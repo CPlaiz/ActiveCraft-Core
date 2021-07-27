@@ -1,0 +1,333 @@
+name: Activecraft-Core
+version: ${project.version}
+main: de.silencio.activecraftcore.Main
+api-version: 1.17
+authors: [ CPlaiz, Silencio ]
+description: Activecraft Knockoff
+
+commands:
+  heal:
+    description: Heals the target player.
+  spawn:
+    description: Teleports you to spawn.
+    aliases: ["setspawn"]
+  ping:
+    description: Pong!
+  broadcast:
+    description: Server-wide broadcast.
+  msg:
+    description: Private message to another Player.
+  invsee:
+    description: Opens the targets Inventory.
+  vanish:
+    description: become invisible for other players.
+    aliases: ["v"]
+  creative:
+    description: the targets gamemode to Creative.
+    aliases: ["cr"]
+  survival:
+    description: Sets the targets gamemode to Survival.
+    aliases: [ "su" ]
+  spectator:
+    description: Sets the targets gamemode to Spectator.
+    aliases: ["sp"]
+  adventure:
+    description: Sets the targets gamemode to Adventure.
+    aliases: ["ad"]
+  clearinventory:
+    description: Clears the targets inventory.
+    aliases: ["clear"]
+  feed:
+    description: Feeds the player
+  craftingtable:
+    description: Opens a workbench menu.
+  anvil:
+    description: Opens an anvil menu.
+  enchanttable:
+    description: Opens an enchantment table menu.
+  cartographytable:
+    description: Opens a cartography table menu.
+  grindstone:
+    description: Opens a grindstone menu.
+  loom:
+    description: Opens a loom menu.
+  smithingtable:
+    description: Opens a smithing table menu.
+  stonecutter:
+    description: Opens a stonecutter menu.
+  playtime:
+    description: Shows a players playtime.
+  repair:
+    description: Repairs selected item.
+  colornick:
+    description: Allows the player to only change displaycolor.
+  fly:
+    description: Allows the player to toggle their or an other player's flight.
+  offinvsee:
+    description: Shows a players armor and offhand-item.
+  realname:
+    description: Shows a players real name.
+  nick:
+    description: Allows a player to change their or another players Displayname.
+  god:
+    description: Toggle invincibility for you or another player.
+  enderchest:
+    description: Opens your or another players enderchest.
+    aliases: ["ec"]
+  tpa:
+    description: Sends a teleport request to another player.
+  tpaccept:
+    description: Accept a teleport request
+  tpadeny:
+    description: Denies a teleport request
+  warp:
+    description: Warp System.
+    aliases:
+      - "setwarp"
+      - "delwarp"
+      - "warps"
+  home:
+    description: Teleports to your home.
+  sethome:
+    description: Creates your home.
+  delhome:
+    description: Deletes your home.
+  suicide:
+    description: kill yourself.
+  tphere:
+    description: Teleports another player to you.
+  opitems:
+    description: Gives a player OP items.
+  kickall:
+    description: Kicks all players.
+  ram:
+    description: Shows RAM info.
+  tp:
+    description: Teleports to another player.
+  staffchat:
+    description: Send a message that only other staff can see.
+    aliases: ["sc"]
+  reply:
+    description: Sends a private message to the last player who messaged you.
+    aliases: [ "r" ]
+  portal:
+    description: Creates or destroys a portal.
+  lastonline:
+    description: Gets the last time a player was online.
+  whois:
+    description: Gets additional infomation on a player.
+  i:
+    description: Gives the selected Item to the player.
+  item:
+    description: Multiple item operations.
+  butcher:
+    description: Kills all mobs.
+
+permissions:
+  activecraft.heal:
+    description: Heals the target player.
+    default: op
+  activecraft.ping:
+    description: Pong!
+    default: op
+  activecraft.msg:
+    description: Private message to another player.
+    default: op
+  activecraft.msg.spy:
+    description: Spy on other private messages.
+    default: op
+  activecraft.broadcast:
+    description: Server-wide message.
+    default: op
+  activecraft.clearinv:
+    description: Clears the targets inventory.
+    default: op
+  activecraft.invsee:
+    description: Opens another players inventory.
+    default: op
+  activecraft.spawn:
+    description: Allows the player to teleport to spawn.
+    default: op
+  activecraft.setspawn:
+    description: Sets the spawn.
+    default: op
+  activecraft.vanish:
+    description: Permission to set vanish for a player.
+    default: op
+  activecraft.gamemode.creative:
+    description: Sets the targets gamemode to Creative.
+    default: op
+  activecraft.gamemode.survival:
+    description: Sets the targets gamemode to Survival.
+    default: op
+  activecraft.gamemode.spectator:
+    description: Sets the targets gamemode to Spectator.
+    default: op
+  activecraft.gamemode.adventure:
+    description: Sets the targets gamemode to Adventure.
+    default: op
+  activecraft.feed:
+    description: Feeds the player
+    default: op
+  activecraft.workbench:
+    description: Opens a workbench menu.
+    default: op
+  activecraft.anvil:
+    description: Opens an anvil menu.
+    default: op
+  activecraft.enchanttable:
+    description: Opens an enchantment table menu.
+    default: op
+  activecraft.cartographytable:
+    description: Opens a cartography table menu.
+    default: op
+  activecraft.grindstone:
+    description: Opens a grindstone menu.
+    default: op
+  activecraft.loom:
+    description: Opens a loom menu.
+    default: op
+  activecraft.smithingtable:
+    description: Opens a smithing table menu.
+    default: op
+  activecraft.stonecutter:
+    description: Opens a stonecutter menu.
+    default: op
+  activecraft.playtime:
+    description: Shows a players playtime.
+    default: op
+  activecraft.repair:
+    description: Repairs selected item.
+    default: op
+  activecraft.nick.color:
+    description: Allows the player to only change displaycolor.
+    default: op
+  activecraft.fly:
+      description: Allows the player to toggle their flight.
+      default: op
+  activecraft.fly.others:
+    description: Allows the player to toggle other player's flight.
+    default: op
+  activecraft.realname:
+    description: Shows a players real name.
+    default: op
+  activecraft.nick:
+    description: Allows a player to change their Displayname.
+    default: op
+  activecraft.nick.others:
+    description: Allows a player to change another players Displayname.
+    default: op
+  activecraft.god:
+    description: Toggle invincibility for you.
+    default: op
+  activecraft.god.others:
+    description: Toggle invincibility for another player.
+    default: op
+  activecraft.enderchest:
+    description: Opens your enderchest.
+    default: op
+  activecraft.enderchest.others:
+    description: Opens another players enderchest.
+    default: op
+  activecraft.tpa:
+    description: Sends a teleport request to another player.
+    default: op
+  activecraft.tpaccept:
+    description: Accepts a teleport request.
+    default: op
+  activecraft.tpadeny:
+    description: Denies a teleport request.
+    default: op
+  activecraft.setwarp:
+    description: Permission to set a new warp.
+    default: op
+  activecraft.deletewarp:
+    description: Permission to delete a warp.
+    default: op
+  activecraft.listwarps:
+    description: Permission to list all warps.
+    default: op
+  activecraft.warp:
+    description: Permission to use /warp
+    default: op
+  activecraft.doublejump:
+    description: Allows a player to double jump.
+    default: op
+  activecraft.home:
+    description: Teleports to your home.
+    default: op
+  activecraft.sethome:
+    description: Creates your home.
+    default: op
+  activecraft.delhome:
+    description: Deletes your home.
+    default: op
+  activecraft.home.others:
+    description: Teleports to another players home
+    default: op
+  activecraft.sethome.others:
+    description: Sets another players home.
+    default: op
+  activecraft.delhome.others:
+    description: Deletes another players home.
+    default: op
+  activecraft.suicide:
+    description: Kills you.
+    default: op
+  activecraft.tphere:
+    description: Teleports another player to you.
+    default: op
+  activecraft.opitems:
+    description: Gives a player OP items.
+    default: op
+  activecraft.kickall:
+    description: Kicks all players.
+    default: op
+  activecraft.kickall.bypass:
+    description: Prevents a player from being kicked by /kickall.
+    default: op
+  activecraf.ram:
+    description: Shows RAM info.
+    default: op
+  activecraft.tp:
+    description: Teleports to another player.
+    default: op
+  activecraft.staffchat:
+    description: Send a message that only other staff can see.
+    default: op
+  activecraft.reply:
+    description: Sends a private message to the last player who messaged you.
+    default: op
+  activecraft.portal.create:
+    description: Permission to create a portal.
+    default: op
+  activecraft.portal.destroy:
+    description: Permission to destroy a portal.
+    default: op
+  activecraft.portal.list:
+    description: Permission to list all portals.
+    default: op
+  activecraft.lastonline:
+    description: Permission to get the last time a player was online.
+    default: op
+  activecraft.whois:
+    description: Permission to get infomation on a player.
+    default: op
+  activecraft.quickgive:
+    description: Gives the selected Item to the player.
+    default: op
+  activecraft.butcher:
+    description: Kills all mobs.
+    default: op
+  activecraft.item.give:
+    description: Permission to give items to players.
+    default: op
+  activecraft.item.name:
+    description: Permission to rename items.
+    default: op
+  activecraft.item.lore:
+    description: Permission to change the lore of an item.
+    default: op
+  activecraft.item.tag:
+    description: Permission to change the tag of an item.
+    default: op
