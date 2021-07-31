@@ -1,6 +1,7 @@
 package de.silencio.activecraftcore.commands;
 
 import de.silencio.activecraftcore.messages.Errors;
+import de.silencio.activecraftcore.utils.BanManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;

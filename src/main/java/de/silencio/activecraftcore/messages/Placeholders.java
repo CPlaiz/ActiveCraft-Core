@@ -13,7 +13,7 @@ public class Placeholders {
         Runtime runtime = Runtime.getRuntime();
         long usedram = runtime.totalMemory() - runtime.freeMemory();
 
-        String editedMessage = target.replace("%playername%", player.getName())
+        target = target.replace("%playername%", player.getName())
                                      .replace("%displayname% ", player.getDisplayName())
                                      .replace("%ping%", player.getDisplayName()) //ping !!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                                      .replace("%canpickupitems%", player.getCanPickupItems() + "")
@@ -45,7 +45,7 @@ public class Placeholders {
                                      .replace("%ramtotal%", runtime.totalMemory()/dataSize + "MB")
                                      .replace("%ip%", player.getAddress() + "");
 
-        return editedMessage;
+        return target;
     }
 
     //server

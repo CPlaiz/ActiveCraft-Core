@@ -1,8 +1,10 @@
 package de.silencio.activecraftcore.utils;
 
 import de.silencio.activecraftcore.Main;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.Plugin;
 
 import java.io.File;
 import java.io.IOException;

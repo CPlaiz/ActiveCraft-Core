@@ -6,6 +6,7 @@ import de.silencio.activecraftcore.listener.EnderPealCooldown;
 import de.silencio.activecraftcore.listener.JoinQuitListener;
 import de.silencio.activecraftcore.listener.MessageManager;
 import de.silencio.activecraftcore.listener.inventory.Navigator;
+import de.silencio.activecraftcore.templates.BanCommand;
 import de.silencio.activecraftcore.utils.Config;
 import de.silencio.activecraftcore.utils.FileConfig;
 import de.silencio.activecraftcore.utils.VanishManager;
@@ -127,6 +128,7 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginCommand("i").setExecutor(new QuickGiveCommand());
         Bukkit.getPluginCommand("butcher").setExecutor(new ButcherCommand());
         Bukkit.getPluginCommand("item").setExecutor(new ItemCommand());
+        Bukkit.getPluginCommand("ban").setExecutor(new BanCommand());
     }
 
     public static Main getPlugin() {

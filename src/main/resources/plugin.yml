@@ -1,4 +1,4 @@
-name: Activecraft-Core
+name: ActiveCraft-Core
 version: ${project.version}
 main: de.silencio.activecraftcore.Main
 api-version: 1.17
@@ -122,6 +122,13 @@ commands:
     description: Multiple item operations.
   butcher:
     description: Kills all mobs.
+  ban:
+    description: Ban/Unban a player/ip.
+    aliases:
+      - "unban"
+      - "ban-ip"
+      - "unban-ip"
+      - "banlist"
 
 permissions:
   activecraft.heal:
