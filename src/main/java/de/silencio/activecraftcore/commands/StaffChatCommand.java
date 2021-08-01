@@ -20,7 +20,7 @@ public class StaffChatCommand implements CommandExecutor {
             for (int i = 0; i < args.length; i++) {
                 message = message + args[i] + " ";
             }
-                Bukkit.broadcast(ChatColor.GOLD + "[StaffChat] " + ChatColor.AQUA + ((Player) sender).getDisplayName() + ChatColor.RESET + ": " + message, "activecraft.staffchat");
+                Bukkit.broadcast(ChatColor.GOLD + "[StaffChat] " + ChatColor.AQUA + ((Player) sender).getName() + ChatColor.RESET + ": " + message, "activecraft.staffchat");
             message = "";
 
         } else sender.sendMessage(Errors.NOT_A_PLAYER);

@@ -89,7 +89,7 @@ public class ColorNickCommand implements CommandExecutor, TabCompleter {
             }
         } else if (args.length == 2) {
             for (ChatColor color : ChatColor.values()) {
-                if (color != ChatColor.BOLD && color != ChatColor.MAGIC && color != ChatColor.UNDERLINE && color != ChatColor.ITALIC && color != ChatColor.STRIKETHROUGH) {
+                if (color != ChatColor.BOLD && color != ChatColor.MAGIC && color != ChatColor.UNDERLINE && color != ChatColor.ITALIC && color != ChatColor.STRIKETHROUGH && color != ChatColor.RESET) {
                     list.add(color.name());
                 }
             }

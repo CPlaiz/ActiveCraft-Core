@@ -19,7 +19,7 @@ public class PingCommand implements CommandExecutor {
                 Player player = (Player) sender;
 
                 sender.sendMessage(ChatColor.GOLD + "Pong!");
-                player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1f, 0.1f);
+                player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1f, 0.1f);
             } else sender.sendMessage(ChatColor.GOLD + "Pong!");
             return true;
         } else sender.sendMessage(Errors.NO_PERMISSION);
