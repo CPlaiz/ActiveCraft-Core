@@ -1,4 +1,4 @@
-package de.silencio.activecraftcore.templates;
+package de.silencio.activecraftcore.commands;
 
 import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.utils.BanManager;

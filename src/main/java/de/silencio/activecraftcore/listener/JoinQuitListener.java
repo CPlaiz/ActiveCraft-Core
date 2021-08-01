@@ -93,8 +93,6 @@ public class JoinQuitListener implements Listener {
         Player player = event.getPlayer();
         //player.performCommand("spawn");
 
-        setDisplaynameFromConfig(p, playerdataConfig.getString("colornick"), playerdataConfig.getString("nickname"));
-
 
         playerdataConfig.set("last-online", "Online");
 
@@ -105,6 +103,8 @@ public class JoinQuitListener implements Listener {
         event.setJoinMessage(mainConfig.getString("join-format").replace("%displayname%", p.getDisplayName()));
 
         playerdataConfig.saveConfig();
+
+        setDisplaynameFromConfig(p, playerdataConfig.getString("colornick"), playerdataConfig.getString("nickname"));
 
         if(!player.hasPermission("vanish.see")) {
             VanishManager vanishManager = Main.getVanishManager();
