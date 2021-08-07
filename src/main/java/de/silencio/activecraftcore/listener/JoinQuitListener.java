@@ -38,7 +38,11 @@ public class JoinQuitListener implements Listener {
             if (!playerlistUUID.contains(p.getUniqueId().toString())) {
                 playerlistUUID.add(p.getUniqueId().toString());
             }
-            fileConfigPlayers.set("players", playerlist);
+            if (!playerlistName.contains(p.getName())) {
+                playerlistName.add(p.getName());
+            }
+            fileConfigPlayers.set("uuids", playerlistUUID);
+            fileConfigPlayers.set("players", playerlistName);
             fileConfigPlayers.saveConfig();
 
 
@@ -92,11 +96,12 @@ public class JoinQuitListener implements Listener {
         playerdataConfig.set("last-online", "Online");
 
         FileConfig mainConfig = new FileConfig("config.yml");
-        event.setJoinMessage(mainConfig.getString("join-format").replace("%displayname%", p.getDisplayName()));
+        
 
         playerdataConfig.saveConfig();
 
         setDisplaynameFromConfig(p, playerdataConfig.getString("colornick"), playerdataConfig.getString("nickname"));
+        event.setJoinMessage(mainConfig.getString("join-format").replace("%displayname%", p.getDisplayName()));
 
         if(!player.hasPermission("vanish.see")) {
             VanishManager vanishManager = Main.getVanishManager();

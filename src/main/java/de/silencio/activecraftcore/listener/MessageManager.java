@@ -1,5 +1,7 @@
 package de.silencio.activecraftcore.listener;
 
+import de.silencio.activecraftcore.commands.DialogueList;
+import de.silencio.activecraftcore.utils.DialogueManager;
 import de.silencio.activecraftcore.utils.FileConfig;
 import de.silencio.activecraftcore.utils.MessageUtils;
 import org.bukkit.Bukkit;
@@ -16,9 +18,12 @@ public class MessageManager implements Listener, DialogueList {
     @EventHandler
     public void onChatMessage(AsyncPlayerChatEvent event) {
 
+
         MessageUtils messageUtils = new MessageUtils();
         String message = messageUtils.replaceColor(event.getMessage());
         Player player = event.getPlayer();
+
+        if (!dialogueList.contains(player)) {
 
             FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + player.getName() + ".yml");
 

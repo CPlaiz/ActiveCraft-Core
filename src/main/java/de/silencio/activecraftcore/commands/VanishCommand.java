@@ -2,6 +2,7 @@ package de.silencio.activecraftcore.commands;
 
 import de.silencio.activecraftcore.Main;
 import de.silencio.activecraftcore.messages.Errors;
+import de.silencio.activecraftcore.utils.FileConfig;
 import de.silencio.activecraftcore.utils.VanishManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -16,6 +17,10 @@ public class VanishCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         VanishManager vanishManager = Main.getVanishManager();
         Player p = (Player) sender;
+
+        FileConfig fileConfig = new FileConfig("config.yml");
+        String joinFormat = fileConfig.getString("join-format");
+        String quitFormat = fileConfig.getString("quit-format");
 
 
         if (p.hasPermission("activecraft.vanish")) {

@@ -1,8 +1,9 @@
 package de.silencio.activecraftcore.commands;
 
 import de.silencio.activecraftcore.messages.Errors;
+import de.silencio.activecraftcore.ownlisteners.DialogueListener;
 import de.silencio.activecraftcore.utils.BanManager;
-import org.bukkit.BanEntry;
+import de.silencio.activecraftcore.utils.DialogueManager;
 import org.bukkit.BanList;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -10,10 +11,19 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
 
 import java.util.*;
 
-public class BanCommand implements CommandExecutor {
+public class BanCommand implements CommandExecutor, DialogueList, Listener, DialogueListener {
+
+    private Map<Player, List<String>> banDialogueList = new HashMap<>();
+    private List<DialogueListener> dialogueListenerList = new ArrayList<DialogueListener>();
+
+    private DialogueManager dialogueManager;
+    private BanManager banManager;
+    private Player target;
+    private CommandSender commandSender;
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
@@ -21,32 +31,24 @@ public class BanCommand implements CommandExecutor {
 
             if (label.equalsIgnoreCase("ban")) {
 
-                BanManager banManager = new BanManager(BanList.Type.NAME);
+                banManager = new BanManager(BanList.Type.NAME);
 
-                if (banManager.isBanned(args[0])) {
+                if (!banManager.isBanned(args[0])) {
 
-                    switch (args.length) {
-                        case 1:
-                            banManager.ban(args[0], ChatColor.RED + "** Banned by an Operator **", null, sender.getName());
-                            Bukkit.getPlayer(args[0]).kickPlayer(ChatColor.RED + "You have been banned from this server.\n" + ChatColor.GOLD + "Reason: " + ChatColor.AQUA + "Banned by an operator.\n" + ChatColor.GOLD + "Until: Permanent");
-                            break;
-                        case 2:
-                            banManager.ban(args[0], args[1], null, sender.getName());
-                            Bukkit.getPlayer(args[0]).kickPlayer(ChatColor.RED + "You have been banned from this server.\n" + ChatColor.GOLD + "Reason: " + ChatColor.AQUA + args[1] + "\n" + ChatColor.GOLD + "Until: Permanent");
-                            break;
-                        case 3:
-                            banManager.ban(args[0], args[1], null, sender.getName());
-                            Bukkit.getPlayer(args[0]).kickPlayer(ChatColor.RED + "You have been banned from this server.\n" + ChatColor.GOLD + "Reason: " + ChatColor.AQUA + args[1] + "\n" + ChatColor.GOLD + "Until: Permanent");
-                            break;
-                        case 4:
-                            banManager.ban(args[0], args[1], null, args[3]);
-                            Bukkit.getPlayer(args[0]).kickPlayer(ChatColor.RED + "You have been banned from this server.\n" + ChatColor.GOLD + "Reason: " + ChatColor.AQUA + args[1] + "\n" + ChatColor.GOLD + "Until: Permanent");
-                            break;
-                    }
+                    this.commandSender = sender;
 
-                    if (args.length > 4) {
-                        sender.sendMessage(Errors.TOO_MANY_ARGUMENTS);
-                    } else sender.sendMessage(ChatColor.GOLD + "Banned " + ChatColor.AQUA + args[0]);
+                    this.target = Bukkit.getPlayer(args[0]);
+
+                    dialogueList.add(target);
+
+                    this.dialogueManager = new DialogueManager((Player) sender);
+                    sender.sendMessage(ChatColor.GOLD + "-- Ban Dialogue --");
+                    this.dialogueManager.add(ChatColor.GOLD + "Please enter a reason: ");
+                    this.dialogueManager.add(ChatColor.GOLD + "Please enter the ban duration: ");
+
+                    Date date = new Date();
+
+
 
                 } else sender.sendMessage(Errors.WARNING + "This player is already banned.");
 
