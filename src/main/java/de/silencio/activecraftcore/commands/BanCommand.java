@@ -11,9 +11,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.time.OffsetDateTime;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.*;
 
 public class BanCommand implements CommandExecutor {
 
@@ -50,81 +48,25 @@ public class BanCommand implements CommandExecutor {
                         sender.sendMessage(Errors.TOO_MANY_ARGUMENTS);
                     } else sender.sendMessage(ChatColor.GOLD + "Banned " + ChatColor.AQUA + args[0]);
 
-                } else sender.sendMessage(ChatColor.RED + "Warning! " + ChatColor.GOLD + "This player is already banned.");
-
-            } else if (label.equalsIgnoreCase("unban")) {
-
-                BanManager banManager = new BanManager(BanList.Type.NAME);
-                if (args.length == 1) {
-                    banManager.unban(args[0]);
-                    sender.sendMessage(ChatColor.GOLD + "Unbanned " + ChatColor.AQUA + args[0]);
-                } else sender.sendMessage(Errors.TOO_MANY_ARGUMENTS);
-            } else if (label.equalsIgnoreCase("ban-ip")) {
-
-                BanManager banManager = new BanManager(BanList.Type.IP);
-                Player target = Bukkit.getPlayer(args[0]);
-
-                switch (args.length) {
-                    case 1:
-                        banManager.ban(target.getAddress().toString(), ChatColor.RED + "** Banned by an Operator **", null, sender.getName());
-                        break;
-                    case 2:
-                        banManager.ban(target.getAddress().toString(), args[1], null, sender.getName());
-                        break;
-                    case 3:
-                        banManager.ban(target.getAddress().toString(), args[1], null, sender.getName());
-                        break;
-                    case 4:
-                        banManager.ban(target.getAddress().toString(), args[1], null, args[3]);
-                        break;
-                }
-
-                if (args.length > 4) {
-                    sender.sendMessage(Errors.TOO_MANY_ARGUMENTS);
-
-                } else sender.sendMessage(ChatColor.GOLD + "Banned " + ChatColor.AQUA + args[0]);
-
-            } else if (label.equalsIgnoreCase("unban-ip")) {
-
-                BanManager banManager = new BanManager(BanList.Type.IP);
-                Player target = Bukkit.getPlayer(args[0]);
-                if (args.length == 1) {
-                    banManager.unban(target.getAddress().toString());
-                    sender.sendMessage(ChatColor.GOLD + "Unbanned " + ChatColor.AQUA + args[0]);
-                } else sender.sendMessage(Errors.TOO_MANY_ARGUMENTS);
-            } else if (label.equalsIgnoreCase("banlist")) {
-                BanManager banManagerIp = new BanManager(BanList.Type.IP);
-                BanManager banManagerName = new BanManager(BanList.Type.NAME);
+                } else sender.sendMessage(Errors.WARNING + "This player is already banned.");
 
 
-                if (!banManagerIp.getBans().isEmpty() || !banManagerName.getBans().isEmpty()) {
-                    for (BanEntry banEntry : banManagerIp.getBans()) {
-                        sender.sendMessage("------------------\n"
-                                + "IP: " + banEntry.getTarget() + "\n"
-                                + "Reason: " + banEntry.getReason() + "\n"
-                                + "Created: " + banEntry.getCreated() + "\n"
-                                + "Expires: " + banEntry.getExpiration() + "\n"
-                                + "Source: " + banEntry.getSource() + "\n"
-                                + "------------------"
-                        );
-                    }
-
-                    for (BanEntry banEntry : banManagerName.getBans()) {
-                        sender.sendMessage("------------------");
-                        sender.sendMessage("Name: " + banEntry.getTarget());
-                        sender.sendMessage("Reason: " + banEntry.getReason());
-                        sender.sendMessage("Created: " + banEntry.getCreated());
-                        sender.sendMessage("Expires: " + banEntry.getExpiration());
-                        sender.sendMessage("Source: " + banEntry.getSource());
-                        sender.sendMessage("------------------");
-                    }
-                } else sender.sendMessage(ChatColor.RED + "Warning!" + ChatColor.GOLD + " There are no bans to be listed!");
             }
-
         } else sender.sendMessage(Errors.NO_PERMISSION);
-
         return true;
-
     }
 
+    @Override
+    public void onDialogueNext() {
+        if (dialogueManager.getActiveStep() == 1) {
+            banManager.ban(target, dialogueManager.getAnswer(0), null, commandSender.getName());
+        }
+    }
 }
+
+// 1s = 1 second
+// 1m = 1 minute
+// 1h = 1 hour
+// 1d = 1 day
+
+// 1d5h = 1 day + 5 hours

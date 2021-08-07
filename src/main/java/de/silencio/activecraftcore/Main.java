@@ -1,7 +1,6 @@
 package de.silencio.activecraftcore;
 
 import de.silencio.activecraftcore.commands.*;
-import de.silencio.activecraftcore.listener.DoubleJump;
 import de.silencio.activecraftcore.listener.EnderPealCooldown;
 import de.silencio.activecraftcore.listener.JoinQuitListener;
 import de.silencio.activecraftcore.listener.MessageManager;
@@ -73,8 +72,8 @@ public final class Main extends JavaPlugin {
         pluginManager.registerEvents(new Navigator(), this);
         pluginManager.registerEvents(new OffInvSeeCommand(), this);
         pluginManager.registerEvents(new MessageManager(), this);
-        pluginManager.registerEvents(new DoubleJump(), this);
         pluginManager.registerEvents(new EnderPealCooldown(), this);
+        pluginManager.registerEvents(new LogCommand(), this);
 
         // commands
 
@@ -129,6 +128,13 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginCommand("butcher").setExecutor(new ButcherCommand());
         Bukkit.getPluginCommand("item").setExecutor(new ItemCommand());
         Bukkit.getPluginCommand("ban").setExecutor(new BanCommand());
+        Bukkit.getPluginCommand("whereami").setExecutor(new WhereAmICommand());
+        Bukkit.getPluginCommand("weather").setExecutor(new WeatherCommand());
+        Bukkit.getPluginCommand("more").setExecutor(new MoreCommand());
+        Bukkit.getPluginCommand("rehstart").setExecutor(new RestartCommand());
+        Bukkit.getPluginCommand("mute").setExecutor(new MuteCommand());
+        Bukkit.getPluginCommand("hat").setExecutor(new HatCommand());
+        Bukkit.getPluginCommand("log").setExecutor(new LogCommand());
     }
 
     public static Main getPlugin() {

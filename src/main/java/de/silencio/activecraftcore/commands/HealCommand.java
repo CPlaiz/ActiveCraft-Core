@@ -29,11 +29,13 @@ public class HealCommand implements CommandExecutor {
 
                     Player target = Bukkit.getPlayer(args[0]);
 
-                    target.setHealth(20);
-                    target.setFoodLevel(20);
-                    player.sendMessage(ChatColor.GOLD + "You healed " + ChatColor.AQUA + target.getDisplayName());
-                    target.sendMessage(ChatColor.GOLD + "You were healed by " + ChatColor.AQUA + player.getDisplayName() + ChatColor.GOLD + ".");
-                    target.playSound(target.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 0.4f, 1f);
+                    if(target != null) {
+                        target.setHealth(20);
+                        target.setFoodLevel(20);
+                        player.sendMessage(ChatColor.GOLD + "You healed " + ChatColor.AQUA + target.getDisplayName());
+                        target.sendMessage(ChatColor.GOLD + "You were healed by " + ChatColor.AQUA + player.getDisplayName() + ChatColor.GOLD + ".");
+                        target.playSound(target.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 0.4f, 1f);
+                    } else sender.sendMessage(Errors.WARNING + "Player not found!");
                 } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
 
             } else sender.sendMessage(Errors.NO_PERMISSION);

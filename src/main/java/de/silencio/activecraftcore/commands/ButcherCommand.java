@@ -26,12 +26,18 @@ public class ButcherCommand implements CommandExecutor {
 
                     List<Entity> enemies = player.getNearbyEntities(200, 500, 200);
                     int amount = enemies.size();
+
                     player.sendMessage(ChatColor.GOLD + "Killed " + ChatColor.AQUA + amount + ChatColor.GOLD + " mobs.");
 
+                    if(amount == 0) {
+                        sender.sendMessage(Errors.WARNING + "No mobs nearby!");
+                    }
                     for (int i = 0; i < amount; i++) {
                         Entity e = enemies.get(i);
                         if (e instanceof Monster || e instanceof Flying || e instanceof Slime) {
-                            ((Monster) e).setHealth(0);
+                            if(e != null) {
+                                ((Monster) e).setHealth(0);
+                            }
                         }
                     }
                 } else sender.sendMessage(Errors.TOO_MANY_ARGUMENTS);

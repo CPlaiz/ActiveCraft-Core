@@ -1,7 +1,6 @@
 package de.silencio.activecraftcore.commands;
 
 import de.silencio.activecraftcore.messages.Errors;
-import de.silencio.activecraftcore.utils.BanManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -10,7 +9,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.io.Console;
 import java.util.HashMap;
 
 public class MsgCommand implements CommandExecutor {
@@ -46,9 +44,9 @@ public class MsgCommand implements CommandExecutor {
                                 message = "";
                             } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
                         } else
-                            sender.sendMessage(ChatColor.RED + "Warning!" + ChatColor.GRAY + " You can't message yourself!");
-                    } else player.sendMessage(ChatColor.GOLD + "Player not online.");
-                } else player.sendMessage(ChatColor.GOLD + "Usage: /msg <Player>.");
+                            sender.sendMessage(Errors.WARNING + " You can't message yourself!");
+                    } else player.sendMessage(Errors.WARNING + "Player not online.");
+                } else player.sendMessage(Errors.WARNING + "Please include a player.");
 
 
 
@@ -65,7 +63,7 @@ public class MsgCommand implements CommandExecutor {
                     target.playSound(target.getLocation(), Sound.ENTITY_ARROW_HIT_PLAYER, 1f, 1f);
                     message = "";
                 } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
-            } else sender.sendMessage(ChatColor.GOLD + "Player not online.");
+            } else sender.sendMessage(Errors.WARNING + "Player not online.");
         }
         return true;
     }

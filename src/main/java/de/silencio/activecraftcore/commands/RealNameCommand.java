@@ -21,7 +21,7 @@ public class RealNameCommand implements CommandExecutor {
 
                     Player target = Bukkit.getPlayer(args[0]);
 
-                    sender.sendMessage(ChatColor.GOLD + "Real name of " + ChatColor.AQUA + args[0] + ChatColor.GOLD + " is " + ChatColor.AQUA + target.getName() + ChatColor.GOLD + ".");
+                    sender.sendMessage(ChatColor.GOLD + "Real name of " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " is " + ChatColor.AQUA + target.getName() + ChatColor.GOLD + ".");
 
                 } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
 

@@ -24,25 +24,25 @@ public class VanishCommand implements CommandExecutor {
                 if (target != null) {
                 if (vanishManager.isVanished(target)) {
                     vanishManager.setVanished(target, false);
-                    target.sendMessage(ChatColor.GOLD + "You are now " + ChatColor.GREEN + "invisible!");
-                    sender.sendMessage(ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " is now " + ChatColor.GREEN + "visible!");
+                    target.sendMessage(ChatColor.GOLD + "You are now " + ChatColor.AQUA + "visible.");
+                    sender.sendMessage(ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " is now " + ChatColor.AQUA + "visible.");
                 } else {
                     vanishManager.setVanished(target, true);
-                    target.sendMessage(ChatColor.GOLD + "You are now " + ChatColor.GREEN + "invisible!");
-                    sender.sendMessage(ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " is now " + ChatColor.GREEN + "invisible!");
+                    target.sendMessage(ChatColor.GOLD + "You are now " + ChatColor.AQUA + "invisible.");
+                    sender.sendMessage(ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " is now " + ChatColor.AQUA + "invisible.");
                     }
                 } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
             } else if (sender instanceof Player) {
                 if (vanishManager.isVanished(p)) {
                     vanishManager.setVanished(p, false);
-                    p.sendMessage(ChatColor.GOLD + "You are now " + ChatColor.AQUA + "visible!");
-                    Bukkit.broadcastMessage(ChatColor.AQUA + "» " + ChatColor.GOLD  + p.getDisplayName());
+                    p.sendMessage(ChatColor.GOLD + "You are now " + ChatColor.AQUA + "visible.");
+                    Bukkit.broadcastMessage(joinFormat.replace("%displayname%", p.getDisplayName()));
 
 
                 } else {
                     vanishManager.setVanished(p, true);
-                    p.sendMessage(ChatColor.GOLD + "You are now " + ChatColor.AQUA + "invisible!");
-                    Bukkit.broadcastMessage(ChatColor.RED + "« " + ChatColor.GOLD + p.getDisplayName());
+                    p.sendMessage(ChatColor.GOLD + "You are now " + ChatColor.AQUA + "invisible.");
+                    Bukkit.broadcastMessage(quitFormat.replace("%displayname%", p.getDisplayName()));
                 }
             }
         } else sender.sendMessage(Errors.NO_PERMISSION);

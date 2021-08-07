@@ -28,20 +28,15 @@ public class JoinQuitListener implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
 
-
-
             Player p = event.getPlayer();
 
             FileConfig fileConfigPlayers = new FileConfig("playerlist.yml");
-
             FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + p.getName() + ".yml");
 
-
-
-
-            List<String> playerlist = fileConfigPlayers.getStringList("players");
-            if (!playerlist.contains(p.getUniqueId().toString())) {
-                playerlist.add(p.getUniqueId().toString());
+            List<String> playerlistUUID = fileConfigPlayers.getStringList("uuids");
+            List<String> playerlistName = fileConfigPlayers.getStringList("players");
+            if (!playerlistUUID.contains(p.getUniqueId().toString())) {
+                playerlistUUID.add(p.getUniqueId().toString());
             }
             fileConfigPlayers.set("players", playerlist);
             fileConfigPlayers.saveConfig();
@@ -67,37 +62,34 @@ public class JoinQuitListener implements Listener {
 
                 FileConfig fileConfig = new FileConfig("playerdata" + File.separator + p.getName() + ".yml");
 
-                fileConfig.set("name", p.getName());
-                fileConfig.set("nickname", p.getName());
-                fileConfig.set("uuid", p.getUniqueId().toString());
-                fileConfig.set("taskid", 0);
-                fileConfig.set("afk", false);
-                fileConfig.set("op", p.isOp());
-                fileConfig.set("colornick", "WHITE");
-                fileConfig.set("whitelisted", p.isWhitelisted());
-                fileConfig.set("godmode", false);
-                fileConfig.set("muted", false);
-                fileConfig.set("vanished", false);
-                fileConfig.set("on-duty", false);
-                fileConfig.set("stats.blocks.broken", 0);
-                fileConfig.set("stats.blocks.placed", 0);
-                fileConfig.set("stats.killed.players", 0);
-                fileConfig.set("stats.killed.monsters", 0);
-                fileConfig.set("stats.killed.animals", 0);
-                fileConfig.set("last-online", null);
-                fileConfig.set("last-coords", null);
+                playerdataConfig.set("name", p.getName());
+                playerdataConfig.set("nickname", p.getName());
+                playerdataConfig.set("uuid", p.getUniqueId().toString());
+                playerdataConfig.set("taskid", 0);
+                playerdataConfig.set("afk", false);
+                playerdataConfig.set("op", p.isOp());
+                playerdataConfig.set("colornick", "WHITE");
+                playerdataConfig.set("whitelisted", p.isWhitelisted());
+                playerdataConfig.set("godmode", false);
+                playerdataConfig.set("muted", false);
+                playerdataConfig.set("vanished", false);
+                playerdataConfig.set("on-duty", false);
+                playerdataConfig.set("stats.blocks.broken", 0);
+                playerdataConfig.set("stats.blocks.placed", 0);
+                playerdataConfig.set("stats.killed.players", 0);
+                playerdataConfig.set("stats.killed.monsters", 0);
+                playerdataConfig.set("stats.killed.animals", 0);
+                playerdataConfig.set("last-online", null);
+                playerdataConfig.set("last-coords", null);
+                playerdataConfig.set("log-enabled", false);
 
-                fileConfig.saveConfig();
+                playerdataConfig.saveConfig();
         }
 
         Player player = event.getPlayer();
         //player.performCommand("spawn");
 
-
         playerdataConfig.set("last-online", "Online");
-
-        player.setPlayerListHeader(ChatColor.GOLD + "Plugin Testserver");
-        player.setPlayerListFooter(ChatColor.GOLD + "Plugin Testserver");
 
         FileConfig mainConfig = new FileConfig("config.yml");
         event.setJoinMessage(mainConfig.getString("join-format").replace("%displayname%", p.getDisplayName()));

@@ -129,6 +129,22 @@ commands:
       - "ban-ip"
       - "unban-ip"
       - "banlist"
+  whereami:
+    description: Locates the player.
+  weather:
+    description: Changes weather in the players current world.
+  more:
+    description: Fills an Itemstack to its max stack size.
+  rehstart:
+    description: Restarts the server with a warning.
+  mute:
+    description: Mutes / unmutes a player.
+    aliases:
+      - "unmute"
+  hat:
+    description: Changes item in helmet slot.
+  log:
+    description: Logs all commands executed on the server.
 
 permissions:
   activecraft.heal:
@@ -337,4 +353,31 @@ permissions:
     default: op
   activecraft.item.tag:
     description: Permission to change the tag of an item.
+    default: op
+  activecraft.whereami:
+    description: Locates the player.
+    default: op
+  activecraft.whereami.other:
+    description: Locates other players.
+    default: op
+  activecraft.weather:
+    description: Changes weather in the players current world.
+    default: op
+  activecraft.more:
+    description: Fills an Itemstack to its max stack size.
+    default: op
+  activecraft.restart:
+    description: Restarts the server with a warning.
+    default: op
+  activecraft.mute:
+    description: Mutes / unmutes a player.
+    default: op
+  activecraft.muted.see:
+    description: Allows admins to see messages from muted players.
+    default: op
+  activecraft.hat:
+    description: Changes item in helmet slot.
+    default: op
+  activecraft.log:
+    description: Logs all commands executed on the server.
     default: op

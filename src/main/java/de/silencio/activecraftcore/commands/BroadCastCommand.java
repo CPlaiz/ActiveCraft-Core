@@ -20,9 +20,9 @@ public class BroadCastCommand implements CommandExecutor {
                     msg = msg + args[i] + " ";
                 }
 
-                Bukkit.broadcastMessage("§6[BroadCast]§r " + msg);
+                    Bukkit.broadcastMessage("§6[BroadCast]§r " + msg);
 
-            } else sender.sendMessage(ChatColor.GOLD + "Usage: /broadcast <Message>.");
+            } else sender.sendMessage(Errors.WARNING + "Please include a message!");
 
         } else sender.sendMessage(Errors.NO_PERMISSION);
 

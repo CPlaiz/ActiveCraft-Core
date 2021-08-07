@@ -197,19 +197,19 @@ public class OpItemsCommand implements CommandExecutor, TabCompleter {
                         player.getInventory().addItem(is);
                     }
                     if (args[0].equalsIgnoreCase("crossbow")) {
-                        ItemStack is = new ItemStack(Material.CROSSBOW, 1);
-                        ItemMeta im = is.getItemMeta();
+                        ItemStack crossbow = new ItemStack(Material.CROSSBOW, 1);
+                        ItemMeta crossbowmeta = crossbow.getItemMeta();
 
-                        im.setDisplayName(ChatColor.GOLD + "OP Crossbow");
-                        im.addEnchant(Enchantment.MULTISHOT, 3276, true);
-                        im.addEnchant(Enchantment.QUICK_CHARGE, 5, true);
-                        im.addEnchant(Enchantment.MENDING, 32767, true);
-                        im.addEnchant(Enchantment.DURABILITY, 32767, true);
-                        im.addEnchant(Enchantment.VANISHING_CURSE, 32767, true);
-                        im.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-                        is.setItemMeta(im);
+                        crossbowmeta.setDisplayName(ChatColor.GOLD + "OP Crossbow");
+                        crossbowmeta.addEnchant(Enchantment.MULTISHOT, 3276, true);
+                        crossbowmeta.addEnchant(Enchantment.QUICK_CHARGE, 5, true);
+                        crossbowmeta.addEnchant(Enchantment.MENDING, 32767, true);
+                        crossbowmeta.addEnchant(Enchantment.DURABILITY, 32767, true);
+                        crossbowmeta.addEnchant(Enchantment.VANISHING_CURSE, 32767, true);
+                        crossbowmeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+                        crossbow.setItemMeta(crossbowmeta);
 
-                        player.getInventory().addItem(is);
+                        player.getInventory().addItem(crossbow);
                     }
                     if (args[0].equalsIgnoreCase("trident")) {
                         ItemStack is = new ItemStack(Material.TRIDENT, 1);
@@ -620,7 +620,7 @@ public class OpItemsCommand implements CommandExecutor, TabCompleter {
         if (args.length == 1) {
             list.add("sword");
             list.add("bow");
-            list.add("crossbosw");
+            list.add("crossbow");
             list.add("pickaxe");
             list.add("axe");
             list.add("shovel");

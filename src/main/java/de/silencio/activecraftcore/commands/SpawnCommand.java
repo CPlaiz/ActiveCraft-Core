@@ -48,7 +48,7 @@ public class SpawnCommand implements CommandExecutor {
                         player.sendMessage(ChatColor.GOLD + "Teleported " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " to " + ChatColor.AQUA + "Spawn" + ChatColor.GOLD + ".");
                         target.playSound(target.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
                     }
-                } else player.sendMessage(ChatColor.GOLD + "No Spawn set.");
+                } else player.sendMessage(Errors.WARNING + "No Spawn set.");
 
             } else player.sendMessage(Errors.NO_PERMISSION);
             return true;

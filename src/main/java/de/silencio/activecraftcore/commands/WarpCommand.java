@@ -34,7 +34,7 @@ public class WarpCommand implements CommandExecutor, TabCompleter {
                             player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
 
                         } else sender.sendMessage(Errors.NO_PERMISSION);
-                    } else sender.sendMessage(ChatColor.RED + "Warning!" + ChatColor.GRAY + " This warp does not exist!");
+                    } else sender.sendMessage(Errors.WARNING + "This warp does not exist!");
                 }
 
                 if (label.equalsIgnoreCase("setwarp")) {
@@ -52,7 +52,7 @@ public class WarpCommand implements CommandExecutor, TabCompleter {
 
                             player.sendMessage(ChatColor.GOLD + "Created the warp " + ChatColor.AQUA + args[0] + ChatColor.GOLD + ".");
                             WarpManager.createWarp(args[0], player.getLocation());
-                        } else sender.sendMessage(ChatColor.RED + "Warning!" + ChatColor.GRAY + " This warp already exists!");
+                        } else sender.sendMessage(Errors.WARNING + "This warp already exists!");
                     } else sender.sendMessage(Errors.NO_PERMISSION);
 
                 } else if (label.equalsIgnoreCase("delwarp")) {
@@ -69,7 +69,7 @@ public class WarpCommand implements CommandExecutor, TabCompleter {
 
                             player.sendMessage(ChatColor.GOLD + "Deleted the warp " + ChatColor.AQUA + args[0] + ChatColor.GOLD + ".");
                             WarpManager.deleteWarp(args[0]);
-                        } else sender.sendMessage(ChatColor.RED + "Warning!" + ChatColor.GRAY + " This warp does not exist!");
+                        } else sender.sendMessage(Errors.WARNING + "This warp does not exist!");
                     } else sender.sendMessage(Errors.NO_PERMISSION);
                 }
                 }
@@ -84,7 +84,7 @@ public class WarpCommand implements CommandExecutor, TabCompleter {
                                     Location loc = warpsConfig.getLocation(s);
                                     sender.sendMessage(ChatColor.GOLD + s + ": " + ChatColor.GRAY + loc.getWorld().getName() + "; " + loc.getBlockX() + "," + loc.getBlockY() + ", " + loc.getBlockZ());
                                 }
-                            } else sender.sendMessage(ChatColor.RED + "Warning! " + ChatColor.GRAY + "There are no portals to be listed!");
+                            } else sender.sendMessage(Errors.WARNING + "There are no portals to be listed!");
                     } else sender.sendMessage(Errors.NO_PERMISSION);
                 }
 
