@@ -32,7 +32,7 @@ public class QuickGiveCommand implements CommandExecutor, TabCompleter {
                     Material material = Material.getMaterial(args[0].toUpperCase());
                     ItemStack itemStack = new ItemStack(material);
                     player.getInventory().addItem(itemStack);
-                    sender.sendMessage(ChatColor.GOLD + "Gave you " + ChatColor.AQUA + itemStack.getType().name().toLowerCase());
+                    sender.sendMessage(ChatColor.GOLD + "Gave you " + ChatColor.AQUA + itemStack.getType().name().toLowerCase().replace("_", " "));
                     player.playSound(player.getLocation(), Sound.valueOf("BLOCK_AMETHYST_BLOCK_BREAK"), 1f, 1f);
                 }
                 if(args.length == 2) {
@@ -40,7 +40,7 @@ public class QuickGiveCommand implements CommandExecutor, TabCompleter {
                     ItemStack itemStack = new ItemStack(material);
                     itemStack.setAmount(Integer.parseInt(args[1]));
                     player.getInventory().addItem(itemStack);
-                    sender.sendMessage(ChatColor.GOLD + "Gave you " + ChatColor.AQUA + args[1] + ChatColor.GOLD + "x " + ChatColor.AQUA + itemStack.getType().name().toLowerCase());
+                    sender.sendMessage(ChatColor.GOLD + "Gave you " + ChatColor.AQUA + args[1] + ChatColor.GOLD + "x " + ChatColor.AQUA + itemStack.getType().name().toLowerCase().replace("_", " "));
                     player.playSound(player.getLocation(), Sound.valueOf("BLOCK_AMETHYST_BLOCK_BREAK"), 1f, 1f);
                 }
 

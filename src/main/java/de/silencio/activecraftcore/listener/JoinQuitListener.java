@@ -65,6 +65,7 @@ public class JoinQuitListener implements Listener {
             if (config.toFileConfiguration().getKeys(true).size() == 0) {
 
                 FileConfig fileConfig = new FileConfig("playerdata" + File.separator + p.getName() + ".yml");
+                FileConfig mainConfig = new FileConfig("config.yml");
 
                 playerdataConfig.set("name", p.getName());
                 playerdataConfig.set("nickname", p.getName());
@@ -76,6 +77,7 @@ public class JoinQuitListener implements Listener {
                 playerdataConfig.set("whitelisted", p.isWhitelisted());
                 playerdataConfig.set("godmode", false);
                 playerdataConfig.set("muted", false);
+                playerdataConfig.set("default-mute", mainConfig.getString("mute-new-players"));
                 playerdataConfig.set("vanished", false);
                 playerdataConfig.set("on-duty", false);
                 playerdataConfig.set("stats.blocks.broken", 0);

@@ -1,4 +1,8 @@
+#  Configuration file for Activecraft-Core
+#  Made by CPlaiz and Silencio
+
 chat-format: "%displayname%§f: %message%"
 join-format: "§b» %displayname%"
 quit-format: "§c« %displayname%"
 use-timer-on-tpa: true
+mute-new-players: true

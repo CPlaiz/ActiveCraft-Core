@@ -38,6 +38,7 @@ public class MuteCommand implements CommandExecutor {
                         FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + args[0] + ".yml");
 
                         playerdataConfig.set("muted", "false");
+                        playerdataConfig.set("default-mute", "false");
                         playerdataConfig.saveConfig();
 
                         player.sendMessage(ChatColor.GOLD + "Unmuted " + ChatColor.AQUA + args[0] + ChatColor.GOLD + ".");
@@ -45,9 +46,7 @@ public class MuteCommand implements CommandExecutor {
                     }
 
                 } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
-
             } else sender.sendMessage(Errors.NO_PERMISSION);
-
         } else sender.sendMessage(Errors.NOT_A_PLAYER);
         return true;
     }

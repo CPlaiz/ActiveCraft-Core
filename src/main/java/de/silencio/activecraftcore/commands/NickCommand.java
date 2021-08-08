@@ -40,14 +40,16 @@ public class NickCommand implements CommandExecutor {
 
                 if(args.length == 2) {
 
-                    FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + player.getName() + ".yml");
-
                     Player target = Bukkit.getPlayer(args[0]);
+                    FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + target.getName() + ".yml");
+
                     setDisplaycolorFromConfig(target, playerdataConfig.getString("colornick"));
                     playerdataConfig.set("nickname", args[1]);
                     playerdataConfig.saveConfig();
                     player.sendMessage(ChatColor.GOLD + "Set nickname of " + ChatColor.AQUA + target.getName() + ChatColor.GOLD + " to " + ChatColor.AQUA + args[1]);
                     target.sendMessage(ChatColor.GOLD + "Nickname set to " + ChatColor.AQUA + args[1] + ChatColor.GOLD + " by " + ChatColor.AQUA + player.getDisplayName());
+                    target.setDisplayName(args[1]);
+                    target.setPlayerListName(args[1]);
                 }
             } else sender.sendMessage(Errors.NO_PERMISSION);
 

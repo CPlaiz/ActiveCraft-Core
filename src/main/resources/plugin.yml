@@ -15,6 +15,8 @@ commands:
     description: Pong!
   broadcast:
     description: Server-wide broadcast.
+    aliases:
+      - "broadcastworld"
   msg:
     description: Private message to another Player.
   invsee:
@@ -149,6 +151,16 @@ commands:
     description: Gives the player its own head.
   strike:
     description: Strikes a player with lightning.
+  break:
+    description: Breaks the targeted block.
+  firework:
+    description: Summons a firework.
+    aliases:
+      - "fw"
+  book:
+    description: Options to edit already signed books.
+  xp:
+    description: Adds xp or levels to a player.
 
 permissions:
   activecraft.heal:
@@ -393,4 +405,19 @@ permissions:
     default: op
   activecraft.strike:
     description: Strikes a player with lightning.
+    default: op
+  activecraft.break:
+    description: Breaks the targeted block.
+    default: op
+  activecraft.firework:
+    description: Summons a firework.
+    default: op
+  activecraft.book:
+    description: Options to edit already signed books.
+    default: op
+  activecraft.xp:
+    description: Adds xp or levels to a player.
+    default: op
+  activecraft.xp.other:
+    description: Adds xp or levels to another player.
     default: op

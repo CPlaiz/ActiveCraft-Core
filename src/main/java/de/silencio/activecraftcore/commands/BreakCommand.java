@@ -17,8 +17,8 @@ public class BreakCommand implements CommandExecutor {
 
             if(sender.hasPermission("activecraft.break")) {
 
-                player.getTargetBlock(9999);
-
+                var block = player.getTargetBlock(null, 9999);
+                block.setType(Material.AIR);
 
             } else sender.sendMessage(Errors.NO_PERMISSION);
         } else sender.sendMessage(Errors.NOT_A_PLAYER);

@@ -8,6 +8,7 @@ import de.silencio.activecraftcore.listener.inventory.Navigator;
 import de.silencio.activecraftcore.commands.BanCommand;
 import de.silencio.activecraftcore.utils.*;
 import org.bukkit.Bukkit;
+import org.bukkit.block.data.type.Fire;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -144,6 +145,10 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginCommand("log").setExecutor(new LogCommand());
         Bukkit.getPluginCommand("skull").setExecutor(new SkullCommand());
         Bukkit.getPluginCommand("strike").setExecutor(new StrikeCommand());
+        Bukkit.getPluginCommand("break").setExecutor(new BreakCommand());
+        Bukkit.getPluginCommand("firework").setExecutor(new FireWorkCommand());
+        Bukkit.getPluginCommand("book").setExecutor(new BookCommand());
+        Bukkit.getPluginCommand("xp").setExecutor(new XpCommand());
     }
 
     public static Main getPlugin() {

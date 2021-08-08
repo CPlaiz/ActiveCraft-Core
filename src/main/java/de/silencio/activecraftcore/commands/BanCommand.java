@@ -13,7 +13,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 
 public class BanCommand implements CommandExecutor, DialogueList, Listener, DialogueListener {
 
@@ -28,9 +30,7 @@ public class BanCommand implements CommandExecutor, DialogueList, Listener, Dial
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         if (sender.hasPermission("activecraft.ban")) {
-
             if (label.equalsIgnoreCase("ban")) {
-
                 banManager = new BanManager(BanList.Type.NAME);
 
                 if (!banManager.isBanned(args[0])) {
@@ -48,11 +48,10 @@ public class BanCommand implements CommandExecutor, DialogueList, Listener, Dial
                     this.dialogueManager.initialize();
 
                     Date date = new Date();
-
-
-
                 } else sender.sendMessage(Errors.WARNING + "This player is already banned.");
-
+            } else if (label.equalsIgnoreCase("unban")) {
+                banManager.unban(target);
+            } else if (label.equalsIgnoreCase("banlist")) {
 
             }
         } else sender.sendMessage(Errors.NO_PERMISSION);

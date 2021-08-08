@@ -30,13 +30,24 @@ public class MessageManager implements Listener, DialogueList {
             String value = playerdataConfig.getString("muted", "true");
             boolean booleanvalue = Boolean.parseBoolean(value);
 
+            String defaultvalue = playerdataConfig.getString("default-mute", "true");
+            boolean defaultboolean = Boolean.parseBoolean(defaultvalue);
+
             if (playerdataConfig.getString("muted") == null) {
                 FileConfig fileConfig = new FileConfig("config.yml");
                 Bukkit.broadcastMessage(fileConfig.getString("chat-format").replace("%displayname%", player.getDisplayName()).replace("%message%", message));
                 event.setCancelled(true);
-            } else if (booleanvalue == true) {
+            } else if (booleanvalue) {
                 player.sendMessage(ChatColor.GOLD + "You are muted!");
                 Bukkit.broadcast(ChatColor.GOLD + "[Mute] " + ChatColor.AQUA + player.getName() + ChatColor.GOLD + " tried to talk, but is muted. (" + ChatColor.AQUA + message + ChatColor.GOLD + ")", "activecraft.muted.see");
+                event.setCancelled(true);
+            } else if (playerdataConfig.getString("default-mute") == null) {
+                FileConfig fileConfig = new FileConfig("config.yml");
+                Bukkit.broadcastMessage(fileConfig.getString("chat-format").replace("%displayname%", player.getDisplayName()).replace("%message%", message));
+                event.setCancelled(true);
+            } else if (defaultboolean) {
+                player.sendMessage(ChatColor.GOLD + "You are new to this server so you cannot write in chat. Please contact a staff member to verify you.");
+                Bukkit.broadcast(ChatColor.GOLD + "[Default-Mute] " + ChatColor.AQUA + player.getName() + ChatColor.GOLD + " is default-muted. (" + ChatColor.AQUA + message + ChatColor.GOLD + ")", "activecraft.muted.see");
                 event.setCancelled(true);
             } else {
                 FileConfig fileConfig = new FileConfig("config.yml");
