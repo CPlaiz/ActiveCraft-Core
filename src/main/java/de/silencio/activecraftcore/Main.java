@@ -135,6 +135,8 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginCommand("mute").setExecutor(new MuteCommand());
         Bukkit.getPluginCommand("hat").setExecutor(new HatCommand());
         Bukkit.getPluginCommand("log").setExecutor(new LogCommand());
+        Bukkit.getPluginCommand("skull").setExecutor(new SkullCommand());
+        Bukkit.getPluginCommand("strike").setExecutor(new StrikeCommand());
     }
 
     public static Main getPlugin() {

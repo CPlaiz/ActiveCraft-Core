@@ -35,8 +35,8 @@ public class ColorNickCommand implements CommandExecutor, TabCompleter {
 
                                 FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + player.getName() + ".yml");
 
-                                player.setPlayerListName(color + playerdataConfig.getString("nickname"));
-                                player.setDisplayName(color + playerdataConfig.getString("nickname"));
+                                player.setPlayerListName(color + playerdataConfig.getString("nickname" + ChatColor.RESET));
+                                player.setDisplayName(color + playerdataConfig.getString("nickname" + ChatColor.RESET));
                                 playerdataConfig.set("colornick", color.name());
                                 playerdataConfig.saveConfig();
                                 player.sendMessage(ChatColor.GOLD + "Name color changed to " + color + color.name());

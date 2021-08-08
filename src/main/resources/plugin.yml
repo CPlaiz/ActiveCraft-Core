@@ -145,6 +145,10 @@ commands:
     description: Changes item in helmet slot.
   log:
     description: Logs all commands executed on the server.
+  skull:
+    description: Gives the player its own head.
+  strike:
+    description: Strikes a player with lightning.
 
 permissions:
   activecraft.heal:
@@ -380,4 +384,13 @@ permissions:
     default: op
   activecraft.log:
     description: Logs all commands executed on the server.
+    default: op
+  activecraft.skull:
+    description: Gives the player its own head.
+    default: op
+  activecraft.skull.other:
+    description: Gives the player another players head.
+    default: op
+  activecraft.strike:
+    description: Strikes a player with lightning.
     default: op
