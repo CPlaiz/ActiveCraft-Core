@@ -6,12 +6,15 @@ import de.silencio.activecraftcore.listener.JoinQuitListener;
 import de.silencio.activecraftcore.listener.MessageManager;
 import de.silencio.activecraftcore.listener.inventory.Navigator;
 import de.silencio.activecraftcore.commands.BanCommand;
+import de.silencio.activecraftcore.ownlisteners.DialogueListener;
 import de.silencio.activecraftcore.utils.*;
 import org.bukkit.Bukkit;
 import org.bukkit.block.data.type.Fire;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.HashMap;
 
 public final class Main extends JavaPlugin {
 
@@ -26,6 +29,9 @@ public final class Main extends JavaPlugin {
     private Config homeconfig;
     private static Config warpsConfig;
 
+    public DialogueManagerList dialogueManagerList;
+    public DialogueListenerList dialogueListenerList;
+
     public Main() {
         instance = this;
         plugin = this;
@@ -35,6 +41,8 @@ public final class Main extends JavaPlugin {
     public void onEnable() {
         // Plugin startup logic
 
+        this.dialogueManagerList = new DialogueManagerList();
+        this.dialogueListenerList = new DialogueListenerList();
         this.vanishManager = new VanishManager(this);
 
         this.register();
@@ -76,7 +84,7 @@ public final class Main extends JavaPlugin {
 
         //custom Listeners
         BanCommand banCommand = new BanCommand();
-        DialogueListenerList dialogueListenerList = new DialogueListenerList();
+        dialogueListenerList = new DialogueListenerList();
 
         dialogueListenerList.addListener(banCommand);
 
@@ -135,7 +143,7 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginCommand("i").setExecutor(new QuickGiveCommand());
         Bukkit.getPluginCommand("butcher").setExecutor(new ButcherCommand());
         Bukkit.getPluginCommand("item").setExecutor(new ItemCommand());
-        Bukkit.getPluginCommand("ban").setExecutor(new BanCommand());
+        Bukkit.getPluginCommand("ban").setExecutor(banCommand);
         Bukkit.getPluginCommand("whereami").setExecutor(new WhereAmICommand());
         Bukkit.getPluginCommand("weather").setExecutor(new WeatherCommand());
         Bukkit.getPluginCommand("more").setExecutor(new MoreCommand());
@@ -195,4 +203,13 @@ public final class Main extends JavaPlugin {
             }
         }, 20*60, 20*60);
     }
+
+    public DialogueManagerList getDialogueManagerList() {
+        return dialogueManagerList;
+    }
+
+    public DialogueListenerList getDialogueListenerList() {
+        return dialogueListenerList;
+    }
+
 }

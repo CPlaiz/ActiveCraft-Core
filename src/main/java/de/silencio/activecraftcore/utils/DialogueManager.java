@@ -19,8 +19,11 @@ public class DialogueManager implements DialogueList, Listener {
     private int activeStep;
     private int steps;
     private boolean dialogueActive;
-
-
+    private DialogueManagerList dialogueManagerList;
+    private DialogueListenerList dialogueListenerList;
+    private String header;
+    private String completedMessage;
+    private String cancelledMessage;
 
     public DialogueManager(Player player) {
 
@@ -28,6 +31,12 @@ public class DialogueManager implements DialogueList, Listener {
         this.player = player;
         activeStep = 0;
         dialogueActive = false;
+        dialogueManagerList = Main.getPlugin().getDialogueManagerList();
+        dialogueManagerList.addDialogueManager(player, this);
+        dialogueListenerList = Main.getPlugin().getDialogueListenerList();
+        header = ChatColor.GOLD + "-- Dialogue --";
+        completedMessage = ChatColor.GOLD + "Exiting dialogue...";
+        cancelledMessage = ChatColor.GOLD + "Cancelling dialogue...";
     }
 
     public void add(String message) {
@@ -38,21 +47,41 @@ public class DialogueManager implements DialogueList, Listener {
     }
 
     public void answer(String answer) {
-        System.out.println("active step " + activeStep);
-        player.sendMessage(ChatColor.GREEN + answer);
-        System.out.println(Arrays.toString(answers));
-        this.answers[activeStep] = answer;
-
-        next();
+        if (dialogueActive) {
+            if (answer.equals("exit") || answer.equals("cancel")) {
+                player.sendMessage(cancelledMessage);
+                exit();
+                //send to listener
+                for (DialogueListener dialogueListener : dialogueListenerList.getDialogueListenerList()) {
+                    dialogueListener.onDialogueCancel(this);
+                }
+            }
+            //System.out.println("active step " + activeStep);
+            //System.out.println(answers.length);
+            player.sendMessage(ChatColor.GREEN + "> " + answer);
+            //System.out.println(Arrays.toString(answers));
+            this.answers[activeStep] = answer;
+            this.activeStep += 1;
+            next();
+        }
     }
 
     public void next() {
-        if (activeStep >= dialogueSteps.toArray().length) {
-            this.dialogueList.remove(player);
+        if (activeStep >= steps) {
+            player.sendMessage(completedMessage);
+            exit();
+            //send to listener
+            for (DialogueListener dialogueListener : dialogueListenerList.getDialogueListenerList()) {
+                dialogueListener.onDialogueComplete(this);
+            }
             return;
         }
+
         player.sendMessage(dialogueSteps.get(activeStep));
-        this.activeStep += 1;
+        //send to listener
+        for (DialogueListener dialogueListener : dialogueListenerList.getDialogueListenerList()) {
+            dialogueListener.onDialogueNext(this);
+        }
     }
 
     public String getAnswer(int position) {
@@ -64,12 +93,33 @@ public class DialogueManager implements DialogueList, Listener {
     }
 
     public void initialize() {
-        System.out.println(steps);
+
+        //System.out.println(steps);
         this.answers = new String[steps];
+        //System.out.println("array length: " + this.answers.length);
+        //System.out.println("step count: " + this.steps);
         //System.out.println(answers[steps - 1]);
+        player.sendMessage(header);
         dialogueActive = true;
+        next();
     }
 
+    public boolean isDialogueActive() {
+        return dialogueActive;
+    }
 
+    public void exit() {
+        dialogueActive = false;
+        this.dialogueList.remove(player);
+    }
 
+    public void setHeader(String header) {
+        this.header = header;
+    }
+    public void setCancelledMessage(String cancelledMessage) {
+        this.cancelledMessage = cancelledMessage;
+    }
+    public void setCompletedMessage(String completedMessage) {
+        this.completedMessage = completedMessage;
+    }
 }

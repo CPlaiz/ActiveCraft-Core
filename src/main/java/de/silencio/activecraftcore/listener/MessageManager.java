@@ -1,5 +1,6 @@
 package de.silencio.activecraftcore.listener;
 
+import de.silencio.activecraftcore.Main;
 import de.silencio.activecraftcore.commands.DialogueList;
 import de.silencio.activecraftcore.utils.DialogueManager;
 import de.silencio.activecraftcore.utils.FileConfig;
@@ -55,7 +56,9 @@ public class MessageManager implements Listener, DialogueList {
                 event.setCancelled(true);
             }
         } else {
-            DialogueManager dialogueManager = new DialogueManager(player);
+
+            DialogueManager dialogueManager = Main.getPlugin().dialogueManagerList.getDialogueManager(player);
+            //System.out.println(dialogueManager.toString());
             dialogueManager.answer(event.getMessage());
             event.setCancelled(true);
         }
