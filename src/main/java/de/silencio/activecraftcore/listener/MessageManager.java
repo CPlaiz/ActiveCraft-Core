@@ -46,6 +46,7 @@ public class MessageManager implements Listener, DialogueList {
         } else {
             DialogueManager dialogueManager = new DialogueManager(player);
             dialogueManager.answer(event.getMessage());
+            event.setCancelled(true);
         }
     }
 }

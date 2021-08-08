@@ -6,9 +6,7 @@ import de.silencio.activecraftcore.listener.JoinQuitListener;
 import de.silencio.activecraftcore.listener.MessageManager;
 import de.silencio.activecraftcore.listener.inventory.Navigator;
 import de.silencio.activecraftcore.commands.BanCommand;
-import de.silencio.activecraftcore.utils.Config;
-import de.silencio.activecraftcore.utils.FileConfig;
-import de.silencio.activecraftcore.utils.VanishManager;
+import de.silencio.activecraftcore.utils.*;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
@@ -74,6 +72,15 @@ public final class Main extends JavaPlugin {
         pluginManager.registerEvents(new MessageManager(), this);
         pluginManager.registerEvents(new EnderPealCooldown(), this);
         pluginManager.registerEvents(new LogCommand(), this);
+
+        //custom Listeners
+        BanCommand banCommand = new BanCommand();
+        DialogueListenerList dialogueListenerList = new DialogueListenerList();
+
+        dialogueListenerList.addListener(banCommand);
+
+
+
 
         // commands
 

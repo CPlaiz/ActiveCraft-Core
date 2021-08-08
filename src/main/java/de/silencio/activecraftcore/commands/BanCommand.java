@@ -45,6 +45,7 @@ public class BanCommand implements CommandExecutor, DialogueList, Listener, Dial
                     sender.sendMessage(ChatColor.GOLD + "-- Ban Dialogue --");
                     this.dialogueManager.add(ChatColor.GOLD + "Please enter a reason: ");
                     this.dialogueManager.add(ChatColor.GOLD + "Please enter the ban duration: ");
+                    this.dialogueManager.initialize();
 
                     Date date = new Date();
 
@@ -62,6 +63,7 @@ public class BanCommand implements CommandExecutor, DialogueList, Listener, Dial
     public void onDialogueNext() {
         if (dialogueManager.getActiveStep() == 1) {
             banManager.ban(target, dialogueManager.getAnswer(0), null, commandSender.getName());
+
         }
     }
 }
