@@ -161,10 +161,19 @@ commands:
     description: Options to edit already signed books.
   xp:
     description: Adds xp or levels to a player.
+  enchant:
+    description: Enchants an item.
+  lockdown:
+    description: Full lockdown of the server, prohibits normal players from joining.
+    aliases:
+      - "lockdownbypass"
 
 permissions:
   activecraft.heal:
     description: Heals the target player.
+    default: op
+  activecraft.heal.others:
+    description: Heals other players.
     default: op
   activecraft.ping:
     description: Pong!
@@ -193,6 +202,9 @@ permissions:
   activecraft.vanish:
     description: Permission to set vanish for a player.
     default: op
+  activecraft.vanish.other:
+    description: Permission to set vanish for other players.
+    default: op
   activecraft.gamemode.creative:
     description: Sets the targets gamemode to Creative.
     default: op
@@ -207,6 +219,9 @@ permissions:
     default: op
   activecraft.feed:
     description: Feeds the player
+    default: op
+  activecraft.feed.other:
+    description: Feeds other players.
     default: op
   activecraft.workbench:
     description: Opens a workbench menu.
@@ -420,4 +435,16 @@ permissions:
     default: op
   activecraft.xp.other:
     description: Adds xp or levels to another player.
+    default: op
+  activecraft.enchant:
+    description: Enchants an item.
+    default: op
+  activecraft.lockdown:
+    description: Full lockdown of the server, prohibits normal players from joining.
+    default: op
+  activecraft.lockdown.bypass:
+    description: Allows a player to join the server even in lockdown mode.
+    default: op
+  activecraft.lockdown.allowbypass:
+    description: Allows ingame players to change lockdown bypass settings temporarily.
     default: op

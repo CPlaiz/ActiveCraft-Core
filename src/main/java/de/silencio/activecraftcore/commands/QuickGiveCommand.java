@@ -25,27 +25,21 @@ public class QuickGiveCommand implements CommandExecutor, TabCompleter {
             Player player = (Player) sender;
 
             if(sender.hasPermission("activecraft.quickgive")) {
-                if(args.length == 0) {
-                    sender.sendMessage(Errors.INVALID_ARGUMENTS);
-                }
                 if(args.length == 1) {
                     Material material = Material.getMaterial(args[0].toUpperCase());
                     ItemStack itemStack = new ItemStack(material);
                     player.getInventory().addItem(itemStack);
                     sender.sendMessage(ChatColor.GOLD + "Gave you " + ChatColor.AQUA + itemStack.getType().name().toLowerCase().replace("_", " "));
                     player.playSound(player.getLocation(), Sound.valueOf("BLOCK_AMETHYST_BLOCK_BREAK"), 1f, 1f);
-                }
-                if(args.length == 2) {
+                } else if(args.length == 2) {
                     Material material = Material.getMaterial(args[0].toUpperCase());
                     ItemStack itemStack = new ItemStack(material);
                     itemStack.setAmount(Integer.parseInt(args[1]));
                     player.getInventory().addItem(itemStack);
                     sender.sendMessage(ChatColor.GOLD + "Gave you " + ChatColor.AQUA + args[1] + ChatColor.GOLD + "x " + ChatColor.AQUA + itemStack.getType().name().toLowerCase().replace("_", " "));
                     player.playSound(player.getLocation(), Sound.valueOf("BLOCK_AMETHYST_BLOCK_BREAK"), 1f, 1f);
-                }
-
+                } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
             } else sender.sendMessage(Errors.NO_PERMISSION);
-
         } else sender.sendMessage(Errors.NOT_A_PLAYER);
         return true;
     }

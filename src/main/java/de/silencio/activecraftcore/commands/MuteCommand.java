@@ -16,9 +16,6 @@ public class MuteCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        if(sender instanceof Player) {
-            Player player = (Player) sender;
-
             if(sender.hasPermission("activecraft.mute")) {
 
                 if(args.length == 1) {
@@ -30,7 +27,7 @@ public class MuteCommand implements CommandExecutor {
                         playerdataConfig.set("muted", "true");
                         playerdataConfig.saveConfig();
 
-                        player.sendMessage(ChatColor.GOLD + "Muted " + ChatColor.AQUA + args[0] + ChatColor.GOLD + ".");
+                        sender.sendMessage(ChatColor.GOLD + "Muted " + ChatColor.AQUA + args[0] + ChatColor.GOLD + ".");
                         target.sendMessage(ChatColor.GOLD + "You have been muted.");
                     }
 
@@ -41,13 +38,11 @@ public class MuteCommand implements CommandExecutor {
                         playerdataConfig.set("default-mute", "false");
                         playerdataConfig.saveConfig();
 
-                        player.sendMessage(ChatColor.GOLD + "Unmuted " + ChatColor.AQUA + args[0] + ChatColor.GOLD + ".");
+                        sender.sendMessage(ChatColor.GOLD + "Unmuted " + ChatColor.AQUA + args[0] + ChatColor.GOLD + ".");
                         target.sendMessage(ChatColor.GOLD + "You have been unmuted.");
                     }
-
                 } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
             } else sender.sendMessage(Errors.NO_PERMISSION);
-        } else sender.sendMessage(Errors.NOT_A_PLAYER);
         return true;
     }
 }

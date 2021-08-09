@@ -14,40 +14,41 @@ public class XpCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        if(sender instanceof Player) {
-            Player player = (Player) sender;
-
             if(args.length == 1) {
-                if(Integer.parseInt(args[0]) != Integer.parseInt(null)) {
-                    if (sender.hasPermission("activecraft.xp")) {
-                        if (args[0].endsWith("l")) {
-                            player.giveExpLevels(Integer.parseInt(args[0].replace("l", "")));
-                            player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f);
-                            player.sendMessage(ChatColor.GOLD + "Gave yourself " + ChatColor.AQUA + args[0].replace("l", "") + ChatColor.GOLD + " levels.");
-                        } else {
-                            player.giveExp(Integer.parseInt(args[0]));
-                            player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f);
-                            player.sendMessage(ChatColor.GOLD + "Gave yourself " + ChatColor.AQUA + args[0] + ChatColor.GOLD + " xp.");
-                        }
-                    } else sender.sendMessage(Errors.NO_PERMISSION);
-                }
+                if(sender instanceof Player) {
+                    Player player = (Player) sender;
+                    if (Integer.parseInt(args[0]) != Integer.parseInt(null)) {
+                        if (sender.hasPermission("activecraft.xp")) {
+                            if (args[0].endsWith("l")) {
+                                player.giveExpLevels(Integer.parseInt(args[0].replace("l", "")));
+                                player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f);
+                                player.sendMessage(ChatColor.GOLD + "Gave yourself " + ChatColor.AQUA + args[0].replace("l", "") + ChatColor.GOLD + " levels.");
+                            } else {
+                                player.giveExp(Integer.parseInt(args[0]));
+                                player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f);
+                                player.sendMessage(ChatColor.GOLD + "Gave yourself " + ChatColor.AQUA + args[0] + ChatColor.GOLD + " xp.");
+                            }
+                        } else sender.sendMessage(Errors.NO_PERMISSION);
+                    } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
+                } else sender.sendMessage(Errors.NOT_A_PLAYER);
             } else if(args.length == 2) {
-                if (player.hasPermission("activecraft.xp.other")) {
+                if (sender.hasPermission("activecraft.xp.other")) {
                     Player target = Bukkit.getPlayer(args[0]);
-                    if (args[1].endsWith("l")) {
-                        target.giveExpLevels(Integer.parseInt(args[1].replace("l", "")));
-                        target.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f);
-                        player.sendMessage(ChatColor.GOLD + "Gave " + ChatColor.AQUA + target.getDisplayName() + " " + args[1].replace("l", "") + ChatColor.GOLD + " levels.");
-                        target.sendMessage(ChatColor.GOLD + "You were given " + ChatColor.AQUA + args[1].replace("l", "") + ChatColor.GOLD + " levels by " + ChatColor.AQUA + player.getDisplayName() + ChatColor.GOLD + ".");
-                    } else {
-                        target.giveExp(Integer.parseInt(args[1]));
-                        target.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f);
-                        player.sendMessage(ChatColor.GOLD + "Gave " + ChatColor.AQUA + target.getDisplayName() + " " +  args[1] + ChatColor.GOLD + " xp.");
-                        target.sendMessage(ChatColor.GOLD + "You were given " + ChatColor.AQUA + args[1] + ChatColor.GOLD + " xp by " + ChatColor.AQUA + player.getDisplayName() + ChatColor.GOLD + ".");
-                    }
+                    if(target != null) {
+                        if (args[1].endsWith("l")) {
+                            target.giveExpLevels(Integer.parseInt(args[1].replace("l", "")));
+                            target.playSound(target.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f);
+                            sender.sendMessage(ChatColor.GOLD + "Gave " + ChatColor.AQUA + target.getDisplayName() + " " + args[1].replace("l", "") + ChatColor.GOLD + " levels.");
+                            target.sendMessage(ChatColor.GOLD + "You were given " + ChatColor.AQUA + args[1].replace("l", "") + ChatColor.GOLD + " levels by " + ChatColor.AQUA + sender.getName() + ChatColor.GOLD + ".");
+                        } else {
+                            target.giveExp(Integer.parseInt(args[1]));
+                            target.playSound(target.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f);
+                            sender.sendMessage(ChatColor.GOLD + "Gave " + ChatColor.AQUA + target.getDisplayName() + " " + args[1] + ChatColor.GOLD + " xp.");
+                            target.sendMessage(ChatColor.GOLD + "You were given " + ChatColor.AQUA + args[1] + ChatColor.GOLD + " xp by " + ChatColor.AQUA + sender.getName() + ChatColor.GOLD + ".");
+                        }
+                    } else sender.sendMessage(Errors.INVALID_PLAYER);
                 } else sender.sendMessage(Errors.NO_PERMISSION);
             } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
-        } else sender.sendMessage(Errors.NOT_A_PLAYER);
         return true;
     }
 }

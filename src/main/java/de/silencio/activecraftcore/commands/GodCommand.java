@@ -16,66 +16,59 @@ public class GodCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        if(sender instanceof Player) {
-            Player player = (Player) sender;
-
-            FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + player.getName() + ".yml");
-
-            if(sender.hasPermission("activecraft.god")) {
-
                 if(args.length == 1) {
-                    switch(args[0]) {
-                        case "on":
-                        case "true":
-                            player.setInvulnerable(true);
-                            sender.sendMessage(ChatColor.GOLD + "God mode activated.");
+                    if(sender.hasPermission("activecraft.god")) {
+                        if (sender instanceof Player) {
+                            Player player = (Player) sender;
+                            FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + player.getName() + ".yml");
+                            switch (args[0]) {
+                                case "on":
+                                case "true":
+                                    player.setInvulnerable(true);
+                                    sender.sendMessage(ChatColor.GOLD + "God mode activated.");
 
-                            playerdataConfig.set("godmode", "true");
-                            playerdataConfig.saveConfig();
-                            break;
-                        case "off":
-                        case "false":
-                            player.setInvulnerable(false);
-                            sender.sendMessage(ChatColor.GOLD + "God mode deactivated.");
+                                    playerdataConfig.set("godmode", "true");
+                                    playerdataConfig.saveConfig();
+                                    break;
+                                case "off":
+                                case "false":
+                                    player.setInvulnerable(false);
+                                    sender.sendMessage(ChatColor.GOLD + "God mode deactivated.");
 
-                            playerdataConfig.set("godmode", "false");
-                            playerdataConfig.saveConfig();
-                            break;
-                    }
-                }
+                                    playerdataConfig.set("godmode", "false");
+                                    playerdataConfig.saveConfig();
+                                    break;
+                            }
+                        } else sender.sendMessage(Errors.NOT_A_PLAYER);
+                    } else sender.sendMessage(Errors.NO_PERMISSION);
+                } else if (args.length == 2) {
+                    if(sender.hasPermission("activecraft.god.others")) {
+                        Player target = Bukkit.getPlayer(args[0]);
 
-            } else sender.sendMessage(Errors.NO_PERMISSION);
+                        FileConfig targetdataConfig = new FileConfig("playerdata" + File.separator + target.getName() + ".yml");
 
-            if(sender.hasPermission("activecraft.god.others")) {
-                if (args.length == 2) {
+                        switch (args[1]) {
+                            case "on":
+                            case "true":
+                                target.setInvulnerable(true);
+                                sender.sendMessage(ChatColor.GOLD + "God mode activated for " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + ".");
+                                target.sendMessage(ChatColor.GOLD + "God mode activated by " + ChatColor.AQUA + sender.getName() + ChatColor.GOLD + ".");
 
-                    Player target = Bukkit.getPlayer(args[0]);
+                                targetdataConfig.set("godmode", "true");
+                                targetdataConfig.saveConfig();
+                                break;
+                            case "off":
+                            case "false":
+                                target.setInvulnerable(false);
+                                sender.sendMessage(ChatColor.GOLD + "God mode deactivated for " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + ".");
+                                target.sendMessage(ChatColor.GOLD + "God mode deactivated by " + ChatColor.AQUA + sender.getName() + ChatColor.GOLD + ".");
 
-                    FileConfig targetdataConfig = new FileConfig("playerdata" + File.separator + target.getName() + ".yml");
-
-                    switch (args[1]) {
-                        case "on":
-                        case "true":
-                            target.setInvulnerable(true);
-                            player.sendMessage(ChatColor.GOLD + "God mode activated for " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + ".");
-                            target.sendMessage(ChatColor.GOLD + "God mode activated by " + ChatColor.AQUA + player.getDisplayName() + ChatColor.GOLD + ".");
-
-                            targetdataConfig.set("godmode", "true");
-                            targetdataConfig.saveConfig();
-                            break;
-                        case "off":
-                        case "false":
-                            target.setInvulnerable(false);
-                            player.sendMessage(ChatColor.GOLD + "God mode deactivated for " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + ".");
-                            target.sendMessage(ChatColor.GOLD + "God mode deactivated by " + ChatColor.AQUA + player.getDisplayName() + ChatColor.GOLD + ".");
-
-                            targetdataConfig.set("godmode", "true");
-                            targetdataConfig.saveConfig();
-                            break;
-                    }
-                }
-            } else sender.sendMessage(Errors.NO_PERMISSION);
-        } else sender.sendMessage(Errors.NOT_A_PLAYER);
+                                targetdataConfig.set("godmode", "true");
+                                targetdataConfig.saveConfig();
+                                break;
+                        }
+                    } else sender.sendMessage(Errors.NO_PERMISSION);
+                } if(args.length > 2) sender.sendMessage(Errors.TOO_MANY_ARGUMENTS);
         return true;
     }
 }

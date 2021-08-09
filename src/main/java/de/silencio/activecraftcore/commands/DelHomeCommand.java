@@ -14,9 +14,6 @@ public class DelHomeCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-
-        if(sender instanceof Player) {
-
             FileConfiguration homeconfig = new FileConfig("homes.yml");
 
             if(sender.hasPermission("activecraft.delhome")) {
@@ -27,7 +24,6 @@ public class DelHomeCommand implements CommandExecutor {
 
                     sender.sendMessage(ChatColor.GOLD + "Home deleted.");
                 }
-
             } else sender.sendMessage(Errors.NO_PERMISSION);
 
             if(args.length == 1) {
@@ -40,11 +36,8 @@ public class DelHomeCommand implements CommandExecutor {
                     ((FileConfig) homeconfig).saveConfig();
 
                     sender.sendMessage(ChatColor.GOLD + "Deleted the home of player " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + ".");
-
                 } else sender.sendMessage(Errors.NO_PERMISSION);
             }
-
-        } else sender.sendMessage(Errors.NOT_A_PLAYER);
         return true;
     }
 }

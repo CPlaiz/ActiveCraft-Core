@@ -13,22 +13,19 @@ public class SuicideCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        if(sender instanceof Player) {
-
             if(args.length == 0) {
-                if (sender.hasPermission("activecraft.suicide")) {
+                if (sender instanceof Player) {
+                    if (sender.hasPermission("activecraft.suicide")) {
 
-                    Player player = ((Player) sender);
-                    player.setHealth(0);
-                    player.sendMessage(ChatColor.GOLD + "You killed yourself.");
-                    Bukkit.broadcastMessage(ChatColor.AQUA + player.getDisplayName() + ChatColor.GOLD + " committed suicide.");
+                        Player player = ((Player) sender);
+                        player.setHealth(0);
+                        player.sendMessage(ChatColor.GOLD + "You killed yourself.");
+                        Bukkit.broadcastMessage(ChatColor.AQUA + player.getDisplayName() + ChatColor.GOLD + " committed suicide.");
 
-                } else sender.sendMessage(Errors.NO_PERMISSION);
-            }
-
-            if(args.length == 1) {
+                    } else sender.sendMessage(Errors.NO_PERMISSION);
+                } else sender.sendMessage(Errors.NOT_A_PLAYER);
+            } else if(args.length == 1) {
                 if(sender.hasPermission("activecraft.suicide.others")) {
-
                     Player target = Bukkit.getPlayer(args[0]);
 
                     target.setHealth(0);
@@ -36,8 +33,7 @@ public class SuicideCommand implements CommandExecutor {
                     Bukkit.broadcastMessage(ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " committed suicide.");
 
                 } else sender.sendMessage(Errors.NO_PERMISSION);
-            }
-        } else sender.sendMessage(Errors.NOT_A_PLAYER);
+            } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
         return true;
     }
 }

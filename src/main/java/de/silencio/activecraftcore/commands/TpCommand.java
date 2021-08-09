@@ -22,10 +22,13 @@ public class TpCommand implements CommandExecutor {
 
                 if (sender.hasPermission("activecraft.tp")) {
 
-                    player.teleport(target.getLocation());
-                    player.sendMessage(ChatColor.GOLD + "Teleported to " + ChatColor.AQUA + target.getDisplayName());
-                    player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
-
+                    if(target != null) {
+                        if(target != player) {
+                            player.teleport(target.getLocation());
+                            player.sendMessage(ChatColor.GOLD + "Teleported to " + ChatColor.AQUA + target.getDisplayName());
+                            player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
+                        } else sender.sendMessage(Errors.WARNING + "You can't teleport to yourself!");
+                    } else sender.sendMessage(Errors.INVALID_PLAYER);
                 } else sender.sendMessage(Errors.NO_PERMISSION);
             } else if(args.length == 0) {
                 sender.sendMessage(Errors.INVALID_ARGUMENTS);

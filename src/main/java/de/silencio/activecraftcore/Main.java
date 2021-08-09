@@ -3,18 +3,18 @@ package de.silencio.activecraftcore;
 import de.silencio.activecraftcore.commands.*;
 import de.silencio.activecraftcore.listener.EnderPealCooldown;
 import de.silencio.activecraftcore.listener.JoinQuitListener;
+import de.silencio.activecraftcore.listener.LockdownListener;
 import de.silencio.activecraftcore.listener.MessageManager;
 import de.silencio.activecraftcore.listener.inventory.Navigator;
 import de.silencio.activecraftcore.commands.BanCommand;
-import de.silencio.activecraftcore.ownlisteners.DialogueListener;
 import de.silencio.activecraftcore.utils.*;
 import org.bukkit.Bukkit;
-import org.bukkit.block.data.type.Fire;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.server.PluginEnableEvent;
+import org.bukkit.event.server.ServerListPingEvent;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.util.HashMap;
 
 public final class Main extends JavaPlugin {
 
@@ -56,7 +56,6 @@ public final class Main extends JavaPlugin {
         locationsConfig = new Config("locations.yml" , getDataFolder());
         homeconfig = new Config("homes.yml", getDataFolder());
 
-
         log("Plugin loaded.");
     }
 
@@ -81,6 +80,8 @@ public final class Main extends JavaPlugin {
         pluginManager.registerEvents(new MessageManager(), this);
         pluginManager.registerEvents(new EnderPealCooldown(), this);
         pluginManager.registerEvents(new LogCommand(), this);
+        pluginManager.registerEvents(new LockdownListener(), this);
+        pluginManager.registerEvents(new LockdownCommand(), this);
 
         //custom Listeners
         BanCommand banCommand = new BanCommand();
@@ -134,7 +135,7 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginCommand("opitems").setExecutor(new OpItemsCommand());
         Bukkit.getPluginCommand("kickall").setExecutor(new KickAllCommand());
         Bukkit.getPluginCommand("ram").setExecutor(new RamCommand());
-        //Bukkit.getPluginCommand("tp").setExecutor(new TpCommand());
+        Bukkit.getPluginCommand("tp").setExecutor(new TpCommand());
         Bukkit.getPluginCommand("staffchat").setExecutor(new StaffChatCommand());
         Bukkit.getPluginCommand("reply").setExecutor(new ReplyCommand());
         Bukkit.getPluginCommand("portal").setExecutor(new PortalCommand());
@@ -157,6 +158,8 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginCommand("firework").setExecutor(new FireWorkCommand());
         Bukkit.getPluginCommand("book").setExecutor(new BookCommand());
         Bukkit.getPluginCommand("xp").setExecutor(new XpCommand());
+        Bukkit.getPluginCommand("enchant").setExecutor(new EnchantCommand());
+        Bukkit.getPluginCommand("lockdown").setExecutor(new LockdownCommand());
     }
 
     public static Main getPlugin() {

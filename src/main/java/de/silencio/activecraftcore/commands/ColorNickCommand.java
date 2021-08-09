@@ -21,8 +21,6 @@ public class ColorNickCommand implements CommandExecutor, TabCompleter {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         if (sender instanceof Player) {
-
-
             if (args.length == 1) {
                 Player target = Bukkit.getPlayer(args[0]);
                 Player player = (Player) sender;
@@ -69,7 +67,6 @@ public class ColorNickCommand implements CommandExecutor, TabCompleter {
                     }
                 } else sender.sendMessage(Errors.NO_PERMISSION);
             }
-
         } else sender.sendMessage(Errors.NOT_A_PLAYER);
         return true;
     }
@@ -105,7 +102,4 @@ public class ColorNickCommand implements CommandExecutor, TabCompleter {
 
         return completerList;
     }
-
-
-
 }

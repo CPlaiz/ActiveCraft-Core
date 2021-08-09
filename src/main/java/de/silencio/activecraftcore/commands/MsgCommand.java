@@ -43,13 +43,9 @@ public class MsgCommand implements CommandExecutor {
                                 Bukkit.broadcast(ChatColor.GOLD + "[" + player.getDisplayName() + ChatColor.GOLD + " -> " + target.getDisplayName() + ChatColor.GOLD + "] " + ChatColor.RESET + message, "activecraft.msg.spy");
                                 message = "";
                             } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
-                        } else
-                            sender.sendMessage(Errors.WARNING + " You can't message yourself!");
-                    } else player.sendMessage(Errors.WARNING + "Player not online.");
+                        } else sender.sendMessage(Errors.WARNING + " You can't message yourself!");
+                    } else player.sendMessage(Errors.INVALID_PLAYER);
                 } else player.sendMessage(Errors.WARNING + "Please include a player.");
-
-
-
             } else sender.sendMessage(Errors.NO_PERMISSION);
         } else if (args.length >= 1) {
             Player target = Bukkit.getPlayer(args[0]);
@@ -63,7 +59,7 @@ public class MsgCommand implements CommandExecutor {
                     target.playSound(target.getLocation(), Sound.ENTITY_ARROW_HIT_PLAYER, 1f, 1f);
                     message = "";
                 } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
-            } else sender.sendMessage(Errors.WARNING + "Player not online.");
+            } else sender.sendMessage(Errors.INVALID_PLAYER);
         }
         return true;
     }

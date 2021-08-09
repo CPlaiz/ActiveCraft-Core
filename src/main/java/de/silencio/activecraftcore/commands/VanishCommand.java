@@ -15,43 +15,44 @@ public class VanishCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        VanishManager vanishManager = Main.getVanishManager();
-        Player p = (Player) sender;
 
-        FileConfig fileConfig = new FileConfig("config.yml");
-        String joinFormat = fileConfig.getString("join-format");
-        String quitFormat = fileConfig.getString("quit-format");
+        if(sender instanceof Player) {
+            VanishManager vanishManager = Main.getVanishManager();
+            Player p = (Player) sender;
 
+            FileConfig fileConfig = new FileConfig("config.yml");
+            String joinFormat = fileConfig.getString("join-format");
+            String quitFormat = fileConfig.getString("quit-format");
 
-        if (p.hasPermission("activecraft.vanish")) {
             if (args.length == 1) {
-                Player target = Bukkit.getPlayer(args[0]);
-                if (target != null) {
-                if (vanishManager.isVanished(target)) {
-                    vanishManager.setVanished(target, false);
-                    target.sendMessage(ChatColor.GOLD + "You are now " + ChatColor.AQUA + "visible.");
-                    sender.sendMessage(ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " is now " + ChatColor.AQUA + "visible.");
-                } else {
-                    vanishManager.setVanished(target, true);
-                    target.sendMessage(ChatColor.GOLD + "You are now " + ChatColor.AQUA + "invisible.");
-                    sender.sendMessage(ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " is now " + ChatColor.AQUA + "invisible.");
-                    }
-                } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
+                if (sender.hasPermission("activecraft.vanish.other")) {
+                    Player target = Bukkit.getPlayer(args[0]);
+                    if (target != null) {
+                        if (vanishManager.isVanished(target)) {
+                            vanishManager.setVanished(target, false);
+                            target.sendMessage(ChatColor.GOLD + "You are now " + ChatColor.AQUA + "visible.");
+                            sender.sendMessage(ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " is now " + ChatColor.AQUA + "visible.");
+                        } else {
+                            vanishManager.setVanished(target, true);
+                            target.sendMessage(ChatColor.GOLD + "You are now " + ChatColor.AQUA + "invisible.");
+                            sender.sendMessage(ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " is now " + ChatColor.AQUA + "invisible.");
+                        }
+                    } else sender.sendMessage(Errors.INVALID_PLAYER);
+                } else sender.sendMessage(Errors.NO_PERMISSION);
             } else if (sender instanceof Player) {
-                if (vanishManager.isVanished(p)) {
-                    vanishManager.setVanished(p, false);
-                    p.sendMessage(ChatColor.GOLD + "You are now " + ChatColor.AQUA + "visible.");
-                    Bukkit.broadcastMessage(joinFormat.replace("%displayname%", p.getDisplayName()));
-
-
-                } else {
-                    vanishManager.setVanished(p, true);
-                    p.sendMessage(ChatColor.GOLD + "You are now " + ChatColor.AQUA + "invisible.");
-                    Bukkit.broadcastMessage(quitFormat.replace("%displayname%", p.getDisplayName()));
-                }
+                if (sender.hasPermission("activecraft.vanish")) {
+                    if (vanishManager.isVanished(p)) {
+                        vanishManager.setVanished(p, false);
+                        p.sendMessage(ChatColor.GOLD + "You are now " + ChatColor.AQUA + "visible.");
+                        Bukkit.broadcastMessage(joinFormat.replace("%displayname%", p.getDisplayName()));
+                    } else {
+                        vanishManager.setVanished(p, true);
+                        p.sendMessage(ChatColor.GOLD + "You are now " + ChatColor.AQUA + "invisible.");
+                        Bukkit.broadcastMessage(quitFormat.replace("%displayname%", p.getDisplayName()));
+                    }
+                } else sender.sendMessage(Errors.NO_PERMISSION);
             }
-        } else sender.sendMessage(Errors.NO_PERMISSION);
-
+        } else sender.sendMessage(Errors.NOT_A_PLAYER);
         return true;
     }
 }

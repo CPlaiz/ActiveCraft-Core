@@ -13,21 +13,14 @@ public class RealNameCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        if(sender instanceof Player) {
-
             if(sender.hasPermission("activecraft.realname")) {
-
                 if(args.length == 1) {
-
                     Player target = Bukkit.getPlayer(args[0]);
-
-                    sender.sendMessage(ChatColor.GOLD + "Real name of " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " is " + ChatColor.AQUA + target.getName() + ChatColor.GOLD + ".");
-
+                    if(target != null) {
+                        sender.sendMessage(ChatColor.GOLD + "Real name of " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " is " + ChatColor.AQUA + target.getName() + ChatColor.GOLD + ".");
+                    } else sender.sendMessage(Errors.INVALID_PLAYER);
                 } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
-
             } else sender.sendMessage(Errors.NO_PERMISSION);
-
-        } else sender.sendMessage(Errors.NOT_A_PLAYER);
         return true;
     }
 }

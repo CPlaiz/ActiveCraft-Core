@@ -125,7 +125,6 @@ public class BookCommand implements CommandExecutor, TabCompleter {
             list.add("generation");
         }
 
-        if(args.length == 0) return list;
         if(args.length == 2 && args[0].equalsIgnoreCase("generation")) {
             list.add("original");
             list.add("copy");

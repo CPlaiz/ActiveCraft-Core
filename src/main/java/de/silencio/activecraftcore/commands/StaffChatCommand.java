@@ -31,18 +31,12 @@ public class StaffChatCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        if(sender instanceof Player) {
-
             for (int i = 0; i < args.length; i++) {
                 message = message + args[i] + " ";
             }
-                Bukkit.broadcast(ChatColor.GOLD + "[StaffChat] " + ChatColor.AQUA + ((Player) sender).getName() + ChatColor.RESET + ": " + message, "activecraft.staffchat");
+                Bukkit.broadcast(ChatColor.GOLD + "[StaffChat] " + ChatColor.AQUA + sender.getName() + ChatColor.RESET + ": " + message, "activecraft.staffchat");
                 triggerListener();
-
             message = "";
-
-        } else sender.sendMessage(Errors.NOT_A_PLAYER);
         return true;
     }
 }
-

@@ -88,6 +88,7 @@ public class JoinQuitListener implements Listener {
                 playerdataConfig.set("last-online", null);
                 playerdataConfig.set("last-coords", null);
                 playerdataConfig.set("log-enabled", false);
+                playerdataConfig.set("lockdown-bypass", false);
 
                 playerdataConfig.saveConfig();
         }
@@ -119,6 +120,15 @@ public class JoinQuitListener implements Listener {
 
         OffsetDateTime now = OffsetDateTime.now();
         playerdataConfig.set("last-online", dtf.format(now));
+
+        if(player.hasPermission("activecraft.lockdown.bypass")) {
+            playerdataConfig.set("lockdown-bypass", true);
+        } else {
+            playerdataConfig.set("lockdown-bypass", false);
+        }
+
+        playerdataConfig.saveConfig();
+
         FileConfig mainConfig = new FileConfig("config.yml");
         event.setQuitMessage(mainConfig.getString("quit-format").replace("%displayname%", player.getDisplayName()));
 

@@ -1,8 +1,15 @@
 #  Configuration file for Activecraft-Core
 #  Made by CPlaiz and Silencio
 
-chat-format: "%displayname%§f: %message%"
-join-format: "§b» %displayname%"
-quit-format: "§c« %displayname%"
+chat-format: '%displayname%§f: %message%'
+join-format: §b» %displayname%
+quit-format: §c« %displayname%
 use-timer-on-tpa: true
 mute-new-players: true
+
+# Lockdown Settings
+lockdown-modt: This server is in lockdown mode. You are not able to join until this is disabled.
+lockdown-kick-message: This server is in lockdown mode. You are not able to join until this is disabled.
+# Do not edit!
+lockdown:
+old-modt:

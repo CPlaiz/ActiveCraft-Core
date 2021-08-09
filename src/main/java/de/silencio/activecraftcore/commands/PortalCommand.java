@@ -5,16 +5,12 @@ import de.silencio.activecraftcore.utils.FileConfig;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.EndGateway;
-import org.bukkit.block.data.BlockData;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Wolf;
-import org.bukkit.inventory.meta.BlockDataMeta;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 

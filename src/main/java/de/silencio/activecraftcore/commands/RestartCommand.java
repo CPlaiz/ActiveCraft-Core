@@ -77,9 +77,7 @@ public class RestartCommand implements CommandExecutor {
                     }
                 };
                 titletimer.runTaskTimer(Main.getPlugin(), 0, 20);
-
             } else sender.sendMessage(Errors.NO_PERMISSION);
-
         } else sender.sendMessage(Errors.NOT_A_PLAYER);
         return true;
     }
