@@ -21,11 +21,14 @@ public class BanManager {
 
     public void ban(String target, String reason, Date expires, String source) {
         banList.addBan(target, reason, expires, source);
+        //Bukkit.getPlayer(target).kickPlayer(reason);
     }
 
     public void ban(Player target, String reason, Date expires, String source) {
         banList.addBan(target.getName(), reason, expires, source);
+        //target.kickPlayer(reason);
     }
+    
 
     public BanList getBanList() {
         return banList;

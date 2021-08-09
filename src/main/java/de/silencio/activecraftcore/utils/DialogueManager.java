@@ -55,6 +55,7 @@ public class DialogueManager implements DialogueList, Listener {
                 for (DialogueListener dialogueListener : dialogueListenerList.getDialogueListenerList()) {
                     dialogueListener.onDialogueCancel(this);
                 }
+                return;
             }
             //System.out.println("active step " + activeStep);
             //System.out.println(answers.length);
