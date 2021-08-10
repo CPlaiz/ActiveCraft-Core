@@ -159,7 +159,10 @@ public class BanCommand implements CommandExecutor, DialogueList, Listener, Dial
     }
 
     @Override
-    public void onDialogueNext(DialogueManager dialogueManager) {
+    public void onDialogueAnswer(DialogueManager dialogueManager) {
+        if (dialogueManager.getActiveStep() == 1) {
+            dialogueManager.goBack();
+        }
         return;
     }
 

@@ -4,7 +4,7 @@ import de.silencio.activecraftcore.utils.DialogueManager;
 
 public interface DialogueListener {
 
-    void onDialogueNext(DialogueManager dialogueManager);
+    void onDialogueAnswer(DialogueManager dialogueManager);
 
     void onDialogueCancel(DialogueManager dialogueManager);
 

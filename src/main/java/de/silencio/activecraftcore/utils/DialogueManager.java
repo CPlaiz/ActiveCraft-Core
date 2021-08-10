@@ -24,6 +24,7 @@ public class DialogueManager implements DialogueList, Listener {
     private String header;
     private String completedMessage;
     private String cancelledMessage;
+    private boolean answerPassing;
 
     public DialogueManager(Player player) {
 
@@ -57,13 +58,21 @@ public class DialogueManager implements DialogueList, Listener {
                 }
                 return;
             }
-            //System.out.println("active step " + activeStep);
-            //System.out.println(answers.length);
-            player.sendMessage(ChatColor.GREEN + "> " + answer);
-            //System.out.println(Arrays.toString(answers));
-            this.answers[activeStep] = answer;
-            this.activeStep += 1;
-            next();
+            for (DialogueListener dialogueListener : dialogueListenerList.getDialogueListenerList()) {
+                         dialogueListener.onDialogueAnswer(this);
+                     }
+            if (answerPassing) {
+                //System.out.println("active step " + activeStep);
+                //System.out.println(answers.length);
+                player.sendMessage(ChatColor.GREEN + "> " + answer);
+                //System.out.println(Arrays.toString(answers));
+                this.answers[activeStep] = answer;
+                this.activeStep += 1;
+                next();
+            } else {
+                player.sendMessage(ChatColor.RED + "Invalid Answer!");
+                next();
+            }
         }
     }
 
@@ -79,10 +88,9 @@ public class DialogueManager implements DialogueList, Listener {
         }
 
         player.sendMessage(dialogueSteps.get(activeStep));
+        this.answerPassing = true;
         //send to listener
-        for (DialogueListener dialogueListener : dialogueListenerList.getDialogueListenerList()) {
-            dialogueListener.onDialogueNext(this);
-        }
+
     }
 
     public String getAnswer(int position) {
@@ -122,5 +130,9 @@ public class DialogueManager implements DialogueList, Listener {
     }
     public void setCompletedMessage(String completedMessage) {
         this.completedMessage = completedMessage;
+    }
+
+    public void goBack() {
+        this.answerPassing = false;
     }
 }
