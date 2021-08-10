@@ -7,6 +7,12 @@ quit-format: §c« %displayname%
 use-timer-on-tpa: true
 mute-new-players: true
 
+# AFK Settings
+afk-format: '[AFK]'
+announce-afk: false
+afk-format-yes: %displayname% is now afk.
+afk-format-no: %displayname% is no longer afk.
+
 # Lockdown Settings
 lockdown-modt: This server is in lockdown mode. You are not able to join until this is disabled.
 lockdown-kick-message: This server is in lockdown mode. You are not able to join until this is disabled.

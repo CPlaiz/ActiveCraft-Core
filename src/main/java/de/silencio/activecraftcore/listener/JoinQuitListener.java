@@ -5,6 +5,7 @@ import de.silencio.activecraftcore.utils.Config;
 import de.silencio.activecraftcore.utils.FileConfig;
 import de.silencio.activecraftcore.utils.VanishManager;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -76,6 +77,8 @@ public class JoinQuitListener implements Listener {
                 playerdataConfig.set("colornick", "WHITE");
                 playerdataConfig.set("whitelisted", p.isWhitelisted());
                 playerdataConfig.set("godmode", false);
+                playerdataConfig.set("fly", false);
+                playerdataConfig.set("flyspeed", 1);
                 playerdataConfig.set("muted", false);
                 playerdataConfig.set("default-mute", mainConfig.getString("mute-new-players"));
                 playerdataConfig.set("vanished", false);
@@ -89,6 +92,11 @@ public class JoinQuitListener implements Listener {
                 playerdataConfig.set("last-coords", null);
                 playerdataConfig.set("log-enabled", false);
                 playerdataConfig.set("lockdown-bypass", false);
+                playerdataConfig.set("violations.warns", 0);
+                playerdataConfig.set("violations.mutes", 0);
+                playerdataConfig.set("violations.bans", 0);
+                playerdataConfig.set("violations.ip-bans", 0);
+
 
                 playerdataConfig.saveConfig();
         }
@@ -109,6 +117,12 @@ public class JoinQuitListener implements Listener {
         if(!player.hasPermission("vanish.see")) {
             VanishManager vanishManager = Main.getVanishManager();
             vanishManager.hideAll(player);
+        }
+
+        if(player.getGameMode() != GameMode.CREATIVE && player.getGameMode() != GameMode.SPECTATOR) {
+            if (playerdataConfig.getBoolean("fly")) {
+                player.setAllowFlight(true);
+            } else player.setAllowFlight(false);
         }
     }
 

@@ -65,6 +65,8 @@ commands:
     description: Allows the player to only change displaycolor.
   fly:
     description: Allows the player to toggle their or an other player's flight.
+    aliases:
+      - "flyspeed"
   offinvsee:
     description: Shows a players armor and offhand-item.
   realname:
@@ -167,6 +169,8 @@ commands:
     description: Full lockdown of the server, prohibits normal players from joining.
     aliases:
       - "lockdownbypass"
+  afk:
+    description: Allows a player to change AFK status.
 
 permissions:
   activecraft.heal:
@@ -261,6 +265,12 @@ permissions:
       default: op
   activecraft.fly.others:
     description: Allows the player to toggle other player's flight.
+    default: op
+  activecraft.flyspeed:
+    description: Allows the player to change their speed while in flight.
+    default: op
+  activecraft.flyspeed.other:
+    description: Allows the player to change other players speed while in flight.
     default: op
   activecraft.realname:
     description: Shows a players real name.
@@ -447,4 +457,10 @@ permissions:
     default: op
   activecraft.lockdown.allowbypass:
     description: Allows ingame players to change lockdown bypass settings temporarily.
+    default: op
+  activecraft.afk:
+    description: Allows a player to change their AFK status
+    default: op
+  activecraft.afk.other:
+    description: Allows a player to change AFK status for other players.
     default: op

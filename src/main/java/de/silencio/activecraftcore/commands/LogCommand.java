@@ -12,10 +12,13 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.command.TabCompleter;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
-public class LogCommand implements CommandExecutor, Listener {
+public class LogCommand implements CommandExecutor, Listener, TabCompleter{
 
 
 
@@ -63,7 +66,26 @@ public class LogCommand implements CommandExecutor, Listener {
             }
         }
     }
-}
 
-// /heal  [Log] Aqua + target + Gold + executed command + Aqua + heal
-// /heal (no permission)  [Log] Aqua + target + Gold + tried to execute command + Aqua + heal
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+        ArrayList<String> list = new ArrayList<>();
+        Player p = (Player) sender;
+
+        if (args.length == 0) return list;
+        if (args.length == 1) {
+            list.add("on");
+            list.add("off");
+        }
+
+        ArrayList<String> completerList = new ArrayList<>();
+        String currentarg = args[args.length - 1].toLowerCase();
+        for (String s : list) {
+            String s1 = s.toLowerCase();
+            if (s1.startsWith(currentarg)) {
+                completerList.add(s);
+            }
+        }
+        return completerList;
+    }
+}

@@ -33,8 +33,8 @@ public class ColorNickCommand implements CommandExecutor, TabCompleter {
 
                                 FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + player.getName() + ".yml");
 
-                                player.setPlayerListName(color + playerdataConfig.getString("nickname" + ChatColor.RESET));
-                                player.setDisplayName(color + playerdataConfig.getString("nickname" + ChatColor.RESET));
+                                player.setPlayerListName(color + playerdataConfig.getString("nickname"));
+                                player.setDisplayName(color + playerdataConfig.getString("nickname"));
                                 playerdataConfig.set("colornick", color.name());
                                 playerdataConfig.saveConfig();
                                 player.sendMessage(ChatColor.GOLD + "Name color changed to " + color + color.name());
@@ -54,10 +54,10 @@ public class ColorNickCommand implements CommandExecutor, TabCompleter {
                             if (!args[1].equals("BOLD") && !args[1].equals("MAGIC") && !args[1].equals("STRIKETHROUGH") &&
                                     !args[1].equals("ITALIC") && !args[1].equals("UNDERLINE") && !args[1].equals("RESET")) {
 
-                                FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + player.getName() + ".yml");
+                                FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + target.getName() + ".yml");
 
-                                player.setPlayerListName(color + playerdataConfig.getString("nickname"));
-                                player.setDisplayName(color + playerdataConfig.getString("nickname"));
+                                target.setPlayerListName(color + playerdataConfig.getString("nickname"));
+                                target.setDisplayName(color + playerdataConfig.getString("nickname"));
                                 playerdataConfig.set("colornick", color.name());
                                 playerdataConfig.saveConfig();
                                 player.sendMessage(ChatColor.GOLD + "Name color for " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " changed to " + color + color.name() + ChatColor.GOLD + ".");

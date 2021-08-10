@@ -160,6 +160,7 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginCommand("xp").setExecutor(new XpCommand());
         Bukkit.getPluginCommand("enchant").setExecutor(new EnchantCommand());
         Bukkit.getPluginCommand("lockdown").setExecutor(new LockdownCommand());
+        Bukkit.getPluginCommand("afk").setExecutor(new AfkCommand());
     }
 
     public static Main getPlugin() {
