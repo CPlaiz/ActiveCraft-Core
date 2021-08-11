@@ -211,6 +211,9 @@ permissions:
   activecraft.vanish.other:
     description: Permission to set vanish for other players.
     default: op
+  activecraft.vanish.see:
+    description: Allows a player to see vanished players.
+    default: op
   activecraft.gamemode.creative:
     description: Sets the targets gamemode to Creative.
     default: op
@@ -315,10 +318,7 @@ permissions:
     default: op
   activecraft.warp:
     description: Permission to use /warp
-    default: op
-  activecraft.doublejump:
-    description: Allows a player to double jump.
-    default: op
+    default: op  
   activecraft.home:
     description: Teleports to your home.
     default: op
@@ -472,3 +472,7 @@ permissions:
   activecraft.top:
     description: Teleports the player ontop of the highest block at the player's x/z coordinates.
     default: op
+  activecraft.explode:
+    description: Creates a explosion at the player's position.
+  activecraft.explode.other:
+    description: Creates a explosion at a player's position.

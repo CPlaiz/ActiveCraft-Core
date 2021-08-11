@@ -1,4 +1,4 @@
-package de.silencio.activecraftcore.commands;
+package de.silencio.activecraftcore.messages.Dialogue;
 
 import org.bukkit.entity.Player;
 

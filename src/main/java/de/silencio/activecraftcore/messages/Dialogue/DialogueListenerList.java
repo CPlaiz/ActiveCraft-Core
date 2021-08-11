@@ -1,6 +1,4 @@
-package de.silencio.activecraftcore.utils;
-
-import de.silencio.activecraftcore.ownlisteners.DialogueListener;
+package de.silencio.activecraftcore.messages.Dialogue;
 
 import java.util.ArrayList;
 import java.util.List;

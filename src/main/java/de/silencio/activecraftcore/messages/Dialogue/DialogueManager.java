@@ -1,14 +1,11 @@
-package de.silencio.activecraftcore.utils;
+package de.silencio.activecraftcore.messages.Dialogue;
 
 import de.silencio.activecraftcore.Main;
-import de.silencio.activecraftcore.commands.DialogueList;
-import de.silencio.activecraftcore.ownlisteners.DialogueListener;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class DialogueManager implements DialogueList, Listener {

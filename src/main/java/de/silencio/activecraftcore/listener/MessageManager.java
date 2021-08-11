@@ -1,8 +1,8 @@
 package de.silencio.activecraftcore.listener;
 
 import de.silencio.activecraftcore.Main;
-import de.silencio.activecraftcore.commands.DialogueList;
-import de.silencio.activecraftcore.utils.DialogueManager;
+import de.silencio.activecraftcore.messages.Dialogue.DialogueList;
+import de.silencio.activecraftcore.messages.Dialogue.DialogueManager;
 import de.silencio.activecraftcore.utils.FileConfig;
 import de.silencio.activecraftcore.utils.MessageUtils;
 import org.bukkit.Bukkit;

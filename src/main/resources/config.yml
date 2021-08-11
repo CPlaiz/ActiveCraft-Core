@@ -1,12 +1,15 @@
 #  Configuration file for Activecraft-Core
 #  Made by CPlaiz and Silencio
 
-check-for-matching-ips: true
+# Ingame Visual formats
 chat-format: '%displayname%§f: %message%'
 join-format: "§b» %displayname%"
 quit-format: "§c« %displayname%"
+
+# Misc settings
 use-timer-on-tpa: true
 mute-new-players: true
+check-for-matching-ips: true
 
 # AFK Settings
 afk-format: '[AFK]'

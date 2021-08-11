@@ -6,6 +6,8 @@ import de.silencio.activecraftcore.listener.JoinQuitListener;
 import de.silencio.activecraftcore.listener.LockdownListener;
 import de.silencio.activecraftcore.listener.MessageManager;
 import de.silencio.activecraftcore.listener.inventory.Navigator;
+import de.silencio.activecraftcore.messages.Dialogue.DialogueListenerList;
+import de.silencio.activecraftcore.messages.Dialogue.DialogueManagerList;
 import de.silencio.activecraftcore.utils.*;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -155,6 +157,7 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginCommand("lockdown").setExecutor(new LockdownCommand());
         Bukkit.getPluginCommand("afk").setExecutor(new AfkCommand());
         Bukkit.getPluginCommand("top").setExecutor(new TopCommand());
+        Bukkit.getPluginCommand("explode").setExecutor(new ExplodeCommand());
     }
 
     public static Main getPlugin() {

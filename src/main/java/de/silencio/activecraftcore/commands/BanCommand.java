@@ -1,12 +1,13 @@
 package de.silencio.activecraftcore.commands;
 
 import de.silencio.activecraftcore.Main;
+import de.silencio.activecraftcore.messages.Dialogue.DialogueList;
 import de.silencio.activecraftcore.messages.Errors;
-import de.silencio.activecraftcore.ownlisteners.DialogueListener;
+import de.silencio.activecraftcore.messages.Dialogue.DialogueListener;
 import de.silencio.activecraftcore.utils.BanManager;
-import de.silencio.activecraftcore.utils.DialogueManager;
+import de.silencio.activecraftcore.messages.Dialogue.DialogueManager;
+import de.silencio.activecraftcore.utils.FileConfig;
 import de.silencio.activecraftcore.utils.StringUtils;
-import net.kyori.adventure.text.Component;
 import net.md_5.bungee.api.chat.*;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.BanEntry;
@@ -22,7 +23,6 @@ import org.bukkit.event.Listener;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.List;
 

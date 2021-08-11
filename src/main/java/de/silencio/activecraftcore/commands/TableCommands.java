@@ -9,61 +9,61 @@ import org.bukkit.entity.Player;
 public class TableCommands implements CommandExecutor {
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        Player player = (Player) sender;
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {;
 
-        if(args.length < 1) {
+        if(sender instanceof Player) {
+            Player player = (Player) sender;
+            if (args.length == 0) {
 
-            if (label.equalsIgnoreCase("craftingtable")) {
-                if (sender.hasPermission("activecraft.workbench")) {
-                    ((Player) sender).openWorkbench(null, true);
-                } else sender.sendMessage(Errors.NO_PERMISSION);
-            }
+                if (label.equalsIgnoreCase("craftingtable")) {
+                    if (player.hasPermission("activecraft.workbench")) {
+                        player.openWorkbench(null, true);
+                    } else sender.sendMessage(Errors.NO_PERMISSION);
+                }
 
-            if (label.equalsIgnoreCase("anvil")) {
-                if (sender.hasPermission("activecraft.anvil")) {
-                    ((Player) sender).openAnvil(null, true);
-                } else sender.sendMessage(Errors.NO_PERMISSION);
-            }
+                if (label.equalsIgnoreCase("anvil")) {
+                    if (player.hasPermission("activecraft.anvil")) {
+                        player.openAnvil(null, true);
+                    } else sender.sendMessage(Errors.NO_PERMISSION);
+                }
 
-            if (label.equalsIgnoreCase("enchanttable")) {
-                if (sender.hasPermission("activecraft.enchanttable")) {
-                    ((Player) sender).openEnchanting(null, true);
-                } else sender.sendMessage(Errors.NO_PERMISSION);
-            }
+                if (label.equalsIgnoreCase("enchanttable")) {
+                    if (player.hasPermission("activecraft.enchanttable")) {
+                        player.openEnchanting(null, true);
+                    } else sender.sendMessage(Errors.NO_PERMISSION);
+                }
 
-            if (label.equalsIgnoreCase("cartographytable")) {
-                if (sender.hasPermission("activecraft.cartographytable")) {
-                    ((Player) sender).openCartographyTable(null, true);
-                } else sender.sendMessage(Errors.NO_PERMISSION);
-            }
+                if (label.equalsIgnoreCase("cartographytable")) {
+                    if (player.hasPermission("activecraft.cartographytable")) {
+                        player.openCartographyTable(null, true);
+                    } else sender.sendMessage(Errors.NO_PERMISSION);
+                }
 
-            if (label.equalsIgnoreCase("grindstone")) {
-                if (sender.hasPermission("activecraft.grindstone")) {
-                    ((Player) sender).openGrindstone(null, true);
-                } else sender.sendMessage(Errors.NO_PERMISSION);
-            }
+                if (label.equalsIgnoreCase("grindstone")) {
+                    if (player.hasPermission("activecraft.grindstone")) {
+                        player.openGrindstone(null, true);
+                    } else sender.sendMessage(Errors.NO_PERMISSION);
+                }
 
-            if (label.equalsIgnoreCase("loom")) {
-                if (sender.hasPermission("activecraft.loom")) {
-                    ((Player) sender).openLoom(null, true);
-                } else sender.sendMessage(Errors.NO_PERMISSION);
-            }
+                if (label.equalsIgnoreCase("loom")) {
+                    if (player.hasPermission("activecraft.loom")) {
+                        player.openLoom(null, true);
+                    } else sender.sendMessage(Errors.NO_PERMISSION);
+                }
 
-            if (label.equalsIgnoreCase("smithingtable")) {
-                if (sender.hasPermission("activecraft.smithingtable")) {
-                    ((Player) sender).openSmithingTable(null, true);
-                } else sender.sendMessage(Errors.NO_PERMISSION);
-            }
+                if (label.equalsIgnoreCase("smithingtable")) {
+                    if (player.hasPermission("activecraft.smithingtable")) {
+                        player.openSmithingTable(null, true);
+                    } else sender.sendMessage(Errors.NO_PERMISSION);
+                }
 
-            if (label.equalsIgnoreCase("stonecutter")) {
-                if (sender.hasPermission("activecraft.stonecutter")) {
-                    ((Player) sender).openStonecutter(null, true);
-                } else sender.sendMessage(Errors.NO_PERMISSION);
-            }
-
-        } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
-
+                if (label.equalsIgnoreCase("stonecutter")) {
+                    if (player.hasPermission("activecraft.stonecutter")) {
+                        player.openStonecutter(null, true);
+                    } else sender.sendMessage(Errors.NO_PERMISSION);
+                }
+            } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
+        }
         return true;
     }
 }

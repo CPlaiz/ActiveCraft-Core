@@ -50,14 +50,10 @@ public class JoinQuitListener implements Listener {
         fileConfigPlayerlist.set("players", playerlistName);
         fileConfigPlayerlist.saveConfig();
 
+        fileConfigUUIDName.set(player.getName().toLowerCase(), player.getUniqueId().toString());
+        fileConfigUUIDName.saveConfig();
 
-
-
-            fileConfigUUIDName.set(player.getName().toLowerCase(), player.getUniqueId().toString());
-            fileConfigUUIDName.saveConfig();
-
-
-            File file = new File(Main.getPlugin().getDataFolder() + File.separator + "playerdata" + File.separator);
+        File file = new File(Main.getPlugin().getDataFolder() + File.separator + "playerdata" + File.separator);
 
             Config config;
 
@@ -71,35 +67,28 @@ public class JoinQuitListener implements Listener {
 
                 FileConfig fileConfig = new FileConfig("playerdata" + File.separator + player.getName() + ".yml");
 
-
-                playerdataConfig.set("name", player.getName());
-                playerdataConfig.set("nickname", player.getName());
-                playerdataConfig.set("uuid", player.getUniqueId().toString());
-                playerdataConfig.set("taskid", 0);
-                playerdataConfig.set("afk", false);
-                playerdataConfig.set("op", player.isOp());
-                playerdataConfig.set("colornick", "WHITE");
-                playerdataConfig.set("whitelisted", player.isWhitelisted());
-                playerdataConfig.set("godmode", false);
-                playerdataConfig.set("fly", false);
-                playerdataConfig.set("flyspeed", 1);
-                playerdataConfig.set("muted", false);
-                playerdataConfig.set("default-mute", mainConfig.getString("mute-new-players"));
-                playerdataConfig.set("vanished", false);
-                playerdataConfig.set("on-duty", false);
-                playerdataConfig.set("stats.blocks.broken", 0);
-                playerdataConfig.set("stats.blocks.placed", 0);
-                playerdataConfig.set("stats.killed.players", 0);
-                playerdataConfig.set("stats.killed.monsters", 0);
-                playerdataConfig.set("stats.killed.animals", 0);
-                playerdataConfig.set("last-online", null);
-                playerdataConfig.set("last-coords", null);
-                playerdataConfig.set("log-enabled", false);
-                playerdataConfig.set("lockdown-bypass", false);
-                playerdataConfig.set("violations.warns", 0);
-                playerdataConfig.set("violations.mutes", 0);
-                playerdataConfig.set("violations.bans", 0);
-                playerdataConfig.set("violations.ip-bans", 0);
+            playerdataConfig.set("name", player.getName());
+            playerdataConfig.set("nickname", player.getName());
+            playerdataConfig.set("uuid", player.getUniqueId().toString());
+            playerdataConfig.set("afk", false);
+            playerdataConfig.set("op", player.isOp());
+            playerdataConfig.set("colornick", "WHITE");
+            playerdataConfig.set("whitelisted", player.isWhitelisted());
+            playerdataConfig.set("godmode", false);
+            playerdataConfig.set("fly", false);
+            playerdataConfig.set("flyspeed", 1);
+            playerdataConfig.set("muted", false);
+            playerdataConfig.set("default-mute", mainConfig.getString("mute-new-players"));
+            playerdataConfig.set("vanished", false);
+            playerdataConfig.set("on-duty", false);
+            playerdataConfig.set("last-online", null);
+            playerdataConfig.set("last-coords", null);
+            playerdataConfig.set("log-enabled", false);
+            playerdataConfig.set("lockdown-bypass", false);
+            playerdataConfig.set("violations.warns", 0);
+            playerdataConfig.set("violations.mutes", 0);
+            playerdataConfig.set("violations.bans", 0);
+            playerdataConfig.set("violations.ip-bans", 0);
 
                 playerdataConfig.saveConfig();
         }
@@ -108,40 +97,40 @@ public class JoinQuitListener implements Listener {
         List<String> knownIps = playerdataConfig.getStringList("known-ips");
         if (knownIps.contains(player.getAddress().getAddress().toString().replace("/", ""))) {
             knownIps.add(player.getAddress().getAddress().toString().replace("/", ""));
-            if (mainConfig.getBoolean("check-for-matching-ips")) {
-                for (String s : fileConfigPlayerlist.getStringList("players")) {
-                    FileConfig fileConfigIpAddressCheck = new FileConfig("playerdata" + File.separator + s + ".yml");
-                    List<String> knownIpsOthers = fileConfigIpAddressCheck.getStringList("known-ips");
-                    for (String knownIpPlayer : knownIps) {
-                        if (knownIpsOthers.contains(knownIpPlayer)) {
-                            Bukkit.broadcast(Errors.WARNING + ChatColor.AQUA + player.getName() + ChatColor.GOLD + " shares the IP " +
-                                    ChatColor.GRAY + knownIpPlayer + ChatColor.GOLD + " with " + ChatColor.AQUA +
-                                    fileConfigIpAddressCheck.getString("name"), "activecraft.matchingip.nofity");
-                        }
-                    }
-
-
-                }
-            }
             playerdataConfig.set("known-ips", knownIps);
             playerdataConfig.saveConfig();
+        }
+        if (mainConfig.getBoolean("check-for-matching-ips")) {
+            List<String> playerList = fileConfigPlayerlist.getStringList("players");
+            playerList.remove(player.getName());
+            for (String s : playerList) {
+                FileConfig fileConfigIpAddressCheck = new FileConfig("playerdata" + File.separator + s + ".yml");
+                List<String> knownIpsOthers = fileConfigIpAddressCheck.getStringList("known-ips");
+                for (String knownIpPlayer : knownIps) {
+                    if (knownIpsOthers.contains(knownIpPlayer)) {
+                        Bukkit.broadcast(Errors.WARNING + ChatColor.AQUA + player.getName() + ChatColor.GOLD + " shares the IP " +
+                                ChatColor.GRAY + knownIpPlayer + ChatColor.GOLD + " with " + ChatColor.AQUA +
+                                fileConfigIpAddressCheck.getString("name"), "activecraft.matchingip.notify");
+                    }
+                }
+            }
         }
         
 
         playerdataConfig.saveConfig();
 
         setDisplaynameFromConfig(player, playerdataConfig.getString("colornick"), playerdataConfig.getString("nickname"));
-        event.setJoinMessage(mainConfig.getString("join-format").replace("%displayname%", player.getDisplayName()));
 
-        if(!player.hasPermission("vanish.see")) {
-            VanishManager vanishManager = Main.getVanishManager();
-            vanishManager.hideAll(player);
+        if (!playerdataConfig.getBoolean("vanished")) {
+            event.setJoinMessage(placeholder.replace(mainConfig.getString("join-format"), Placeholder.Type.DISPLAYNAME));
+        } else {
+            vanishManager.setVanished(player, true);
+            event.setJoinMessage(null);
+            Bukkit.broadcast((mainConfig.getString("join-format") + ChatColor.GOLD + " (vanished)").replace("%displayname%", player.getDisplayName()), "activecraft.vanish.see");
         }
 
-        if(player.getGameMode() != GameMode.CREATIVE && player.getGameMode() != GameMode.SPECTATOR) {
-            if (playerdataConfig.getBoolean("fly")) {
-                player.setAllowFlight(true);
-            } else player.setAllowFlight(false);
+        if (!player.hasPermission("activecraft.vanish.see")) {
+            vanishManager.hideAll(player);
         }
     }
 
@@ -163,7 +152,17 @@ public class JoinQuitListener implements Listener {
         playerdataConfig.saveConfig();
 
         FileConfig mainConfig = new FileConfig("config.yml");
-        event.setQuitMessage(mainConfig.getString("quit-format").replace("%displayname%", player.getDisplayName()));
+
+        if (!playerdataConfig.getBoolean("vanished")) {
+            event.setQuitMessage(mainConfig.getString("quit-format").replace("%displayname%", player.getDisplayName()));
+        } else {
+            VanishManager vanishManager = Main.getVanishManager();
+            List<Player> vanishedList = vanishManager.getVanished();
+            vanishedList.remove(player);
+            vanishManager.setVanishedList(vanishedList);
+            event.setQuitMessage(null);
+            Bukkit.broadcast((mainConfig.getString("quit-format") + ChatColor.GOLD + " (vanished)").replace("%displayname%", player.getDisplayName()), "activecraft.vanish.see");
+        }
 
         playerdataConfig.saveConfig();
     }
