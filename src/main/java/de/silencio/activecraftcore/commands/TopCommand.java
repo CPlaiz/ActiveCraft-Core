@@ -15,21 +15,21 @@ public class TopCommand implements CommandExecutor {
             Player player = (Player) sender;
 
             if (sender.hasPermission("activecraft.top")) {
-                if (args.length == 1) {
-                    int x = player.getLocation().getBlockX();
-                    int z = player.getLocation().getBlockZ();
-                    Location loc = new Location(player.getWorld(), x - 0.5, player.getWorld().getHighestBlockYAt(x, z), z - 0.5);
+                if (args.length == 0) {
+                    double x = player.getLocation().getX();
+                    double z = player.getLocation().getZ();
+                    Location loc = new Location(player.getWorld(), x, player.getWorld().getHighestBlockYAt((int) x, (int) z), z);
                     if (loc.getBlock().getType() != Material.LAVA) {
                         loc.setY(loc.getBlockY() + 1);
                         player.teleport(loc);
                         player.sendMessage(ChatColor.GOLD + "Teleported to the top.");
                         player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
                     } else sender.sendMessage(Errors.WARNING + "Teleport is not safe!");
-                } else if (args.length == 2) {
+                } else if (args.length == 1) {
                     Player target = Bukkit.getPlayer(args[0]);
-                    int x = target.getLocation().getBlockX();
-                    int z = target.getLocation().getBlockZ();
-                    Location loc = new Location(target.getWorld(), x - 0.5, target.getWorld().getHighestBlockYAt(x, z), z - 0.5);
+                    double x = player.getLocation().getX();
+                    double z = player.getLocation().getZ();
+                    Location loc = new Location(target.getWorld(), x, target.getWorld().getHighestBlockYAt((int) x, (int) z), z);
                     if (loc.getBlock().getType() != Material.LAVA) {
                         loc.setY(loc.getBlockY() + 1);
                         target.teleport(loc);

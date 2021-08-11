@@ -19,9 +19,7 @@ public class VanishCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        if(sender instanceof Player) {
             VanishManager vanishManager = Main.getVanishManager();
-            Player p = (Player) sender;
 
             FileConfig fileConfig = new FileConfig("config.yml");
             String joinFormat = fileConfig.getString("join-format");
@@ -30,6 +28,7 @@ public class VanishCommand implements CommandExecutor {
             if (args.length == 1) {
                 if (sender.hasPermission("activecraft.vanish.other")) {
                     Player target = Bukkit.getPlayer(args[0]);
+
                     if (target != null) {
                         FileConfig playerdataconfig = new FileConfig("playerdata" + File.separator + target.getName() + ".yml");
                         if (vanishManager.isVanished(target)) {
@@ -75,6 +74,7 @@ public class VanishCommand implements CommandExecutor {
                 Player p = (Player) sender;
                 FileConfig playerdataconfig = new FileConfig("playerdata" + File.separator + p.getName() + ".yml");
                 if (sender.hasPermission("activecraft.vanish")) {
+                    Player player = (Player) sender;
                     if (vanishManager.isVanished(p)) {
                         vanishManager.setVanished(p, false);
                         p.sendMessage(ChatColor.GOLD + "You are now " + ChatColor.AQUA + "visible.");
@@ -111,8 +111,7 @@ public class VanishCommand implements CommandExecutor {
                         playerdataconfig.saveConfig();
                     }
                 } else sender.sendMessage(Errors.NO_PERMISSION);
-            }
-        } else sender.sendMessage(Errors.NOT_A_PLAYER);
+            } else sender.sendMessage(Errors.NOT_A_PLAYER);
         return true;
     }
 }

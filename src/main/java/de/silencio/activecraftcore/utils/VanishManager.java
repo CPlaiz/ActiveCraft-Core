@@ -35,16 +35,22 @@ public class VanishManager {
 
         for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
             if (player.equals(onlinePlayer)) continue;
-            if (hide) {
-                onlinePlayer.hidePlayer(plugin, player);
-            } else {
-                onlinePlayer.showPlayer(plugin, player);
+            if (!onlinePlayer.hasPermission("activecraft.vanish.see")) {
+                if (hide) {
+                    onlinePlayer.hidePlayer(plugin, player);
+                } else {
+                    onlinePlayer.showPlayer(plugin, player);
+                }
             }
         }
     }
 
     public void hideAll(Player player) {
         vanished.forEach(player1 -> player.hidePlayer(plugin, player1));
+    }
+
+    public void setVanishedList(List<Player> vanishedList) {
+        vanished = vanishedList;
     }
 
 }

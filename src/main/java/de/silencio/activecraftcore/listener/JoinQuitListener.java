@@ -4,6 +4,7 @@ import de.silencio.activecraftcore.Main;
 import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.utils.Config;
 import de.silencio.activecraftcore.utils.FileConfig;
+import de.silencio.activecraftcore.utils.Placeholder;
 import de.silencio.activecraftcore.utils.VanishManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -28,24 +29,30 @@ public class JoinQuitListener implements Listener {
 
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy, HH:mm:ss");
 
+
+
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
 
-            Player player = event.getPlayer();
+        Player player = event.getPlayer();
 
-            FileConfig fileConfigPlayerlist = new FileConfig("playerlist.yml");
-            FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + player.getName() + ".yml");
-            FileConfig fileConfigUUIDName = new FileConfig("nameuuidlist.yml");
-            FileConfig mainConfig = new FileConfig("config.yml");
+        Placeholder placeholder = new Placeholder(player);
 
-            List<String> playerlistUUID = fileConfigPlayerlist.getStringList("uuids");
-            List<String> playerlistName = fileConfigPlayerlist.getStringList("players");
-            if (!playerlistUUID.contains(player.getUniqueId().toString())) {
-                playerlistUUID.add(player.getUniqueId().toString());
-            }
-            if (!playerlistName.contains(player.getName())) {
-                playerlistName.add(player.getName());
-            }
+        FileConfig fileConfigPlayerlist = new FileConfig("playerlist.yml");
+        FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + player.getName() + ".yml");
+        FileConfig fileConfigUUIDName = new FileConfig("nameuuidlist.yml");
+        FileConfig mainConfig = new FileConfig("config.yml");
+
+        VanishManager vanishManager = Main.getVanishManager();
+
+        List<String> playerlistUUID = fileConfigPlayerlist.getStringList("uuids");
+        List<String> playerlistName = fileConfigPlayerlist.getStringList("players");
+        if (!playerlistUUID.contains(player.getUniqueId().toString())) {
+            playerlistUUID.add(player.getUniqueId().toString());
+        }
+        if (!playerlistName.contains(player.getName())) {
+            playerlistName.add(player.getName());
+        }
         fileConfigPlayerlist.set("uuids", playerlistUUID);
         fileConfigPlayerlist.set("players", playerlistName);
         fileConfigPlayerlist.saveConfig();
@@ -55,17 +62,17 @@ public class JoinQuitListener implements Listener {
 
         File file = new File(Main.getPlugin().getDataFolder() + File.separator + "playerdata" + File.separator);
 
-            Config config;
+        Config config;
 
-            if (!file.exists()) {
-                file.mkdir();
-            }
+        if (!file.exists()) {
+            file.mkdir();
+        }
 
-            config = new Config("playerdata" + File.separator + player.getName() + ".yml", Main.getPlugin().getDataFolder());
+        config = new Config("playerdata" + File.separator + player.getName() + ".yml", Main.getPlugin().getDataFolder());
 
-            if (config.toFileConfiguration().getKeys(true).size() == 0) {
+        if (config.toFileConfiguration().getKeys(true).size() == 0) {
 
-                FileConfig fileConfig = new FileConfig("playerdata" + File.separator + player.getName() + ".yml");
+            FileConfig fileConfig = new FileConfig("playerdata" + File.separator + player.getName() + ".yml");
 
             playerdataConfig.set("name", player.getName());
             playerdataConfig.set("nickname", player.getName());
@@ -90,12 +97,13 @@ public class JoinQuitListener implements Listener {
             playerdataConfig.set("violations.bans", 0);
             playerdataConfig.set("violations.ip-bans", 0);
 
-                playerdataConfig.saveConfig();
+            playerdataConfig.saveConfig();
         }
 
         playerdataConfig.set("last-online", "Online");
+
         List<String> knownIps = playerdataConfig.getStringList("known-ips");
-        if (knownIps.contains(player.getAddress().getAddress().toString().replace("/", ""))) {
+        if (!knownIps.contains(player.getAddress().getAddress().toString().replace("/", ""))) {
             knownIps.add(player.getAddress().getAddress().toString().replace("/", ""));
             playerdataConfig.set("known-ips", knownIps);
             playerdataConfig.saveConfig();
@@ -115,9 +123,10 @@ public class JoinQuitListener implements Listener {
                 }
             }
         }
-        
 
         playerdataConfig.saveConfig();
+
+
 
         setDisplaynameFromConfig(player, playerdataConfig.getString("colornick"), playerdataConfig.getString("nickname"));
 
@@ -143,7 +152,7 @@ public class JoinQuitListener implements Listener {
         OffsetDateTime now = OffsetDateTime.now();
         playerdataConfig.set("last-online", dtf.format(now));
 
-        if(player.hasPermission("activecraft.lockdown.bypass")) {
+        if (player.hasPermission("activecraft.lockdown.bypass")) {
             playerdataConfig.set("lockdown-bypass", true);
         } else {
             playerdataConfig.set("lockdown-bypass", false);

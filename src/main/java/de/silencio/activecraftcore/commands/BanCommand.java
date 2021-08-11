@@ -21,6 +21,7 @@ import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -176,6 +177,9 @@ public class BanCommand implements CommandExecutor, DialogueList, Listener, Dial
         if (this.dialogueManager == dialogueManager) {
             if (type == BanList.Type.NAME) {
                 nameBanManager.ban(target, this.dialogueManager.getAnswer(0), convertBanDuration(this.dialogueManager.getAnswer(1)), commandSender.getName());
+                FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + target.getName() + ".yml");
+                playerdataConfig.set("violations.bans", playerdataConfig.getInt("violations.bans") + 1);
+                playerdataConfig.saveConfig();
                 Bukkit.getScheduler().runTask(Main.getPlugin(), new Runnable() {
                     @Override
                     public void run() {
@@ -184,6 +188,9 @@ public class BanCommand implements CommandExecutor, DialogueList, Listener, Dial
                 });
             } else if (type == BanList.Type.IP) {
                 ipBanManager.ban(target.getAddress().getAddress().toString().replace("/", ""), this.dialogueManager.getAnswer(0), convertBanDuration(this.dialogueManager.getAnswer(1)), commandSender.getName());
+                FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + target.getName() + ".yml");
+                playerdataConfig.set("violations.ip-bans", playerdataConfig.getInt("violations.ip-bans") + 1);
+                playerdataConfig.saveConfig();
                 Bukkit.getScheduler().runTask(Main.getPlugin(), new Runnable() {
                     @Override
                     public void run() {

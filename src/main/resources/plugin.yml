@@ -173,6 +173,8 @@ commands:
     description: Allows a player to change AFK status.
   top:
     description: Teleports the player ontop of the highest block at the player's x/z coordinates.
+  explode:
+    description: Creates a explosion at a player's position.
 
 permissions:
   activecraft.heal:
