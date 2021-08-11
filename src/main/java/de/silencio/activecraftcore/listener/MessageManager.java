@@ -58,7 +58,6 @@ public class MessageManager implements Listener, DialogueList {
         } else {
 
             DialogueManager dialogueManager = Main.getPlugin().dialogueManagerList.getDialogueManager(player);
-            //System.out.println(dialogueManager.toString());
             dialogueManager.answer(event.getMessage());
             event.setCancelled(true);
         }

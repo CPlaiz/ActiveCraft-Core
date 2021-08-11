@@ -171,6 +171,8 @@ commands:
       - "lockdownbypass"
   afk:
     description: Allows a player to change AFK status.
+  top:
+    description: Teleports the player ontop of the highest block at the player's x/z coordinates.
 
 permissions:
   activecraft.heal:
@@ -463,4 +465,10 @@ permissions:
     default: op
   activecraft.afk.other:
     description: Allows a player to change AFK status for other players.
+    default: op
+  activecraft.matchingip.notify:
+    description: Player with this permissions get a message if somebody's ip matches another.
+    default: op
+  activecraft.top:
+    description: Teleports the player ontop of the highest block at the player's x/z coordinates.
     default: op

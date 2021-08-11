@@ -6,13 +6,9 @@ import de.silencio.activecraftcore.listener.JoinQuitListener;
 import de.silencio.activecraftcore.listener.LockdownListener;
 import de.silencio.activecraftcore.listener.MessageManager;
 import de.silencio.activecraftcore.listener.inventory.Navigator;
-import de.silencio.activecraftcore.commands.BanCommand;
 import de.silencio.activecraftcore.utils.*;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.server.PluginEnableEvent;
-import org.bukkit.event.server.ServerListPingEvent;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -84,10 +80,7 @@ public final class Main extends JavaPlugin {
         pluginManager.registerEvents(new LockdownCommand(), this);
 
         //custom Listeners
-        BanCommand banCommand = new BanCommand();
         dialogueListenerList = new DialogueListenerList();
-
-        dialogueListenerList.addListener(banCommand);
 
 
 
@@ -144,7 +137,7 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginCommand("i").setExecutor(new QuickGiveCommand());
         Bukkit.getPluginCommand("butcher").setExecutor(new ButcherCommand());
         Bukkit.getPluginCommand("item").setExecutor(new ItemCommand());
-        Bukkit.getPluginCommand("ban").setExecutor(banCommand);
+        Bukkit.getPluginCommand("ban").setExecutor(new BanCommand());
         Bukkit.getPluginCommand("whereami").setExecutor(new WhereAmICommand());
         Bukkit.getPluginCommand("weather").setExecutor(new WeatherCommand());
         Bukkit.getPluginCommand("more").setExecutor(new MoreCommand());
@@ -161,6 +154,7 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginCommand("enchant").setExecutor(new EnchantCommand());
         Bukkit.getPluginCommand("lockdown").setExecutor(new LockdownCommand());
         Bukkit.getPluginCommand("afk").setExecutor(new AfkCommand());
+        Bukkit.getPluginCommand("top").setExecutor(new TopCommand());
     }
 
     public static Main getPlugin() {

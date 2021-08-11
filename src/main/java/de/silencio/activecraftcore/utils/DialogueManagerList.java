@@ -16,6 +16,10 @@ public class DialogueManagerList {
         dialogueManagers.put(player, dialogueManager);
     }
 
+    public void removeDialogueManager(Player player) {
+        dialogueManagers.remove(player);
+    }
+
     public HashMap<Player, DialogueManager> getDialogueManagers() {
         return dialogueManagers;
     }

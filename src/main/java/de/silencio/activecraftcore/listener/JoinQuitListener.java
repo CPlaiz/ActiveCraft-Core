@@ -1,9 +1,11 @@
 package de.silencio.activecraftcore.listener;
 
 import de.silencio.activecraftcore.Main;
+import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.utils.Config;
 import de.silencio.activecraftcore.utils.FileConfig;
 import de.silencio.activecraftcore.utils.VanishManager;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -29,27 +31,29 @@ public class JoinQuitListener implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
 
-            Player p = event.getPlayer();
+            Player player = event.getPlayer();
 
-            FileConfig fileConfigPlayers = new FileConfig("playerlist.yml");
-            FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + p.getName() + ".yml");
-
-            List<String> playerlistUUID = fileConfigPlayers.getStringList("uuids");
-            List<String> playerlistName = fileConfigPlayers.getStringList("players");
-            if (!playerlistUUID.contains(p.getUniqueId().toString())) {
-                playerlistUUID.add(p.getUniqueId().toString());
-            }
-            if (!playerlistName.contains(p.getName())) {
-                playerlistName.add(p.getName());
-            }
-            fileConfigPlayers.set("uuids", playerlistUUID);
-            fileConfigPlayers.set("players", playerlistName);
-            fileConfigPlayers.saveConfig();
-
-
+            FileConfig fileConfigPlayerlist = new FileConfig("playerlist.yml");
+            FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + player.getName() + ".yml");
             FileConfig fileConfigUUIDName = new FileConfig("nameuuidlist.yml");
+            FileConfig mainConfig = new FileConfig("config.yml");
 
-            fileConfigUUIDName.set(p.getName().toLowerCase(), p.getUniqueId().toString());
+            List<String> playerlistUUID = fileConfigPlayerlist.getStringList("uuids");
+            List<String> playerlistName = fileConfigPlayerlist.getStringList("players");
+            if (!playerlistUUID.contains(player.getUniqueId().toString())) {
+                playerlistUUID.add(player.getUniqueId().toString());
+            }
+            if (!playerlistName.contains(player.getName())) {
+                playerlistName.add(player.getName());
+            }
+        fileConfigPlayerlist.set("uuids", playerlistUUID);
+        fileConfigPlayerlist.set("players", playerlistName);
+        fileConfigPlayerlist.saveConfig();
+
+
+
+
+            fileConfigUUIDName.set(player.getName().toLowerCase(), player.getUniqueId().toString());
             fileConfigUUIDName.saveConfig();
 
 
@@ -61,21 +65,21 @@ public class JoinQuitListener implements Listener {
                 file.mkdir();
             }
 
-            config = new Config("playerdata" + File.separator + p.getName() + ".yml", Main.getPlugin().getDataFolder());
+            config = new Config("playerdata" + File.separator + player.getName() + ".yml", Main.getPlugin().getDataFolder());
 
             if (config.toFileConfiguration().getKeys(true).size() == 0) {
 
-                FileConfig fileConfig = new FileConfig("playerdata" + File.separator + p.getName() + ".yml");
-                FileConfig mainConfig = new FileConfig("config.yml");
+                FileConfig fileConfig = new FileConfig("playerdata" + File.separator + player.getName() + ".yml");
 
-                playerdataConfig.set("name", p.getName());
-                playerdataConfig.set("nickname", p.getName());
-                playerdataConfig.set("uuid", p.getUniqueId().toString());
+
+                playerdataConfig.set("name", player.getName());
+                playerdataConfig.set("nickname", player.getName());
+                playerdataConfig.set("uuid", player.getUniqueId().toString());
                 playerdataConfig.set("taskid", 0);
                 playerdataConfig.set("afk", false);
-                playerdataConfig.set("op", p.isOp());
+                playerdataConfig.set("op", player.isOp());
                 playerdataConfig.set("colornick", "WHITE");
-                playerdataConfig.set("whitelisted", p.isWhitelisted());
+                playerdataConfig.set("whitelisted", player.isWhitelisted());
                 playerdataConfig.set("godmode", false);
                 playerdataConfig.set("fly", false);
                 playerdataConfig.set("flyspeed", 1);
@@ -97,22 +101,37 @@ public class JoinQuitListener implements Listener {
                 playerdataConfig.set("violations.bans", 0);
                 playerdataConfig.set("violations.ip-bans", 0);
 
-
                 playerdataConfig.saveConfig();
         }
 
-        Player player = event.getPlayer();
-        //player.performCommand("spawn");
-
         playerdataConfig.set("last-online", "Online");
+        List<String> knownIps = playerdataConfig.getStringList("known-ips");
+        if (knownIps.contains(player.getAddress().getAddress().toString().replace("/", ""))) {
+            knownIps.add(player.getAddress().getAddress().toString().replace("/", ""));
+            if (mainConfig.getBoolean("check-for-matching-ips")) {
+                for (String s : fileConfigPlayerlist.getStringList("players")) {
+                    FileConfig fileConfigIpAddressCheck = new FileConfig("playerdata" + File.separator + s + ".yml");
+                    List<String> knownIpsOthers = fileConfigIpAddressCheck.getStringList("known-ips");
+                    for (String knownIpPlayer : knownIps) {
+                        if (knownIpsOthers.contains(knownIpPlayer)) {
+                            Bukkit.broadcast(Errors.WARNING + ChatColor.AQUA + player.getName() + ChatColor.GOLD + " shares the IP " +
+                                    ChatColor.GRAY + knownIpPlayer + ChatColor.GOLD + " with " + ChatColor.AQUA +
+                                    fileConfigIpAddressCheck.getString("name"), "activecraft.matchingip.nofity");
+                        }
+                    }
 
-        FileConfig mainConfig = new FileConfig("config.yml");
+
+                }
+            }
+            playerdataConfig.set("known-ips", knownIps);
+            playerdataConfig.saveConfig();
+        }
         
 
         playerdataConfig.saveConfig();
 
-        setDisplaynameFromConfig(p, playerdataConfig.getString("colornick"), playerdataConfig.getString("nickname"));
-        event.setJoinMessage(mainConfig.getString("join-format").replace("%displayname%", p.getDisplayName()));
+        setDisplaynameFromConfig(player, playerdataConfig.getString("colornick"), playerdataConfig.getString("nickname"));
+        event.setJoinMessage(mainConfig.getString("join-format").replace("%displayname%", player.getDisplayName()));
 
         if(!player.hasPermission("vanish.see")) {
             VanishManager vanishManager = Main.getVanishManager();
