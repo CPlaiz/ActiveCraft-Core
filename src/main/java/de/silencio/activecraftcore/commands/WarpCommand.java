@@ -45,7 +45,7 @@ public class WarpCommand implements CommandExecutor, TabCompleter {
                             List<String> warpList = warpListConfig.getStringList("warplist");
                             if (!warpList.contains(args[0])) {
                                 warpList.add(args[0]);
-                                System.out.println(warpList);
+                                //System.out.println(warpList);
                             }
                             warpListConfig.set("warplist", warpList);
                             warpListConfig.saveConfig();

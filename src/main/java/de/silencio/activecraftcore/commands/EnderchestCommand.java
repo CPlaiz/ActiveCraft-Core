@@ -19,31 +19,29 @@ public class EnderchestCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        if(sender instanceof Player) {
+        if (sender instanceof Player) {
             Player player = (Player) sender;
 
-            if(sender.hasPermission("activecraft.enderchest")) {
-
-                if(args.length == 0) {
-
+            if (args.length == 0) {
+                if (sender.hasPermission("activecraft.enderchest")) {
                     player.openInventory(player.getEnderChest());
                     player.playSound(player.getLocation(), Sound.BLOCK_ENDER_CHEST_OPEN, 1f, 1f);
                     player.sendMessage(ChatColor.GOLD + "Opened Enderchest.");
+                } else sender.sendMessage(Errors.NO_PERMISSION);
 
-                }
+            } else if (sender.hasPermission("activecraft.enderchest.others")) {
 
-            } else sender.sendMessage(Errors.NO_PERMISSION);
-
-            if(sender.hasPermission("activecraft.enderchest.others")) {
-
-                if(args.length == 1) {
-
+                if (args.length == 1) {
+                    if (Bukkit.getPlayer(args[0]) == null) {
+                        sender.sendMessage(Errors.INVALID_PLAYER);
+                        return false;
+                    }
                     Player target = Bukkit.getPlayer(args[0]);
 
                     player.openInventory(target.getEnderChest());
                     player.playSound(player.getLocation(), Sound.BLOCK_ENDER_CHEST_OPEN, 1f, 1f);
                     player.sendMessage(ChatColor.GOLD + "Opened Enderchest of " + ChatColor.AQUA + target.getDisplayName());
-                }
+                } else sender.sendMessage(Errors.TOO_MANY_ARGUMENTS);
             } else sender.sendMessage(Errors.NO_PERMISSION);
 
         } else sender.sendMessage(Errors.NOT_A_PLAYER);

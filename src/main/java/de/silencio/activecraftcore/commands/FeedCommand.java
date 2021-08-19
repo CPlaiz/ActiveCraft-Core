@@ -24,12 +24,21 @@ public class FeedCommand implements CommandExecutor {
                         }
                     } else sender.sendMessage(Errors.NOT_A_PLAYER);
                 } else if(args.length == 1) {
+                    if (Bukkit.getPlayer(args[0]) == null) {
+                        sender.sendMessage(Errors.INVALID_PLAYER);
+                        return false;
+                    }
                     Player target = Bukkit.getPlayer(args[0]);
                     if(target != null) {
-                        if (sender.hasPermission("activecraft.feed.other")) {
+                        if (sender.hasPermission("activecraft.feed.others")) {
                             target.setFoodLevel(20);
                             sender.sendMessage(ChatColor.GOLD + "You fed " + ChatColor.AQUA + target.getDisplayName());
-                            target.sendMessage(ChatColor.GOLD + "You were fed by " + ChatColor.AQUA + sender.getName() + ChatColor.GOLD + ".");
+                            if (sender instanceof Player) {
+                                target.sendMessage(ChatColor.GOLD + "You were fed by " + ChatColor.AQUA + ((Player) sender).getDisplayName() + ChatColor.GOLD + ".");
+                            } else {
+                                target.sendMessage(ChatColor.GOLD + "You were fed by " + ChatColor.AQUA + sender.getName() + ChatColor.GOLD + ".");
+                            }
+
                             target.playSound(target.getLocation(), Sound.ENTITY_PLAYER_BURP, 1f, 1f);
                         } else sender.sendMessage(Errors.NO_PERMISSION);
                     } else sender.sendMessage(Errors.INVALID_PLAYER);

@@ -1,8 +1,6 @@
 package de.silencio.activecraftcore.commands;
 
 import de.silencio.activecraftcore.messages.Errors;
-import org.bukkit.BanEntry;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -19,21 +17,21 @@ public class WeatherCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        if(sender instanceof Player) {
+        if (sender instanceof Player) {
             Player player = (Player) sender;
 
-            if(sender.hasPermission("activecraft.weather")) {
-                if(args.length == 1) {
-                        if(Objects.equals(args[0], "thunder")) {
-                            player.getWorld().setThundering(true);
-                            player.sendMessage(ChatColor.GOLD + "Changed weather in " + ChatColor.AQUA + player.getWorld().getName() + ChatColor.GOLD + " to " + ChatColor.AQUA + "Thunder" + ChatColor.GOLD + ".");
-                        } else if(Objects.equals(args[0], "rain")) {
-                             player.getWorld().setStorm(true);
-                             player.sendMessage(ChatColor.GOLD + "Changed weather in " + ChatColor.AQUA + player.getWorld().getName() + ChatColor.GOLD + " to " + ChatColor.AQUA + "Rain" + ChatColor.GOLD + ".");
-                        } else if(Objects.equals(args[0], "clear")) {
-                            player.getWorld().setClearWeatherDuration(999999999);
-                            player.sendMessage(ChatColor.GOLD + "Changed weather in " + ChatColor.AQUA + player.getWorld().getName() + ChatColor.GOLD + " to " + ChatColor.AQUA + "Clear" + ChatColor.GOLD + ".");
-                       }
+            if (sender.hasPermission("activecraft.weather")) {
+                if (args.length == 1) {
+                    if (Objects.equals(args[0], "thunder")) {
+                        player.getWorld().setThundering(true);
+                        player.sendMessage(ChatColor.GOLD + "Changed weather in " + ChatColor.AQUA + player.getWorld().getName() + ChatColor.GOLD + " to " + ChatColor.AQUA + "Thunder" + ChatColor.GOLD + ".");
+                    } else if (Objects.equals(args[0], "rain")) {
+                        player.getWorld().setStorm(true);
+                        player.sendMessage(ChatColor.GOLD + "Changed weather in " + ChatColor.AQUA + player.getWorld().getName() + ChatColor.GOLD + " to " + ChatColor.AQUA + "Rain" + ChatColor.GOLD + ".");
+                    } else if (Objects.equals(args[0], "clear")) {
+                        player.getWorld().setClearWeatherDuration(999999999);
+                        player.sendMessage(ChatColor.GOLD + "Changed weather in " + ChatColor.AQUA + player.getWorld().getName() + ChatColor.GOLD + " to " + ChatColor.AQUA + "Clear" + ChatColor.GOLD + ".");
+                    } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
                 } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
             } else sender.sendMessage(Errors.NO_PERMISSION);
 
@@ -46,12 +44,12 @@ public class WeatherCommand implements CommandExecutor, TabCompleter {
         ArrayList<String> list = new ArrayList<>();
         Player p = (Player) sender;
 
-            if (args.length == 0) return list;
-            if (args.length == 1) {
-                list.add("clear");
-                list.add("thunder");
-                list.add("rain");
-            }
+        if (args.length == 0) return list;
+        if (args.length == 1) {
+            list.add("clear");
+            list.add("thunder");
+            list.add("rain");
+        }
 
         ArrayList<String> completerList = new ArrayList<>();
         String currentarg = args[args.length - 1].toLowerCase();

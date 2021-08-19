@@ -44,7 +44,7 @@ public class SpawnCommand implements CommandExecutor {
                     } else if (args.length == 1) {
                         Player target = Bukkit.getPlayer(args[0]);
                         if(target != null) {
-                            if (sender.hasPermission("activecraft.spawn.other")) {
+                            if (sender.hasPermission("activecraft.spawn.others")) {
                                 LocationUtils.teleport(target, LocationUtils.str2Loc(spawns.getString("spawn")));
                                 target.sendMessage(ChatColor.GOLD + "You were teleported to " + ChatColor.AQUA + "Spawn" + ChatColor.GOLD + " by " + ChatColor.AQUA + sender.getName());
                                 sender.sendMessage(ChatColor.GOLD + "Teleported " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " to " + ChatColor.AQUA + "Spawn" + ChatColor.GOLD + ".");

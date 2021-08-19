@@ -1,6 +1,5 @@
 package de.silencio.activecraftcore.commands;
 
-import de.silencio.activecraftcore.Main;
 import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.utils.FileConfig;
 import org.bukkit.Bukkit;
@@ -36,6 +35,10 @@ public class HomeCommand implements CommandExecutor {
                 if(args.length == 1) {
                     if(sender.hasPermission("activecraft.home.others")) {
                         Player player = (Player) sender;
+                        if (Bukkit.getPlayer(args[0]) == null) {
+                            sender.sendMessage(Errors.INVALID_PLAYER);
+                            return false;
+                        }
                         Player target = Bukkit.getPlayer(args[0]);
                         String targetUUID = target.getUniqueId().toString();
 

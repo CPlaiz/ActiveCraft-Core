@@ -3,20 +3,24 @@ version: ${project.version}
 main: de.silencio.activecraftcore.Main
 api-version: 1.17
 authors: [ CPlaiz, Silencio ]
-description: Activecraft Knockoff
+description: The heart of all ActiveCraft Plugins
 
 commands:
   heal:
     description: Heals the target player.
+    usage:
+    permission: activecraft.heal
   spawn:
     description: Teleports you to spawn.
     aliases: ["setspawn"]
+    usage: /spawn | /setspawn
   ping:
     description: Pong!
   broadcast:
     description: Server-wide broadcast.
     aliases:
       - "broadcastworld"
+      - "bc"
   msg:
     description: Private message to another Player.
   invsee:
@@ -106,8 +110,6 @@ commands:
     description: Kicks all players.
   ram:
     description: Shows RAM info.
-  tp:
-    description: Teleports to another player.
   staffchat:
     description: Send a message that only other staff can see.
     aliases: ["sc"]
@@ -139,7 +141,7 @@ commands:
     description: Changes weather in the players current world.
   more:
     description: Fills an Itemstack to its max stack size.
-  rehstart:
+  restart-server:
     description: Restarts the server with a warning.
   mute:
     description: Mutes / unmutes a player.
@@ -175,6 +177,18 @@ commands:
     description: Teleports the player ontop of the highest block at the player's x/z coordinates.
   explode:
     description: Creates a explosion at a player's position.
+  warn:
+    description: Sends a warning to a player.
+  known-ips:
+    description: Gets all ips a player has logged in with.
+  profile:
+    description: Opens a profile inventory for quick player management.
+  lastcoords:
+    description: Get a player's last coords
+  verify:
+    description: Verifies a player.
+  tpall:
+    description: Teleports all players.
 
 permissions:
   activecraft.heal:
@@ -210,7 +224,7 @@ permissions:
   activecraft.vanish:
     description: Permission to set vanish for a player.
     default: op
-  activecraft.vanish.other:
+  activecraft.vanish.others:
     description: Permission to set vanish for other players.
     default: op
   activecraft.vanish.see:
@@ -231,7 +245,7 @@ permissions:
   activecraft.feed:
     description: Feeds the player
     default: op
-  activecraft.feed.other:
+  activecraft.feed.others:
     description: Feeds other players.
     default: op
   activecraft.workbench:
@@ -268,15 +282,15 @@ permissions:
     description: Allows the player to only change displaycolor.
     default: op
   activecraft.fly:
-      description: Allows the player to toggle their flight.
-      default: op
+    description: Allows the player to toggle their flight.
+    default: op
   activecraft.fly.others:
     description: Allows the player to toggle other player's flight.
     default: op
   activecraft.flyspeed:
     description: Allows the player to change their speed while in flight.
     default: op
-  activecraft.flyspeed.other:
+  activecraft.flyspeed.others:
     description: Allows the player to change other players speed while in flight.
     default: op
   activecraft.realname:
@@ -345,6 +359,12 @@ permissions:
   activecraft.tphere:
     description: Teleports another player to you.
     default: op
+  activecraft.tp.others:
+    description: Permission to teleport other players.
+    default: op
+  activecraft.tp:
+    description: Permission to teleport.
+    default: op
   activecraft.opitems:
     description: Gives a player OP items.
     default: op
@@ -356,9 +376,6 @@ permissions:
     default: op
   activecraf.ram:
     description: Shows RAM info.
-    default: op
-  activecraft.tp:
-    description: Teleports to another player.
     default: op
   activecraft.staffchat:
     description: Send a message that only other staff can see.
@@ -387,6 +404,9 @@ permissions:
   activecraft.butcher:
     description: Kills all mobs.
     default: op
+  activecraft.kill:
+    description: Permission to kill players.
+    default: op
   activecraft.item.give:
     description: Permission to give items to players.
     default: op
@@ -402,7 +422,7 @@ permissions:
   activecraft.whereami:
     description: Locates the player.
     default: op
-  activecraft.whereami.other:
+  activecraft.whereami.others:
     description: Locates other players.
     default: op
   activecraft.weather:
@@ -429,7 +449,7 @@ permissions:
   activecraft.skull:
     description: Gives the player its own head.
     default: op
-  activecraft.skull.other:
+  activecraft.skull.others:
     description: Gives the player another players head.
     default: op
   activecraft.strike:
@@ -447,7 +467,7 @@ permissions:
   activecraft.xp:
     description: Adds xp or levels to a player.
     default: op
-  activecraft.xp.other:
+  activecraft.xp.others:
     description: Adds xp or levels to another player.
     default: op
   activecraft.enchant:
@@ -465,7 +485,7 @@ permissions:
   activecraft.afk:
     description: Allows a player to change their AFK status
     default: op
-  activecraft.afk.other:
+  activecraft.afk.others:
     description: Allows a player to change AFK status for other players.
     default: op
   activecraft.matchingip.notify:
@@ -478,3 +498,42 @@ permissions:
     description: Creates a explosion at the player's position.
   activecraft.explode.other:
     description: Creates a explosion at a player's position.
+    default: op
+  activecraft.warn.add:
+    description: Allows a player to add a warning.
+    default: op
+  activecraft.warn.remove:
+    description: Allows a player to remove a warning.
+    default: op
+  activecraft.warn.get:
+    description: Allows a player to list all warnings.
+    default: op
+  activecraft.listips:
+    description: Gets all ips a player has logged in with.
+  activecraft.profile:
+    description: Opens a profile inventory for quick player management.
+    default: op
+  activecraft.lastcoords:
+    description: Gets the last coords of a player in a give world.
+    default: op
+  activecraft.verify:
+    description: Verifies a player.
+    default: op
+  activecraft.ban:
+    description: Permission to ban/ip-ban/unban/ip-unban a player and perform /banlist.
+    default: op
+  activecraft.location:
+    description: Permission to see player locations.
+    default: op
+  activecraft.activeeffects:
+    description: Permission to see active effects on players.
+    default: op
+  activecraft.kick:
+    description: Permission to kick players from the server.
+    default: op
+  activecraft.tpall:
+    description: Permission to teleport all players.
+    default: op
+  activecraft.tpall.exept:
+    description: Prevents the holder from being teleported will /tpall.
+    default: op

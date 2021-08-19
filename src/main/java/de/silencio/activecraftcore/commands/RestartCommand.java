@@ -5,18 +5,20 @@ import de.silencio.activecraftcore.Main;
 import de.silencio.activecraftcore.messages.Errors;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Server;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Entity;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class RestartCommand implements CommandExecutor {
+import java.util.ArrayList;
+import java.util.List;
 
-    private int time;
+public class RestartCommand implements CommandExecutor, TabCompleter {
+
+    private int time = 30;
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -28,7 +30,19 @@ public class RestartCommand implements CommandExecutor {
 
                 if (args.length == 0) {
                     time = 30;
-                } else time = Integer.parseInt(args[0]);
+                } else {
+                    Integer num = null;
+                    try {
+                        num = Integer.valueOf(args[0]);
+                    } catch (NumberFormatException ignored) {
+                    }
+                    if (num == null) {
+                        sender.sendMessage(Errors.INVALID_NUMBER);
+                        return false;
+                    }
+                    System.out.println(args[0]);
+                    this.time = Integer.parseInt(args[0]);
+                }
 
 
                 BukkitRunnable runnable = new BukkitRunnable() {
@@ -81,4 +95,12 @@ public class RestartCommand implements CommandExecutor {
         } else sender.sendMessage(Errors.NOT_A_PLAYER);
         return true;
     }
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+
+        ArrayList<String> completerList = new ArrayList<>();
+        return completerList;
+    }
+
 }

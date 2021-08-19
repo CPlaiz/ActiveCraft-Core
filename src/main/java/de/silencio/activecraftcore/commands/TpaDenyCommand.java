@@ -25,7 +25,7 @@ public class TpaDenyCommand extends TpaCommand implements CommandExecutor {
                     target.sendMessage(ChatColor.AQUA + player.getDisplayName() + ChatColor.GOLD + "Denied your TPA request.");
 
                     tpaList.remove(sender);
-                    System.out.println("Bjarne ist ein retard.");
+                    //System.out.println("Bjarne ist ein retard.");
 
                 } else sender.sendMessage(ChatColor.RED + "Warning!" + ChatColor.GRAY + " You don't have any pending TPA requests!");
 

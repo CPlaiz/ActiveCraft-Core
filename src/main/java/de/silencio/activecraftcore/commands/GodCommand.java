@@ -35,17 +35,20 @@ public class GodCommand implements CommandExecutor {
                                     player.setInvulnerable(false);
                                     sender.sendMessage(ChatColor.GOLD + "God mode deactivated.");
 
-                                    playerdataConfig.set("godmode", "false");
-                                    playerdataConfig.saveConfig();
-                                    break;
-                            }
-                        } else sender.sendMessage(Errors.NOT_A_PLAYER);
-                    } else sender.sendMessage(Errors.NO_PERMISSION);
-                } else if (args.length == 2) {
-                    if(sender.hasPermission("activecraft.god.others")) {
-                        Player target = Bukkit.getPlayer(args[0]);
+                        playerdataConfig.set("godmode", false);
+                        playerdataConfig.saveConfig();
+                    }
+                } else sender.sendMessage(Errors.NOT_A_PLAYER);
+            } else sender.sendMessage(Errors.NO_PERMISSION);
+        } else if (args.length == 1) {
+            if (sender.hasPermission("activecraft.god.others")) {
+                if (Bukkit.getPlayer(args[0]) == null) {
+                    sender.sendMessage(Errors.INVALID_PLAYER);
+                    return false;
+                }
+                Player target = Bukkit.getPlayer(args[0]);
 
-                        FileConfig targetdataConfig = new FileConfig("playerdata" + File.separator + target.getName() + ".yml");
+                FileConfig targetdataConfig = new FileConfig("playerdata" + File.separator + target.getName().toLowerCase() + ".yml");
 
                         switch (args[1]) {
                             case "on":

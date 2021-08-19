@@ -7,12 +7,12 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
-import org.bukkit.command.TabCompleter;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ public class LogCommand implements CommandExecutor, Listener, TabCompleter{
         if(sender instanceof Player) {
             Player player = (Player) sender;
 
-            FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + player.getName() + ".yml");
+            FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + player.getName().toLowerCase() + ".yml");
 
             if(sender.hasPermission("activecraft.log")) {
 
@@ -58,7 +58,7 @@ public class LogCommand implements CommandExecutor, Listener, TabCompleter{
         String eventMessage = event.getMessage();
 
         for (Player player : Bukkit.getOnlinePlayers()) {
-            FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + player.getName() + ".yml");
+            FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + player.getName().toLowerCase() + ".yml");
             if (playerdataConfig.getBoolean("log-enabled")) {
                 if (player.hasPermission("activecraft.log")) {
                     player.sendMessage(ChatColor.GOLD + "[Log] " + ChatColor.AQUA + executingPlayer.getName() + ChatColor.GOLD + " executed command " + ChatColor.AQUA + eventMessage);

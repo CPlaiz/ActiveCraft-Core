@@ -12,9 +12,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 
 public class TpaCommand implements CommandExecutor {
@@ -29,7 +27,10 @@ public class TpaCommand implements CommandExecutor {
             if(sender.hasPermission("activecraft.tpa")) {
 
                 if(args.length == 1) {
-
+                    if (Bukkit.getPlayer(args[0]) == null) {
+                        sender.sendMessage(Errors.INVALID_PLAYER);
+                        return false;
+                    }
                     Player target = Bukkit.getPlayer(args[0]);
                     Player player = (Player) sender;
                     TextComponent accept = new TextComponent(ChatColor.GREEN + "[ACCEPT]");

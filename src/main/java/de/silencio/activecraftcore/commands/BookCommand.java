@@ -56,6 +56,15 @@ public class BookCommand implements CommandExecutor, TabCompleter {
                                 for (int i = 2; i < args.length; i++) {
                                     editpage = editpage + args[i] + " ";
                                 }
+                                Integer num = null;
+                                try {
+                                    num = Integer.valueOf(args[1]);
+                                } catch (NumberFormatException ignored) {
+                                }
+                                if (num != null) {
+                                    sender.sendMessage(Errors.INVALID_NUMBER);
+                                    return false;
+                                }
                                 bookmeta.setPage(Integer.parseInt(args[1]), editpage);
                                 book.setItemMeta(bookmeta);
                             } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
@@ -78,28 +87,25 @@ public class BookCommand implements CommandExecutor, TabCompleter {
 
                                     bookmeta.setGeneration(BookMeta.Generation.ORIGINAL);
                                     book.setItemMeta(bookmeta);
-                                }
-                                if (args[1].equalsIgnoreCase("copy")) {
+                                } else if (args[1].equalsIgnoreCase("copy")) {
                                     ItemStack book = player.getInventory().getItemInMainHand();
                                     BookMeta bookmeta = (BookMeta) book.getItemMeta();
 
                                     bookmeta.setGeneration(BookMeta.Generation.COPY_OF_ORIGINAL);
                                     book.setItemMeta(bookmeta);
-                                }
-                                if (args[1].equalsIgnoreCase("copy_of_copy")) {
+                                } else if (args[1].equalsIgnoreCase("copy_of_copy")) {
                                     ItemStack book = player.getInventory().getItemInMainHand();
                                     BookMeta bookmeta = (BookMeta) book.getItemMeta();
 
                                     bookmeta.setGeneration(BookMeta.Generation.COPY_OF_COPY);
                                     book.setItemMeta(bookmeta);
-                                }
-                                if (args[1].equalsIgnoreCase("tattered")) {
+                                } else if (args[1].equalsIgnoreCase("tattered")) {
                                     ItemStack book = player.getInventory().getItemInMainHand();
                                     BookMeta bookmeta = (BookMeta) book.getItemMeta();
 
                                     bookmeta.setGeneration(BookMeta.Generation.TATTERED);
                                     book.setItemMeta(bookmeta);
-                                }
+                                } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
 
                             } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
                         } else sender.sendMessage(Errors.INVALID_ARGUMENTS);

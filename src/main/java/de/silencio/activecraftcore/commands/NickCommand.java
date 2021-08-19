@@ -2,6 +2,7 @@ package de.silencio.activecraftcore.commands;
 
 import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.utils.FileConfig;
+import de.silencio.activecraftcore.utils.MessageUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -16,49 +17,56 @@ public class NickCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-            Player player = (Player) sender;
 
+        if (Bukkit.getPlayer(args[0]) == null) {
+            if (sender instanceof Player) {
+                Player player = (Player) sender;
+                if (sender.hasPermission("activecraft.nick")) {
+                    StringBuilder stringBuilder = new StringBuilder();
+                    for (int i = 0; i < args.length; i++) {
+                        if (i != 0) stringBuilder.append(" ");
+                        stringBuilder.append(args[i]);
+                    }
+                    String nickname = stringBuilder.toString();
+                    nickname = MessageUtils.replaceColor(nickname);
+                    nickname = MessageUtils.replaceFormat(nickname);
 
-                if(args.length == 1) {
-                    if(sender instanceof Player) {
-                        if (sender.hasPermission("activecraft.nick")) {
+                    FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + player.getName().toLowerCase() + ".yml");
 
-                            FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + player.getName() + ".yml");
-
-                            player.setDisplayName(args[0]);
-                            player.setPlayerListName(args[0]);
-                            playerdataConfig.set("nickname", args[0]);
-                            playerdataConfig.saveConfig();
-                            player.sendMessage(ChatColor.GOLD + "Nick set to " + ChatColor.AQUA + args[0]);
-                        }
-                    } else sender.sendMessage(Errors.INVALID_PLAYER);
-                } else if(args.length == 2) {
-                    if(sender.hasPermission("activecraft.nick.others")) {
+                    player.setDisplayName(nickname);
+                    player.setPlayerListName(nickname);
+                    playerdataConfig.set("nickname", nickname);
+                    playerdataConfig.saveConfig();
+                    player.sendMessage(ChatColor.GOLD + "Nick set to " + ChatColor.AQUA + nickname);
+                }
+            } else sender.sendMessage(Errors.INVALID_PLAYER);
+        } else {
+            if (args.length > 1) {
+                if (sender.hasPermission("activecraft.nick.others")) {
+                    StringBuilder stringBuilder = new StringBuilder();
+                    for (int i = 1; i < args.length; i++) {
+                        if (i != 1) stringBuilder.append(" ");
+                        stringBuilder.append(args[i]);
+                    }
+                    String nickname = stringBuilder.toString();
+                    nickname = MessageUtils.replaceColor(nickname);
+                    nickname = MessageUtils.replaceFormat(nickname);
 
                     Player target = Bukkit.getPlayer(args[0]);
-                    FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + target.getName() + ".yml");
+                    FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + target.getName().toLowerCase() + ".yml");
 
-                    setDisplaycolorFromConfig(target, playerdataConfig.getString("colornick"));
-                    playerdataConfig.set("nickname", args[1]);
+                    //setDisplaycolorFromConfig(target, playerdataConfig.getString("colornick"));
+                    playerdataConfig.set("nickname", nickname);
                     playerdataConfig.saveConfig();
-                    player.sendMessage(ChatColor.GOLD + "Set nickname of " + ChatColor.AQUA + target.getName() + ChatColor.GOLD + " to " + ChatColor.AQUA + args[1]);
-                    target.sendMessage(ChatColor.GOLD + "Nickname set to " + ChatColor.AQUA + args[1] + ChatColor.GOLD + " by " + ChatColor.AQUA + player.getDisplayName());
-                    target.setDisplayName(args[1]);
-                    target.setPlayerListName(args[1]);
+                    sender.sendMessage(ChatColor.GOLD + "Set nickname of " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " to " + ChatColor.AQUA + nickname);
+                    if (sender instanceof Player) {
+                        target.sendMessage(ChatColor.GOLD + "Nickname set to " + ChatColor.AQUA + nickname + ChatColor.GOLD + " by " + ChatColor.AQUA + ((Player) sender).getDisplayName());
+                    } else target.sendMessage(ChatColor.GOLD + "Nickname set to " + ChatColor.AQUA + nickname + ChatColor.GOLD + " by " + ChatColor.AQUA + sender.getName());
+                    target.setDisplayName(nickname);
+                    target.setPlayerListName(nickname);
                 } else sender.sendMessage(Errors.NO_PERMISSION);
             } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
-        return true;
-    }
-
-    public void setDisplaycolorFromConfig(Player p, String s) {
-        for (ChatColor color : ChatColor.values()) {
-            if (s.toLowerCase().equals(color.name().toLowerCase())) {
-                if (!s.equals("BOLD") && !s.equals("MAGIC") && !s.equals("STRIKETHROUGH") &&
-                        !s.equals("ITALIC") && !s.equals("UNDERLINE") && !s.equals("RESET")) {
-                    p.setDisplayName(color + p.getDisplayName());
-                    p.setPlayerListName(color + p.getDisplayName());
-                }
-            }
         }
+        return true;
     }
 }

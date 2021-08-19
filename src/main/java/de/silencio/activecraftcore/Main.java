@@ -1,18 +1,20 @@
 package de.silencio.activecraftcore;
 
 import de.silencio.activecraftcore.commands.*;
-import de.silencio.activecraftcore.listener.EnderPealCooldown;
-import de.silencio.activecraftcore.listener.JoinQuitListener;
-import de.silencio.activecraftcore.listener.LockdownListener;
-import de.silencio.activecraftcore.listener.MessageManager;
-import de.silencio.activecraftcore.listener.inventory.Navigator;
+import de.silencio.activecraftcore.listener.*;
+import de.silencio.activecraftcore.listener.inventory.ProfileListener;
 import de.silencio.activecraftcore.messages.Dialogue.DialogueListenerList;
 import de.silencio.activecraftcore.messages.Dialogue.DialogueManagerList;
-import de.silencio.activecraftcore.utils.*;
+import de.silencio.activecraftcore.utils.Config;
+import de.silencio.activecraftcore.utils.FileConfig;
+import de.silencio.activecraftcore.utils.VanishManager;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.io.File;
 
 public final class Main extends JavaPlugin {
 
@@ -73,13 +75,15 @@ public final class Main extends JavaPlugin {
         PluginManager pluginManager = Bukkit.getPluginManager();
 
         pluginManager.registerEvents(new JoinQuitListener(), this);
-        pluginManager.registerEvents(new Navigator(), this);
+        pluginManager.registerEvents(new ProfileListener(), this);
         pluginManager.registerEvents(new OffInvSeeCommand(), this);
         pluginManager.registerEvents(new MessageManager(), this);
         pluginManager.registerEvents(new EnderPealCooldown(), this);
         pluginManager.registerEvents(new LogCommand(), this);
         pluginManager.registerEvents(new LockdownListener(), this);
         pluginManager.registerEvents(new LockdownCommand(), this);
+        pluginManager.registerEvents(new SignListener(), this);
+        //pluginManager.registerEvents(new ProfileCommand(), this);
 
         //custom Listeners
         dialogueListenerList = new DialogueListenerList();
@@ -115,7 +119,6 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginCommand("colornick").setExecutor(new ColorNickCommand());
         Bukkit.getPluginCommand("fly").setExecutor(new FlyCommand());
         Bukkit.getPluginCommand("offinvsee").setExecutor(new OffInvSeeCommand());
-        Bukkit.getPluginCommand("realname").setExecutor(new RealNameCommand());
         Bukkit.getPluginCommand("nick").setExecutor(new NickCommand());
         Bukkit.getPluginCommand("god").setExecutor(new GodCommand());
         Bukkit.getPluginCommand("enderchest").setExecutor(new EnderchestCommand());
@@ -130,7 +133,7 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginCommand("opitems").setExecutor(new OpItemsCommand());
         Bukkit.getPluginCommand("kickall").setExecutor(new KickAllCommand());
         Bukkit.getPluginCommand("ram").setExecutor(new RamCommand());
-        Bukkit.getPluginCommand("tp").setExecutor(new TpCommand());
+        //Bukkit.getPluginCommand("tp").setExecutor(new TpCommand());
         Bukkit.getPluginCommand("staffchat").setExecutor(new StaffChatCommand());
         Bukkit.getPluginCommand("reply").setExecutor(new ReplyCommand());
         Bukkit.getPluginCommand("portal").setExecutor(new PortalCommand());
@@ -143,7 +146,7 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginCommand("whereami").setExecutor(new WhereAmICommand());
         Bukkit.getPluginCommand("weather").setExecutor(new WeatherCommand());
         Bukkit.getPluginCommand("more").setExecutor(new MoreCommand());
-        Bukkit.getPluginCommand("rehstart").setExecutor(new RestartCommand());
+        Bukkit.getPluginCommand("restart-server").setExecutor(new RestartCommand());
         Bukkit.getPluginCommand("mute").setExecutor(new MuteCommand());
         Bukkit.getPluginCommand("hat").setExecutor(new HatCommand());
         Bukkit.getPluginCommand("log").setExecutor(new LogCommand());
@@ -158,6 +161,12 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginCommand("afk").setExecutor(new AfkCommand());
         Bukkit.getPluginCommand("top").setExecutor(new TopCommand());
         Bukkit.getPluginCommand("explode").setExecutor(new ExplodeCommand());
+        Bukkit.getPluginCommand("warn").setExecutor(new WarnCommand());
+        Bukkit.getPluginCommand("known-ips").setExecutor(new KnownIpsCommand());
+        Bukkit.getPluginCommand("profile").setExecutor(new ProfileCommand());
+        Bukkit.getPluginCommand("lastcoords").setExecutor(new LastCoordsCommand());
+        Bukkit.getPluginCommand("verify").setExecutor(new VerifyCommand());
+        Bukkit.getPluginCommand("tpall").setExecutor(new TpAllCommand());
     }
 
     public static Main getPlugin() {
@@ -182,16 +191,26 @@ public final class Main extends JavaPlugin {
                 for(Player players : Bukkit.getOnlinePlayers()) {
 
                     FileConfig fileConfig = new FileConfig("playtime.yml");
+                    FileConfig mainConfig = new FileConfig("config.yml");
 
                     int hours = fileConfig.getInt(players.getName() + ".hours");
                     int minutes = fileConfig.getInt(players.getName() + ".minutes");
 
+                    FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + players.getName().toLowerCase() + ".yml");
+                    if (minutes + hours * 60 >= mainConfig.getInt("remove-default-mute-after") && mainConfig.getInt("remove-default-mute-after") == 0) {
+                        players.sendMessage(ChatColor.GOLD + "Your default-mute has been removed. You are now able to talk.");
+                        playerdataConfig.set("default-mute", false);
+                        playerdataConfig.saveConfig();
+                    }
                     minutes++;
 
                     fileConfig.set(players.getName() + ".minutes", minutes);
                     fileConfig.saveConfig();
 
                     if(minutes == 60) {
+
+
+
 
                         fileConfig.set(players.getName() + ".minutes", 0);
 

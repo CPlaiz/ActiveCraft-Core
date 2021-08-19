@@ -17,7 +17,10 @@ public class TphereCommand implements CommandExecutor {
 
             if (args.length == 1) {
                 if (sender.hasPermission("activecraft.tphere")) {
-
+                    if (Bukkit.getPlayer(args[0]) == null) {
+                        sender.sendMessage(Errors.INVALID_PLAYER);
+                        return false;
+                    }
                     Player target = Bukkit.getPlayer(args[0]);
                     Player player = (Player) sender;
 

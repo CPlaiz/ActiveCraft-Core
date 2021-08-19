@@ -7,6 +7,7 @@ import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -25,6 +26,10 @@ public class MsgCommand implements CommandExecutor {
             if (player.hasPermission("activecraft.msg")) {
 
                 if (args.length >= 1) {
+                    if (Bukkit.getPlayer(args[0]) == null) {
+                        sender.sendMessage(Errors.INVALID_PLAYER);
+                        return false;
+                    }
                     Player target = Bukkit.getPlayer(args[0]);
 
                     if (target != null) {

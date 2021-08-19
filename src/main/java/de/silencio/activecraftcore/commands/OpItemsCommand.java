@@ -1,6 +1,5 @@
 package de.silencio.activecraftcore.commands;
 
-import de.silencio.activecraftcore.Main;
 import de.silencio.activecraftcore.messages.Errors;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;

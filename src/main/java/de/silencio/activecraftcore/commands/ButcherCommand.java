@@ -1,17 +1,18 @@
 package de.silencio.activecraftcore.commands;
 
 import de.silencio.activecraftcore.messages.Errors;
-import net.md_5.bungee.api.ChatMessageType;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class ButcherCommand implements CommandExecutor {
+public class ButcherCommand implements CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -34,9 +35,17 @@ public class ButcherCommand implements CommandExecutor {
                     }
                     for (int i = 0; i < amount; i++) {
                         Entity e = enemies.get(i);
-                        if (e instanceof Monster || e instanceof Flying || e instanceof Slime) {
+                        if (e instanceof Monster) {
                             if(e != null) {
                                 ((Monster) e).setHealth(0);
+                            }
+                        } else if (e instanceof Flying) {
+                            if(e != null) {
+                                ((Flying) e).setHealth(0);
+                            }
+                        } else if (e instanceof Slime) {
+                            if(e != null) {
+                                ((Slime) e).setHealth(0);
                             }
                         }
                     }
@@ -45,4 +54,12 @@ public class ButcherCommand implements CommandExecutor {
         } else sender.sendMessage(Errors.NOT_A_PLAYER);
         return true;
     }
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+
+        ArrayList<String> completerList = new ArrayList<>();
+        return completerList;
+    }
+
 }

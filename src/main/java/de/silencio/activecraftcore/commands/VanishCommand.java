@@ -12,7 +12,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.io.File;
-import java.util.Calendar;
 
 public class VanishCommand implements CommandExecutor {
 
@@ -26,11 +25,15 @@ public class VanishCommand implements CommandExecutor {
             String quitFormat = fileConfig.getString("quit-format");
 
             if (args.length == 1) {
-                if (sender.hasPermission("activecraft.vanish.other")) {
+                if (sender.hasPermission("activecraft.vanish.others")) {
+                    if (Bukkit.getPlayer(args[0]) == null) {
+                        sender.sendMessage(Errors.INVALID_PLAYER);
+                        return false;
+                    }
                     Player target = Bukkit.getPlayer(args[0]);
 
                     if (target != null) {
-                        FileConfig playerdataconfig = new FileConfig("playerdata" + File.separator + target.getName() + ".yml");
+                        FileConfig playerdataconfig = new FileConfig("playerdata" + File.separator + target.getName().toLowerCase() + ".yml");
                         if (vanishManager.isVanished(target)) {
                             vanishManager.setVanished(target, false);
                             target.sendMessage(ChatColor.GOLD + "You are now " + ChatColor.AQUA + "visible.");
@@ -38,7 +41,7 @@ public class VanishCommand implements CommandExecutor {
                             for (Player forPlayer : Bukkit.getOnlinePlayers()) {
                                 if (forPlayer.hasPermission("activecraft.vanish.see")) {
                                     if (forPlayer != sender || forPlayer != target) {
-                                        forPlayer.sendMessage(ChatColor.AQUA + target.getName() + ChatColor.GOLD + " is now " + ChatColor.AQUA + "visible.");
+                                        forPlayer.sendMessage(ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " is now " + ChatColor.AQUA + "visible.");
                                     }
                                 } else
                                 if (forPlayer != sender || forPlayer != target) {
@@ -56,7 +59,7 @@ public class VanishCommand implements CommandExecutor {
                             for (Player forPlayer : Bukkit.getOnlinePlayers()) {
                                 if (forPlayer.hasPermission("activecraft.vanish.see")) {
                                     if (forPlayer != sender || forPlayer != target) {
-                                        forPlayer.sendMessage(ChatColor.AQUA + target.getName() + ChatColor.GOLD + " is now " + ChatColor.AQUA + "invisible.");
+                                        forPlayer.sendMessage(ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " is now " + ChatColor.AQUA + "invisible.");
                                     }
                                 } else
                                 if (forPlayer != sender || forPlayer != target) {
@@ -72,7 +75,7 @@ public class VanishCommand implements CommandExecutor {
                 } else sender.sendMessage(Errors.NO_PERMISSION);
             } else if (sender instanceof Player) {
                 Player p = (Player) sender;
-                FileConfig playerdataconfig = new FileConfig("playerdata" + File.separator + p.getName() + ".yml");
+                FileConfig playerdataconfig = new FileConfig("playerdata" + File.separator + p.getName().toLowerCase() + ".yml");
                 if (sender.hasPermission("activecraft.vanish")) {
                     Player player = (Player) sender;
                     if (vanishManager.isVanished(p)) {
@@ -81,7 +84,7 @@ public class VanishCommand implements CommandExecutor {
                         for (Player forPlayer : Bukkit.getOnlinePlayers()) {
                             if (forPlayer.hasPermission("activecraft.vanish.see")) {
                                 if (forPlayer != sender) {
-                                    forPlayer.sendMessage(ChatColor.AQUA + sender.getName() + ChatColor.GOLD + " is now " + ChatColor.AQUA + "visible.");
+                                    forPlayer.sendMessage(ChatColor.AQUA + ((Player) sender).getDisplayName() + ChatColor.GOLD + " is now " + ChatColor.AQUA + "visible.");
                                 }
                             } else
                             if (forPlayer != sender) {
@@ -98,7 +101,7 @@ public class VanishCommand implements CommandExecutor {
                         for (Player forPlayer : Bukkit.getOnlinePlayers()) {
                             if (forPlayer.hasPermission("activecraft.vanish.see")) {
                                 if (forPlayer != sender) {
-                                    forPlayer.sendMessage(ChatColor.AQUA + sender.getName() + ChatColor.GOLD + " is now " + ChatColor.AQUA + "invisible.");
+                                    forPlayer.sendMessage(ChatColor.AQUA + ((Player) sender).getDisplayName() + ChatColor.GOLD + " is now " + ChatColor.AQUA + "invisible.");
                                 }
                             } else
                             if (forPlayer != sender) {

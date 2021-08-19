@@ -13,11 +13,11 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class TpAcceptCommand extends TpaCommand implements CommandExecutor {
 
-    FileConfig fileConfig = new FileConfig("config.yml");
+
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-
+        FileConfig fileConfig = new FileConfig("config.yml");
         if (sender instanceof Player) {
 
             if (sender.hasPermission("activecraft.tpaccept")) {

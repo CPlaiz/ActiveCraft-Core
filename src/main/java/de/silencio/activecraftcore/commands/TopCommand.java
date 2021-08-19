@@ -16,9 +16,12 @@ public class TopCommand implements CommandExecutor {
 
             if (sender.hasPermission("activecraft.top")) {
                 if (args.length == 0) {
+                    int xBlock = player.getLocation().getBlockX();
+                    int zBlock = player.getLocation().getBlockZ();
                     double x = player.getLocation().getX();
                     double z = player.getLocation().getZ();
-                    Location loc = new Location(player.getWorld(), x, player.getWorld().getHighestBlockYAt((int) x, (int) z), z);
+                    System.out.println(xBlock + ", " + zBlock + ", " + x + ", " + z);
+                    Location loc = new Location(player.getWorld(), x, player.getWorld().getHighestBlockYAt(xBlock, zBlock), z, player.getLocation().getYaw(), player.getLocation().getPitch());
                     if (loc.getBlock().getType() != Material.LAVA) {
                         loc.setY(loc.getBlockY() + 1);
                         player.teleport(loc);
@@ -26,15 +29,21 @@ public class TopCommand implements CommandExecutor {
                         player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
                     } else sender.sendMessage(Errors.WARNING + "Teleport is not safe!");
                 } else if (args.length == 1) {
+                    if (Bukkit.getPlayer(args[0]) == null) {
+                        sender.sendMessage(Errors.INVALID_PLAYER);
+                        return false;
+                    }
                     Player target = Bukkit.getPlayer(args[0]);
-                    double x = player.getLocation().getX();
-                    double z = player.getLocation().getZ();
-                    Location loc = new Location(target.getWorld(), x, target.getWorld().getHighestBlockYAt((int) x, (int) z), z);
+                    int xBlock = target.getLocation().getBlockX();
+                    int zBlock = target.getLocation().getBlockZ();
+                    double x = target.getLocation().getX();
+                    double z = target.getLocation().getZ();
+                    Location loc = new Location(target.getWorld(), x, target.getWorld().getHighestBlockYAt(xBlock, zBlock), z, player.getLocation().getYaw(), player.getLocation().getPitch());
                     if (loc.getBlock().getType() != Material.LAVA) {
                         loc.setY(loc.getBlockY() + 1);
                         target.teleport(loc);
                         target.sendMessage(ChatColor.GOLD + "Teleported to the top.");
-                        sender.sendMessage(ChatColor.GOLD + "Teleported " + ChatColor.AQUA + target.getName() + ChatColor.GOLD + " to the top.");
+                        sender.sendMessage(ChatColor.GOLD + "Teleported " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " to the top.");
                         target.playSound(target.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
                     } else sender.sendMessage(Errors.WARNING + "Teleport is not safe!");
                 }

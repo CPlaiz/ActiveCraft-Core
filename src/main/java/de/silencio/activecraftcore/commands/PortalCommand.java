@@ -51,6 +51,7 @@ public class PortalCommand implements CommandExecutor, TabCompleter {
                     endGateway.setExitLocation(loc);
                     endGateway.setAge(-999999999);
                     endGateway.update();
+                    sender.sendMessage(ChatColor.GOLD + "Created portal.");
 
                 } else if (args.length == 9) {
                     FileConfig portalsConfig = new FileConfig("portals.yml");
@@ -81,6 +82,7 @@ public class PortalCommand implements CommandExecutor, TabCompleter {
                     endGateway.setExitLocation(loc);
                     endGateway.setAge(-999999999);
                     endGateway.update();
+                    sender.sendMessage(ChatColor.GOLD + "Created portal.");
                 }
 
 
@@ -96,7 +98,7 @@ public class PortalCommand implements CommandExecutor, TabCompleter {
                     int portalz = portalsConfig.getInt(args[1] + ".portal.z");
                     World portalworld = Bukkit.getWorld(portalsConfig.getString(args[1] + ".portal.world"));
                     Block block = portalworld.getBlockAt(portalx, portaly, portalz);
-                    System.out.println("Block: " + block.getLocation().toString() + block.getType().toString());
+                    //System.out.println("Block: " + block.getLocation().toString() + block.getType().toString());
                     block.setType(Material.AIR);
                     portalsConfig.set(args[1], null);
                     portalList.remove(args[1]);

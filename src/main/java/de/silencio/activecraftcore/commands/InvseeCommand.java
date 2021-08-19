@@ -14,6 +14,10 @@ public class InvseeCommand implements CommandExecutor {
 
         if (sender instanceof Player) {
             Player player = (Player) sender;
+            if (Bukkit.getPlayer(args[0]) == null) {
+                sender.sendMessage(Errors.INVALID_PLAYER);
+                return false;
+            }
             Player target = Bukkit.getPlayer(args[0]);
 
             if (sender.hasPermission("activecraft.invsee")) {

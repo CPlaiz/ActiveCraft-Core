@@ -1,8 +1,6 @@
 package de.silencio.activecraftcore.listener;
 
 import de.silencio.activecraftcore.utils.FileConfig;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -19,8 +17,8 @@ public class LockdownListener implements Listener {
 
         if (isLockedDown) {
             String playername = event.getPlayerProfile().getName();
-            FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + playername + ".yml");
-            System.out.println(playername);
+            FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + playername.toLowerCase() + ".yml");
+            //System.out.println(playername);
             if(!playerdataConfig.getBoolean("lockdown-bypass")) {
                 event.setLoginResult(AsyncPlayerPreLoginEvent.Result.KICK_OTHER);
                 event.setKickMessage(fileConfig.getString("lockdown-kick-message"));

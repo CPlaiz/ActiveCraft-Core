@@ -21,9 +21,13 @@ public class WhereAmICommand implements CommandExecutor {
                 } else sender.sendMessage(Errors.NO_PERMISSION);
             } else sender.sendMessage(Errors.NOT_A_PLAYER);
         } else if(args.length == 1) {
+            if (Bukkit.getPlayer(args[0]) == null) {
+                sender.sendMessage(Errors.INVALID_PLAYER);
+                return false;
+            }
             Player target = Bukkit.getPlayer(args[0]);
             if(target != null) {
-                if (sender.hasPermission("activecraft.whereami.other")) {
+                if (sender.hasPermission("activecraft.whereami.others")) {
                     sender.sendMessage(ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " is in " + ChatColor.AQUA + target.getWorld().getName() + ChatColor.GOLD + " at x" + ChatColor.AQUA + target.getLocation().getBlockX() + ChatColor.GOLD + " y" + ChatColor.AQUA + target.getLocation().getBlockY() + ChatColor.GOLD + " z" + ChatColor.AQUA + target.getLocation().getBlockZ());
                 } else sender.sendMessage(Errors.NO_PERMISSION);
             }

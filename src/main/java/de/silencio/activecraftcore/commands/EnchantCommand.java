@@ -13,7 +13,6 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.EnchantmentStorageMeta;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -160,6 +159,15 @@ public class EnchantCommand implements CommandExecutor, TabCompleter {
                         args[0].replace("thorns", "Enchantment.THORNS");
                         args[0].replace("unbreaking", "Enchantment.DURABILITY");
 
+                        Integer num = null;
+                        try {
+                            num = Integer.valueOf(args[1]);
+                        } catch (NumberFormatException ignored) {
+                        }
+                        if (num == null) {
+                            sender.sendMessage(Errors.INVALID_NUMBER);
+                            return false;
+                        }
                         int level = Integer.parseInt(args[1]);
 
                         ItemStack eitem = player.getInventory().getItemInMainHand();
@@ -224,8 +232,6 @@ public class EnchantCommand implements CommandExecutor, TabCompleter {
                 list.add("clear");
                 list.add("glint");
         }
-
-        if (args.length == 0) return list;
         if (args.length == 2 && args[0].equalsIgnoreCase("glint")) {
             list.add("true");
             list.add("false");

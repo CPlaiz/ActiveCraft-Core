@@ -13,8 +13,11 @@ public interface Errors {
 
         String INVALID_PLAYER = ChatColor.RED + "Warning! " + ChatColor.GRAY + "Player not found!";
 
+        String INVALID_NUMBER = ChatColor.RED + "Warning! " + ChatColor.GRAY + "This is not a valid number!";
+
         String NOT_A_PLAYER = ChatColor.RED + "Warning! " + ChatColor.GRAY + "You are not a player!";
 
         String WARNING = ChatColor.RED + "Warning! " + ChatColor.GRAY;
+
 
 }

@@ -4,7 +4,6 @@ import org.bukkit.*;
 import org.bukkit.entity.Player;
 
 import java.io.File;
-import java.util.Arrays;
 
 public class Placeholder {
 
@@ -66,7 +65,7 @@ public class Placeholder {
 
     public String replace(String target, Type type) {
 
-        FileConfig playerdataconfig = new FileConfig("playerdata" + File.separator + player.getName() + ".yml");
+        FileConfig playerdataconfig = new FileConfig("playerdata" + File.separator + player.getName().toLowerCase() + ".yml");
         Server server = player.getServer();
         World world = player.getWorld();
         Location location = player.getLocation();
@@ -81,7 +80,7 @@ public class Placeholder {
                 edited = target.replace("%playername%", player.getName());
                 break;
             case PING:
-                edited = target.replace("%ping%", player.getDisplayName()); // TODO: 11.08.2021
+                edited = target.replace("%ping%", player.getPing() + ""); 
                 break;
             case PLAYERS_IN_WORLD:
                 edited = target.replace("%players_in_world%", world.getPlayerCount() + "");
@@ -189,13 +188,14 @@ public class Placeholder {
                 edited = target.replace("%is_vanished%", playerdataconfig.get("vanished").toString());
                 break;
             case PLAYTIME:
-                edited = target.replace("%playtime%", player.getDisplayName());
+                FileConfig playtimeConfig = new FileConfig("playtime");
+                edited = target.replace("%playtime%", playtimeConfig.getInt(player.getName() + ".minutes") + playtimeConfig.getInt(player.getName() + ".hours") + "");
                 break;
             case TIMES_JOINED:
-                edited = target.replace("%times_joined%", player.getDisplayName());
+                edited = target.replace("%times_joined%", playerdataconfig.getInt("times-joined") + "");
                 break;
             case TIMES_LEFT:
-                edited = target.replace("%times_left%", player.getDisplayName());
+                edited = target.replace("%times_left%", player.getDisplayName()); // TODO: 19.08.2021
                 break;
             case DIFFICULTY:
                 edited = target.replace("%difficulty%", world.getDifficulty().toString());

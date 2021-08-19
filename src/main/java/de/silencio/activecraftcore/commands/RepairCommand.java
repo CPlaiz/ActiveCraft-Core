@@ -20,17 +20,13 @@ public class RepairCommand implements CommandExecutor {
 
             if(sender.hasPermission("activecraft.repair")) {
 
-                if(args.length == 0) {
-
                     ItemStack item = player.getInventory().getItemInMainHand();
-                    System.out.println(item.getType().toString());
+                    //System.out.println(item.getType().toString());
                     ItemMeta meta = item.getItemMeta();
                     if (meta instanceof Damageable) {
                         ((Damageable) meta).setDamage(0);
                     }
                     item.setItemMeta(meta);
-
-                } else sender.sendMessage(Errors.TOO_MANY_ARGUMENTS);
 
             } else sender.sendMessage(Errors.NO_PERMISSION);
 

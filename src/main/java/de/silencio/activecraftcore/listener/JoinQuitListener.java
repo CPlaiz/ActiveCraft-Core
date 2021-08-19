@@ -2,23 +2,17 @@ package de.silencio.activecraftcore.listener;
 
 import de.silencio.activecraftcore.Main;
 import de.silencio.activecraftcore.messages.Errors;
-import de.silencio.activecraftcore.utils.Config;
-import de.silencio.activecraftcore.utils.FileConfig;
-import de.silencio.activecraftcore.utils.Placeholder;
-import de.silencio.activecraftcore.utils.VanishManager;
+import de.silencio.activecraftcore.utils.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
-import org.bukkit.Material;
+import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.inventory.ItemStack;
+import org.bukkit.event.player.PlayerTeleportEvent;
 
 import java.io.File;
 import java.time.OffsetDateTime;
@@ -32,6 +26,16 @@ public class JoinQuitListener implements Listener {
 
 
     @EventHandler
+    public void onPlayerWorldChange(PlayerTeleportEvent event) {
+        Player player = event.getPlayer();
+        Location playerLocation = player.getLocation();
+        FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + player.getName().toLowerCase() + ".yml");
+
+        playerdataConfig.set("last-location." + event.getFrom().getWorld().getName(), playerLocation);
+        playerdataConfig.saveConfig();
+    }
+
+    @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
 
         Player player = event.getPlayer();
@@ -39,7 +43,7 @@ public class JoinQuitListener implements Listener {
         Placeholder placeholder = new Placeholder(player);
 
         FileConfig fileConfigPlayerlist = new FileConfig("playerlist.yml");
-        FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + player.getName() + ".yml");
+        FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + player.getName().toLowerCase() + ".yml");
         FileConfig fileConfigUUIDName = new FileConfig("nameuuidlist.yml");
         FileConfig mainConfig = new FileConfig("config.yml");
 
@@ -68,11 +72,11 @@ public class JoinQuitListener implements Listener {
             file.mkdir();
         }
 
-        config = new Config("playerdata" + File.separator + player.getName() + ".yml", Main.getPlugin().getDataFolder());
+        config = new Config("playerdata" + File.separator + player.getName().toLowerCase() + ".yml", Main.getPlugin().getDataFolder());
 
         if (config.toFileConfiguration().getKeys(true).size() == 0) {
 
-            FileConfig fileConfig = new FileConfig("playerdata" + File.separator + player.getName() + ".yml");
+            FileConfig fileConfig = new FileConfig("playerdata" + File.separator + player.getName().toLowerCase() + ".yml");
 
             playerdataConfig.set("name", player.getName());
             playerdataConfig.set("nickname", player.getName());
@@ -85,7 +89,7 @@ public class JoinQuitListener implements Listener {
             playerdataConfig.set("fly", false);
             playerdataConfig.set("flyspeed", 1);
             playerdataConfig.set("muted", false);
-            playerdataConfig.set("default-mute", mainConfig.getString("mute-new-players"));
+            playerdataConfig.set("default-mute", mainConfig.getBoolean("mute-new-players"));    
             playerdataConfig.set("vanished", false);
             playerdataConfig.set("on-duty", false);
             playerdataConfig.set("last-online", null);
@@ -96,11 +100,13 @@ public class JoinQuitListener implements Listener {
             playerdataConfig.set("violations.mutes", 0);
             playerdataConfig.set("violations.bans", 0);
             playerdataConfig.set("violations.ip-bans", 0);
+            playerdataConfig.set("times-joined", 0);
 
             playerdataConfig.saveConfig();
         }
 
         playerdataConfig.set("last-online", "Online");
+        playerdataConfig.set("times-joined", playerdataConfig.getInt("times-joined") + 1);
 
         List<String> knownIps = playerdataConfig.getStringList("known-ips");
         if (!knownIps.contains(player.getAddress().getAddress().toString().replace("/", ""))) {
@@ -112,7 +118,7 @@ public class JoinQuitListener implements Listener {
             List<String> playerList = fileConfigPlayerlist.getStringList("players");
             playerList.remove(player.getName());
             for (String s : playerList) {
-                FileConfig fileConfigIpAddressCheck = new FileConfig("playerdata" + File.separator + s + ".yml");
+                FileConfig fileConfigIpAddressCheck = new FileConfig("playerdata" + File.separator + s.toLowerCase() + ".yml");
                 List<String> knownIpsOthers = fileConfigIpAddressCheck.getStringList("known-ips");
                 for (String knownIpPlayer : knownIps) {
                     if (knownIpsOthers.contains(knownIpPlayer)) {
@@ -146,17 +152,21 @@ public class JoinQuitListener implements Listener {
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
+        Location playerLocation = player.getLocation();
 
-        FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + player.getName() + ".yml");
+        FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + player.getName().toLowerCase() + ".yml");
 
         OffsetDateTime now = OffsetDateTime.now();
         playerdataConfig.set("last-online", dtf.format(now));
+        playerdataConfig.set("last-location." + playerLocation.getWorld().getName(), playerLocation);
 
         if (player.hasPermission("activecraft.lockdown.bypass")) {
             playerdataConfig.set("lockdown-bypass", true);
         } else {
             playerdataConfig.set("lockdown-bypass", false);
         }
+
+
 
         playerdataConfig.saveConfig();
 

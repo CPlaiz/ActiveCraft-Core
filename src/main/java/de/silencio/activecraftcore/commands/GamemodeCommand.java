@@ -16,7 +16,12 @@ public class GamemodeCommand implements CommandExecutor {
 
 
         if (args.length == 1) {
+            if (Bukkit.getPlayer(args[0]) == null) {
+                sender.sendMessage(Errors.INVALID_PLAYER);
+                return false;
+            }
             Player target = Bukkit.getPlayer(args[0]);
+
             if (label.equalsIgnoreCase("su") || label.equalsIgnoreCase("survival")) {
                 if (sender.hasPermission("activecraft.gamemode.survival")) {
                     target.setGameMode(GameMode.SURVIVAL);

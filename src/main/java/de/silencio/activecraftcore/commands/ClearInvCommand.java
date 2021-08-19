@@ -24,10 +24,16 @@ public class ClearInvCommand implements CommandExecutor {
             }
 
             if(args.length == 1) {
+                if (Bukkit.getPlayer(args[0]) == null) {
+                    sender.sendMessage(Errors.INVALID_PLAYER);
+                    return false;
+                }
                 Player target = Bukkit.getPlayer(args[0]);
                 if(target != null) {
-                    sender.sendMessage(ChatColor.GOLD + "Cleared " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + "'s inventory.");
-                    target.sendMessage(ChatColor.GOLD + "Your inventory was cleared by " + ChatColor.AQUA + sender.getName());
+                    sender.sendMessage(ChatColor.GOLD + "Cleared " + ChatColor.AQUA + target.getDisplayName() + "'s" + ChatColor.GOLD + " inventory.");
+                    if (sender instanceof Player) {
+                        target.sendMessage(ChatColor.GOLD + "Your inventory was cleared by " + ChatColor.AQUA + ((Player) sender).getDisplayName());
+                    } else target.sendMessage(ChatColor.GOLD + "Your inventory was cleared by " + ChatColor.AQUA + sender.getName());
                     target.getInventory().clear();
                 } else sender.sendMessage(Errors.INVALID_PLAYER);
             }

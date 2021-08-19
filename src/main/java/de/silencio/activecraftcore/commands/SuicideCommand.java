@@ -26,6 +26,10 @@ public class SuicideCommand implements CommandExecutor {
                 } else sender.sendMessage(Errors.NOT_A_PLAYER);
             } else if(args.length == 1) {
                 if(sender.hasPermission("activecraft.suicide.others")) {
+                    if (Bukkit.getPlayer(args[0]) == null) {
+                        sender.sendMessage(Errors.INVALID_PLAYER);
+                        return false;
+                    }
                     Player target = Bukkit.getPlayer(args[0]);
 
                     target.setHealth(0);

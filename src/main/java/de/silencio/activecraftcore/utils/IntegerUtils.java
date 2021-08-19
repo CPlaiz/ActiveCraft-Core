@@ -2,7 +2,7 @@ package de.silencio.activecraftcore.utils;
 
 public class IntegerUtils {
 
-    public String shortInteger(int duration) {
+    public static String shortInteger(int duration) {
         String string = "";
         int hours = 0;
         int minutes = 0;

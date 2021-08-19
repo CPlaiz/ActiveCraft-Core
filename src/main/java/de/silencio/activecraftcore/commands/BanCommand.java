@@ -2,13 +2,15 @@ package de.silencio.activecraftcore.commands;
 
 import de.silencio.activecraftcore.Main;
 import de.silencio.activecraftcore.messages.Dialogue.DialogueList;
-import de.silencio.activecraftcore.messages.Errors;
-import de.silencio.activecraftcore.messages.Dialogue.DialogueListener;
-import de.silencio.activecraftcore.utils.BanManager;
+import de.silencio.activecraftcore.ownlisteners.DialogueListener;
 import de.silencio.activecraftcore.messages.Dialogue.DialogueManager;
+import de.silencio.activecraftcore.messages.Errors;
+import de.silencio.activecraftcore.utils.BanManager;
 import de.silencio.activecraftcore.utils.FileConfig;
 import de.silencio.activecraftcore.utils.StringUtils;
-import net.md_5.bungee.api.chat.*;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.BanEntry;
 import org.bukkit.BanList;
@@ -22,10 +24,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
 import java.io.File;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.List;
 
 public class BanCommand implements CommandExecutor, DialogueList, Listener, DialogueListener, TabCompleter {
 
@@ -39,6 +38,10 @@ public class BanCommand implements CommandExecutor, DialogueList, Listener, Dial
     private BanList.Type type;
     private StringUtils stringUtils = new StringUtils();
 
+    public BanCommand() {
+        Main.getPlugin().dialogueListenerList.addListener(this);
+    }
+
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         //System.out.println(Main.getPlugin().getDialogueListenerList().toString());
@@ -49,6 +52,10 @@ public class BanCommand implements CommandExecutor, DialogueList, Listener, Dial
 
                 type = BanList.Type.NAME;
 
+                if (Bukkit.getPlayer(args[0]) == null) {
+                    sender.sendMessage(Errors.INVALID_PLAYER);
+                    return false;
+                }
                 this.target = Bukkit.getPlayer(args[0]);
                 if (!nameBanManager.isBanned(args[0])) {
 
@@ -59,15 +66,15 @@ public class BanCommand implements CommandExecutor, DialogueList, Listener, Dial
                     this.dialogueManager.setCompletedMessage(ChatColor.GOLD + "Banned " + ChatColor.AQUA + target.getName() + ChatColor.GOLD + ".");
                     this.dialogueManager.setCancelledMessage(ChatColor.GOLD + "Cancelled ban dialogue for " + ChatColor.AQUA + target.getName() + ChatColor.GOLD + ".");
                     this.dialogueManager.add(ChatColor.GOLD + "Please enter a reason: ");
-                    this.dialogueManager.add(ChatColor.GOLD + "Please enter the ban duration: ");
+                    this.dialogueManager.add(ChatColor.GOLD + "Please enter the ban duration (dd/MM/yyyy hh:mm): ");
                     this.dialogueManager.initialize();
 
                     Date date = new Date();
                 } else sender.sendMessage(Errors.WARNING + "This player is already banned.");
             } else if (label.equalsIgnoreCase("unban")) {
-                if (nameBanManager.isBanned(target.getName())) {
-                    nameBanManager.unban(target);
-                    sender.sendMessage(ChatColor.GOLD + "Unbanned " + ChatColor.AQUA + target.getName());
+                if (nameBanManager.isBanned(args[0])) {
+                    nameBanManager.unban(args[0]);
+                    sender.sendMessage(ChatColor.GOLD + "Unbanned " + ChatColor.AQUA + args[0]);
                 } else sender.sendMessage(Errors.WARNING + "This player is not banned.");
             } else if (label.equalsIgnoreCase("banlist")) {
                 if (sender.hasPermission("activecraft.banlist")) {
@@ -126,7 +133,7 @@ public class BanCommand implements CommandExecutor, DialogueList, Listener, Dial
                         this.dialogueManager.setCompletedMessage(ChatColor.GOLD + "Banned " + ChatColor.AQUA + target.getName() + ChatColor.GOLD + " (" + target.getAddress().getAddress().toString().replace("/", "") + ").");
                         this.dialogueManager.setCancelledMessage(ChatColor.GOLD + "Cancelled ban dialogue for " + ChatColor.AQUA + target.getName() + ChatColor.GOLD + ".");
                         this.dialogueManager.add(ChatColor.GOLD + "Please enter a reason: ");
-                        this.dialogueManager.add(ChatColor.GOLD + "Please enter the ban duration: ");
+                        this.dialogueManager.add(ChatColor.GOLD + "Please enter the ban duration (dd/MM/yyyy hh:mm): ");
                         this.dialogueManager.initialize();
 
                         Date date = new Date();
@@ -150,8 +157,8 @@ public class BanCommand implements CommandExecutor, DialogueList, Listener, Dial
                     } else sender.sendMessage(Errors.WARNING + "This player is already banned.");
                 } else sender.sendMessage(Errors.WARNING + "This is not a valid IP address");
             } else if (label.equalsIgnoreCase("unban-ip")) {
-                System.out.println(args[0]);
-                System.out.println(ipBanManager.isBanned(args[0]));
+                //System.out.println(args[0]);
+                //System.out.println(ipBanManager.isBanned(args[0]));
                     ipBanManager.unban(args[0]);
                     sender.sendMessage(ChatColor.GOLD + "Unbanned " + ChatColor.AQUA + args[0]);
             }
@@ -162,9 +169,11 @@ public class BanCommand implements CommandExecutor, DialogueList, Listener, Dial
     @Override
     public void onDialogueAnswer(DialogueManager dialogueManager) {
         if (dialogueManager.getActiveStep() == 1) {
-            dialogueManager.goBack();
+            if (!(dialogueManager.getTempAnswer().matches("\\d\\d/\\d\\d/\\d\\d\\d\\d \\d\\d:\\d\\d") ||
+                    dialogueManager.getTempAnswer().equalsIgnoreCase("permanent") || dialogueManager.getTempAnswer().equalsIgnoreCase("null"))) {
+                dialogueManager.goBack();
+            }
         }
-        return;
     }
 
     @Override
@@ -177,7 +186,7 @@ public class BanCommand implements CommandExecutor, DialogueList, Listener, Dial
         if (this.dialogueManager == dialogueManager) {
             if (type == BanList.Type.NAME) {
                 nameBanManager.ban(target, this.dialogueManager.getAnswer(0), convertBanDuration(this.dialogueManager.getAnswer(1)), commandSender.getName());
-                FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + target.getName() + ".yml");
+                FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + target.getName().toLowerCase() + ".yml");
                 playerdataConfig.set("violations.bans", playerdataConfig.getInt("violations.bans") + 1);
                 playerdataConfig.saveConfig();
                 Bukkit.getScheduler().runTask(Main.getPlugin(), new Runnable() {
@@ -188,7 +197,7 @@ public class BanCommand implements CommandExecutor, DialogueList, Listener, Dial
                 });
             } else if (type == BanList.Type.IP) {
                 ipBanManager.ban(target.getAddress().getAddress().toString().replace("/", ""), this.dialogueManager.getAnswer(0), convertBanDuration(this.dialogueManager.getAnswer(1)), commandSender.getName());
-                FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + target.getName() + ".yml");
+                FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + target.getName().toLowerCase() + ".yml");
                 playerdataConfig.set("violations.ip-bans", playerdataConfig.getInt("violations.ip-bans") + 1);
                 playerdataConfig.saveConfig();
                 Bukkit.getScheduler().runTask(Main.getPlugin(), new Runnable() {
@@ -203,31 +212,33 @@ public class BanCommand implements CommandExecutor, DialogueList, Listener, Dial
 
     public Date convertBanDuration(String string) {
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm");
         Date nowDate = new Date();
         Date addedDate = null;
         Date finalDate = null;
 
-        if (string.matches("^\\d/\\d/\\d \\d:\\d")) {
+        if (string.matches("\\d\\d/\\d\\d/\\d\\d\\d\\d \\d\\d:\\d\\d")) {
 
-            System.out.println();
+            string = string.trim();
+            String stringSub1 = string.substring(0, 10);
+            String stringSub2 = string.substring(12, 16);
 
-            String[] arrayDate = string.split("/");
-            String[] arrayTime = new String[2];
+            String[] arrayDate = stringSub1.split("/");
+            String[] arrayTime = stringSub2.split(":");
 
+            long dayMillis = Long.parseLong(arrayDate[0])*24*60*60*1000;
+            long monthMillis = Long.parseLong(arrayDate[1])*30*24*60*60*1000;
+            long yearMillis = Long.parseLong(arrayDate[2])*365*60*60*1000;
+            long hourMillis = Long.parseLong(arrayTime[0])*60*60*1000;
+            long minuteMillis = Long.parseLong(arrayTime[1])*60*1000;
 
+            long nowMillis = nowDate.getTime();
+
+            long totalMillis = dayMillis + monthMillis + yearMillis + hourMillis + minuteMillis + nowMillis;
+
+            finalDate = new Date(totalMillis);
+        } else if (string.equalsIgnoreCase("null") || string.equalsIgnoreCase("permanent")) {
+            finalDate = null;
         }
-
-
-        try {
-            addedDate = new SimpleDateFormat("dd/MM/yyyy hh:mm").parse(string);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        long nowMillis = nowDate.getTime();
-
-
         return finalDate;
     }
 

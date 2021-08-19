@@ -17,9 +17,13 @@ public class WhoIsCommand implements CommandExecutor {
 
         if (sender.hasPermission("activecraft.whois")) {
             if (args.length == 1) {
+                if (Bukkit.getPlayer(args[0]) == null) {
+                    sender.sendMessage(Errors.INVALID_PLAYER);
+                    return false;
+                }
                 Player target = Bukkit.getPlayer(args[0]);
 
-                FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + target.getName() + ".yml");
+                FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + target.getName().toLowerCase() + ".yml");
 
                 sender.sendMessage(
 
@@ -33,8 +37,9 @@ public class WhoIsCommand implements CommandExecutor {
                       + ChatColor.AQUA + "World: " + ChatColor.WHITE +  target.getWorld().getName() + "\n"
                       + ChatColor.AQUA + "Coordinates: " +
                                 ChatColor.WHITE + "X: " + target.getLocation().getBlockX() + ", Y: " + target.getLocation().getBlockY() + ", Z: " + target.getLocation().getBlockZ() + "\n"
+                      + ChatColor.AQUA + "AFK: " + ChatColor.WHITE + playerdataConfig.getString("afk") + "\n"
                       + ChatColor.AQUA + "Client: " + ChatColor.WHITE + target.getClientBrandName() + "\n"
-                      + ChatColor.AQUA + "Address: " + ChatColor.WHITE + target.getAddress().toString() + "\n"
+                      + ChatColor.AQUA + "Address: " + ChatColor.WHITE + target.getAddress().toString().replace("/", "") + "\n"
                       + ChatColor.AQUA + "Gamemode: " + ChatColor.WHITE + target.getGameMode().name().toLowerCase() + "\n"
                       + ChatColor.AQUA + "Muted: " + ChatColor.WHITE + playerdataConfig.getString("muted") + "\n"
                       + ChatColor.AQUA + "Whitelisted: " + ChatColor.WHITE + target.isWhitelisted() + "\n"
