@@ -21,7 +21,7 @@
 title: ActiveCraft-Docs
 email: your-email@example.com
 description: This is the documentation page for ActiveCraft-Core. 
-baseurl: "" # the subpath of your site, e.g. /blog
+baseurl: "ActiveCraft-Core" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: jekyllrb
 github_username:  CPlaiz

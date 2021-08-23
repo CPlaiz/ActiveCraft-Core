@@ -4,5 +4,8 @@
 
 layout: home
 ---
+
+# Contributors
+
 **Coming soon**
 {: .label .label-yellow }
