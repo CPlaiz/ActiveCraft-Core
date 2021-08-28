@@ -17,7 +17,7 @@ public class GodCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         if (args.length == 0) {
-            if (sender.hasPermission("activecraft.god")) {
+            if (sender.hasPermission("activecraft.god.self")) {
                 if (sender instanceof Player) {
                     Player player = (Player) sender;
                     FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + player.getName().toLowerCase() + ".yml");

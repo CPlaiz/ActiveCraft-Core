@@ -17,7 +17,7 @@ public class BroadCastCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        if(sender.hasPermission("activecraft.broadcast")) {
+        if(sender.hasPermission("activecraft.broadcast.self")) {
 
             if(label.equalsIgnoreCase("broadcast") || label.equalsIgnoreCase("bc")) {
                 if (args.length >= 1) {

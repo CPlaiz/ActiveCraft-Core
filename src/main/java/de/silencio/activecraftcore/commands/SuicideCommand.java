@@ -15,7 +15,7 @@ public class SuicideCommand implements CommandExecutor {
 
             if(args.length == 0) {
                 if (sender instanceof Player) {
-                    if (sender.hasPermission("activecraft.suicide")) {
+                    if (sender.hasPermission("activecraft.suicide.self")) {
 
                         Player player = ((Player) sender);
                         player.setHealth(0);
@@ -31,6 +31,11 @@ public class SuicideCommand implements CommandExecutor {
                         return false;
                     }
                     Player target = Bukkit.getPlayer(args[0]);
+
+                    if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
+                        sender.sendMessage(Errors.CANNOT_TARGET_SELF);
+                        return false;
+                    }
 
                     target.setHealth(0);
                     sender.sendMessage(ChatColor.GOLD + "Made " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " commit suicide.");

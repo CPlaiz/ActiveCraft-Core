@@ -23,7 +23,7 @@ public class EnderchestCommand implements CommandExecutor {
             Player player = (Player) sender;
 
             if (args.length == 0) {
-                if (sender.hasPermission("activecraft.enderchest")) {
+                if (sender.hasPermission("activecraft.enderchest.self")) {
                     player.openInventory(player.getEnderChest());
                     player.playSound(player.getLocation(), Sound.BLOCK_ENDER_CHEST_OPEN, 1f, 1f);
                     player.sendMessage(ChatColor.GOLD + "Opened Enderchest.");

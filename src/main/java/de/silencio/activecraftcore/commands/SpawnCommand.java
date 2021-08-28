@@ -35,7 +35,7 @@ public class SpawnCommand implements CommandExecutor {
                     if (args.length == 0) {
                         if(sender instanceof Player) {
                             Player player = (Player) sender;
-                            if (sender.hasPermission("activecraft.spawn")) {
+                            if (sender.hasPermission("activecraft.spawn.self")) {
                                 LocationUtils.teleport(player, LocationUtils.str2Loc(spawns.getString("spawn")));
                                 player.sendMessage(ChatColor.GOLD + "Teleported to " + ChatColor.AQUA + "Spawn" + ChatColor.GOLD + ".");
                                 player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);

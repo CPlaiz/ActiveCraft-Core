@@ -135,13 +135,15 @@ public class JoinQuitListener implements Listener {
 
 
 
-        setDisplaynameFromConfig(player, playerdataConfig.getString("colornick"), playerdataConfig.getString("nickname"));
+
 
         if (!playerdataConfig.getBoolean("vanished")) {
             event.setJoinMessage(placeholder.replace(mainConfig.getString("join-format"), Placeholder.Type.DISPLAYNAME));
+            setDisplaynameFromConfig(player, playerdataConfig.getString("colornick"), playerdataConfig.getString("nickname"));
         } else {
             vanishManager.setVanished(player, true);
-            player.setPlayerListName(playerdataConfig.getString("nickname") + ChatColor.GRAY + " " + mainConfig.getString("vanish-format"));
+            setDisplaynameFromConfig(player, playerdataConfig.getString("colornick"), playerdataConfig.getString("nickname") + ChatColor.GRAY + " " + mainConfig.getString("vanish-format"));
+            //player.setPlayerListName(playerdataConfig.getString("nickname") + ChatColor.GRAY + " " + mainConfig.getString("vanish-format"));
             event.setJoinMessage(null);
             Bukkit.broadcast((mainConfig.getString("join-format") + ChatColor.GOLD + " (vanished)").replace("%displayname%", player.getDisplayName()), "activecraft.vanish.see");
         }

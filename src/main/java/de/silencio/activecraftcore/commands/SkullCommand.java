@@ -19,7 +19,7 @@ public class SkullCommand implements CommandExecutor {
             Player player = (Player) sender;
 
             if (args.length == 0) {
-                if (sender.hasPermission("activecraft.skull")) {
+                if (sender.hasPermission("activecraft.skull.self")) {
 
                     ItemStack skull = new ItemStack(Material.PLAYER_HEAD, 1, (short) 3);
                     SkullMeta meta = (SkullMeta) skull.getItemMeta();

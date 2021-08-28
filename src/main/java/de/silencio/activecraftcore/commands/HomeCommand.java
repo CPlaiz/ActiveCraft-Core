@@ -18,7 +18,7 @@ public class HomeCommand implements CommandExecutor {
 
         if(sender instanceof Player) {
 
-            if(sender.hasPermission("activecraft.home")) {
+            if(sender.hasPermission("activecraft.home.self")) {
 
                 FileConfiguration homeconfig = new FileConfig("homes.yml");
 

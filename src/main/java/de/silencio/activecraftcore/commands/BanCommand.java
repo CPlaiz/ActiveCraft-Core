@@ -108,7 +108,24 @@ public class BanCommand implements CommandExecutor, DialogueList, Listener, Dial
                             TextComponent textComponent = new TextComponent();
                             textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, TextComponent.fromLegacyText(ChatColor.GOLD + "Unban " + ChatColor.AQUA + s)));
                             textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/unban-ip " + s));
-                            textComponent.setText(s + ", ");
+                            FileConfig playerlist = new FileConfig("playerlist.yml");
+                            StringBuilder stringBuilder = new StringBuilder();
+                            boolean isFirst = true;
+                            for (String playername : playerlist.getStringList("players")) {
+                                FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + playername + ".yml");
+                                if (playerdataConfig.getStringList("known-ips").contains(s)) {
+                                    if (!isFirst) {
+                                        stringBuilder.append(", ");
+                                    } else isFirst = false;
+                                    stringBuilder.append(playerdataConfig.getString("name"));
+
+                                }
+                            }
+                            if (!stringBuilder.toString().equalsIgnoreCase("")) {
+                                textComponent.setText(s + " (" + stringBuilder.toString() + ")" + ", ");
+                            } else {
+                                textComponent.setText(s + ", ");
+                            }
                             //textComponentList.add(textComponent);
                             componentBuilder.append(textComponent);
                         }
@@ -159,8 +176,8 @@ public class BanCommand implements CommandExecutor, DialogueList, Listener, Dial
             } else if (label.equalsIgnoreCase("unban-ip")) {
                 //System.out.println(args[0]);
                 //System.out.println(ipBanManager.isBanned(args[0]));
-                    ipBanManager.unban(args[0]);
-                    sender.sendMessage(ChatColor.GOLD + "Unbanned " + ChatColor.AQUA + args[0]);
+                ipBanManager.unban(args[0]);
+                sender.sendMessage(ChatColor.GOLD + "Unbanned " + ChatColor.AQUA + args[0]);
             }
         } else sender.sendMessage(Errors.NO_PERMISSION);
         return true;
@@ -225,11 +242,11 @@ public class BanCommand implements CommandExecutor, DialogueList, Listener, Dial
             String[] arrayDate = stringSub1.split("/");
             String[] arrayTime = stringSub2.split(":");
 
-            long dayMillis = Long.parseLong(arrayDate[0])*24*60*60*1000;
-            long monthMillis = Long.parseLong(arrayDate[1])*30*24*60*60*1000;
-            long yearMillis = Long.parseLong(arrayDate[2])*365*60*60*1000;
-            long hourMillis = Long.parseLong(arrayTime[0])*60*60*1000;
-            long minuteMillis = Long.parseLong(arrayTime[1])*60*1000;
+            long dayMillis = Long.parseLong(arrayDate[0]) * 24 * 60 * 60 * 1000;
+            long monthMillis = Long.parseLong(arrayDate[1]) * 30 * 24 * 60 * 60 * 1000;
+            long yearMillis = Long.parseLong(arrayDate[2]) * 365 * 60 * 60 * 1000;
+            long hourMillis = Long.parseLong(arrayTime[0]) * 60 * 60 * 1000;
+            long minuteMillis = Long.parseLong(arrayTime[1]) * 60 * 1000;
 
             long nowMillis = nowDate.getTime();
 

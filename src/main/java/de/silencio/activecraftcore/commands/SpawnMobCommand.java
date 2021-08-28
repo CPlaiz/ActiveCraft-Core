@@ -23,7 +23,7 @@ public class SpawnMobCommand implements CommandExecutor, TabCompleter {
         if (args.length == 1) {
             if (sender instanceof Player) {
                 Player player = (Player) sender;
-                if (player.hasPermission("activecraft.summon")) {
+                if (player.hasPermission("activecraft.summon.self")) {
                     World world = player.getWorld();
 
                     EntityType type = null;
@@ -41,7 +41,7 @@ public class SpawnMobCommand implements CommandExecutor, TabCompleter {
         } else if (args.length == 2) {
             if (Bukkit.getPlayer(args[0]) == null) {
                 if (sender instanceof Player) {
-                    if (sender.hasPermission("activecraft.summon.multiple")) {
+                    if (sender.hasPermission("activecraft.summon.self.multiple")) {
                         Player player = (Player) sender;
                         World world = player.getWorld();
 
@@ -70,6 +70,11 @@ public class SpawnMobCommand implements CommandExecutor, TabCompleter {
             } else {
                 if (sender.hasPermission("activecraft.summon.others")) {
                     Player target = Bukkit.getPlayer(args[0]);
+
+                    if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
+                        sender.sendMessage(Errors.CANNOT_TARGET_SELF);
+                        return false;
+                    }
                     World world = target.getWorld();
 
                     EntityType type = null;
@@ -84,6 +89,7 @@ public class SpawnMobCommand implements CommandExecutor, TabCompleter {
             }
         } else if (args.length == 3) {
             if (Bukkit.getPlayer(args[0]) != null) {
+                
                 Player target = Bukkit.getPlayer(args[0]);
                 if (sender.hasPermission("activecraft.summon.others.multiple")) {
                     Integer num = null;

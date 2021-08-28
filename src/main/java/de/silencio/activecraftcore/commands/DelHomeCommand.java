@@ -16,7 +16,7 @@ public class DelHomeCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
             FileConfiguration homeconfig = new FileConfig("homes.yml");
 
-            if(sender.hasPermission("activecraft.delhome")) {
+            if(sender.hasPermission("activecraft.delhome.self")) {
                 if(args.length == 0) {
 
                     homeconfig.set(((Player) sender).getUniqueId().toString(), null);

@@ -23,7 +23,7 @@ public class FormatNickCommand implements CommandExecutor, TabCompleter {
             if (sender instanceof Player) {
                 Player player = (Player) sender;
 
-                if (sender.hasPermission("activecraft.nick.format")) {
+                if (sender.hasPermission("activecraft.nick.format.self")) {
                     for (ChatColor color : ChatColor.values()) {
                         if (args[0].toLowerCase().equals(color.name().toLowerCase())) {
                             if (!args[0].equals("BOLD") && !args[0].equals("MAGIC") && !args[0].equals("STRIKETHROUGH") &&

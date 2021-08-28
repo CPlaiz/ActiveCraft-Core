@@ -4,6 +4,7 @@ main: de.silencio.activecraftcore.Main
 api-version: 1.17
 authors: [ CPlaiz, Silencio ]
 description: The heart of all ActiveCraft Plugins
+website: cplaiz.github.io/ActiveCraft-Core/
 
 commands:
   heal:
@@ -32,6 +33,7 @@ commands:
   vanish:
     description: become invisible for other players.
     aliases: ["v"]
+    permission: vanish
   creative:
     description: the targets gamemode to Creative.
     aliases: ["cr"]
@@ -182,6 +184,7 @@ commands:
       - "ban-ip"
       - "unban-ip"
       - "banlist"
+    permission: activecraft.ban
   whereami:
     description: Locates the player.
     permission: activecraft.whereami
@@ -256,8 +259,10 @@ commands:
     permission: activecraft.lastcoords
   verify:
     description: Verifies a player.
+    permission: activecraft.verify
   tpall:
     description: Teleports all players.
+    permission: activecraft.tpall
   summon:
     description: Summons one or multiple mobs at your or another players location.
     permission: activecraft.summon

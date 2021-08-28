@@ -6,6 +6,7 @@ import de.silencio.activecraftcore.messages.Reasons;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -55,6 +56,7 @@ public class ProfileMenu implements Listener {
     private ItemStack closeStack;
     private ItemStack noPermissionStack;
     private ItemStack glassFillItem;
+    private Inventory lastInv;
 
     //main inv
     Inventory profileInventory;
@@ -179,32 +181,32 @@ public class ProfileMenu implements Listener {
                     .displayname(ChatColor.GOLD + "Ban " + target.getName())
                     .build();
             if (player.hasPermission("activecraft.ban")) {
-            violationInv.setItem(14, banStack);
+                violationInv.setItem(14, banStack);
             } else violationInv.setItem(14, noPermissionStack);
         }
         {
             warnStack = new ItemBuilder(Material.GRASS_BLOCK)
-                    .displayname(ChatColor.GOLD + "Warn Player")
+                    .displayname(ChatColor.GOLD + "Warn " + target.getName())
                     .build();
             if (player.hasPermission("activecraft.warn.add")) {
-            violationInv.setItem(11, warnStack);
+                violationInv.setItem(11, warnStack);
             } else violationInv.setItem(11, noPermissionStack);
         }
         if (!profile.isMuted()) {
             muteStack = new ItemBuilder(Material.GRASS_BLOCK)
-                    .displayname(ChatColor.GOLD + "Mute")
+                    .displayname(ChatColor.GOLD + "Mute " + target.getName())
                     .lore(ChatColor.GRAY + target.getName() + " is not muted.")
                     .build();
             if (player.hasPermission("activecraft.mute")) {
-            violationInv.setItem(12, muteStack);
+                violationInv.setItem(12, muteStack);
             } else violationInv.setItem(12, noPermissionStack);
         } else {
             muteStack = new ItemBuilder(Material.GRASS_BLOCK)
-                    .displayname(ChatColor.GOLD + "Unmute")
+                    .displayname(ChatColor.GOLD + "Unmute " + target.getName())
                     .lore(ChatColor.GRAY + target.getName() + " is muted.")
                     .build();
             if (player.hasPermission("activecraft.mute")) {
-            violationInv.setItem(12, muteStack);
+                violationInv.setItem(12, muteStack);
             } else violationInv.setItem(12, noPermissionStack);
         }
         {
@@ -213,15 +215,15 @@ public class ProfileMenu implements Listener {
                             target.getAddress().getAddress().toString().replace("/", "") + ")")
                     .build();
             if (player.hasPermission("activecraft.ban")) {
-            violationInv.setItem(15, ipBanStack);
+                violationInv.setItem(15, ipBanStack);
             } else violationInv.setItem(15, noPermissionStack);
         }
         {
             kickStack = new ItemBuilder(Material.GRASS_BLOCK)
-                    .displayname(ChatColor.GOLD + "Kick")
+                    .displayname(ChatColor.GOLD + "Kick " + target.getName())
                     .build();
             if (player.hasPermission("activecraft.kick")) {
-            violationInv.setItem(13, kickStack);
+                violationInv.setItem(13, kickStack);
             } else violationInv.setItem(13, noPermissionStack);
         }
         violationInv.setItem(21, backStack.lore(ChatColor.GRAY + "Go back to " + ChatColor.DARK_AQUA + "profile").build());
@@ -239,7 +241,7 @@ public class ProfileMenu implements Listener {
                     .displayname(ChatColor.GOLD + "Set " + ChatColor.AQUA + target.getName() + "'s " + ChatColor.GOLD + "gamemode to " + ChatColor.AQUA + "Creative")
                     .build();
             if (player.hasPermission("activecraft.gamemode.creative")) {
-            gamemodeSwitcherInv.setItem(11, creativeStack);
+                gamemodeSwitcherInv.setItem(11, creativeStack);
             } else gamemodeSwitcherInv.setItem(11, noPermissionStack);
         }
         {
@@ -247,7 +249,7 @@ public class ProfileMenu implements Listener {
                     .displayname(ChatColor.GOLD + "Set " + ChatColor.AQUA + target.getName() + "'s " + ChatColor.GOLD + "gamemode to " + ChatColor.AQUA + "Survival")
                     .build();
             if (player.hasPermission("activecraft.gamemode.survival")) {
-            gamemodeSwitcherInv.setItem(12, survivalStack);
+                gamemodeSwitcherInv.setItem(12, survivalStack);
             } else gamemodeSwitcherInv.setItem(12, noPermissionStack);
         }
         {
@@ -275,7 +277,7 @@ public class ProfileMenu implements Listener {
                     .displayname(ChatColor.GOLD + "Set " + ChatColor.AQUA + target.getName() + "'s " + ChatColor.GOLD + "gamemode to " + ChatColor.AQUA + "Spectator")
                     .build();
             if (player.hasPermission("activecraft.gamemode.spectator")) {
-            gamemodeSwitcherInv.setItem(15, spectatorStack);
+                gamemodeSwitcherInv.setItem(15, spectatorStack);
             } else gamemodeSwitcherInv.setItem(15, noPermissionStack);
         }
         {
@@ -283,7 +285,7 @@ public class ProfileMenu implements Listener {
                     .displayname(ChatColor.GOLD + "Set " + ChatColor.AQUA + target.getName() + "'s " + ChatColor.GOLD + "gamemode to " + ChatColor.AQUA + "Adventure")
                     .build();
             if (player.hasPermission("activecraft.gamemode.adventure")) {
-            gamemodeSwitcherInv.setItem(14, adventureStack);
+                gamemodeSwitcherInv.setItem(14, adventureStack);
             } else gamemodeSwitcherInv.setItem(14, noPermissionStack);
         }
         gamemodeSwitcherInv.setItem(21, backStack.lore(ChatColor.GRAY + "Go back to " + ChatColor.DARK_AQUA + "profile").build());
@@ -301,7 +303,7 @@ public class ProfileMenu implements Listener {
                     .displayname(ChatColor.GOLD + "Open " + ChatColor.AQUA + target.getName() + "'s" + ChatColor.GOLD + " Inventory")
                     .build();
             if (player.hasPermission("activecraft.invsee")) {
-            storageMenuInv.setItem(12, invSeeStack);
+                storageMenuInv.setItem(12, invSeeStack);
             } else storageMenuInv.setItem(12, noPermissionStack);
         }
         {
@@ -309,7 +311,7 @@ public class ProfileMenu implements Listener {
                     .displayname(ChatColor.GOLD + "Open " + ChatColor.AQUA + target.getName() + "'s" + ChatColor.GOLD + " enderchest")
                     .build();
             if (player.hasPermission("activecraft.enderchest.others")) {
-            storageMenuInv.setItem(14, enderchestStack);
+                storageMenuInv.setItem(14, enderchestStack);
             } else storageMenuInv.setItem(14, noPermissionStack);
         }
         {
@@ -318,7 +320,7 @@ public class ProfileMenu implements Listener {
                     .lore(ChatColor.RED + "Comming soon")
                     .build();
             if (player.hasPermission("activecraft.enderchest.others")) {
-            storageMenuInv.setItem(13, offInvStack);
+                storageMenuInv.setItem(13, offInvStack);
             } else storageMenuInv.setItem(13, noPermissionStack);
         }
         storageMenuInv.setItem(21, backStack.lore(ChatColor.GRAY + "Go back to " + ChatColor.DARK_AQUA + "profile").build());
@@ -760,37 +762,48 @@ public class ProfileMenu implements Listener {
                     case MUTE:
                         if (profile.isMuted()) {
                             player.performCommand("unmute " + target.getName());
+                            renewViolationsInventory();
+                            player.openInventory(violationInv);
                         } else player.performCommand("mute " + target.getName());
                         break;
                     case CLEAR_INV:
-                        player.performCommand("clear " + target.getName());
+                        if (player.hasPermission("activecraft.clearinv")) {
+                            player.performCommand("clear " + target.getName());
+                            renewActionInventory();
+                            player.openInventory(actionMenuInv);
+                        } else player.sendMessage(Errors.NO_PERMISSION);
                         break;
                     case TP:
                         if (player.hasPermission("activecraft.tp")) {
                             player.teleport(target.getLocation());
+                            renewActionInventory();
+                            player.openInventory(actionMenuInv);
                         } else player.sendMessage(Errors.NO_PERMISSION);
                         break;
                     case TP_HERE:
                         if (player.hasPermission("activecraft.tp")) {
                             target.teleport(player.getLocation());
+                            renewActionInventory();
+                            player.openInventory(actionMenuInv);
                         } else player.sendMessage(Errors.NO_PERMISSION);
                         break;
                     case KILL:
                         if (player.hasPermission("activecraft.kill")) {
                             target.setHealth(0);
+                            renewActionInventory();
+                            player.openInventory(actionMenuInv);
                         } else player.sendMessage(Errors.NO_PERMISSION);
                         break;
                 }
                 activeConfirmation = null;
-                player.closeInventory();
             } else if (Objects.equals(event.getCurrentItem(), this.cancelStack)) {
                 activeConfirmation = null;
-                player.closeInventory();
+                player.openInventory(lastInv);
             }
         }
     }
 
-    @EventHandler
+    @EventHandler (priority = EventPriority.LOWEST)
     private void onClick(InventoryClickEvent event) {
         List<Inventory> invList = new ArrayList<>();
         invList.add(profileInventory);
@@ -801,9 +814,12 @@ public class ProfileMenu implements Listener {
         invList.add(reasonsInv);
         invList.add(reasonsTimeInv);
         invList.add(storageMenuInv);
+        if (event.getCurrentItem() == null) return;
         if (invList.contains(event.getClickedInventory())) {
-            player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1f, 1f);
-        }
+            if (!Objects.equals(event.getCurrentItem().getType(), Material.GRAY_STAINED_GLASS_PANE)) {
+                player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1f, 1f);
+            } else System.out.println("pepega 1");
+        } else System.out.println("pepega 2");
     }
 
     @EventHandler
@@ -919,6 +935,7 @@ public class ProfileMenu implements Listener {
             } else if (Objects.equals(event.getCurrentItem(), this.muteStack)) {
                 activeConfirmation = Confirmable.MUTE;
                 getConfirmation(muteStack);
+                lastInv = violationInv;
             } else if (Objects.equals(event.getCurrentItem(), this.kickStack)) {
                 violationReason = "Kicked by an operator.";
                 banTime = -1;
@@ -974,14 +991,17 @@ public class ProfileMenu implements Listener {
             if (event.getCurrentItem() == null) return;
             if (Objects.equals(event.getCurrentItem(), this.godModeStack)) {
                 player.performCommand("god " + target.getName());
+                newBackItem();
                 renewActionInventory();
                 player.openInventory(actionMenuInv);
             } else if (Objects.equals(event.getCurrentItem(), this.flyStack)) {
                 player.performCommand("fly " + target.getName());
+                newBackItem();
                 renewActionInventory();
                 player.openInventory(actionMenuInv);
             } else if (Objects.equals(event.getCurrentItem(), this.vanishStack)) {
                 player.performCommand("vanish " + target.getName());
+                newBackItem();
                 renewActionInventory();
                 player.openInventory(actionMenuInv);
             } else if (Objects.equals(event.getCurrentItem(), this.feedStack)) {
@@ -991,14 +1011,17 @@ public class ProfileMenu implements Listener {
             } else if (Objects.equals(event.getCurrentItem(), this.clearInvStack)) {
                 activeConfirmation = Confirmable.CLEAR_INV;
                 getConfirmation(clearInvStack);
+                lastInv = actionMenuInv;
             } else if (Objects.equals(event.getCurrentItem(), this.homeStack)) {
                 player.performCommand("home " + target.getName());
             } else if (Objects.equals(event.getCurrentItem(), this.tpToPlayerStack)) {
-                activeConfirmation = Confirmable.TP_HERE;
-                getConfirmation(tpToPlayerStack);
-            } else if (Objects.equals(event.getCurrentItem(), this.tpherePlayerStack)) {
                 activeConfirmation = Confirmable.TP;
+                getConfirmation(tpToPlayerStack);
+                lastInv = actionMenuInv;
+            } else if (Objects.equals(event.getCurrentItem(), this.tpherePlayerStack)) {
+                activeConfirmation = Confirmable.TP_HERE;
                 getConfirmation(tpherePlayerStack);
+                lastInv = actionMenuInv;
             } else if (Objects.equals(event.getCurrentItem(), this.strikeStack)) {
                 player.performCommand("strike " + target.getName());
             } else if (Objects.equals(event.getCurrentItem(), this.explodeStack)) {
@@ -1006,6 +1029,7 @@ public class ProfileMenu implements Listener {
             } else if (Objects.equals(event.getCurrentItem(), this.killStack)) {
                 activeConfirmation = Confirmable.KILL;
                 getConfirmation(killStack);
+                lastInv = actionMenuInv;
             }
         }
     }
@@ -1137,6 +1161,7 @@ public class ProfileMenu implements Listener {
                     .build();
             PotionMeta potionMeta = (PotionMeta) healStack.getItemMeta();
             potionMeta.setColor(Color.FUCHSIA);
+            potionMeta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
             healStack.setItemMeta(potionMeta);
             if (player.hasPermission("activecraft.heal")) {
                 actionMenuInv.setItem(21, healStack);
@@ -1337,7 +1362,7 @@ public class ProfileMenu implements Listener {
         for (int i = 0; i < inventory.getSize(); i++) {
             glassFillItem = new ItemBuilder(Material.GRAY_STAINED_GLASS_PANE)
                     .displayname(" ")
-                            .build();
+                    .build();
             inventory.setItem(i, glassFillItem);
         }
     }

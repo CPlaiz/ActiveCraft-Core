@@ -19,7 +19,7 @@ public class FlyCommand implements CommandExecutor {
         if (label.equalsIgnoreCase("fly")) {
             if (args.length == 0) {
                 if (sender instanceof Player) {
-                    if (sender.hasPermission("activecraft.fly")) {
+                    if (sender.hasPermission("activecraft.fly.self")) {
                         Player player = (Player) sender;
                         FileConfig fileConfig = new FileConfig("playerdata" + File.separator + player.getName().toLowerCase() + ".yml");
 

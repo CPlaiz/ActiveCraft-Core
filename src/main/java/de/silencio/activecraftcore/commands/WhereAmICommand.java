@@ -16,7 +16,7 @@ public class WhereAmICommand implements CommandExecutor {
         if (args.length == 0) {
             if(sender instanceof Player) {
                 Player player = (Player) sender;
-                if (sender.hasPermission("activecraft.whereami")) {
+                if (sender.hasPermission("activecraft.whereami.self")) {
                     sender.sendMessage(ChatColor.GOLD + "You are in " + ChatColor.AQUA + player.getWorld().getName() + ChatColor.GOLD + " at x" + ChatColor.AQUA + player.getLocation().getBlockX() + ChatColor.GOLD + " y" + ChatColor.AQUA + player.getLocation().getBlockY() + ChatColor.GOLD + " z" + ChatColor.AQUA + player.getLocation().getBlockZ());
                 } else sender.sendMessage(Errors.NO_PERMISSION);
             } else sender.sendMessage(Errors.NOT_A_PLAYER);
@@ -27,6 +27,10 @@ public class WhereAmICommand implements CommandExecutor {
             }
             Player target = Bukkit.getPlayer(args[0]);
             if(target != null) {
+                if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
+                    sender.sendMessage(Errors.CANNOT_TARGET_SELF);
+                    return false;
+                }
                 if (sender.hasPermission("activecraft.whereami.others")) {
                     sender.sendMessage(ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " is in " + ChatColor.AQUA + target.getWorld().getName() + ChatColor.GOLD + " at x" + ChatColor.AQUA + target.getLocation().getBlockX() + ChatColor.GOLD + " y" + ChatColor.AQUA + target.getLocation().getBlockY() + ChatColor.GOLD + " z" + ChatColor.AQUA + target.getLocation().getBlockZ());
                 } else sender.sendMessage(Errors.NO_PERMISSION);

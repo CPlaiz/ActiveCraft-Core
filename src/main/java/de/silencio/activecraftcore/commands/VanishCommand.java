@@ -34,10 +34,15 @@ public class VanishCommand implements CommandExecutor {
                     Player target = Bukkit.getPlayer(args[0]);
 
                     if (target != null) {
+                        if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
+                            sender.sendMessage(Errors.CANNOT_TARGET_SELF);
+                            return false;
+                        }
                         FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + target.getName().toLowerCase() + ".yml");
                         if (vanishManager.isVanished(target)) {
                             vanishManager.setVanished(target, false);
-                            target.setPlayerListName(playerdataConfig.getString("nickname"));
+
+                            setDisplaynameFromConfig(target, playerdataConfig.getString("colornick"), playerdataConfig.getString("nickname"));
                             target.sendMessage(ChatColor.GOLD + "You are now " + ChatColor.AQUA + "visible.");
                             sender.sendMessage(ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " is now " + ChatColor.AQUA + "visible.");
                             for (Player forPlayer : Bukkit.getOnlinePlayers()) {
@@ -47,7 +52,7 @@ public class VanishCommand implements CommandExecutor {
                                     }
                                 } else
                                 if (forPlayer != sender || forPlayer != target) {
-                                    forPlayer.sendMessage(joinFormat.replace("%displayname%", target.getDisplayName()));
+                                    forPlayer.sendMessage(joinFormat.replace("%displayname%", joinQuitWithColor(target, playerdataConfig.getString("nickname"), playerdataConfig.getString("colornick"))));
                                 }
                             }
                             //Bukkit.broadcastMessage(joinFormat.replace("%displayname%", target.getDisplayName()));
@@ -58,7 +63,7 @@ public class VanishCommand implements CommandExecutor {
                             playerdataConfig.saveConfig();
                         } else {
                             vanishManager.setVanished(target, true);
-                            target.setPlayerListName(playerdataConfig.getString("nickname") + ChatColor.GRAY + " " + fileConfig.getString("vanish-format"));
+                            setDisplaynameFromConfig(target, playerdataConfig.getString("colornick"), playerdataConfig.getString("nickname") + ChatColor.GRAY + " " + fileConfig.getString("vanish-format"));
                             target.sendMessage(ChatColor.GOLD + "You are now " + ChatColor.AQUA + "invisible.");
                             sender.sendMessage(ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " is now " + ChatColor.AQUA + "invisible.");
                             for (Player forPlayer : Bukkit.getOnlinePlayers()) {
@@ -68,7 +73,7 @@ public class VanishCommand implements CommandExecutor {
                                     }
                                 } else
                                 if (forPlayer != sender || forPlayer != target) {
-                                    forPlayer.sendMessage(quitFormat.replace("%displayname%", target.getDisplayName()));
+                                    forPlayer.sendMessage(quitFormat.replace("%displayname%", joinQuitWithColor(target, playerdataConfig.getString("nickname"), playerdataConfig.getString("colornick"))));
                                 }
                             }
                             //Bukkit.broadcastMessage(quitFormat.replace("%displayname%", target.getDisplayName()));
@@ -83,11 +88,11 @@ public class VanishCommand implements CommandExecutor {
             } else if (sender instanceof Player) {
                 Player p = (Player) sender;
                 FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + p.getName().toLowerCase() + ".yml");
-                if (sender.hasPermission("activecraft.vanish")) {
+                if (sender.hasPermission("activecraft.vanish.self")) {
                     Player player = (Player) sender;
                     if (vanishManager.isVanished(p)) {
                         vanishManager.setVanished(p, false);
-                        p.setPlayerListName(playerdataConfig.getString("nickname"));
+                        setDisplaynameFromConfig(p, playerdataConfig.getString("colornick"), playerdataConfig.getString("nickname"));
                         p.sendMessage(ChatColor.GOLD + "You are now " + ChatColor.AQUA + "visible.");
                         for (Player forPlayer : Bukkit.getOnlinePlayers()) {
                             if (forPlayer.hasPermission("activecraft.vanish.see")) {
@@ -96,7 +101,7 @@ public class VanishCommand implements CommandExecutor {
                                 }
                             } else
                             if (forPlayer != sender) {
-                                forPlayer.sendMessage(joinFormat.replace("%displayname%", player.getDisplayName()));
+                                forPlayer.sendMessage(joinFormat.replace("%displayname%", joinQuitWithColor(player, playerdataConfig.getString("nickname"), playerdataConfig.getString("colornick"))));
                             }
                         }
                         //Bukkit.broadcastMessage(joinFormat.replace("%displayname%", p.getDisplayName()));
@@ -107,7 +112,7 @@ public class VanishCommand implements CommandExecutor {
                         playerdataConfig.saveConfig();
                     } else {
                         vanishManager.setVanished(p, true);
-                        p.setPlayerListName(playerdataConfig.getString("nickname") + ChatColor.GRAY + " " + fileConfig.getString("vanish-format"));
+                        setDisplaynameFromConfig(p, playerdataConfig.getString("colornick"), playerdataConfig.getString("nickname") + ChatColor.GRAY + " " + fileConfig.getString("vanish-format"));
                         p.sendMessage(ChatColor.GOLD + "You are now " + ChatColor.AQUA + "invisible.");
                         for (Player forPlayer : Bukkit.getOnlinePlayers()) {
                             if (forPlayer.hasPermission("activecraft.vanish.see")) {
@@ -116,7 +121,8 @@ public class VanishCommand implements CommandExecutor {
                                 }
                             } else
                             if (forPlayer != sender) {
-                                forPlayer.sendMessage(quitFormat.replace("%displayname%", player.getDisplayName()));
+
+                                forPlayer.sendMessage(quitFormat.replace("%displayname%", joinQuitWithColor(player, playerdataConfig.getString("nickname"), playerdataConfig.getString("colornick"))));
                             }
                         }
                         //Bukkit.broadcastMessage(quitFormat.replace("%displayname%", p.getDisplayName()));
@@ -129,5 +135,30 @@ public class VanishCommand implements CommandExecutor {
                 } else sender.sendMessage(Errors.NO_PERMISSION);
             } else sender.sendMessage(Errors.NOT_A_PLAYER);
         return true;
+    }
+
+    public void setDisplaynameFromConfig(Player p, String colorname, String displayname) {
+        for (ChatColor color : ChatColor.values()) {
+            if (colorname.toLowerCase().equals(color.name().toLowerCase())) {
+                if (!colorname.equals("BOLD") && !colorname.equals("MAGIC") && !colorname.equals("STRIKETHROUGH") &&
+                        !colorname.equals("ITALIC") && !colorname.equals("UNDERLINE") && !colorname.equals("RESET")) {
+                    p.setDisplayName(color + displayname);
+                    p.setPlayerListName(color + displayname);
+                }
+            }
+        }
+    }
+
+    public String joinQuitWithColor(Player p, String displayname, String colorname) {
+        String outputDisplayname = null;
+        for (ChatColor color : ChatColor.values()) {
+            if (colorname.toLowerCase().equals(color.name().toLowerCase())) {
+                if (!colorname.equals("BOLD") && !colorname.equals("MAGIC") && !colorname.equals("STRIKETHROUGH") &&
+                        !colorname.equals("ITALIC") && !colorname.equals("UNDERLINE") && !colorname.equals("RESET")) {
+                    outputDisplayname = color + displayname;
+                }
+            }
+        }
+        return outputDisplayname;
     }
 }

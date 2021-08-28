@@ -18,6 +18,7 @@ public interface Errors {
         String NOT_A_PLAYER = ChatColor.RED + "Warning! " + ChatColor.GRAY + "You are not a player!";
 
         String WARNING = ChatColor.RED + "Warning! " + ChatColor.GRAY;
-
+        
+        String CANNOT_TARGET_SELF = WARNING + "You cannot target yourself!";
 
 }

@@ -16,16 +16,16 @@ public class SetHomeCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-            FileConfiguration homeconfig = new FileConfig("homes.yml");
+            FileConfig homeconfig = new FileConfig("homes.yml");
 
-                if (sender.hasPermission("activecraft.sethome")) {
+                if (sender.hasPermission("activecraft.sethome.self")) {
                     if (args.length == 0) {
                         if(sender instanceof Player) {
 
                             Location loc = ((Player) sender).getLocation();
 
                             homeconfig.set(((Player) sender).getUniqueId().toString(), loc);
-                            ((FileConfig) homeconfig).saveConfig();
+                            homeconfig.saveConfig();
 
                             sender.sendMessage(ChatColor.GOLD + "Home set!");
                         } else sender.sendMessage(Errors.NOT_A_PLAYER);
@@ -51,7 +51,7 @@ public class SetHomeCommand implements CommandExecutor {
                         Location loc = ((Player) sender).getLocation();
 
                         homeconfig.set(targetUUID, loc);
-                        ((FileConfig) homeconfig).saveConfig();
+                        homeconfig.saveConfig();
                         sender.sendMessage(ChatColor.GOLD + "Set home of player " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " to current location.");
                     } else sender.sendMessage(Errors.INVALID_PLAYER);
                 } else sender.sendMessage(Errors.NO_PERMISSION);

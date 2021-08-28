@@ -12,10 +12,14 @@ import de.silencio.activecraftcore.utils.VanishManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.permissions.Permission;
+import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 public final class Main extends JavaPlugin {
 
@@ -65,6 +69,18 @@ public final class Main extends JavaPlugin {
         playtimeConfig = new Config("playtime.yml", getDataFolder());
         locationsConfig = new Config("locations.yml", getDataFolder());
         homeconfig = new Config("homes.yml", getDataFolder());
+
+        FileConfig warplistConfig = new FileConfig("warplist.yml");
+        for (String s : warplistConfig.getStringList("warplist")) {
+            Map<String, Boolean> childMap = new HashMap<>();
+            childMap.put("activecraft.warp.self", true);
+            childMap.put("activecraft.warp", true);
+            Bukkit.getPluginManager().addPermission(new Permission("activecraft.warp.self." + s, "Permission to warp yourself to a specific warp.", PermissionDefault.OP, childMap));
+            childMap.clear();
+            childMap.put("activecraft.warp.others", true);
+            childMap.put("activecraft.warp", true);
+            Bukkit.getPluginManager().addPermission(new Permission("activecraft.warp.others." + s, "Permission to warp another player to a specific warp.", PermissionDefault.OP, childMap));
+        }
 
         log("Plugin loaded.");
     }
@@ -182,6 +198,12 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginCommand("edit-sign").setExecutor(new EditSignCommand());
         Bukkit.getPluginCommand("summon").setExecutor(new SpawnMobCommand());
         Bukkit.getPluginCommand("edit-sign").setExecutor(new EditSignCommand());
+        Bukkit.getPluginCommand("randomtp").setExecutor(new RandomTPCommand());
+        Bukkit.getPluginCommand("walkspeed").setExecutor(new WalkspeedCommand());
+        Bukkit.getPluginCommand("leathercolor").setExecutor(new LeatherColorCommand());
+        Bukkit.getPluginCommand("knockbackstick").setExecutor(new KnockbackStickCommand());
+        Bukkit.getPluginCommand("fireball").setExecutor(new FireBallCommand());
+        Bukkit.getPluginCommand("playerlist").setExecutor(new PlayerlistCommand());
     }
 
     public static Main getPlugin() {

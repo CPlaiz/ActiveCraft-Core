@@ -17,7 +17,7 @@ public class FeedCommand implements CommandExecutor {
                 if(args.length == 0) {
                     if(sender instanceof Player) {
                         Player player = (Player) sender;
-                        if(sender.hasPermission("activecraft.feed")) {
+                        if(sender.hasPermission("activecraft.feed.self")) {
                             player.setFoodLevel(20);
                             player.sendMessage(ChatColor.GOLD + "You were fed.");
                             player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_BURP, 1f, 1f);

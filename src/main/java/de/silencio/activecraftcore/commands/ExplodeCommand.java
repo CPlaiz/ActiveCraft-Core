@@ -30,7 +30,7 @@ public class ExplodeCommand implements CommandExecutor, TabCompleter {
         if (Bukkit.getPlayer(args[0]) == null) {
             if (sender instanceof Player) {
                 Player player = (Player) sender;
-                if (player.hasPermission("activecraft.explode")) {
+                if (player.hasPermission("activecraft.explode.self")) {
                     switch (args.length) {
                         case 1:
                             Float num = null;

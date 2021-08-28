@@ -33,7 +33,10 @@ public class MessageManager implements Listener, DialogueList {
 
             if (!muted && !defaultMuted) {
                 FileConfig fileConfig = new FileConfig("config.yml");
-                Bukkit.broadcastMessage(fileConfig.getString("chat-format").replace("%displayname%", player.getDisplayName()).replace("%message%", message));
+                //Bukkit.broadcastMessage(fileConfig.getString("chat-format").replace("%displayname%", player.getDisplayName()).replace("%message%", message));
+                Bukkit.broadcastMessage(fileConfig.getString("chat-format")
+                        .replace("%displayname%", messageWithColor(player, playerdataConfig.getString("nickname"), playerdataConfig.getString("colornick")))
+                        .replace("%message%", message));
                 event.setCancelled(true);
             } else {
                 if (muted) {
@@ -53,5 +56,18 @@ public class MessageManager implements Listener, DialogueList {
             dialogueManager.answer(event.getMessage());
             event.setCancelled(true);
         }
+    }
+
+    public String messageWithColor(Player p, String displayname, String colorname) {
+        String outputDisplayname = null;
+        for (ChatColor color : ChatColor.values()) {
+            if (colorname.toLowerCase().equals(color.name().toLowerCase())) {
+                if (!colorname.equals("BOLD") && !colorname.equals("MAGIC") && !colorname.equals("STRIKETHROUGH") &&
+                        !colorname.equals("ITALIC") && !colorname.equals("UNDERLINE") && !colorname.equals("RESET")) {
+                    outputDisplayname = color + displayname;
+                }
+            }
+        }
+        return outputDisplayname;
     }
 }

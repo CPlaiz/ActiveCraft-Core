@@ -22,7 +22,7 @@ public class PlayTimeCommand implements CommandExecutor, TabCompleter {
 
         FileConfig fileConfig = new FileConfig("playtime.yml");
         if (args.length == 0) {
-            if (sender.hasPermission("activecraft.playtime")) {
+            if (sender.hasPermission("activecraft.playtime.self")) {
                 if (sender instanceof Player) {
                     int hours = fileConfig.getInt(sender.getName() + ".hours");
                     int minutes = fileConfig.getInt(sender.getName() + ".minutes");

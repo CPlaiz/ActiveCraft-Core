@@ -23,7 +23,7 @@ public class ColorNickCommand implements CommandExecutor, TabCompleter {
                 if(sender instanceof Player) {
                         Player player = (Player) sender;
 
-                        if (sender.hasPermission("activecraft.nick.color")) {
+                        if (sender.hasPermission("activecraft.colornick.self")) {
                             for (ChatColor color : ChatColor.values()) {
                                 if (args[0].toLowerCase().equals(color.name().toLowerCase())) {
                                     if (!args[0].equals("BOLD") && !args[0].equals("MAGIC") && !args[0].equals("STRIKETHROUGH") &&
@@ -55,7 +55,7 @@ public class ColorNickCommand implements CommandExecutor, TabCompleter {
                         return false;
                     }
 
-                    if (sender.hasPermission("activecraft.nick.color.others")) {
+                    if (sender.hasPermission("activecraft.colornick.others")) {
                         for (ChatColor color : ChatColor.values()) {
                             if (args[1].toLowerCase().equals(color.name().toLowerCase())) {
                                 if (!args[1].equals("BOLD") && !args[1].equals("MAGIC") && !args[1].equals("STRIKETHROUGH") &&

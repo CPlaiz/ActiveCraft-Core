@@ -27,49 +27,49 @@ public class GamemodeCommand implements CommandExecutor {
             }
 
             if (label.equalsIgnoreCase("su") || label.equalsIgnoreCase("survival")) {
-                if (sender.hasPermission("activecraft.gamemode.survival")) {
+                if (sender.hasPermission("activecraft.gamemode.survival.others")) {
                     target.setGameMode(GameMode.SURVIVAL);
                 } else sender.sendMessage(Errors.NO_PERMISSION);
             }
 
             if (label.equalsIgnoreCase("cr") || label.equalsIgnoreCase("creative")) {
-                if (sender.hasPermission("activecraft.gamemode.creative")) {
+                if (sender.hasPermission("activecraft.gamemode.creative.others")) {
                     target.setGameMode(GameMode.CREATIVE);
                 } else sender.sendMessage(Errors.NO_PERMISSION);
             }
 
             if (label.equalsIgnoreCase("sp") || label.equalsIgnoreCase("spectator")) {
-                if (sender.hasPermission("activecraft.gamemode.spectator")) {
+                if (sender.hasPermission("activecraft.gamemode.spectator.others")) {
                     target.setGameMode(GameMode.SPECTATOR);
                 } else sender.sendMessage(Errors.NO_PERMISSION);
             }
 
             if (label.equalsIgnoreCase("ad") || label.equalsIgnoreCase("adventure")) {
-                if (sender.hasPermission("activecraft.gamemode.adventure")) {
+                if (sender.hasPermission("activecraft.gamemode.adventure.others")) {
                     target.setGameMode(GameMode.ADVENTURE);
                 } else sender.sendMessage(Errors.NO_PERMISSION);
             }
         } else if (sender instanceof Player){
             if (label.equalsIgnoreCase("su") || label.equalsIgnoreCase("survival")) {
-                if (sender.hasPermission("activecraft.gamemode.survival")) {
+                if (sender.hasPermission("activecraft.gamemode.survival.self")) {
                     player.setGameMode(GameMode.SURVIVAL);
                 } else sender.sendMessage(Errors.NO_PERMISSION);
             }
 
             if (label.equalsIgnoreCase("cr") || label.equalsIgnoreCase("creative")) {
-                if (sender.hasPermission("activecraft.gamemode.creative")) {
+                if (sender.hasPermission("activecraft.gamemode.creative.self")) {
                     player.setGameMode(GameMode.CREATIVE);
                 } else sender.sendMessage(Errors.NO_PERMISSION);
             }
 
             if (label.equalsIgnoreCase("sp") || label.equalsIgnoreCase("spectator")) {
-                if (sender.hasPermission("activecraft.gamemode.spectator")) {
+                if (sender.hasPermission("activecraft.gamemode.spectator.self")) {
                     player.setGameMode(GameMode.SPECTATOR);
                 } else sender.sendMessage(Errors.NO_PERMISSION);
             }
 
             if (label.equalsIgnoreCase("ad") || label.equalsIgnoreCase("adventure")) {
-                if (sender.hasPermission("activecraft.gamemode.adventure")) {
+                if (sender.hasPermission("activecraft.gamemode.adventure.self")) {
                     player.setGameMode(GameMode.ADVENTURE);
                 } else sender.sendMessage(Errors.NO_PERMISSION);
             }

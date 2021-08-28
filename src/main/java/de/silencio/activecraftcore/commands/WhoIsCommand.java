@@ -15,41 +15,81 @@ public class WhoIsCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        if (sender.hasPermission("activecraft.whois")) {
-            if (args.length == 1) {
+
+        if (args.length == 0) {
+            if (sender instanceof Player) {
+                if (sender.hasPermission("activecraft.whois.self")) {
+                    Player player = (Player) sender;
+                    FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + sender.getName().toLowerCase() + ".yml");
+
+                    sender.sendMessage(
+
+                            ChatColor.GOLD + "Name: " + ChatColor.AQUA + player.getName() + "\n"
+                                    + ChatColor.GOLD + "Nickname: " + ChatColor.AQUA + player.getDisplayName() + "\n"
+                                    + ChatColor.GOLD + "Colornick: " + ChatColor.AQUA + playerdataConfig.getString("colornick") + "\n"
+                                    + ChatColor.GOLD + "UUID: " + ChatColor.AQUA + player.getUniqueId() + "\n"
+                                    + ChatColor.GOLD + "Op: " + ChatColor.AQUA + player.isOp() + "\n"
+                                    + ChatColor.GOLD + "Health: " + ChatColor.AQUA + Math.round(player.getHealth()) + "\n"
+                                    + ChatColor.GOLD + "Food: " + ChatColor.AQUA + player.getFoodLevel() + "\n"
+                                    + ChatColor.GOLD + "World: " + ChatColor.AQUA + player.getWorld().getName() + "\n"
+                                    + ChatColor.GOLD + "Coordinates: X: " + ChatColor.AQUA + player.getLocation().getBlockX() + ChatColor.GOLD + ", Y: "
+                                        + ChatColor.AQUA + player.getLocation().getBlockY() + ChatColor.GOLD + ", Z: "
+                                        + ChatColor.AQUA + player.getLocation().getBlockZ() + "\n"
+                                    + ChatColor.GOLD + "AFK: " + ChatColor.AQUA + playerdataConfig.getString("afk") + "\n"
+                                    + ChatColor.GOLD + "Client: " + ChatColor.AQUA + player.getClientBrandName() + "\n"
+                                    + ChatColor.GOLD + "Address: " + ChatColor.AQUA + player.getAddress().toString().replace("/", "") + "\n"
+                                    + ChatColor.GOLD + "Gamemode: " + ChatColor.AQUA + player.getGameMode().name().toLowerCase() + "\n"
+                                    + ChatColor.GOLD + "Muted: " + ChatColor.AQUA + playerdataConfig.getString("muted") + "\n"
+                                    + ChatColor.GOLD + "Whitelisted: " + ChatColor.AQUA + player.isWhitelisted() + "\n"
+                                    + ChatColor.GOLD + "God: " + ChatColor.AQUA + playerdataConfig.getString("godmode") + "\n"
+                                    + ChatColor.GOLD + "Vanished: " + ChatColor.AQUA + playerdataConfig.getString("vanished") + "\n"
+                                    + ChatColor.GOLD + "On Duty: " + ChatColor.AQUA + playerdataConfig.getString("on-duty") + "\n"
+
+                    );
+                } else sender.sendMessage(Errors.NO_PERMISSION);
+            } else sender.sendMessage(Errors.NOT_A_PLAYER);
+        } else if (args.length == 1) {
+            if (sender.hasPermission("activecraft.whois.others")) {
                 if (Bukkit.getPlayer(args[0]) == null) {
                     sender.sendMessage(Errors.INVALID_PLAYER);
                     return false;
                 }
                 Player target = Bukkit.getPlayer(args[0]);
 
+                if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
+                    sender.sendMessage(Errors.CANNOT_TARGET_SELF);
+                    return false;
+                }
+
                 FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + target.getName().toLowerCase() + ".yml");
 
                 sender.sendMessage(
 
-                        ChatColor.AQUA + "Name: " + ChatColor.WHITE + target.getName() + "\n"
-                      + ChatColor.AQUA + "Nickname: " + ChatColor.WHITE + target.getDisplayName() + "\n"
-                      + ChatColor.AQUA + "Colornick: " + ChatColor.WHITE + playerdataConfig.getString("colornick") + "\n"
-                      + ChatColor.AQUA + "UUID: " + ChatColor.WHITE + target.getUniqueId() + "\n"
-                      + ChatColor.AQUA + "Op: " + ChatColor.WHITE + target.isOp() + "\n"
-                      + ChatColor.AQUA + "Health: " + ChatColor.WHITE +  Math.round(target.getHealth()) + "\n"
-                      + ChatColor.AQUA + "Food: " + ChatColor.WHITE +  target.getFoodLevel() + "\n"
-                      + ChatColor.AQUA + "World: " + ChatColor.WHITE +  target.getWorld().getName() + "\n"
-                      + ChatColor.AQUA + "Coordinates: " +
-                                ChatColor.WHITE + "X: " + target.getLocation().getBlockX() + ", Y: " + target.getLocation().getBlockY() + ", Z: " + target.getLocation().getBlockZ() + "\n"
-                      + ChatColor.AQUA + "AFK: " + ChatColor.WHITE + playerdataConfig.getString("afk") + "\n"
-                      + ChatColor.AQUA + "Client: " + ChatColor.WHITE + target.getClientBrandName() + "\n"
-                      + ChatColor.AQUA + "Address: " + ChatColor.WHITE + target.getAddress().toString().replace("/", "") + "\n"
-                      + ChatColor.AQUA + "Gamemode: " + ChatColor.WHITE + target.getGameMode().name().toLowerCase() + "\n"
-                      + ChatColor.AQUA + "Muted: " + ChatColor.WHITE + playerdataConfig.getString("muted") + "\n"
-                      + ChatColor.AQUA + "Whitelisted: " + ChatColor.WHITE + target.isWhitelisted() + "\n"
-                      + ChatColor.AQUA + "God: " + ChatColor.WHITE + playerdataConfig.getString("godmode") + "\n"
-                      + ChatColor.AQUA + "Vanished: " + ChatColor.WHITE + playerdataConfig.getString("vanished") + "\n"
-                      + ChatColor.AQUA + "On Duty: " + ChatColor.WHITE + playerdataConfig.getString("on-duty") + "\n"
+                        ChatColor.GOLD + "Name: " + ChatColor.AQUA + target.getName() + "\n"
+                                + ChatColor.GOLD + "Nickname: " + ChatColor.AQUA + target.getDisplayName() + "\n"
+                                + ChatColor.GOLD + "Colornick: " + ChatColor.AQUA + playerdataConfig.getString("colornick") + "\n"
+                                + ChatColor.GOLD + "UUID: " + ChatColor.AQUA + target.getUniqueId() + "\n"
+                                + ChatColor.GOLD + "Op: " + ChatColor.AQUA + target.isOp() + "\n"
+                                + ChatColor.GOLD + "Health: " + ChatColor.AQUA + Math.round(target.getHealth()) + "\n"
+                                + ChatColor.GOLD + "Food: " + ChatColor.AQUA + target.getFoodLevel() + "\n"
+                                + ChatColor.GOLD + "World: " + ChatColor.AQUA + target.getWorld().getName() + "\n"
+                                + ChatColor.GOLD + "Coordinates: X: " + ChatColor.AQUA + target.getLocation().getBlockX() + ChatColor.GOLD + ", Y: "
+                                    + ChatColor.AQUA + target.getLocation().getBlockY() + ChatColor.GOLD + ", Z: "
+                                    + ChatColor.AQUA + target.getLocation().getBlockZ() + "\n"
+                                + ChatColor.GOLD + "AFK: " + ChatColor.AQUA + playerdataConfig.getString("afk") + "\n"
+                                + ChatColor.GOLD + "Client: " + ChatColor.AQUA + target.getClientBrandName() + "\n"
+                                + ChatColor.GOLD + "Address: " + ChatColor.AQUA + target.getAddress().toString().replace("/", "") + "\n"
+                                + ChatColor.GOLD + "Gamemode: " + ChatColor.AQUA + target.getGameMode().name().toLowerCase() + "\n"
+                                + ChatColor.GOLD + "Muted: " + ChatColor.AQUA + playerdataConfig.getString("muted") + "\n"
+                                + ChatColor.GOLD + "Whitelisted: " + ChatColor.AQUA + target.isWhitelisted() + "\n"
+                                + ChatColor.GOLD + "God: " + ChatColor.AQUA + playerdataConfig.getString("godmode") + "\n"
+                                + ChatColor.GOLD + "Vanished: " + ChatColor.AQUA + playerdataConfig.getString("vanished") + "\n"
+                                + ChatColor.GOLD + "On Duty: " + ChatColor.AQUA + playerdataConfig.getString("on-duty") + "\n"
 
                 );
-            }
-        } else sender.sendMessage(Errors.NO_PERMISSION);
+            } else sender.sendMessage(Errors.NO_PERMISSION);
+        } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
+
 
         return true;
     }

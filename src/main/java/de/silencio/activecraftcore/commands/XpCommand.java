@@ -23,7 +23,7 @@ public class XpCommand implements CommandExecutor {
                 } catch (NumberFormatException ignored) {
                 }
                 if (num != null) {
-                    if (sender.hasPermission("activecraft.xp")) {
+                    if (sender.hasPermission("activecraft.xp.self")) {
                         if (args[0].endsWith("l")) {
                             player.giveExpLevels(Integer.parseInt(args[0].replace("l", "")));
                             player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f);
@@ -43,6 +43,10 @@ public class XpCommand implements CommandExecutor {
                     return false;
                 }
                 Player target = Bukkit.getPlayer(args[0]);
+                if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
+                    sender.sendMessage(Errors.CANNOT_TARGET_SELF);
+                    return false;
+                }
                 Integer num = null;
                 try {
                     num = Integer.valueOf(args[1]);

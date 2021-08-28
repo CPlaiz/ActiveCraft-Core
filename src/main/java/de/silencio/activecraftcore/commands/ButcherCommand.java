@@ -21,7 +21,7 @@ public class ButcherCommand implements CommandExecutor, TabCompleter {
             Player player = (Player) sender;
             World world = player.getWorld();
 
-            if (sender.hasPermission("activecraft.butcher")) {
+            if (sender.hasPermission("activecraft.butcher.self")) {
 
                 if (args.length == 0) {
 

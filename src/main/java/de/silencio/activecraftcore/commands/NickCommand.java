@@ -21,7 +21,7 @@ public class NickCommand implements CommandExecutor {
         if (Bukkit.getPlayer(args[0]) == null) {
             if (sender instanceof Player) {
                 Player player = (Player) sender;
-                if (sender.hasPermission("activecraft.nick")) {
+                if (sender.hasPermission("activecraft.nick.self")) {
                     StringBuilder stringBuilder = new StringBuilder();
                     for (int i = 0; i < args.length; i++) {
                         if (i != 0) stringBuilder.append(" ");

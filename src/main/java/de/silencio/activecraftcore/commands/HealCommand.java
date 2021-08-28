@@ -17,7 +17,7 @@ public class HealCommand implements CommandExecutor {
                 if(args.length < 1) {
                     if(sender instanceof Player) {
                         Player player = (Player) sender;
-                        if(sender.hasPermission("activecraft.heal")) {
+                        if(sender.hasPermission("activecraft.heal.self")) {
                             player.setHealth(20);
                             player.setFoodLevel(20);
                             player.sendMessage(ChatColor.GOLD + "You were healed.");
