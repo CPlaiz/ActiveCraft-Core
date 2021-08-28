@@ -174,6 +174,8 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginCommand("lastcoords").setExecutor(new LastCoordsCommand());
         Bukkit.getPluginCommand("verify").setExecutor(new VerifyCommand());
         Bukkit.getPluginCommand("tpall").setExecutor(new TpAllCommand());
+        Bukkit.getPluginCommand("summon").setExecutor(new SpawnMobCommand());
+        Bukkit.getPluginCommand("edit-sign").setExecutor(new EditSignCommand());
     }
 
     public static Main getPlugin() {

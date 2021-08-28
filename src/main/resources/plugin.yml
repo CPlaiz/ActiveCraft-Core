@@ -188,6 +188,10 @@ commands:
     description: Verifies a player.
   tpall:
     description: Teleports all players.
+  summon:
+    description: Summons an entity at the players or a targets location.
+  edit-sign:
+    description: Summons an entity at the players or a targets location.
 
 permissions:
   activecraft.heal:
@@ -495,7 +499,8 @@ permissions:
     default: op
   activecraft.explode:
     description: Creates a explosion at the player's position.
-  activecraft.explode.other:
+    default: op
+  activecraft.explode.others:
     description: Creates a explosion at a player's position.
     default: op
   activecraft.warn.add:
@@ -535,4 +540,19 @@ permissions:
     default: op
   activecraft.tpall.exept:
     description: Prevents the holder from being teleported will /tpall.
+    default: op
+  activecraft.summon:
+    description: Summons one entity at the players location.
+    default: op
+  activecraft.summon.multiple:
+    description: Summons multiple entities at the players location.
+    default: op
+  activecraft.summon.others:
+    description: Summons one entity at the targets location.
+    default: op
+  activecraft.summon.others.multiple:
+    description: Summons multiple entities at the targets location.
+    default: op
+  activecraft.editsign:
+    description: Permission to enable/disable sign edit mod for players.
     default: op
