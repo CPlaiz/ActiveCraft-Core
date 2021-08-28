@@ -43,6 +43,10 @@ public class SpawnCommand implements CommandExecutor {
                         } else sender.sendMessage(Errors.NOT_A_PLAYER);
                     } else if (args.length == 1) {
                         Player target = Bukkit.getPlayer(args[0]);
+                        if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
+                            sender.sendMessage(Errors.CANNOT_TARGET_SELF);
+                            return false;
+                        }
                         if(target != null) {
                             if (sender.hasPermission("activecraft.spawn.others")) {
                                 LocationUtils.teleport(target, LocationUtils.str2Loc(spawns.getString("spawn")));

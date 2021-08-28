@@ -13,120 +13,168 @@ commands:
     description: Teleports you to spawn.
     aliases: ["setspawn"]
     usage: /spawn | /setspawn
+    permission: activecraft.spawn
   ping:
     description: Pong!
+    permission: activecraft.ping
   broadcast:
     description: Server-wide broadcast.
     aliases:
       - "broadcastworld"
       - "bc"
+    permission: activecraft.broadcast
   msg:
     description: Private message to another Player.
+    permission: activecraft.msg
   invsee:
     description: Opens the targets Inventory.
+    permission: activecraft.invsee
   vanish:
     description: become invisible for other players.
     aliases: ["v"]
   creative:
     description: the targets gamemode to Creative.
     aliases: ["cr"]
+    permission: activecraft.gamemode.creative
   survival:
     description: Sets the targets gamemode to Survival.
     aliases: [ "su" ]
+    permission: activecraft.gamemode.survival
   spectator:
     description: Sets the targets gamemode to Spectator.
     aliases: ["sp"]
+    permission: activecraft.gamemode.spectator
   adventure:
     description: Sets the targets gamemode to Adventure.
     aliases: ["ad"]
+    permission: activecraft.gamemode.adventure
   clearinventory:
     description: Clears the targets inventory.
     aliases: ["clear"]
+    permission: activecraft.clearinv
   feed:
     description: Feeds the player
+    permission: activecraft.feed
   craftingtable:
     description: Opens a workbench menu.
+    permission: activecraft.workbench
   anvil:
     description: Opens an anvil menu.
+    permission: activecraft.anvil
   enchanttable:
     description: Opens an enchantment table menu.
+    permission: activecraft.enchanttable
   cartographytable:
     description: Opens a cartography table menu.
+    permission: activecraft.cartographytable
   grindstone:
     description: Opens a grindstone menu.
+    permission: activecraft.grindstone
   loom:
     description: Opens a loom menu.
+    permission: activecraft.loom
   smithingtable:
     description: Opens a smithing table menu.
+    permission: activecraft.smithingtable
   stonecutter:
     description: Opens a stonecutter menu.
+    permission: activecraft.stonecutter
   playtime:
     description: Shows a players playtime.
+    permission: activecraft.playtime
   repair:
     description: Repairs selected item.
+    permission: activecraft.repair
   colornick:
     description: Allows the player to only change displaycolor.
+    permission: activecraft.colornick
   fly:
     description: Allows the player to toggle their or an other player's flight.
     aliases:
       - "flyspeed"
+    permission: activecraft.fly
   offinvsee:
     description: Shows a players armor and offhand-item.
+    permission: activecraft.offinvsee
   realname:
     description: Shows a players real name.
+    permission: activecraft.realname
   nick:
     description: Allows a player to change their or another players Displayname.
+    permission: activecraft.nick
   god:
     description: Toggle invincibility for you or another player.
+    permission: activecraft.god
   enderchest:
     description: Opens your or another players enderchest.
     aliases: ["ec"]
+    permission: activecraft.enderchest
   tpa:
     description: Sends a teleport request to another player.
+    permission: activecraft.tpa
   tpaccept:
     description: Accept a teleport request
+    permission: activecraft.tpaccept
   tpadeny:
     description: Denies a teleport request
+    permission: activecraft.tpadeny
   warp:
     description: Warp System.
     aliases:
       - "setwarp"
       - "delwarp"
       - "warps"
+    permission: activecraft.warp
   home:
     description: Teleports to your home.
+    permission: activecraft.home
   sethome:
     description: Creates your home.
+    permission: activecraft.sethome
   delhome:
     description: Deletes your home.
+    permission: activecraft.delhome
   suicide:
     description: kill yourself.
+    permission: activecraft.suicide
   tphere:
     description: Teleports another player to you.
+    permission: activecraft.tphere
   opitems:
     description: Gives a player OP items.
+    permission: activecraft.opitems
   kickall:
     description: Kicks all players.
+    permission: activecraft.kickall
   ram:
     description: Shows RAM info.
+    permission: activecraft.ram
   staffchat:
     description: Send a message that only other staff can see.
     aliases: ["sc"]
+    permission: activecraft.staffchat
   reply:
     description: Sends a private message to the last player who messaged you.
     aliases: [ "r" ]
+    permission: activecraft.reply
   portal:
     description: Creates or destroys a portal.
+    permission: activecraft.portal
   lastonline:
     description: Gets the last time a player was online.
+    permission: activecraft.lastonline
   whois:
     description: Gets additional infomation on a player.
+    permission: activecraft.whois
   i:
     description: Gives the selected Item to the player.
+    permission: activecraft.quickgive
   item:
     description: Multiple item operations.
+    permission: activecraft.item.name
   butcher:
     description: Kills all mobs.
+    permission: activecraft.butcher
   ban:
     description: Ban/Unban a player/ip.
     aliases:
@@ -136,70 +184,121 @@ commands:
       - "banlist"
   whereami:
     description: Locates the player.
+    permission: activecraft.whereami
   weather:
     description: Changes weather in the players current world.
+    permission: activecraft.weather
   more:
     description: Fills an Itemstack to its max stack size.
+    permission: activecraft.more
   restart-server:
     description: Restarts the server with a warning.
+    permission: activecraft.restart
   mute:
     description: Mutes / unmutes a player.
     aliases:
       - "unmute"
+    permission: activecraft.mute
   hat:
     description: Changes item in helmet slot.
+    permission: activecraft.hat
   log:
     description: Logs all commands executed on the server.
+    permission: activecraft.log
   skull:
     description: Gives the player its own head.
+    permission: activecraft.skull
   strike:
     description: Strikes a player with lightning.
+    permission: activecraft.strike
   break:
     description: Breaks the targeted block.
+    permission: activecraft.break
   firework:
     description: Summons a firework.
     aliases:
       - "fw"
+    permission: activecraft.firework
   book:
     description: Options to edit already signed books.
+    permission: activecraft.book
   xp:
     description: Adds xp or levels to a player.
+    permission: activecraft.xp
   enchant:
     description: Enchants an item.
+    permission: activecraft.enchant
   lockdown:
     description: Full lockdown of the server, prohibits normal players from joining.
     aliases:
       - "lockdownbypass"
+    permission: activecraft.lockdown
   afk:
     description: Allows a player to change AFK status.
+    permission: activecraft.afk
   top:
     description: Teleports the player ontop of the highest block at the player's x/z coordinates.
+    permission: activecraft.top
   explode:
     description: Creates a explosion at a player's position.
+    permission: activecraft.explode
   warn:
     description: Sends a warning to a player.
+    permission: activecraft.warn
   known-ips:
     description: Gets all ips a player has logged in with.
+    permission: activecraft.listips
   profile:
     description: Opens a profile inventory for quick player management.
+    permission: activecraft.profile
   lastcoords:
     description: Get a player's last coords
+    permission: activecraft.lastcoords
   verify:
     description: Verifies a player.
   tpall:
     description: Teleports all players.
   summon:
-    description: Summons an entity at the players or a targets location.
+    description: Summons one or multiple mobs at your or another players location.
+    permission: activecraft.summon
+  spawner:
+    description: Gives you or another player a mob spawner with the definend mob.
+    permission: activecraft.spawner
   edit-sign:
-    description: Summons an entity at the players or a targets location.
+    description: Toggles the ability to edit signs for you or another player.
+    permission: activecraft.editsign
+  randomtp:
+    description: Teleports the player to a random location.
+    aliases:
+      - "tpr"
+    permission: activecraft.randomtp
+  walkspeed:
+    description: Changes your or another players walk speed.
+    permission: activecraft.walkspeed
+  leathercolor:
+    description: Changes the color of leather armor.
+    permission: activecraft.leathercolor
+  knockbackstick:
+    description: Gives you or another player a mighty stick.
+    permission: activecraft.knockbackstick
+  fireball:
+    description: Summons a fireball at your position.
+    permission: activecraft.fireball
+  playerlist:
+    description: Lists all online players.
+    permission: activecraft.playerlist
 
 permissions:
-  activecraft.heal:
+  activecraft.heal.self:
     description: Heals the target player.
     default: op
+    children:
+      activecraft.heal: true
   activecraft.heal.others:
     description: Heals other players.
     default: op
+    children:
+      activecraft.heal: true
   activecraft.ping:
     description: Pong!
     default: op
@@ -207,50 +306,100 @@ permissions:
     description: Private message to another player.
     default: op
   activecraft.msg.spy:
-    description: Spy on other private messages.
+    description: Recieve other players private messages
     default: op
   activecraft.broadcast:
     description: Server-wide message.
     default: op
-  activecraft.clearinv:
-    description: Clears the targets inventory.
+  activecraft.clearinv.self:
+    description: Clears your inventory.
     default: op
+    children:
+      activecraft.clearinv: true
+  activecraft.clearinv.others:
+    description: Clears another players inventory.
+    default: op
+    children:
+      activecraft.clearinv: true
   activecraft.invsee:
     description: Opens another players inventory.
     default: op
-  activecraft.spawn:
+  activecraft.spawn.self:
     description: Allows the player to teleport to spawn.
     default: op
+    children:
+      activecraft.spawn: true
+  activecraft.spawn.others:
+    description: Allows the player to teleport other players to spawn.
+    default: op
+    children:
+      activecraft.spawn: true
   activecraft.setspawn:
     description: Sets the spawn.
     default: op
-  activecraft.vanish:
+  activecraft.vanish.self:
     description: Permission to set vanish for a player.
     default: op
+    children:
+      activecraft.vanish: true
   activecraft.vanish.others:
     description: Permission to set vanish for other players.
     default: op
+    children:
+      activecraft.vanish: true
   activecraft.vanish.see:
     description: Allows a player to see vanished players.
     default: op
-  activecraft.gamemode.creative:
-    description: Sets the targets gamemode to Creative.
+  activecraft.gamemode.creative.self:
+    description: Sets your gamemode to Creative.
     default: op
-  activecraft.gamemode.survival:
-    description: Sets the targets gamemode to Survival.
+    children:
+      activecraft.gamemode.creative: true
+  activecraft.gamemode.creative.others:
+    description: Sets another players gamemode to Creative.
     default: op
-  activecraft.gamemode.spectator:
-    description: Sets the targets gamemode to Spectator.
+    children:
+      activecraft.gamemode.creative: true
+  activecraft.gamemode.survival.self:
+    description: Sets your gamemode to Survival.
     default: op
-  activecraft.gamemode.adventure:
-    description: Sets the targets gamemode to Adventure.
+    children:
+      activecraft.gamemode.survival: true
+  activecraft.gamemode.survival.others:
+    description: Sets another players gamemode to Survival.
     default: op
-  activecraft.feed:
+    children:
+      activecraft.gamemode.survival: true
+  activecraft.gamemode.spectator.self:
+    description: Sets your gamemode to Spectator.
+    default: op
+    children:
+      activecraft.gamemode.spectator: true
+  activecraft.gamemode.spectator.others:
+    description: Sets another players gamemode to Spectator.
+    default: op
+    children:
+      activecraft.gamemode.spectator: true
+  activecraft.gamemode.adventure.self:
+    description: Sets your gamemode to Adventure.
+    default: op
+    children:
+      activecraft.gamemode.adventure: true
+  activecraft.gamemode.adventure.others:
+    description: Sets another players gamemode to Adventure.
+    default: op
+    children:
+      activecraft.gamemode.adventure: true
+  activecraft.feed.self:
     description: Feeds the player
     default: op
+    children:
+      activecraft.feed: true
   activecraft.feed.others:
     description: Feeds other players.
     default: op
+    children:
+      activecraft.feed: true
   activecraft.workbench:
     description: Opens a workbench menu.
     default: op
@@ -275,48 +424,82 @@ permissions:
   activecraft.stonecutter:
     description: Opens a stonecutter menu.
     default: op
-  activecraft.playtime:
-    description: Shows a players playtime.
+  activecraft.playtime.self:
+    description: Shows your current playtime.
     default: op
+    children:
+      activecraft.playtime: true
+  activecraft.playtime.others:
+    description: Shows another players current playtime.
+    default: op
+    children:
+      activecraft.playtime: true
   activecraft.repair:
     description: Repairs selected item.
     default: op
-  activecraft.nick.color:
-    description: Allows the player to only change displaycolor.
+  activecraft.colornick.self:
+    description: Allows the player to only change their displaycolor.
     default: op
-  activecraft.fly:
+    children:
+      activecraft.colornick: true
+  activecraft.colornick.others:
+    description: Allows the player to only change another players displaycolor.
+    default: op
+    children:
+      activecraft.colornick: true
+  activecraft.fly.self:
     description: Allows the player to toggle their flight.
     default: op
+    children:
+      activecraft.fly: true
   activecraft.fly.others:
-    description: Allows the player to toggle other player's flight.
+    description: Allows the player to toggle another player's flight.
     default: op
-  activecraft.flyspeed:
+    children:
+      activecraft.fly: true
+  activecraft.flyspeed.self:
     description: Allows the player to change their speed while in flight.
     default: op
+    children:
+      activecraft.fly: true
   activecraft.flyspeed.others:
     description: Allows the player to change other players speed while in flight.
     default: op
+    children:
+      activecraft.fly: true
   activecraft.realname:
     description: Shows a players real name.
     default: op
-  activecraft.nick:
+  activecraft.nick.self:
     description: Allows a player to change their Displayname.
     default: op
+    children:
+      activecraft.nick: true
   activecraft.nick.others:
     description: Allows a player to change another players Displayname.
     default: op
-  activecraft.god:
+    children:
+      activecraft.nick: true
+  activecraft.god.self:
     description: Toggle invincibility for you.
     default: op
+    children:
+      activecraft.god: true
   activecraft.god.others:
     description: Toggle invincibility for another player.
     default: op
-  activecraft.enderchest:
+    children:
+      activecraft.god: true
+  activecraft.enderchest.self:
     description: Opens your enderchest.
     default: op
+    children:
+      activecraft.enderchest: true
   activecraft.enderchest.others:
     description: Opens another players enderchest.
     default: op
+    children:
+      activecraft.enderchest: true
   activecraft.tpa:
     description: Sends a teleport request to another player.
     default: op
@@ -329,44 +512,70 @@ permissions:
   activecraft.setwarp:
     description: Permission to set a new warp.
     default: op
+    children:
+      activecraft.warp: true
   activecraft.deletewarp:
     description: Permission to delete a warp.
     default: op
+    children:
+      activecraft.warp: true
   activecraft.listwarps:
     description: Permission to list all warps.
     default: op
-  activecraft.warp:
-    description: Permission to use /warp
-    default: op  
-  activecraft.home:
+    children:
+      activecraft.warp: true
+  activecraft.warp.self:
+    description: Permission to teleport yourself to a warp.
+    default: op
+    children:
+      activecraft.warp: true
+  activecraft.warp.others:
+    description: Permission to teleport another player to a warp.
+    default: op
+    children:
+      activecraft.warp: true
+  activecraft.home.self:
     description: Teleports to your home.
     default: op
-  activecraft.sethome:
+    children:
+      activecraft.home: true
+  activecraft.sethome.self:
     description: Creates your home.
     default: op
-  activecraft.delhome:
+    children:
+      activecraft.sethome: true
+  activecraft.delhome.self:
     description: Deletes your home.
     default: op
+    children:
+      activecraft.delhome: true
   activecraft.home.others:
     description: Teleports to another players home
     default: op
+    children:
+      activecraft.home: true
   activecraft.sethome.others:
     description: Sets another players home.
     default: op
+    children:
+      activecraft.sethome: true
   activecraft.delhome.others:
     description: Deletes another players home.
     default: op
-  activecraft.suicide:
+    children:
+      activecraft.delhome: true
+  activecraft.suicide.self:
     description: Kills you.
     default: op
+    children:
+      activecraft.suicide: true
+  activecraft.suicide.others:
+    description: Kills another player.
+    default: op
+    children:
+      activecraft.suicide: true
   activecraft.tphere:
     description: Teleports another player to you.
-    default: op
-  activecraft.tp.others:
-    description: Permission to teleport other players.
-    default: op
-  activecraft.tp:
-    description: Permission to teleport.
     default: op
   activecraft.opitems:
     description: Gives a player OP items.
@@ -389,18 +598,31 @@ permissions:
   activecraft.portal.create:
     description: Permission to create a portal.
     default: op
+    children:
+      activecraft.portal: true
   activecraft.portal.destroy:
     description: Permission to destroy a portal.
     default: op
+    children:
+      activecraft.portal: true
   activecraft.portal.list:
     description: Permission to list all portals.
     default: op
+    children:
+      activecraft.portal: true
   activecraft.lastonline:
     description: Permission to get the last time a player was online.
     default: op
-  activecraft.whois:
-    description: Permission to get infomation on a player.
+  activecraft.whois.self:
+    description: Permission to get infomation on yourself.
     default: op
+    children:
+      activecraft.whois: true
+  activecraft.whois.others:
+    description: Permission to get information on other players.
+    default: op
+    children:
+      activecraft.whois: true
   activecraft.quickgive:
     description: Gives the selected Item to the player.
     default: op
@@ -422,12 +644,16 @@ permissions:
   activecraft.item.tag:
     description: Permission to change the tag of an item.
     default: op
-  activecraft.whereami:
+  activecraft.whereami.self:
     description: Locates the player.
     default: op
+    children:
+      activecraft.whereami: true
   activecraft.whereami.others:
     description: Locates other players.
     default: op
+    children:
+      activecraft.whereami: true
   activecraft.weather:
     description: Changes weather in the players current world.
     default: op
@@ -449,15 +675,26 @@ permissions:
   activecraft.log:
     description: Logs all commands executed on the server.
     default: op
-  activecraft.skull:
+  activecraft.skull.self:
     description: Gives the player its own head.
     default: op
+    children:
+      activecraft.skull: true
   activecraft.skull.others:
     description: Gives the player another players head.
     default: op
-  activecraft.strike:
-    description: Strikes a player with lightning.
+    children:
+      activecraft.skull: true
+  activecraft.strike.self:
+    description: Strikes yourself with lightning.
     default: op
+    children:
+      activecraft.strike: true
+  activecraft.strike.others:
+    description: Strikes another player with lightning.
+    default: op
+    children:
+      activecraft.strike: true
   activecraft.break:
     description: Breaks the targeted block.
     default: op
@@ -467,12 +704,16 @@ permissions:
   activecraft.book:
     description: Options to edit already signed books.
     default: op
-  activecraft.xp:
+  activecraft.xp.self:
     description: Adds xp or levels to a player.
     default: op
+    children:
+      activecraft.xp: true
   activecraft.xp.others:
     description: Adds xp or levels to another player.
     default: op
+    children:
+      activecraft.xp: true
   activecraft.enchant:
     description: Enchants an item.
     default: op
@@ -485,33 +726,49 @@ permissions:
   activecraft.lockdown.allowbypass:
     description: Allows ingame players to change lockdown bypass settings temporarily.
     default: op
-  activecraft.afk:
+    children:
+      activecraft.lockdown: true
+  activecraft.afk.self:
     description: Allows a player to change their AFK status
     default: op
+    children:
+      activecraft.afk: true
   activecraft.afk.others:
     description: Allows a player to change AFK status for other players.
     default: op
+    children:
+      activecraft.afk: true
   activecraft.matchingip.notify:
     description: Player with this permissions get a message if somebody's ip matches another.
     default: op
   activecraft.top:
     description: Teleports the player ontop of the highest block at the player's x/z coordinates.
     default: op
-  activecraft.explode:
+  activecraft.explode.self:
     description: Creates a explosion at the player's position.
     default: op
+    children:
+      activecraft.explode: true
   activecraft.explode.others:
     description: Creates a explosion at a player's position.
     default: op
+    children:
+      activecraft.explode: true
   activecraft.warn.add:
     description: Allows a player to add a warning.
     default: op
+    children:
+      activecraft.warn: true
   activecraft.warn.remove:
     description: Allows a player to remove a warning.
     default: op
+    children:
+      activecraft.warn: true
   activecraft.warn.get:
     description: Allows a player to list all warnings.
     default: op
+    children:
+      activecraft.warn: true
   activecraft.listips:
     description: Gets all ips a player has logged in with.
   activecraft.profile:
@@ -536,23 +793,88 @@ permissions:
     description: Permission to kick players from the server.
     default: op
   activecraft.tpall:
-    description: Permission to teleport all players.
+    description: Permission to teleport all players to yourself.
     default: op
   activecraft.tpall.exept:
-    description: Prevents the holder from being teleported will /tpall.
+    description: Prevents the player from being teleported by /tpall.
     default: op
-  activecraft.summon:
-    description: Summons one entity at the players location.
+  activecraft.summon.self:
+    description: Summons one mob at your position.
     default: op
-  activecraft.summon.multiple:
-    description: Summons multiple entities at the players location.
+  activecraft.summon.self.multiple:
+    description: Summons multiple mobs at your position.
     default: op
+    children:
+      activecraft.summon: true
   activecraft.summon.others:
-    description: Summons one entity at the targets location.
+    description: Summons one mob at another players position.
     default: op
+    children:
+      activecraft.summon: true
   activecraft.summon.others.multiple:
-    description: Summons multiple entities at the targets location.
+    description: Summons multiple mobs at another players position.
     default: op
-  activecraft.editsign:
-    description: Permission to enable/disable sign edit mod for players.
+    children:
+      activecraft.: true
+  activecraft.spawner.self:
+    description: Gives you a mob spawner with the definend mob.
+    default: op
+    children:
+      activecraft.spawner: true
+  activecraft.spawner.others:
+    description: Gives another player a mob spawner with the definend mob.
+    default: op
+    children:
+      activecraft.spawner: true
+  activecraft.editsign.self:
+    description: Permission to enable/disable sign edit mod for yourself.
+    default: op
+    children:
+      activecraft.editsign: true
+  activecraft.editsign.others:
+    description: Permission to enable/disable sign edit mod for another player.
+    default: op
+    children:
+      activecraft.editsign: true
+  activecraft.randomtp.self:
+    description: Permission to teleport to a random place within an entered range.
+    default: op
+    children:
+      activecraft.randomtp: true
+  activecraft.randomtp.others:
+    description: Permission to teleport other players to a random place within an entered range.
+    default: op
+    children:
+      activecraft.randomtp: true
+  activecraft.walkspeed.self:
+    description: Changes your walk speed.
+    default: op
+    children:
+      activecraft.walkspeed: true
+  activecraft.walkspeed.others:
+    description: Changes another players walk speed.
+    default: op
+    children:
+      activecraft.walkspeed: true
+  activecraft.leathercolor:
+    description: Changes the color of leather armor.
+    default: op
+  activecraft.knockbackstick.self:
+    description: Gives you a mighty stick.
+    default: op
+    children:
+      activecraft.knockbackstick: true
+  activecraft.knockbackstick.others:
+    description: Gives other players a mighty stick.
+    default: op
+    children:
+      activecraft.knockbackstick: true
+  activecrat.fireball:
+    description: Summons a fireball at your position.
+    default: op
+  activecraft.playerlist:
+    description: Lists all online players.
+    default: op
+  activecraft.offinvsee:
+    description: Shows a players armor and offhand-item.
     default: op

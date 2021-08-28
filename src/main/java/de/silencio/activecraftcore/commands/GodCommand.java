@@ -44,7 +44,11 @@ public class GodCommand implements CommandExecutor {
                     return false;
                 }
                 Player target = Bukkit.getPlayer(args[0]);
-
+                if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
+                    sender.sendMessage(Errors.CANNOT_TARGET_SELF);
+                    return false;
+                }
+                
                 FileConfig targetdataConfig = new FileConfig("playerdata" + File.separator + target.getName().toLowerCase() + ".yml");
 
                 if (!targetdataConfig.getBoolean("godmode")) {

@@ -28,7 +28,7 @@ public class OffInvSeeCommand implements CommandExecutor, Listener {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         if (sender instanceof Player){
-            if (sender.hasPermission("activecraft.invsee")) {
+            if (sender.hasPermission("activecraft.offinvsee")) {
                 if (Bukkit.getPlayer(args[0]) == null) {
                     sender.sendMessage(Errors.INVALID_PLAYER);
                     return false;

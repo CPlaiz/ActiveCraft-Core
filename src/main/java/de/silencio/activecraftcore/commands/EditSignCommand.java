@@ -21,47 +21,54 @@ public class EditSignCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        if (sender.hasPermission("activecraft.editsign")) {
             if (args.length == 0) {
                 if (sender instanceof Player) {
-                    Player player = (Player) sender;
+                    if(sender.hasPermission("activecraft.editsign.self")) {
+                        Player player = (Player) sender;
 
-                    FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + player.getName().toLowerCase() + ".yml");
+                        FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + player.getName().toLowerCase() + ".yml");
+                        if (playerdataConfig.getBoolean("edit-sign")) {
+                            playerdataConfig.set("edit-sign", false);
+                            playerdataConfig.saveConfig();
+                            sender.sendMessage(ChatColor.GOLD + "Disabled Sign Edit Mode");
+                        } else {
+                            playerdataConfig.set("edit-sign", true);
+                            playerdataConfig.saveConfig();
+                            sender.sendMessage(ChatColor.GOLD + "Enabled Sign Edit Mode");
+                        }
+                    } else sender.sendMessage(Errors.NO_PERMISSION);
+                } else sender.sendMessage(Errors.NOT_A_PLAYER);
+            } else {
+                if(sender.hasPermission("activecraft.editsign.others")) {
+                    if (Bukkit.getPlayer(args[0]) == null) {
+                        sender.sendMessage(Errors.INVALID_PLAYER);
+                        return false;
+                    }
+                    Player target = Bukkit.getPlayer(args[0]);
+                    if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
+                        sender.sendMessage(Errors.CANNOT_TARGET_SELF);
+                        return false;
+                    }
+                    FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + target.getName().toLowerCase() + ".yml");
                     if (playerdataConfig.getBoolean("edit-sign")) {
                         playerdataConfig.set("edit-sign", false);
                         playerdataConfig.saveConfig();
-                        sender.sendMessage(ChatColor.GOLD + "Disabled Sign Edit Mode");
+                        sender.sendMessage(ChatColor.GOLD + "Disabled Sign Edit Mode for " + ChatColor.AQUA + target.getDisplayName());
+                        if (sender instanceof Player) {
+                            target.sendMessage(ChatColor.GOLD + "Sign Edit Mode disabled by " + ChatColor.AQUA + ((Player) sender).getDisplayName());
+                        } else
+                            target.sendMessage(ChatColor.GOLD + "Sign Edit Mode disabled by " + ChatColor.AQUA + sender.getName());
                     } else {
                         playerdataConfig.set("edit-sign", true);
                         playerdataConfig.saveConfig();
-                        sender.sendMessage(ChatColor.GOLD + "Enabled Sign Edit Mode");
+                        sender.sendMessage(ChatColor.GOLD + "Enabled Sign Edit Mode for " + ChatColor.AQUA + target.getDisplayName());
+                        if (sender instanceof Player) {
+                            target.sendMessage(ChatColor.GOLD + "Sign Edit Mode enabled by " + ChatColor.AQUA + ((Player) sender).getDisplayName());
+                        } else
+                            target.sendMessage(ChatColor.GOLD + "Sign Edit Mode enabled by " + ChatColor.AQUA + sender.getName());
                     }
-                } else sender.sendMessage(Errors.NOT_A_PLAYER);
-            } else {
-                if (Bukkit.getPlayer(args[0]) == null) {
-                    sender.sendMessage(Errors.INVALID_PLAYER);
-                    return false;
-                }
-                Player target = Bukkit.getPlayer(args[0]);
-                FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + target.getName().toLowerCase() + ".yml");
-                if (playerdataConfig.getBoolean("edit-sign")) {
-                    playerdataConfig.set("edit-sign", false);
-                    playerdataConfig.saveConfig();
-                    sender.sendMessage(ChatColor.GOLD + "Disabled Sign Edit Mode for " + ChatColor.AQUA + target.getDisplayName());
-                    if (sender instanceof Player) {
-                        target.sendMessage(ChatColor.GOLD + "Sign Edit Mode disabled by " + ChatColor.AQUA + ((Player)sender).getDisplayName());
-                    } else target.sendMessage(ChatColor.GOLD + "Sign Edit Mode disabled by " + ChatColor.AQUA + sender.getName());
-                } else {
-                    playerdataConfig.set("edit-sign", true);
-                    playerdataConfig.saveConfig();
-                    sender.sendMessage(ChatColor.GOLD + "Enabled Sign Edit Mode for " + ChatColor.AQUA + target.getDisplayName());
-                    if (sender instanceof Player) {
-                        target.sendMessage(ChatColor.GOLD + "Sign Edit Mode enabled by " + ChatColor.AQUA + ((Player)sender).getDisplayName());
-                    } else target.sendMessage(ChatColor.GOLD + "Sign Edit Mode enabled by " + ChatColor.AQUA + sender.getName());
-                }
-
+                } else sender.sendMessage(Errors.NO_PERMISSION);
             }
-        } else sender.sendMessage(Errors.NO_PERMISSION);
         return true;
     }
 }

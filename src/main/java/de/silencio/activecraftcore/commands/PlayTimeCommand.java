@@ -31,6 +31,10 @@ public class PlayTimeCommand implements CommandExecutor, TabCompleter {
             } else sender.sendMessage(Errors.NO_PERMISSION);
         } else if (args.length == 1) {
             if (sender.hasPermission("activecraft.playtime.others")) {
+                if(sender.getName().toLowerCase().equals(Bukkit.getPlayer(args[0]).getName().toLowerCase())) {
+                    sender.sendMessage(Errors.CANNOT_TARGET_SELF);
+                    return false;
+                }
                 FileConfig playerList = new FileConfig("playerlist.yml");
                 if (playerList.getStringList("players").contains(args[0])) {
                     int hours = fileConfig.getInt(args[0] + ".hours");

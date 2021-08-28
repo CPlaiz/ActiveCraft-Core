@@ -95,6 +95,11 @@ public class SpawnMobCommand implements CommandExecutor, TabCompleter {
                         sender.sendMessage(Errors.INVALID_NUMBER);
                         return false;
                     }
+                    if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
+                        sender.sendMessage(Errors.CANNOT_TARGET_SELF);
+                        return false;
+                    }
+
                     EntityType type = null;
                     try {
                         type = EntityType.valueOf(args[1]);

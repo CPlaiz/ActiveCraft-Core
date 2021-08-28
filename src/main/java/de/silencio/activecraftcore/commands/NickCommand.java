@@ -53,6 +53,10 @@ public class NickCommand implements CommandExecutor {
                     nickname = MessageUtils.replaceFormat(nickname);
 
                     Player target = Bukkit.getPlayer(args[0]);
+                    if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
+                        sender.sendMessage(Errors.CANNOT_TARGET_SELF);
+                        return false;
+                    }
                     FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + target.getName().toLowerCase() + ".yml");
 
                     //setDisplaycolorFromConfig(target, playerdataConfig.getString("colornick"));

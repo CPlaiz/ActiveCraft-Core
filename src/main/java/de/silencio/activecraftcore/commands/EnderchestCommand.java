@@ -37,6 +37,10 @@ public class EnderchestCommand implements CommandExecutor {
                         return false;
                     }
                     Player target = Bukkit.getPlayer(args[0]);
+                    if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
+                        sender.sendMessage(Errors.CANNOT_TARGET_SELF);
+                        return false;
+                    }
 
                     player.openInventory(target.getEnderChest());
                     player.playSound(player.getLocation(), Sound.BLOCK_ENDER_CHEST_OPEN, 1f, 1f);

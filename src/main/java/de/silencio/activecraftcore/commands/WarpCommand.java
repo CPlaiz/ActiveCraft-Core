@@ -24,17 +24,38 @@ public class WarpCommand implements CommandExecutor, TabCompleter {
 
             Player player = (Player) sender;
 
-            if(args.length == 1) {
-                    if (label.equalsIgnoreCase("warp")) {
-                        if(WarpManager.getWarp(args[0]) != null) {
-                        if (player.hasPermission("activecraft.warp." + args[0])) {
 
+            if (label.equalsIgnoreCase("warp")) {
+
+                if (args.length == 1) {
+                    if (player.hasPermission("activecraft.warp.self." + args[0])) {
+                        if (WarpManager.getWarp(args[0]) != null) {
                             player.teleport(WarpManager.getWarp(args[0]));
                             player.sendMessage(ChatColor.GOLD + "You warped to " + ChatColor.AQUA + args[0] + ChatColor.GOLD + ".");
                             player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
+                        } else sender.sendMessage(Errors.WARNING + "This warp does not exist!");
+                    } else sender.sendMessage(Errors.NO_PERMISSION);
+                } else if (args.length == 2) {
+                    if (player.hasPermission("activecraft.warp.others." + args[1])) {
+                        if (WarpManager.getWarp(args[1]) != null) {
+                            if (Bukkit.getPlayer(args[0]) == null) {
+                                sender.sendMessage(Errors.INVALID_PLAYER);
+                                return false;
+                            }
+                            Player target = Bukkit.getPlayer(args[0]);
 
-                        } else sender.sendMessage(Errors.NO_PERMISSION);
-                    } else sender.sendMessage(Errors.WARNING + "This warp does not exist!");
+                            if (sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
+                                sender.sendMessage(Errors.CANNOT_TARGET_SELF);
+                                return false;
+                            }
+
+                            target.teleport(WarpManager.getWarp(args[1]));
+                            player.sendMessage(ChatColor.GOLD + "Warped " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " to " + ChatColor.AQUA + args[1] + ChatColor.GOLD + ".");
+                            target.sendMessage(ChatColor.GOLD + "You were warped to " + ChatColor.AQUA + args[1] + ChatColor.GOLD + " by " + ChatColor.AQUA + player.getDisplayName() + ChatColor.GOLD + ".");
+                            target.playSound(target.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
+                        } else sender.sendMessage(Errors.WARNING + "This warp does not exist!");
+                    } else sender.sendMessage(Errors.NO_PERMISSION);
+
                 }
 
                 if (label.equalsIgnoreCase("setwarp")) {

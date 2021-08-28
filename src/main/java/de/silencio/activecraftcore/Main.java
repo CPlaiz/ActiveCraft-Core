@@ -52,6 +52,9 @@ public final class Main extends JavaPlugin {
         this.dialogueListenerList = new DialogueListenerList();
         this.vanishManager = new VanishManager(this);
 
+        int pluginId = 12627;
+        Metrics metrics = new Metrics(this, pluginId);
+
         this.register();
         startTimer();
 
@@ -174,6 +177,9 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginCommand("lastcoords").setExecutor(new LastCoordsCommand());
         Bukkit.getPluginCommand("verify").setExecutor(new VerifyCommand());
         Bukkit.getPluginCommand("tpall").setExecutor(new TpAllCommand());
+        Bukkit.getPluginCommand("summon").setExecutor(new SpawnMobCommand());
+        Bukkit.getPluginCommand("spawner").setExecutor(new SpawnerCommand());
+        Bukkit.getPluginCommand("edit-sign").setExecutor(new EditSignCommand());
         Bukkit.getPluginCommand("summon").setExecutor(new SpawnMobCommand());
         Bukkit.getPluginCommand("edit-sign").setExecutor(new EditSignCommand());
     }

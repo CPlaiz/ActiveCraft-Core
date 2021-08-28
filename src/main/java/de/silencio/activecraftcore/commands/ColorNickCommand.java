@@ -50,6 +50,10 @@ public class ColorNickCommand implements CommandExecutor, TabCompleter {
                         return false;
                     }
                     Player target = Bukkit.getPlayer(args[0]);
+                    if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
+                        sender.sendMessage(Errors.CANNOT_TARGET_SELF);
+                        return false;
+                    }
 
                     if (sender.hasPermission("activecraft.nick.color.others")) {
                         for (ChatColor color : ChatColor.values()) {

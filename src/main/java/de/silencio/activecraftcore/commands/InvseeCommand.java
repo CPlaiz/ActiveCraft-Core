@@ -22,12 +22,10 @@ public class InvseeCommand implements CommandExecutor {
                 Player target = Bukkit.getPlayer(args[0]);
 
                 if (sender.hasPermission("activecraft.invsee")) {
-
-
+                    
                     player.openInventory(target.getInventory());
                     player.playSound(player.getLocation(), Sound.BLOCK_CHEST_OPEN, 1f, 1f);
-
-
+                    
                 } else sender.sendMessage(Errors.NO_PERMISSION);
 
                 return true;
