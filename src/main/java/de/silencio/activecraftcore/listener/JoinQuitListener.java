@@ -96,6 +96,7 @@ public class JoinQuitListener implements Listener {
             playerdataConfig.set("last-coords", null);
             playerdataConfig.set("log-enabled", false);
             playerdataConfig.set("lockdown-bypass", false);
+            playerdataConfig.set("edit-sign", false);
             playerdataConfig.set("violations.warns", 0);
             playerdataConfig.set("violations.mutes", 0);
             playerdataConfig.set("violations.bans", 0);
@@ -140,6 +141,7 @@ public class JoinQuitListener implements Listener {
             event.setJoinMessage(placeholder.replace(mainConfig.getString("join-format"), Placeholder.Type.DISPLAYNAME));
         } else {
             vanishManager.setVanished(player, true);
+            player.setPlayerListName(playerdataConfig.getString("nickname") + ChatColor.GRAY + " " + mainConfig.getString("vanish-format"));
             event.setJoinMessage(null);
             Bukkit.broadcast((mainConfig.getString("join-format") + ChatColor.GOLD + " (vanished)").replace("%displayname%", player.getDisplayName()), "activecraft.vanish.see");
         }

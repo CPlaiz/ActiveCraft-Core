@@ -35,6 +35,7 @@ public class Profile {
     private boolean on_duty;
     private boolean log_enabled;
     private boolean bypass_lockdown;
+    private boolean edit_sign;
     private List<String> known_ips;
 
     public Profile(Player player) {
@@ -46,6 +47,9 @@ public class Profile {
         playtime_hours = playtimeConfig.getInt(player.getName() + ".hours");
     }
 
+    public void reload() {
+        this.playerdataConfig = new FileConfig("playerdata" + File.separator + owner.getName().toLowerCase() + ".yml");
+    }
 
     private void loadFromConfig(FileConfig fileConfig) {
         name = fileConfig.getString("name");
@@ -70,6 +74,7 @@ public class Profile {
         on_duty = fileConfig.getBoolean("on-duty");
         log_enabled = fileConfig.getBoolean("log-enabled");
         bypass_lockdown = fileConfig.getBoolean("lockdown-bypass");
+        edit_sign = fileConfig.getBoolean("edit-sign");
         known_ips = fileConfig.getStringList("known-ips");
     }
 
@@ -171,6 +176,10 @@ public class Profile {
 
     public boolean isBypassLockdown() {
         return bypass_lockdown;
+    }
+
+    public boolean isEditSign() {
+        return edit_sign;
     }
 
     public List<String> getKnownIps() {

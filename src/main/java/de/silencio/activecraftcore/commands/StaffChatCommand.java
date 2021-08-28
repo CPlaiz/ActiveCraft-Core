@@ -1,5 +1,7 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.Main;
+import de.silencio.activecraftcore.ownlisteners.ListenerManager;
 import de.silencio.activecraftcore.ownlisteners.StaffChatListener;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -16,15 +18,11 @@ import java.util.List;
 public class StaffChatCommand implements CommandExecutor, TabCompleter {
 
     String message = "";
-    private List<StaffChatListener> staffChatListeners = new ArrayList<StaffChatListener>();
+    ListenerManager listenerManager = Main.getPlugin().getListenerManager();
 
-    public void addListener(StaffChatListener toAdd) {
-        staffChatListeners.add(toAdd);
-    }
-
-    private void triggerListener() {
-        for (StaffChatListener scl : staffChatListeners) {
-            scl.onStaffChatMessage();
+    private void triggerListener(String message, CommandSender sender) {
+        for (StaffChatListener scl : listenerManager.getStaffChatListenerList()) {
+            scl.onStaffChatMessage(message, sender);
         }
     }
 
@@ -37,7 +35,8 @@ public class StaffChatCommand implements CommandExecutor, TabCompleter {
         if (sender instanceof Player) {
             Bukkit.broadcast(ChatColor.GOLD + "[StaffChat] " + ChatColor.AQUA + ((Player) sender).getDisplayName() + ChatColor.RESET + ": " + message, "activecraft.staffchat");
         } else Bukkit.broadcast(ChatColor.GOLD + "[StaffChat] " + ChatColor.AQUA + sender.getName() + ChatColor.RESET + ": " + message, "activecraft.staffchat");
-        triggerListener();
+        triggerListener(message, sender);
+
         message = "";
         return true;
     }

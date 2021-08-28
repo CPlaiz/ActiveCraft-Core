@@ -8,7 +8,6 @@ description: The heart of all ActiveCraft Plugins
 commands:
   heal:
     description: Heals the target player.
-    usage:
     permission: activecraft.heal
   spawn:
     description: Teleports you to spawn.

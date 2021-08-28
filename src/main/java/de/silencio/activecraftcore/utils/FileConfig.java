@@ -5,6 +5,7 @@ import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class FileConfig extends YamlConfiguration {
@@ -17,7 +18,9 @@ public class FileConfig extends YamlConfiguration {
         try {
             load(this.path);
         } catch (InvalidConfigurationException | IOException ex) {
-            Main.getPlugin().getLogger().severe("File config " + filename + " doesn't exist. Creating a new one.");
+            if (ex instanceof FileNotFoundException) {
+                Main.getPlugin().getLogger().severe("File config " + filename + " doesn't exist. Creating a new one.");
+            } else ex.printStackTrace();
         }
     }
 

@@ -14,7 +14,7 @@ check-for-matching-ips: true
 
 # AFK Settings
 afk-format: '[AFK]'
-announce-afk: false
+announce-afk: true
 afk-format-yes: "%displayname% is now afk."
 afk-format-no: "%displayname% is no longer afk."
 

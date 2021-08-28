@@ -5,6 +5,7 @@ import de.silencio.activecraftcore.listener.*;
 import de.silencio.activecraftcore.listener.inventory.ProfileListener;
 import de.silencio.activecraftcore.messages.Dialogue.DialogueListenerList;
 import de.silencio.activecraftcore.messages.Dialogue.DialogueManagerList;
+import de.silencio.activecraftcore.ownlisteners.ListenerManager;
 import de.silencio.activecraftcore.utils.Config;
 import de.silencio.activecraftcore.utils.FileConfig;
 import de.silencio.activecraftcore.utils.VanishManager;
@@ -29,6 +30,8 @@ public final class Main extends JavaPlugin {
     private Config homeconfig;
     private static Config warpsConfig;
 
+    public ListenerManager listenerManager;
+
     public DialogueManagerList dialogueManagerList;
     public DialogueListenerList dialogueListenerList;
 
@@ -37,10 +40,14 @@ public final class Main extends JavaPlugin {
         plugin = this;
     }
 
+    public ListenerManager getListenerManager() {
+        return listenerManager;
+    }
+
     @Override
     public void onEnable() {
         // Plugin startup logic
-
+        this.listenerManager = new ListenerManager();
         this.dialogueManagerList = new DialogueManagerList();
         this.dialogueListenerList = new DialogueListenerList();
         this.vanishManager = new VanishManager(this);
@@ -50,10 +57,10 @@ public final class Main extends JavaPlugin {
 
         saveDefaultConfig();
 
-        config = new Config("config.yml" , getDataFolder());
+        config = new Config("config.yml", getDataFolder());
         warpsConfig = new Config("warps.yml", getDataFolder());
-        playtimeConfig = new Config("playtime.yml" , getDataFolder());
-        locationsConfig = new Config("locations.yml" , getDataFolder());
+        playtimeConfig = new Config("playtime.yml", getDataFolder());
+        locationsConfig = new Config("locations.yml", getDataFolder());
         homeconfig = new Config("homes.yml", getDataFolder());
 
         log("Plugin loaded.");
@@ -65,7 +72,7 @@ public final class Main extends JavaPlugin {
         log("Plugin unloaded.");
     }
 
-    public void log (String text) {
+    public void log(String text) {
         Bukkit.getConsoleSender().sendMessage(PREFIX + text);
     }
 
@@ -83,12 +90,12 @@ public final class Main extends JavaPlugin {
         pluginManager.registerEvents(new LockdownListener(), this);
         pluginManager.registerEvents(new LockdownCommand(), this);
         pluginManager.registerEvents(new SignListener(), this);
+        pluginManager.registerEvents(new SignInteractListener(), this);
         //pluginManager.registerEvents(new ProfileCommand(), this);
 
         //custom Listeners
         dialogueListenerList = new DialogueListenerList();
-
-
+        listenerManager.addListener(new StaffChatListenerTest());
 
 
         // commands
@@ -188,40 +195,41 @@ public final class Main extends JavaPlugin {
             @Override
             public void run() {
 
-                for(Player players : Bukkit.getOnlinePlayers()) {
+                for (Player player : Bukkit.getOnlinePlayers()) {
 
                     FileConfig fileConfig = new FileConfig("playtime.yml");
                     FileConfig mainConfig = new FileConfig("config.yml");
 
-                    int hours = fileConfig.getInt(players.getName() + ".hours");
-                    int minutes = fileConfig.getInt(players.getName() + ".minutes");
+                    int hours = fileConfig.getInt(player.getName() + ".hours");
+                    int minutes = fileConfig.getInt(player.getName() + ".minutes");
 
-                    FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + players.getName().toLowerCase() + ".yml");
-                    if (minutes + hours * 60 >= mainConfig.getInt("remove-default-mute-after") && mainConfig.getInt("remove-default-mute-after") == 0) {
-                        players.sendMessage(ChatColor.GOLD + "Your default-mute has been removed. You are now able to talk.");
-                        playerdataConfig.set("default-mute", false);
-                        playerdataConfig.saveConfig();
-                    }
+
                     minutes++;
 
-                    fileConfig.set(players.getName() + ".minutes", minutes);
+                    fileConfig.set(player.getName() + ".minutes", minutes);
                     fileConfig.saveConfig();
 
-                    if(minutes == 60) {
+                    if (minutes == 60) {
 
 
-
-
-                        fileConfig.set(players.getName() + ".minutes", 0);
+                        fileConfig.set(player.getName() + ".minutes", 0);
 
                         hours++;
 
-                        fileConfig.set(players.getName() + ".hours", hours);
+                        fileConfig.set(player.getName() + ".hours", hours);
                         fileConfig.saveConfig();
+                    }
+                    FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + player.getName().toLowerCase() + ".yml");
+                    if (minutes + hours * 60 >= mainConfig.getInt("remove-default-mute-after") && mainConfig.getInt("remove-default-mute-after") >= 0) {
+                        if (playerdataConfig.getBoolean("default-mute")) {
+                            player.sendMessage(ChatColor.GOLD + "Your default-mute has been removed. You are now able to talk.");
+                            playerdataConfig.set("default-mute", false);
+                            playerdataConfig.saveConfig();
+                        }
                     }
                 }
             }
-        }, 20*60, 20*60);
+        }, 20 * 60, 20 * 60);
     }
 
     public DialogueManagerList getDialogueManagerList() {

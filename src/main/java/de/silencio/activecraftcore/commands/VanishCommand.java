@@ -2,6 +2,7 @@ package de.silencio.activecraftcore.commands;
 
 import de.silencio.activecraftcore.Main;
 import de.silencio.activecraftcore.messages.Errors;
+import de.silencio.activecraftcore.ownlisteners.VanishListener;
 import de.silencio.activecraftcore.utils.FileConfig;
 import de.silencio.activecraftcore.utils.VanishManager;
 import org.bukkit.Bukkit;
@@ -33,9 +34,10 @@ public class VanishCommand implements CommandExecutor {
                     Player target = Bukkit.getPlayer(args[0]);
 
                     if (target != null) {
-                        FileConfig playerdataconfig = new FileConfig("playerdata" + File.separator + target.getName().toLowerCase() + ".yml");
+                        FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + target.getName().toLowerCase() + ".yml");
                         if (vanishManager.isVanished(target)) {
                             vanishManager.setVanished(target, false);
+                            target.setPlayerListName(playerdataConfig.getString("nickname"));
                             target.sendMessage(ChatColor.GOLD + "You are now " + ChatColor.AQUA + "visible.");
                             sender.sendMessage(ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " is now " + ChatColor.AQUA + "visible.");
                             for (Player forPlayer : Bukkit.getOnlinePlayers()) {
@@ -49,11 +51,14 @@ public class VanishCommand implements CommandExecutor {
                                 }
                             }
                             //Bukkit.broadcastMessage(joinFormat.replace("%displayname%", target.getDisplayName()));
-
-                            playerdataconfig.set("vanished", false);
-                            playerdataconfig.saveConfig();
+                            for (VanishListener vl : Main.getPlugin().getListenerManager().getVanishListenerList()) {
+                                vl.onUnvanish(target);
+                            }
+                            playerdataConfig.set("vanished", false);
+                            playerdataConfig.saveConfig();
                         } else {
                             vanishManager.setVanished(target, true);
+                            target.setPlayerListName(playerdataConfig.getString("nickname") + ChatColor.GRAY + " " + fileConfig.getString("vanish-format"));
                             target.sendMessage(ChatColor.GOLD + "You are now " + ChatColor.AQUA + "invisible.");
                             sender.sendMessage(ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " is now " + ChatColor.AQUA + "invisible.");
                             for (Player forPlayer : Bukkit.getOnlinePlayers()) {
@@ -67,19 +72,22 @@ public class VanishCommand implements CommandExecutor {
                                 }
                             }
                             //Bukkit.broadcastMessage(quitFormat.replace("%displayname%", target.getDisplayName()));
-
-                            playerdataconfig.set("vanished", true);
-                            playerdataconfig.saveConfig();
+                            for (VanishListener vl : Main.getPlugin().getListenerManager().getVanishListenerList()) {
+                                vl.onVanish(target);
+                            }
+                            playerdataConfig.set("vanished", true);
+                            playerdataConfig.saveConfig();
                         }
                     } else sender.sendMessage(Errors.INVALID_PLAYER);
                 } else sender.sendMessage(Errors.NO_PERMISSION);
             } else if (sender instanceof Player) {
                 Player p = (Player) sender;
-                FileConfig playerdataconfig = new FileConfig("playerdata" + File.separator + p.getName().toLowerCase() + ".yml");
+                FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + p.getName().toLowerCase() + ".yml");
                 if (sender.hasPermission("activecraft.vanish")) {
                     Player player = (Player) sender;
                     if (vanishManager.isVanished(p)) {
                         vanishManager.setVanished(p, false);
+                        p.setPlayerListName(playerdataConfig.getString("nickname"));
                         p.sendMessage(ChatColor.GOLD + "You are now " + ChatColor.AQUA + "visible.");
                         for (Player forPlayer : Bukkit.getOnlinePlayers()) {
                             if (forPlayer.hasPermission("activecraft.vanish.see")) {
@@ -92,11 +100,14 @@ public class VanishCommand implements CommandExecutor {
                             }
                         }
                         //Bukkit.broadcastMessage(joinFormat.replace("%displayname%", p.getDisplayName()));
-
-                        playerdataconfig.set("vanished", false);
-                        playerdataconfig.saveConfig();
+                        for (VanishListener vl : Main.getPlugin().getListenerManager().getVanishListenerList()) {
+                            vl.onUnvanish(player);
+                        }
+                        playerdataConfig.set("vanished", false);
+                        playerdataConfig.saveConfig();
                     } else {
                         vanishManager.setVanished(p, true);
+                        p.setPlayerListName(playerdataConfig.getString("nickname") + ChatColor.GRAY + " " + fileConfig.getString("vanish-format"));
                         p.sendMessage(ChatColor.GOLD + "You are now " + ChatColor.AQUA + "invisible.");
                         for (Player forPlayer : Bukkit.getOnlinePlayers()) {
                             if (forPlayer.hasPermission("activecraft.vanish.see")) {
@@ -109,9 +120,11 @@ public class VanishCommand implements CommandExecutor {
                             }
                         }
                         //Bukkit.broadcastMessage(quitFormat.replace("%displayname%", p.getDisplayName()));
-
-                        playerdataconfig.set("vanished", true);
-                        playerdataconfig.saveConfig();
+                        for (VanishListener vl : Main.getPlugin().getListenerManager().getVanishListenerList()) {
+                            vl.onVanish(player);
+                        }
+                        playerdataConfig.set("vanished", true);
+                        playerdataConfig.saveConfig();
                     }
                 } else sender.sendMessage(Errors.NO_PERMISSION);
             } else sender.sendMessage(Errors.NOT_A_PLAYER);
