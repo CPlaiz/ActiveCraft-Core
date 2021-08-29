@@ -1,6 +1,11 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.Main;
 import de.silencio.activecraftcore.messages.Errors;
+import de.silencio.activecraftcore.ownlisteners.ListenerManager;
+import de.silencio.activecraftcore.ownlisteners.SocialSpyListener;
+import de.silencio.activecraftcore.ownlisteners.StaffChatListener;
+import de.silencio.activecraftcore.utils.FileConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -17,6 +22,7 @@ public class MsgCommand implements CommandExecutor {
     public static HashMap<Player, Player> playerStoring = new HashMap<>();
 
     String message = "";
+    ListenerManager listenerManager = Main.getPlugin().getListenerManager();
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -41,6 +47,8 @@ public class MsgCommand implements CommandExecutor {
                                 player.sendMessage("§6[me -> " + target.getDisplayName() + "§6]§r " + message);
                                 target.sendMessage("§6[" + player.getDisplayName() + "§6 -> me]§r " + message);
                                 target.playSound(target.getLocation(), Sound.ENTITY_ARROW_HIT_PLAYER, 1f, 1f);
+
+                                FileConfig mainConfig = new FileConfig("config.yml");
 
                                 playerStoring.put(target, player);
 
@@ -80,5 +88,11 @@ public class MsgCommand implements CommandExecutor {
             } else sender.sendMessage(Errors.INVALID_PLAYER);
         }
         return true;
+    }
+
+    protected void triggerListener(CommandSender sender, Player target, String message) {
+        for (SocialSpyListener scl : listenerManager.getSocialSpyListenerList()) {
+            scl.onSocialSpy(sender, target, message);
+        }
     }
 }

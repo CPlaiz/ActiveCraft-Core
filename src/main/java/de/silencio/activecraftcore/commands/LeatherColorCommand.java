@@ -1,9 +1,7 @@
 package de.silencio.activecraftcore.commands;
 
-import de.silencio.activecraftcore.Main;
 import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.utils.ColorUtils;
-import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -32,14 +30,28 @@ public class LeatherColorCommand implements CommandExecutor, TabCompleter {
                         LeatherArmorMeta itemmeta = (LeatherArmorMeta) mainhanditem.getItemMeta();
                         Color color = null;
                         if (!args[0].startsWith("#")) {
-                            color = ColorUtils.bukkitColorFromString(args[0]);
-                            if (color == null) {
-                                sender.sendMessage(Errors.WARNING + "This is not a valid color!");
-                                return false;
-                            }
+                            if (sender.hasPermission("activecraft.leathercolor.vanilla")) {
+                                color = ColorUtils.bukkitColorFromString(args[0]);
+                                if (color == null) {
+                                    sender.sendMessage(Errors.WARNING + "This is not a valid color!");
+                                    return false;
+                                }
+                            } else sender.sendMessage(Errors.NO_PERMISSION);
                         } else {
-                            int[] rgbArray = ColorUtils.getRGB(args[0]);
-                            color = Color.fromRGB(rgbArray[0], rgbArray[1], rgbArray[2]);
+                            if (sender.hasPermission("activecraft.leathercolor.hex")) {
+                                if (args[0].length() == 7) {
+                                    if (args[0].replace("#", "").toLowerCase().matches("(\\d|[a-f])(\\d|[a-f])(\\d|[a-f])(\\d|[a-f])(\\d|[a-f])(\\d|[a-f])")) {
+                                        int[] rgbArray = ColorUtils.getRGB(args[0]);
+                                        color = Color.fromRGB(rgbArray[0], rgbArray[1], rgbArray[2]);
+                                    } else {
+                                        sender.sendMessage(Errors.WARNING + "This is not a valid hex code!");
+                                        return false;
+                                    }
+                                } else {
+                                    sender.sendMessage(Errors.INVALID_ARGUMENTS);
+                                    return false;
+                                }
+                            } else sender.sendMessage(Errors.NO_PERMISSION);
                         }
                         itemmeta.setColor(color);
                         mainhanditem.setItemMeta(itemmeta);
@@ -57,23 +69,22 @@ public class LeatherColorCommand implements CommandExecutor, TabCompleter {
         ArrayList<String> list = new ArrayList<>();
         if (args.length == 0) return list;
         if (args.length == 1) {
-            list.add("black");
             list.add("green");
-            list.add("dark_blue");
-            list.add("dark_green");
-            list.add("dark_red");
-            list.add("dark_aqua");
-            list.add("dark_purple");
-            list.add("light_purple");
-            list.add("gold");
-            list.add("gray");
+            list.add("black");
             list.add("blue");
-            list.add("aqua");
+            list.add("lime");
+            list.add("cyan");
             list.add("red");
-            list.add("dark_gray");
+            list.add("magenta");
+            list.add("pink");
+            list.add("orange");
+            list.add("light_gray");
+            list.add("gray");
+            list.add("light_blue");
+            list.add("purple");
             list.add("yellow");
             list.add("white");
-            list.add("pepega_green");
+            list.add("brown");
         }
 
         ArrayList<String> completerList = new ArrayList<>();

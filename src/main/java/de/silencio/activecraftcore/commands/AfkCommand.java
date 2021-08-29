@@ -58,8 +58,10 @@ public class AfkCommand implements CommandExecutor {
                 FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + target.getName().toLowerCase() + ".yml");
                 if (sender.hasPermission("activecraft.afk.others")) {
                     if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
-                        sender.sendMessage(Errors.CANNOT_TARGET_SELF);
-                        return false;
+                        if (!sender.hasPermission("activecraft.afk.self")) {
+                            sender.sendMessage(Errors.CANNOT_TARGET_SELF);
+                            return false;
+                        }
                     }
                     if(!playerdataConfig.getBoolean("afk")) {
                         setDisplaynameFromConfig(target, playerdataConfig.getString("colornick"), playerdataConfig.getString("nickname") + ChatColor.GRAY + " " + fileConfig.getString("afk-format"));

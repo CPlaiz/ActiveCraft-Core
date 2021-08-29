@@ -49,9 +49,11 @@ public class WarpCommand implements CommandExecutor, TabCompleter {
                             }
                             Player target = Bukkit.getPlayer(args[0]);
 
-                            if (sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
-                                sender.sendMessage(Errors.CANNOT_TARGET_SELF);
-                                return false;
+                            if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
+                                if (!sender.hasPermission("activecraft.warp.self." + args[1])) {
+                                    sender.sendMessage(Errors.CANNOT_TARGET_SELF);
+                                    return false;
+                                }
                             }
 
                             target.teleport(WarpManager.getWarp(args[1]));

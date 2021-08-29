@@ -114,7 +114,6 @@ public final class Main extends JavaPlugin {
 
         //custom Listeners
         dialogueListenerList = new DialogueListenerList();
-        listenerManager.addListener(new StaffChatListenerTest());
 
 
         // commands
@@ -204,6 +203,7 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginCommand("knockbackstick").setExecutor(new KnockbackStickCommand());
         Bukkit.getPluginCommand("fireball").setExecutor(new FireBallCommand());
         Bukkit.getPluginCommand("playerlist").setExecutor(new PlayerlistCommand());
+        Bukkit.getPluginCommand("realname").setExecutor(new RealNameCommand());
     }
 
     public static Main getPlugin() {

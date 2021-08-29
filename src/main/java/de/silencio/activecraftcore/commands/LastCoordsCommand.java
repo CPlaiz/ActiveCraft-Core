@@ -45,12 +45,42 @@ public class LastCoordsCommand implements CommandExecutor, TabCompleter {
                         sender.sendMessage(Errors.WARNING + "Player has never entered this world.");
                         return false;
                     }
-                    sender.sendMessage(ChatColor.AQUA + playerdataConfig.getString("name") + "'s " + ChatColor.GOLD + "last coords in " + world.getName() + ": \n" + lastLocation.getBlockX()
-                            + "; " + lastLocation.getBlockY() + "; " + lastLocation.getBlockZ() + "; " + (int) lastLocation.getYaw() + "; " + (int) lastLocation.getPitch()
+                    sender.sendMessage(ChatColor.AQUA + playerdataConfig.getString("name") + "'s " + ChatColor.GOLD + "last coords in " + ChatColor.AQUA + world.getName() + ChatColor.GOLD
+                            + ": \nX: " + ChatColor.AQUA + lastLocation.getBlockX() + ChatColor.GOLD
+                            + ", Y: " + ChatColor.AQUA + lastLocation.getBlockY() + ChatColor.GOLD
+                            + ", Z: " + ChatColor.AQUA + lastLocation.getBlockZ() + ChatColor.GOLD
+                            + ", Yaw: " + ChatColor.AQUA + (int) lastLocation.getYaw() + ChatColor.GOLD
+                            + ", Pitch: " + ChatColor.AQUA + (int) lastLocation.getPitch()
                     );
                 } else sender.sendMessage(Errors.NO_PERMISSION);
             } else sender.sendMessage(Errors.INVALID_PLAYER);
 
+        } else if (args.length == 1) {
+            FileConfig playerList = new FileConfig("playerlist.yml");
+            List<String> lowercaseList = new ArrayList<>();
+            for (String s : playerList.getStringList("players")) {
+                lowercaseList.add(s.toLowerCase());
+            }
+            if (lowercaseList.contains(args[0].toLowerCase())) {
+
+                if (sender.hasPermission("activecraft.lastcoords")) {
+                    FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + args[0].toLowerCase() + ".yml");
+                    
+                    Location lastLocation = playerdataConfig.getLocation("last-location.BEFORE_QUIT");
+                    if (lastLocation == null) {
+                        sender.sendMessage(Errors.WARNING + "Player has never left this server!");
+                        return false;
+                    }
+                    World world = lastLocation.getWorld();
+                    sender.sendMessage(ChatColor.AQUA + playerdataConfig.getString("name") + "'s " + ChatColor.GOLD + "last coords in " + ChatColor.AQUA + world.getName() + ChatColor.GOLD
+                            + ": \nX: " + ChatColor.AQUA + lastLocation.getBlockX() + ChatColor.GOLD
+                            + ", Y: " + ChatColor.AQUA + lastLocation.getBlockY() + ChatColor.GOLD
+                            + ", Z: " + ChatColor.AQUA + lastLocation.getBlockZ() + ChatColor.GOLD
+                            + ", Yaw: " + ChatColor.AQUA + (int) lastLocation.getYaw() + ChatColor.GOLD
+                            + ", Pitch: " + ChatColor.AQUA + (int) lastLocation.getPitch()
+                    );
+                } else sender.sendMessage(Errors.NO_PERMISSION);
+            } else sender.sendMessage(Errors.INVALID_PLAYER);
         } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
 
         return true;

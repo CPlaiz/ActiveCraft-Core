@@ -19,7 +19,7 @@ public class XpCommand implements CommandExecutor {
                 Player player = (Player) sender;
                 Integer num = null;
                 try {
-                    num = Integer.valueOf(args[0]);
+                    num = Integer.valueOf(args[0].replace("l", ""));
                 } catch (NumberFormatException ignored) {
                 }
                 if (num != null) {
@@ -44,8 +44,10 @@ public class XpCommand implements CommandExecutor {
                 }
                 Player target = Bukkit.getPlayer(args[0]);
                 if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
-                    sender.sendMessage(Errors.CANNOT_TARGET_SELF);
-                    return false;
+                    if (!sender.hasPermission("activecraft.xp.self")) {
+                        sender.sendMessage(Errors.CANNOT_TARGET_SELF);
+                        return false;
+                    }
                 }
                 Integer num = null;
                 try {

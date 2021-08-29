@@ -31,7 +31,7 @@ public class SpawnMobCommand implements CommandExecutor, TabCompleter {
                         type = EntityType.valueOf(args[0]);
                     } catch (IllegalArgumentException ignored) {
                     }
-                    if (type != null) {
+                    if (type == null || type.name().equals("UNKNOWN")) {
                         world.spawnEntity(player.getLocation(), EntityType.valueOf(args[0]));
 
                         player.sendMessage(ChatColor.GOLD + "Summoned " + ChatColor.AQUA + args[0] + ChatColor.GOLD + ".");
@@ -72,8 +72,10 @@ public class SpawnMobCommand implements CommandExecutor, TabCompleter {
                     Player target = Bukkit.getPlayer(args[0]);
 
                     if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
-                        sender.sendMessage(Errors.CANNOT_TARGET_SELF);
-                        return false;
+                        if (!sender.hasPermission("activecraft.summon.self")) {
+                            sender.sendMessage(Errors.CANNOT_TARGET_SELF);
+                            return false;
+                        }
                     }
                     World world = target.getWorld();
 
@@ -102,8 +104,10 @@ public class SpawnMobCommand implements CommandExecutor, TabCompleter {
                         return false;
                     }
                     if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
-                        sender.sendMessage(Errors.CANNOT_TARGET_SELF);
-                        return false;
+                        if (!sender.hasPermission("activecraft.summon.self.multiple")) {
+                            sender.sendMessage(Errors.CANNOT_TARGET_SELF);
+                            return false;
+                        }
                     }
 
                     EntityType type = null;
@@ -140,7 +144,9 @@ public class SpawnMobCommand implements CommandExecutor, TabCompleter {
         if (args.length == 2) {
             if (Bukkit.getPlayer(args[0]) != null) {
                 for (EntityType entityType : EntityType.values()) {
-                    list.add(entityType.name());
+                    if (!entityType.name().equals("UNKNOWN")) {
+                        list.add(entityType.name());
+                    }
                 }
             }
         }

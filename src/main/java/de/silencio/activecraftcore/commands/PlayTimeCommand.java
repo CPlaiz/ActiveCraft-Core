@@ -31,9 +31,15 @@ public class PlayTimeCommand implements CommandExecutor, TabCompleter {
             } else sender.sendMessage(Errors.NO_PERMISSION);
         } else if (args.length == 1) {
             if (sender.hasPermission("activecraft.playtime.others")) {
-                if(sender.getName().toLowerCase().equals(Bukkit.getPlayer(args[0]).getName().toLowerCase())) {
-                    sender.sendMessage(Errors.CANNOT_TARGET_SELF);
+                if (Bukkit.getPlayer(args[0]) != null) {
+                    sender.sendMessage(Errors.INVALID_PLAYER);
                     return false;
+                }
+                if(sender.getName().toLowerCase().equals(Bukkit.getPlayer(args[0]).getName().toLowerCase())) {
+                    if (!sender.hasPermission("activecraft.playtime.self")) {
+                        sender.sendMessage(Errors.CANNOT_TARGET_SELF);
+                        return false;
+                    }
                 }
                 FileConfig playerList = new FileConfig("playerlist.yml");
                 if (playerList.getStringList("players").contains(args[0])) {

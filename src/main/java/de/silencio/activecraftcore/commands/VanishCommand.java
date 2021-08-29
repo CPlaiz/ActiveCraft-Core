@@ -35,8 +35,10 @@ public class VanishCommand implements CommandExecutor {
 
                     if (target != null) {
                         if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
-                            sender.sendMessage(Errors.CANNOT_TARGET_SELF);
-                            return false;
+                            if (!sender.hasPermission("activecraft.vanish.self")) {
+                                sender.sendMessage(Errors.CANNOT_TARGET_SELF);
+                                return false;
+                            }
                         }
                         FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + target.getName().toLowerCase() + ".yml");
                         if (vanishManager.isVanished(target)) {

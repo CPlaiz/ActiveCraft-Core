@@ -15,45 +15,54 @@ import java.util.List;
 
 public class BookCommand implements CommandExecutor, TabCompleter {
 
-    String title = "";
-    String author = "";
-    String editpage = "";
-    String addpage = "";
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        if(sender instanceof Player) {
+        String title = "";
+        String author = "";
+        String editpage = "";
+        String addpage = "";
+
+        if (sender instanceof Player) {
             Player player = (Player) sender;
 
-            if(sender.hasPermission("activecraft.book")) {
+            if (sender.hasPermission("activecraft.book")) {
 
-                if(player.getInventory().getItemInMainHand().getTranslationKey().equals("item.minecraft.written_book")) {
+                if (player.getInventory().getItemInMainHand().getTranslationKey().equals("item.minecraft.written_book")) {
                     if (args.length > 0) {
                         if (args[0].equalsIgnoreCase("title")) {
-                            if(args.length >= 2) {
+                            if (args.length >= 2) {
                                 ItemStack book = player.getInventory().getItemInMainHand();
                                 BookMeta bookmeta = (BookMeta) book.getItemMeta();
+                                boolean isFirst = true;
                                 for (int i = 1; i < args.length; i++) {
-                                    title = title + args[i] + " ";
+                                    if (!isFirst) {
+                                        title = title + " ";
+                                    } else isFirst = false;
+                                    title = title + args[i];
                                 }
                                 bookmeta.setTitle(title);
                                 book.setItemMeta(bookmeta);
                                 sender.sendMessage(ChatColor.GOLD + "Changed book title to " + ChatColor.AQUA + title + ChatColor.GOLD + ".");
                             } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
                         } else if (args[0].equalsIgnoreCase("author")) {
-                            if(args.length >= 2) {
+                            if (args.length >= 2) {
                                 ItemStack book = player.getInventory().getItemInMainHand();
                                 BookMeta bookmeta = (BookMeta) book.getItemMeta();
+                                boolean isFirst = true;
                                 for (int i = 1; i < args.length; i++) {
-                                    author = author + args[i] + " ";
+                                    if (!isFirst) {
+                                        author = author + " ";
+                                    } else isFirst = false;
+                                    author = author + args[i];
                                 }
                                 bookmeta.setAuthor(author);
                                 book.setItemMeta(bookmeta);
                                 sender.sendMessage(ChatColor.GOLD + "Changed book author to " + ChatColor.AQUA + author + ChatColor.GOLD + ".");
                             } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
                         } else if (args[0].equalsIgnoreCase("editpage")) {
-                            if(args.length >= 3) {
+                            if (args.length >= 3) {
                                 ItemStack book = player.getInventory().getItemInMainHand();
                                 BookMeta bookmeta = (BookMeta) book.getItemMeta();
                                 for (int i = 2; i < args.length; i++) {
@@ -64,7 +73,7 @@ public class BookCommand implements CommandExecutor, TabCompleter {
                                     num = Integer.valueOf(args[1]);
                                 } catch (NumberFormatException ignored) {
                                 }
-                                if (num != null) {
+                                if (num == null) {
                                     sender.sendMessage(Errors.INVALID_NUMBER);
                                     return false;
                                 }
@@ -73,7 +82,7 @@ public class BookCommand implements CommandExecutor, TabCompleter {
                                 sender.sendMessage(ChatColor.GOLD + "Changed the page " + ChatColor.AQUA + num + ChatColor.GOLD + ".");
                             } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
                         } else if (args[0].equalsIgnoreCase("addpage")) {
-                            if(args.length >= 2) {
+                            if (args.length >= 2) {
                                 ItemStack book = player.getInventory().getItemInMainHand();
                                 BookMeta bookmeta = (BookMeta) book.getItemMeta();
                                 for (int i = 1; i < args.length; i++) {
@@ -139,7 +148,7 @@ public class BookCommand implements CommandExecutor, TabCompleter {
             list.add("generation");
         }
 
-        if(args.length == 2 && args[0].equalsIgnoreCase("generation")) {
+        if (args.length == 2 && args[0].equalsIgnoreCase("generation")) {
             list.add("original");
             list.add("copy");
             list.add("copy_of_copy");

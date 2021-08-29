@@ -38,9 +38,11 @@ public class TopCommand implements CommandExecutor {
                 }
                 Player target = Bukkit.getPlayer(args[0]);
 
-                if (sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
-                    sender.sendMessage(Errors.CANNOT_TARGET_SELF);
-                    return false;
+                if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
+                    if (!sender.hasPermission("activecraft.top.self")) {
+                        sender.sendMessage(Errors.CANNOT_TARGET_SELF);
+                        return false;
+                    }
                 }
 
                 int xBlock = target.getLocation().getBlockX();

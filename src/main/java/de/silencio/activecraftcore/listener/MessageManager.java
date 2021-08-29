@@ -9,6 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
@@ -16,7 +17,7 @@ import java.io.File;
 
 public class MessageManager implements Listener, DialogueList {
 
-    @EventHandler
+    @EventHandler (priority = EventPriority.LOWEST)
     public void onChatMessage(AsyncPlayerChatEvent event) {
 
         String message = MessageUtils.replaceColor(event.getMessage());

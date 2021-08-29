@@ -5,8 +5,12 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 
-public class RamCommand implements CommandExecutor {
+import java.util.ArrayList;
+import java.util.List;
+
+public class RamCommand implements CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -24,4 +28,12 @@ public class RamCommand implements CommandExecutor {
             } else sender.sendMessage(Errors.NO_PERMISSION);
         return true;
     }
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+
+        ArrayList<String> completerList = new ArrayList<>();
+        return completerList;
+    }
+
 }

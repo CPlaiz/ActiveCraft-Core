@@ -8,12 +8,15 @@ import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
-public class RandomTPCommand implements CommandExecutor {
+public class RandomTPCommand implements CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -32,8 +35,10 @@ public class RandomTPCommand implements CommandExecutor {
                     Player player = (Player) sender;
                     Player target = Bukkit.getPlayer(args[0]);
                     if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
-                        sender.sendMessage(Errors.CANNOT_TARGET_SELF);
-                        return false;
+                        if (!sender.hasPermission("activecraft.randomtp.self")) {
+                            sender.sendMessage(Errors.CANNOT_TARGET_SELF);
+                            return false;
+                        }
                     }
                     Location tpLoc = randomLocation(target, 3000000);
                     target.teleport(tpLoc);
@@ -99,4 +104,12 @@ public class RandomTPCommand implements CommandExecutor {
                 player.getLocation().getYaw(), player.getLocation().getPitch());
         return newLoc;
     }
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+
+        ArrayList<String> completerList = new ArrayList<>();
+        return completerList;
+    }
+
 }

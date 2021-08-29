@@ -3,8 +3,8 @@
 
 # Ingame Visual formats
 chat-format: '%displayname%§f: %message%'
-join-format: "§b» %displayname%"
-quit-format: "§c« %displayname%"
+join-format: "§b» §f%displayname%"
+quit-format: "§c« §f%displayname%"
 
 # Misc settings
 use-timer-on-tpa: true

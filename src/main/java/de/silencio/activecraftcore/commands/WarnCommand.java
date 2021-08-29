@@ -41,7 +41,7 @@ public class WarnCommand implements CommandExecutor, TabCompleter {
                             if (!(i == 2)) stringBuilder.append(" ");
                             stringBuilder.append(args[i]);
                         }
-                    } else stringBuilder.append("Warned by an moderator.");
+                    } else stringBuilder.append("Warned by a moderator.");
                 } else sender.sendMessage(Errors.NO_PERMISSION);
 
                 String source = sender.getName();

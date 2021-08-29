@@ -38,8 +38,10 @@ public class SkullCommand implements CommandExecutor {
                     }
                     Player target = Bukkit.getPlayer(args[0]);
                     if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
-                        sender.sendMessage(Errors.CANNOT_TARGET_SELF);
-                        return false;
+                        if (!sender.hasPermission("activecraft.skull.self")) {
+                            sender.sendMessage(Errors.CANNOT_TARGET_SELF);
+                            return false;
+                        }
                     }
                     ItemStack skull = new ItemStack(Material.PLAYER_HEAD, 1, (short) 3);
                     SkullMeta meta = (SkullMeta) skull.getItemMeta();

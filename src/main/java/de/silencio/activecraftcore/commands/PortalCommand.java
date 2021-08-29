@@ -53,38 +53,7 @@ public class PortalCommand implements CommandExecutor, TabCompleter {
                     endGateway.update();
                     sender.sendMessage(ChatColor.GOLD + "Created portal.");
 
-                } else if (args.length == 9) {
-                    FileConfig portalsConfig = new FileConfig("portals.yml");
-                    List<String> portalList = portalsConfig.getStringList("portallist");
-                    if (!portalList.contains(args[1])) {
-                        portalList.add(args[1]);
-                    }
-                    portalsConfig.set("portallist", portalList);
-                    portalsConfig.set(args[1] + ".portal.name", args[1]);
-                    portalsConfig.set(args[1] + ".portal.x", Integer.parseInt(args[2]));
-                    portalsConfig.set(args[1] + ".portal.y", Integer.parseInt(args[3]));
-                    portalsConfig.set(args[1] + ".portal.z", Integer.parseInt(args[4]));
-                    portalsConfig.set(args[1] + ".portal.world", "" + p.getLocation().getWorld().getName());
-                    portalsConfig.set(args[1] + ".to.x", Integer.parseInt(args[5]));
-                    portalsConfig.set(args[1] + ".to.y", Integer.parseInt(args[6]));
-                    portalsConfig.set(args[1] + ".to.z", Integer.parseInt(args[7]));
-                    portalsConfig.set(args[1] + ".to.world", args[8]);
-                    portalsConfig.saveConfig();
-
-                    sender.sendMessage(ChatColor.GOLD + "Portal created at " + ChatColor.GREEN + p.getWorld().getName() + ChatColor.GREEN + "; " + ChatColor.GREEN + args[2] + ChatColor.GREEN
-                            + ", " + ChatColor.GREEN + args[3] + ChatColor.GREEN + ", " + ChatColor.GREEN + args[4] + ChatColor.GOLD + ".");
-
-                    Block block = p.getWorld().getBlockAt(Integer.parseInt(args[2]), Integer.parseInt(args[3]), Integer.parseInt(args[4]));
-                    block.setType(Material.END_GATEWAY);
-                    EndGateway endGateway = (EndGateway) block.getState();
-                    endGateway.setExactTeleport(true);
-                    Location loc = new Location(Bukkit.getWorld(args[8]), Integer.parseInt(args[5]), Integer.parseInt(args[6]), Integer.parseInt(args[7]));
-                    endGateway.setExitLocation(loc);
-                    endGateway.setAge(-999999999);
-                    endGateway.update();
-                    sender.sendMessage(ChatColor.GOLD + "Created portal.");
                 }
-
 
             } else sender.sendMessage(Errors.NO_PERMISSION);
         } else if (args[0].equalsIgnoreCase("destroy")) {

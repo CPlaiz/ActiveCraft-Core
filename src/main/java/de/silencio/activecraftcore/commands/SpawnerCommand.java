@@ -64,7 +64,9 @@ public class SpawnerCommand implements CommandExecutor, TabCompleter {
                 EntityType type = null;
                 try {
                     type = EntityType.valueOf(mobName);
-                } catch (IllegalArgumentException exp) {
+                } catch (IllegalArgumentException ignored) {
+                }
+                if (type == null || type.name().equals("UNKNOWN")) {
                     sender.sendMessage(Errors.WARNING + "Invalid Entity!");
                     return false;
                 }
@@ -72,10 +74,13 @@ public class SpawnerCommand implements CommandExecutor, TabCompleter {
                 if (sender.hasPermission("activecraft.spawner.others")) {
 
                     Player target = Bukkit.getPlayer(args[0]);
-                    if (sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
-                        sender.sendMessage(Errors.CANNOT_TARGET_SELF);
-                        return false;
+                    if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
+                        if (!sender.hasPermission("activecraft.spawner.self")) {
+                            sender.sendMessage(Errors.CANNOT_TARGET_SELF);
+                            return false;
+                        }
                     }
+
 
                     ItemStack spawner = new ItemStack(Material.SPAWNER);
                     BlockStateMeta spawnermeta = (BlockStateMeta) spawner.getItemMeta();
@@ -114,7 +119,9 @@ public class SpawnerCommand implements CommandExecutor, TabCompleter {
         if (args.length == 2) {
             if (Bukkit.getPlayer(args[0]) != null) {
                 for (EntityType entityType : EntityType.values()) {
-                    list.add(entityType.name());
+                    if (!entityType.name().equals("UNKNOWN")) {
+                        list.add(entityType.name());
+                    }
                 }
             }
         }

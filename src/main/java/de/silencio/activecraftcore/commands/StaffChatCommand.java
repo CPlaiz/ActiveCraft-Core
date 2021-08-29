@@ -22,7 +22,7 @@ public class StaffChatCommand implements CommandExecutor, TabCompleter {
 
     private void triggerListener(String message, CommandSender sender) {
         for (StaffChatListener scl : listenerManager.getStaffChatListenerList()) {
-            scl.onStaffChatMessage(message, sender);
+            scl.onStaffChatMessage(sender, message);
         }
     }
 

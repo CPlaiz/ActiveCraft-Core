@@ -138,8 +138,8 @@ public class JoinQuitListener implements Listener {
 
 
         if (!playerdataConfig.getBoolean("vanished")) {
+                setDisplaynameFromConfig(player, playerdataConfig.getString("colornick"), playerdataConfig.getString("nickname"));
             event.setJoinMessage(placeholder.replace(mainConfig.getString("join-format"), Placeholder.Type.DISPLAYNAME));
-            setDisplaynameFromConfig(player, playerdataConfig.getString("colornick"), playerdataConfig.getString("nickname"));
         } else {
             vanishManager.setVanished(player, true);
             setDisplaynameFromConfig(player, playerdataConfig.getString("colornick"), playerdataConfig.getString("nickname") + ChatColor.GRAY + " " + mainConfig.getString("vanish-format"));
@@ -170,8 +170,7 @@ public class JoinQuitListener implements Listener {
             playerdataConfig.set("lockdown-bypass", false);
         }
 
-
-
+        playerdataConfig.set("last-location.BEFORE_QUIT", playerLocation);
         playerdataConfig.saveConfig();
 
         FileConfig mainConfig = new FileConfig("config.yml");

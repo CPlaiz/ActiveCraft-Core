@@ -4,5 +4,5 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public interface StaffChatListener {
-    void onStaffChatMessage(String message, CommandSender sender);
+    void onStaffChatMessage(CommandSender sender, String message);
 }

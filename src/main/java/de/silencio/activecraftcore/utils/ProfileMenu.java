@@ -818,8 +818,8 @@ public class ProfileMenu implements Listener {
         if (invList.contains(event.getClickedInventory())) {
             if (!Objects.equals(event.getCurrentItem().getType(), Material.GRAY_STAINED_GLASS_PANE)) {
                 player.playSound(player.getLocation(), Sound.UI_BUTTON_CLICK, 1f, 1f);
-            } else System.out.println("pepega 1");
-        } else System.out.println("pepega 2");
+            }
+        }
     }
 
     @EventHandler
