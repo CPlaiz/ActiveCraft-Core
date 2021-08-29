@@ -30,17 +30,17 @@ public class ClearInvCommand implements CommandExecutor {
                 }
                 Player target = Bukkit.getPlayer(args[0]);
                 if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
-                    sender.sendMessage(Errors.CANNOT_TARGET_SELF);
-                    return false;
+                    if (!sender.hasPermission("activecraft.clearinv.self")) {
+                        sender.sendMessage(Errors.CANNOT_TARGET_SELF);
+                        return false;
+                    }
                 }
-                if (target != null) {
-                    sender.sendMessage(ChatColor.GOLD + "Cleared " + ChatColor.AQUA + target.getDisplayName() + "'s" + ChatColor.GOLD + " inventory.");
-                    if (sender instanceof Player) {
-                        target.sendMessage(ChatColor.GOLD + "Your inventory was cleared by " + ChatColor.AQUA + ((Player) sender).getDisplayName());
-                    } else
-                        target.sendMessage(ChatColor.GOLD + "Your inventory was cleared by " + ChatColor.AQUA + sender.getName());
-                    target.getInventory().clear();
-                } else sender.sendMessage(Errors.INVALID_PLAYER);
+                sender.sendMessage(ChatColor.GOLD + "Cleared " + ChatColor.AQUA + target.getDisplayName() + "'s" + ChatColor.GOLD + " inventory.");
+                if (sender instanceof Player) {
+                    target.sendMessage(ChatColor.GOLD + "Your inventory was cleared by " + ChatColor.AQUA + ((Player) sender).getDisplayName());
+                } else
+                    target.sendMessage(ChatColor.GOLD + "Your inventory was cleared by " + ChatColor.AQUA + sender.getName());
+                target.getInventory().clear();
             } else sender.sendMessage(Errors.NO_PERMISSION);
         }
 

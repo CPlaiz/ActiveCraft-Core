@@ -25,7 +25,6 @@ public class SpawnCommand implements CommandExecutor {
                     spawns.set("spawn", LocationUtils.loc2Str(player.getLocation()));
                     spawns.saveConfig();
                     player.sendMessage(ChatColor.GOLD + "Set Spawn to current location.");
-                    return true;
                 } else player.sendMessage(Errors.NO_PERMISSION);
                 return true;
             }

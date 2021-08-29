@@ -101,11 +101,13 @@ public class ExplodeCommand implements CommandExecutor, TabCompleter {
             } else sender.sendMessage(Errors.NOT_A_PLAYER);
         } else {
             Player target = Bukkit.getPlayer(args[0]);
-            if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
-                sender.sendMessage(Errors.CANNOT_TARGET_SELF);
-                return false;
-            }
             if (sender.hasPermission("activecraft.explode.others")) {
+                if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
+                    if (!sender.hasPermission("activecraft.explode.self")) {
+                        sender.sendMessage(Errors.CANNOT_TARGET_SELF);
+                        return false;
+                    }
+                }
                 switch (args.length) {
                     case 1:
                         target.getWorld().createExplosion(target.getLocation(), DEFAULT_POWER, DEFAULT_FIRE, DEFAULT_BREAK_BLOCKS);

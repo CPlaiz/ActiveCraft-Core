@@ -41,8 +41,10 @@ public class HomeCommand implements CommandExecutor {
                         }
                         Player target = Bukkit.getPlayer(args[0]);
                         if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
-                            sender.sendMessage(Errors.CANNOT_TARGET_SELF);
-                            return false;
+                            if (!sender.hasPermission("activecraft.home.self")) {
+                                sender.sendMessage(Errors.CANNOT_TARGET_SELF);
+                                return false;
+                            }
                         }
                         String targetUUID = target.getUniqueId().toString();
 

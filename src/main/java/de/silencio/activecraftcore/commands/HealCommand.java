@@ -30,13 +30,15 @@ public class HealCommand implements CommandExecutor {
                         return false;
                     }
                     Player target = Bukkit.getPlayer(args[0]);
-                    if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
-                        sender.sendMessage(Errors.CANNOT_TARGET_SELF);
-                        return false;
-                    }
 
                     if(target != null) {
                         if(sender.hasPermission("activecraft.heal.others")) {
+                            if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
+                                if (!sender.hasPermission("activecraft.god.self")) {
+                                    sender.sendMessage(Errors.CANNOT_TARGET_SELF);
+                                    return false;
+                                }
+                            }
                             target.setHealth(20);
                             target.setFoodLevel(20);
                             sender.sendMessage(ChatColor.GOLD + "You healed " + ChatColor.AQUA + target.getDisplayName());

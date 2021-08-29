@@ -6,13 +6,11 @@ import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class ButcherCommand implements CommandExecutor, TabCompleter {
+public class ButcherCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -21,7 +19,7 @@ public class ButcherCommand implements CommandExecutor, TabCompleter {
             Player player = (Player) sender;
             World world = player.getWorld();
 
-            if (sender.hasPermission("activecraft.butcher.self")) {
+            if (sender.hasPermission("activecraft.butcher")) {
 
                 if (args.length == 0) {
 
@@ -54,12 +52,4 @@ public class ButcherCommand implements CommandExecutor, TabCompleter {
         } else sender.sendMessage(Errors.NOT_A_PLAYER);
         return true;
     }
-
-    @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-
-        ArrayList<String> completerList = new ArrayList<>();
-        return completerList;
-    }
-
 }

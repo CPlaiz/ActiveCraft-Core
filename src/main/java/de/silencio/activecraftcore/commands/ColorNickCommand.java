@@ -50,12 +50,14 @@ public class ColorNickCommand implements CommandExecutor, TabCompleter {
                         return false;
                     }
                     Player target = Bukkit.getPlayer(args[0]);
-                    if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
-                        sender.sendMessage(Errors.CANNOT_TARGET_SELF);
-                        return false;
-                    }
 
                     if (sender.hasPermission("activecraft.colornick.others")) {
+                        if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
+                            if (!sender.hasPermission("activecraft.colornick.self")) {
+                                sender.sendMessage(Errors.CANNOT_TARGET_SELF);
+                                return false;
+                            }
+                        }
                         for (ChatColor color : ChatColor.values()) {
                             if (args[1].toLowerCase().equals(color.name().toLowerCase())) {
                                 if (!args[1].equals("BOLD") && !args[1].equals("MAGIC") && !args[1].equals("STRIKETHROUGH") &&

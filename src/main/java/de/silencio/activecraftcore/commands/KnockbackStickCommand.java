@@ -42,11 +42,13 @@ public class KnockbackStickCommand implements CommandExecutor {
                 return false;
             }
             Player target = Bukkit.getPlayer(args[0]);
-            if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
-                sender.sendMessage(Errors.CANNOT_TARGET_SELF);
-                return false;
-            }
             if (sender.hasPermission("activecraft.knockbackstick.others")) {
+                if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
+                    if (!sender.hasPermission("activecraft.knockbackstick.self")) {
+                        sender.sendMessage(Errors.CANNOT_TARGET_SELF);
+                        return false;
+                    }
+                }
                 ItemStack stick = new ItemStack(Material.STICK);
                 ItemMeta stickmeta = stick.getItemMeta();
                 stickmeta.setDisplayName(ChatColor.GOLD + "Knockback Stick");

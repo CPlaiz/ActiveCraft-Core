@@ -11,6 +11,7 @@ use-timer-on-tpa: true
 mute-new-players: false
 remove-default-mute-after: 10 #in minutes | 0 to disable
 check-for-matching-ips: true
+socialspy-to-console: false
 
 # AFK Settings
 afk-format: '[AFK]'

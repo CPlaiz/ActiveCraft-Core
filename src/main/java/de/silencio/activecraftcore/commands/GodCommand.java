@@ -45,8 +45,10 @@ public class GodCommand implements CommandExecutor {
                 }
                 Player target = Bukkit.getPlayer(args[0]);
                 if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
-                    sender.sendMessage(Errors.CANNOT_TARGET_SELF);
-                    return false;
+                    if (!sender.hasPermission("activecraft.god.self")) {
+                        sender.sendMessage(Errors.CANNOT_TARGET_SELF);
+                        return false;
+                    }
                 }
                 
                 FileConfig targetdataConfig = new FileConfig("playerdata" + File.separator + target.getName().toLowerCase() + ".yml");

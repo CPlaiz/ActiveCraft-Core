@@ -5,121 +5,153 @@ api-version: 1.17
 authors: [ CPlaiz, Silencio ]
 description: The heart of all ActiveCraft Plugins
 website: cplaiz.github.io/ActiveCraft-Core/
-
 commands:
   heal:
     description: Heals the target player.
     permission: activecraft.heal
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   spawn:
     description: Teleports you to spawn.
     aliases: ["setspawn"]
     usage: /spawn | /setspawn
     permission: activecraft.spawn
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   ping:
     description: Pong!
     permission: activecraft.ping
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   broadcast:
     description: Server-wide broadcast.
     aliases:
       - "broadcastworld"
       - "bc"
     permission: activecraft.broadcast
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   msg:
     description: Private message to another Player.
     permission: activecraft.msg
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   invsee:
     description: Opens the targets Inventory.
     permission: activecraft.invsee
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   vanish:
     description: become invisible for other players.
     aliases: ["v"]
-    permission: vanish
+    permission: activecraft.vanish
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   creative:
     description: the targets gamemode to Creative.
     aliases: ["cr"]
     permission: activecraft.gamemode.creative
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   survival:
     description: Sets the targets gamemode to Survival.
     aliases: [ "su" ]
     permission: activecraft.gamemode.survival
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   spectator:
     description: Sets the targets gamemode to Spectator.
     aliases: ["sp"]
     permission: activecraft.gamemode.spectator
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   adventure:
     description: Sets the targets gamemode to Adventure.
     aliases: ["ad"]
     permission: activecraft.gamemode.adventure
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   clearinventory:
     description: Clears the targets inventory.
     aliases: ["clear"]
     permission: activecraft.clearinv
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   feed:
     description: Feeds the player
     permission: activecraft.feed
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   craftingtable:
     description: Opens a workbench menu.
     permission: activecraft.workbench
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   anvil:
     description: Opens an anvil menu.
     permission: activecraft.anvil
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   enchanttable:
     description: Opens an enchantment table menu.
     permission: activecraft.enchanttable
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   cartographytable:
     description: Opens a cartography table menu.
     permission: activecraft.cartographytable
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   grindstone:
     description: Opens a grindstone menu.
     permission: activecraft.grindstone
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   loom:
     description: Opens a loom menu.
     permission: activecraft.loom
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   smithingtable:
     description: Opens a smithing table menu.
     permission: activecraft.smithingtable
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   stonecutter:
     description: Opens a stonecutter menu.
     permission: activecraft.stonecutter
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   playtime:
     description: Shows a players playtime.
     permission: activecraft.playtime
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   repair:
     description: Repairs selected item.
     permission: activecraft.repair
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   colornick:
     description: Allows the player to only change displaycolor.
     permission: activecraft.colornick
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   fly:
     description: Allows the player to toggle their or an other player's flight.
     aliases:
       - "flyspeed"
     permission: activecraft.fly
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   offinvsee:
     description: Shows a players armor and offhand-item.
     permission: activecraft.offinvsee
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   realname:
     description: Shows a players real name.
     permission: activecraft.realname
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   nick:
     description: Allows a player to change their or another players Displayname.
     permission: activecraft.nick
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   god:
     description: Toggle invincibility for you or another player.
     permission: activecraft.god
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   enderchest:
     description: Opens your or another players enderchest.
     aliases: ["ec"]
     permission: activecraft.enderchest
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   tpa:
     description: Sends a teleport request to another player.
     permission: activecraft.tpa
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   tpaccept:
     description: Accept a teleport request
     permission: activecraft.tpaccept
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   tpadeny:
     description: Denies a teleport request
     permission: activecraft.tpadeny
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   warp:
     description: Warp System.
     aliases:
@@ -127,56 +159,73 @@ commands:
       - "delwarp"
       - "warps"
     permission: activecraft.warp
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   home:
     description: Teleports to your home.
     permission: activecraft.home
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   sethome:
     description: Creates your home.
     permission: activecraft.sethome
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   delhome:
     description: Deletes your home.
     permission: activecraft.delhome
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   suicide:
     description: kill yourself.
     permission: activecraft.suicide
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   tphere:
     description: Teleports another player to you.
     permission: activecraft.tphere
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   opitems:
     description: Gives a player OP items.
     permission: activecraft.opitems
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   kickall:
     description: Kicks all players.
     permission: activecraft.kickall
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   ram:
     description: Shows RAM info.
     permission: activecraft.ram
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   staffchat:
     description: Send a message that only other staff can see.
     aliases: ["sc"]
     permission: activecraft.staffchat
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   reply:
     description: Sends a private message to the last player who messaged you.
     aliases: [ "r" ]
     permission: activecraft.reply
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   portal:
     description: Creates or destroys a portal.
     permission: activecraft.portal
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   lastonline:
     description: Gets the last time a player was online.
     permission: activecraft.lastonline
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   whois:
     description: Gets additional infomation on a player.
     permission: activecraft.whois
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   i:
     description: Gives the selected Item to the player.
     permission: activecraft.quickgive
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   item:
     description: Multiple item operations.
     permission: activecraft.item.name
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   butcher:
     description: Kills all mobs.
     permission: activecraft.butcher
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   ban:
     description: Ban/Unban a player/ip.
     aliases:
@@ -185,113 +234,147 @@ commands:
       - "unban-ip"
       - "banlist"
     permission: activecraft.ban
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   whereami:
     description: Locates the player.
     permission: activecraft.whereami
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   weather:
     description: Changes weather in the players current world.
     permission: activecraft.weather
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   more:
     description: Fills an Itemstack to its max stack size.
     permission: activecraft.more
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   restart-server:
     description: Restarts the server with a warning.
     permission: activecraft.restart
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   mute:
     description: Mutes / unmutes a player.
     aliases:
       - "unmute"
     permission: activecraft.mute
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   hat:
     description: Changes item in helmet slot.
     permission: activecraft.hat
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   log:
     description: Logs all commands executed on the server.
     permission: activecraft.log
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   skull:
     description: Gives the player its own head.
     permission: activecraft.skull
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   strike:
     description: Strikes a player with lightning.
     permission: activecraft.strike
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   break:
     description: Breaks the targeted block.
     permission: activecraft.break
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   firework:
     description: Summons a firework.
     aliases:
       - "fw"
     permission: activecraft.firework
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   book:
     description: Options to edit already signed books.
     permission: activecraft.book
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   xp:
     description: Adds xp or levels to a player.
     permission: activecraft.xp
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   enchant:
     description: Enchants an item.
     permission: activecraft.enchant
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   lockdown:
     description: Full lockdown of the server, prohibits normal players from joining.
     aliases:
       - "lockdownbypass"
     permission: activecraft.lockdown
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   afk:
     description: Allows a player to change AFK status.
     permission: activecraft.afk
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   top:
     description: Teleports the player ontop of the highest block at the player's x/z coordinates.
     permission: activecraft.top
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   explode:
     description: Creates a explosion at a player's position.
     permission: activecraft.explode
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   warn:
     description: Sends a warning to a player.
     permission: activecraft.warn
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   known-ips:
     description: Gets all ips a player has logged in with.
     permission: activecraft.listips
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   profile:
     description: Opens a profile inventory for quick player management.
     permission: activecraft.profile
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   lastcoords:
     description: Get a player's last coords
     permission: activecraft.lastcoords
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   verify:
     description: Verifies a player.
     permission: activecraft.verify
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   tpall:
     description: Teleports all players.
     permission: activecraft.tpall
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   summon:
     description: Summons one or multiple mobs at your or another players location.
     permission: activecraft.summon
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   spawner:
     description: Gives you or another player a mob spawner with the definend mob.
     permission: activecraft.spawner
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   edit-sign:
     description: Toggles the ability to edit signs for you or another player.
     permission: activecraft.editsign
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   randomtp:
     description: Teleports the player to a random location.
     aliases:
       - "tpr"
     permission: activecraft.randomtp
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   walkspeed:
     description: Changes your or another players walk speed.
     permission: activecraft.walkspeed
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   leathercolor:
     description: Changes the color of leather armor.
     permission: activecraft.leathercolor
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   knockbackstick:
     description: Gives you or another player a mighty stick.
     permission: activecraft.knockbackstick
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   fireball:
     description: Summons a fireball at your position.
     permission: activecraft.fireball
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   playerlist:
     description: Lists all online players.
     permission: activecraft.playerlist
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
 
 permissions:
   activecraft.heal.self:
@@ -700,9 +783,16 @@ permissions:
     default: op
     children:
       activecraft.strike: true
-  activecraft.break:
+  activecraft.break.self:
     description: Breaks the targeted block.
     default: op
+    children:
+      activecraft.break: true
+  activecraft.break.others:
+    description: Breaks the block another player is looking at.
+    default: op
+    children:
+      activecraft.break: true
   activecraft.firework:
     description: Summons a firework.
     default: op
@@ -806,6 +896,8 @@ permissions:
   activecraft.summon.self:
     description: Summons one mob at your position.
     default: op
+    children:
+      activecraft.summon: true
   activecraft.summon.self.multiple:
     description: Summons multiple mobs at your position.
     default: op
@@ -820,7 +912,7 @@ permissions:
     description: Summons multiple mobs at another players position.
     default: op
     children:
-      activecraft.: true
+      activecraft.summon: true
   activecraft.spawner.self:
     description: Gives you a mob spawner with the definend mob.
     default: op
@@ -861,9 +953,16 @@ permissions:
     default: op
     children:
       activecraft.walkspeed: true
-  activecraft.leathercolor:
-    description: Changes the color of leather armor.
+  activecraft.leathercolor.vanilla:
+    description: Changes the color of leather armor with vanilla dye colors.
     default: op
+    children:
+      activecraft.leathercolor: true
+  activecraft.leathercolor.hex:
+    description: Changes the color of leather armor with hex codes.
+    default: op
+    children:
+      activecraft.leathercolor: true
   activecraft.knockbackstick.self:
     description: Gives you a mighty stick.
     default: op

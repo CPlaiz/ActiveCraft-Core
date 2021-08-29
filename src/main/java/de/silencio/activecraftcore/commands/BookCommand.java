@@ -1,6 +1,7 @@
 package de.silencio.activecraftcore.commands;
 
 import de.silencio.activecraftcore.messages.Errors;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -38,6 +39,7 @@ public class BookCommand implements CommandExecutor, TabCompleter {
                                 }
                                 bookmeta.setTitle(title);
                                 book.setItemMeta(bookmeta);
+                                sender.sendMessage(ChatColor.GOLD + "Changed book title to " + ChatColor.AQUA + title + ChatColor.GOLD + ".");
                             } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
                         } else if (args[0].equalsIgnoreCase("author")) {
                             if(args.length >= 2) {
@@ -48,6 +50,7 @@ public class BookCommand implements CommandExecutor, TabCompleter {
                                 }
                                 bookmeta.setAuthor(author);
                                 book.setItemMeta(bookmeta);
+                                sender.sendMessage(ChatColor.GOLD + "Changed book author to " + ChatColor.AQUA + author + ChatColor.GOLD + ".");
                             } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
                         } else if (args[0].equalsIgnoreCase("editpage")) {
                             if(args.length >= 3) {
@@ -67,6 +70,7 @@ public class BookCommand implements CommandExecutor, TabCompleter {
                                 }
                                 bookmeta.setPage(Integer.parseInt(args[1]), editpage);
                                 book.setItemMeta(bookmeta);
+                                sender.sendMessage(ChatColor.GOLD + "Changed the page " + ChatColor.AQUA + num + ChatColor.GOLD + ".");
                             } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
                         } else if (args[0].equalsIgnoreCase("addpage")) {
                             if(args.length >= 2) {
@@ -77,6 +81,7 @@ public class BookCommand implements CommandExecutor, TabCompleter {
                                 }
                                 bookmeta.addPage(addpage);
                                 book.setItemMeta(bookmeta);
+                                sender.sendMessage(ChatColor.GOLD + "Added a new page.");
                             }
                         } else if (args[0].equalsIgnoreCase("generation")) {
                             if (args.length == 2) {
@@ -87,24 +92,28 @@ public class BookCommand implements CommandExecutor, TabCompleter {
 
                                     bookmeta.setGeneration(BookMeta.Generation.ORIGINAL);
                                     book.setItemMeta(bookmeta);
+                                    sender.sendMessage(ChatColor.GOLD + "Changed book generation to " + ChatColor.AQUA + "original" + ChatColor.GOLD + ".");
                                 } else if (args[1].equalsIgnoreCase("copy")) {
                                     ItemStack book = player.getInventory().getItemInMainHand();
                                     BookMeta bookmeta = (BookMeta) book.getItemMeta();
 
                                     bookmeta.setGeneration(BookMeta.Generation.COPY_OF_ORIGINAL);
                                     book.setItemMeta(bookmeta);
+                                    sender.sendMessage(ChatColor.GOLD + "Changed book generation to " + ChatColor.AQUA + "copy of original" + ChatColor.GOLD + ".");
                                 } else if (args[1].equalsIgnoreCase("copy_of_copy")) {
                                     ItemStack book = player.getInventory().getItemInMainHand();
                                     BookMeta bookmeta = (BookMeta) book.getItemMeta();
 
                                     bookmeta.setGeneration(BookMeta.Generation.COPY_OF_COPY);
                                     book.setItemMeta(bookmeta);
+                                    sender.sendMessage(ChatColor.GOLD + "Changed book generation to " + ChatColor.AQUA + "copy of copy" + ChatColor.GOLD + ".");
                                 } else if (args[1].equalsIgnoreCase("tattered")) {
                                     ItemStack book = player.getInventory().getItemInMainHand();
                                     BookMeta bookmeta = (BookMeta) book.getItemMeta();
 
                                     bookmeta.setGeneration(BookMeta.Generation.TATTERED);
                                     book.setItemMeta(bookmeta);
+                                    sender.sendMessage(ChatColor.GOLD + "Changed book generation to " + ChatColor.AQUA + "tattered" + ChatColor.GOLD + ".");
                                 } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
 
                             } else sender.sendMessage(Errors.INVALID_ARGUMENTS);

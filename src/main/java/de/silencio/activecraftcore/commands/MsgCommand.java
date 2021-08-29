@@ -45,8 +45,21 @@ public class MsgCommand implements CommandExecutor {
                                 playerStoring.put(target, player);
 
                                 //socialspy
-                                Bukkit.broadcast(ChatColor.GOLD + "[" + player.getDisplayName() + ChatColor.GOLD + " -> " + target.getDisplayName() + ChatColor.GOLD + "] " + ChatColor.RESET + message, "activecraft.msg.spy");
+                                for(Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+                                    if (onlinePlayer.hasPermission("activecraft.msg.spy")) {
+                                        if(onlinePlayer != player && onlinePlayer != target) {
+                                            onlinePlayer.sendMessage(ChatColor.GOLD + "[" + player.getDisplayName() + ChatColor.GOLD
+                                                    + " -> " + target.getDisplayName() + ChatColor.GOLD + "] " + ChatColor.RESET + message);
+                                        }
+                                    }
+                                }
+                                if (mainConfig.getBoolean("socialspy-to-console")) {
+                                    Bukkit.getConsoleSender().sendMessage(ChatColor.GOLD + "[" + player.getDisplayName() + ChatColor.GOLD
+                                            + " -> " + target.getDisplayName() + ChatColor.GOLD + "] " + ChatColor.RESET + message);
+                                }
+                                triggerListener(sender, target, message);
                                 message = "";
+
                             } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
                         } else sender.sendMessage(Errors.WARNING + " You can't message yourself!");
                     } else player.sendMessage(Errors.INVALID_PLAYER);

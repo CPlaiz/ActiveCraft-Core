@@ -22,7 +22,7 @@ public class SpawnerCommand implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        if (args.length == 1) {
+        if (args.length == 1 ) {
             String mobName = args[0];
             EntityType type = null;
             try {
@@ -46,6 +46,8 @@ public class SpawnerCommand implements CommandExecutor, TabCompleter {
                     //spawnerblock.setSpawnRange(range);
                     player.sendMessage(ChatColor.GOLD + "Gave yourself a " + ChatColor.AQUA + mobName.toLowerCase() + ChatColor.GOLD + " spawner.");
 
+                    spawnerblock.setSpawnedType(EntityType.valueOf(mobName));
+                    spawnermeta.setDisplayName(ChatColor.AQUA + mobName.toLowerCase().replace("_", " "));
                     spawnermeta.setBlockState(spawnerblock);
                     spawner.setItemMeta(spawnermeta);
                     player.getInventory().addItem(spawner);
@@ -80,6 +82,7 @@ public class SpawnerCommand implements CommandExecutor, TabCompleter {
                     CreatureSpawner spawnerblock = (CreatureSpawner) spawnermeta.getBlockState();
 
                     spawnerblock.setSpawnedType(EntityType.valueOf(mobName));
+                    spawnermeta.setDisplayName(ChatColor.AQUA + mobName.toLowerCase().replace("_", " "));
                     sender.sendMessage(ChatColor.GOLD + "Gave " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " a " + ChatColor.AQUA + mobName.toLowerCase() + ChatColor.GOLD + " spawner.");
                     target.sendMessage(ChatColor.AQUA + sender.getName() + ChatColor.GOLD + " gave you a " + ChatColor.AQUA + mobName.toLowerCase() + ChatColor.GOLD + " spawner.");
 

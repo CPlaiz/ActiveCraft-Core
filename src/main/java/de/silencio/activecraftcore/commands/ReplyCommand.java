@@ -1,6 +1,7 @@
 package de.silencio.activecraftcore.commands;
 
 import de.silencio.activecraftcore.messages.Errors;
+import de.silencio.activecraftcore.utils.FileConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -20,6 +21,7 @@ public class ReplyCommand extends MsgCommand implements CommandExecutor {
 
                 Player player = (Player) sender;
                 Player answerTarget = playerStoring.get(player);
+                FileConfig mainConfig = new FileConfig("config.yml");
 
                 if(answerTarget != null) {
                     if (args.length > 0) {
@@ -31,7 +33,19 @@ public class ReplyCommand extends MsgCommand implements CommandExecutor {
                         answerTarget.playSound(answerTarget.getLocation(), Sound.ENTITY_ARROW_HIT_PLAYER, 1f, 1f);
 
                         //socialspy
-                        Bukkit.broadcast(ChatColor.GOLD + "[" + player.getDisplayName() + ChatColor.GOLD + " -> " + answerTarget.getDisplayName() + ChatColor.GOLD + "] " + ChatColor.RESET + message, "activecraft.msg.spy");
+                        for(Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+                            if (onlinePlayer.hasPermission("activecraft.msg.spy")) {
+                                if(onlinePlayer != player && onlinePlayer != answerTarget) {
+                                    onlinePlayer.sendMessage(ChatColor.GOLD + "[" + player.getDisplayName() + ChatColor.GOLD
+                                            + " -> " + answerTarget.getDisplayName() + ChatColor.GOLD + "] " + ChatColor.RESET + message);
+                                }
+                            }
+                        }
+                        if (mainConfig.getBoolean("socialspy-to-console")) {
+                            Bukkit.getConsoleSender().sendMessage(ChatColor.GOLD + "[" + player.getDisplayName() + ChatColor.GOLD
+                                    + " -> " + answerTarget.getDisplayName() + ChatColor.GOLD + "] " + ChatColor.RESET + message);
+                        }
+                        triggerListener(sender, answerTarget, message);
                         message = "";
                     } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
                 } else sender.sendMessage(Errors.INVALID_PLAYER);

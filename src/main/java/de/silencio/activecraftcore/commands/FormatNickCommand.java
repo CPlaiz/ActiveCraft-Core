@@ -23,7 +23,7 @@ public class FormatNickCommand implements CommandExecutor, TabCompleter {
             if (sender instanceof Player) {
                 Player player = (Player) sender;
 
-                if (sender.hasPermission("activecraft.nick.format.self")) {
+                if (sender.hasPermission("activecraft.formatnick.self")) {
                     for (ChatColor color : ChatColor.values()) {
                         if (args[0].toLowerCase().equals(color.name().toLowerCase())) {
                             if (!args[0].equals("BOLD") && !args[0].equals("MAGIC") && !args[0].equals("STRIKETHROUGH") &&
@@ -50,7 +50,13 @@ public class FormatNickCommand implements CommandExecutor, TabCompleter {
             }
             Player target = Bukkit.getPlayer(args[0]);
 
-            if (sender.hasPermission("activecraft.nick.format.others")) {
+            if (sender.hasPermission("activecraft.formatnick.others")) {
+                if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
+                    if (!sender.hasPermission("activecraft.formatnick.self")) {
+                        sender.sendMessage(Errors.CANNOT_TARGET_SELF);
+                        return false;
+                    }
+                }
                 for (ChatColor color : ChatColor.values()) {
                     if (args[1].toLowerCase().equals(color.name().toLowerCase())) {
                         if (!args[1].equals("BOLD") && !args[1].equals("MAGIC") && !args[1].equals("STRIKETHROUGH") &&

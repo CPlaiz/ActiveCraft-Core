@@ -45,7 +45,7 @@ public class LeatherColorCommand implements CommandExecutor, TabCompleter {
                         mainhanditem.setItemMeta(itemmeta);
                         player.getInventory().setItemInMainHand(mainhanditem);
 
-                    } else sender.sendMessage(Errors.WARNING + "No leather armor in main hand!");
+                    } else sender.sendMessage(Errors.WARNING + "No leather item in main hand!");
                 } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
             } else sender.sendMessage(Errors.NO_PERMISSION);
         } else sender.sendMessage(Errors.NOT_A_PLAYER);

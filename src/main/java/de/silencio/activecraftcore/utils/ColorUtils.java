@@ -29,8 +29,13 @@ public class ColorUtils {
             case "light_purple":
                 color = Color.FUCHSIA;
                 break;
-            case "gold":
-                color = Color.ORANGE;
+            case "pink":
+                int[] rgbArray_pink = ColorUtils.getRGB("#F38BAA");
+                color = Color.fromRGB(rgbArray_pink[0], rgbArray_pink[1], rgbArray_pink[2]);
+                break;
+            case "orange":
+                int[] rgbArray_orange = ColorUtils.getRGB("#F9801D");
+                color = Color.fromRGB(rgbArray_orange[0], rgbArray_orange[1], rgbArray_orange[2]);
                 break;
             case "gray":
                 color = Color.SILVER;

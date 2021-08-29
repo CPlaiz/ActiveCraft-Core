@@ -166,7 +166,7 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginCommand("lastonline").setExecutor(new LastOnlineCommand());
         Bukkit.getPluginCommand("whois").setExecutor(new WhoIsCommand());
         Bukkit.getPluginCommand("i").setExecutor(new QuickGiveCommand());
-        Bukkit.getPluginCommand("butcher").setExecutor(new ButcherCommand());
+        //Bukkit.getPluginCommand("butcher").setExecutor(new ButcherCommand());
         Bukkit.getPluginCommand("item").setExecutor(new ItemCommand());
         Bukkit.getPluginCommand("ban").setExecutor(new BanCommand());
         Bukkit.getPluginCommand("whereami").setExecutor(new WhereAmICommand());

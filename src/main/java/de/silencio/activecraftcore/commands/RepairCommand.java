@@ -1,6 +1,8 @@
 package de.silencio.activecraftcore.commands;
 
 import de.silencio.activecraftcore.messages.Errors;
+import org.bukkit.ChatColor;
+import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -27,6 +29,8 @@ public class RepairCommand implements CommandExecutor {
                         ((Damageable) meta).setDamage(0);
                     }
                     item.setItemMeta(meta);
+                    sender.sendMessage(ChatColor.GOLD + "Fixed your " + ChatColor.AQUA + meta.getDisplayName() + ChatColor.GOLD + ".");
+                    player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_USE, 1f, 1f);
 
             } else sender.sendMessage(Errors.NO_PERMISSION);
 

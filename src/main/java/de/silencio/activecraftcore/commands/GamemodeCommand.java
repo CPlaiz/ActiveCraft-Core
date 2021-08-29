@@ -22,8 +22,10 @@ public class GamemodeCommand implements CommandExecutor {
             }
             Player target = Bukkit.getPlayer(args[0]);
             if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
-                sender.sendMessage(Errors.CANNOT_TARGET_SELF);
-                return false;
+                if (!sender.hasPermission("activecraft.gamemode.survival.self") || !sender.hasPermission("activecraft.gamemode.creative.self") || !sender.hasPermission("activecraft.gamemode.adventure.self") || !sender.hasPermission("activecraft.gamemode.spectator.self")) {
+                    sender.sendMessage(Errors.CANNOT_TARGET_SELF);
+                    return false;
+                }
             }
 
             if (label.equalsIgnoreCase("su") || label.equalsIgnoreCase("survival")) {

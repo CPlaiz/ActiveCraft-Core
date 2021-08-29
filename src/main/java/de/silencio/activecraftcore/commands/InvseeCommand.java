@@ -27,8 +27,6 @@ public class InvseeCommand implements CommandExecutor {
                     player.playSound(player.getLocation(), Sound.BLOCK_CHEST_OPEN, 1f, 1f);
                     
                 } else sender.sendMessage(Errors.NO_PERMISSION);
-
-                return true;
             } else sender.sendMessage(Errors.NOT_A_PLAYER);
         } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
         return true;
