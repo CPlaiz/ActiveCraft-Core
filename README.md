@@ -1,5 +1,12 @@
 # ActiveCraft-Core
 The heart of all ActiveCraft plugins
 
-This project is about recoding other minecraft plugins and adding own features to learn and develop coding knowledge.
+This plugin is the heart of all ActiveCraft plugins, and is required for other ActiveCraft plugins to function correctly.
+
+Spigot: https://www.spigotmc.org/resources/activecraft-core.95488/updates
+
+Docs: https://cplaiz.github.io/ActiveCraft-Core/
+
+bStats: https://bstats.org/plugin/bukkit/ActiveCraft-Core/12627
+
 Made by CPlaiz and Silencio.
