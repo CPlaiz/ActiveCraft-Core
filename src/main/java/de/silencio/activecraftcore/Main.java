@@ -5,7 +5,6 @@ import de.silencio.activecraftcore.listener.*;
 import de.silencio.activecraftcore.listener.inventory.ProfileListener;
 import de.silencio.activecraftcore.messages.Dialogue.DialogueListenerList;
 import de.silencio.activecraftcore.messages.Dialogue.DialogueManagerList;
-import de.silencio.activecraftcore.ownlisteners.ListenerManager;
 import de.silencio.activecraftcore.utils.Config;
 import de.silencio.activecraftcore.utils.FileConfig;
 import de.silencio.activecraftcore.utils.VanishManager;
@@ -34,7 +33,6 @@ public final class Main extends JavaPlugin {
     private Config homeconfig;
     private static Config warpsConfig;
 
-    public ListenerManager listenerManager;
 
     public DialogueManagerList dialogueManagerList;
     public DialogueListenerList dialogueListenerList;
@@ -44,14 +42,9 @@ public final class Main extends JavaPlugin {
         plugin = this;
     }
 
-    public ListenerManager getListenerManager() {
-        return listenerManager;
-    }
-
     @Override
     public void onEnable() {
         // Plugin startup logic
-        this.listenerManager = new ListenerManager();
         this.dialogueManagerList = new DialogueManagerList();
         this.dialogueListenerList = new DialogueListenerList();
         this.vanishManager = new VanishManager(this);

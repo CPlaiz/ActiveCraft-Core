@@ -9,14 +9,18 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.LightningStrike;
 import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SetHomeCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-            FileConfig homeconfig = new FileConfig("homes.yml");
+        FileConfig homeconfig = new FileConfig("homes.yml");
 
         if (args.length == 1) {
             if (sender.hasPermission("activecraft.sethome.self")) {

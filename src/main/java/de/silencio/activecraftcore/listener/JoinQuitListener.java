@@ -121,12 +121,23 @@ public class JoinQuitListener implements Listener {
             for (String s : playerList) {
                 FileConfig fileConfigIpAddressCheck = new FileConfig("playerdata" + File.separator + s.toLowerCase() + ".yml");
                 List<String> knownIpsOthers = fileConfigIpAddressCheck.getStringList("known-ips");
+                StringBuilder strBuilder = new StringBuilder();
+                boolean isFirst = true;
                 for (String knownIpPlayer : knownIps) {
                     if (knownIpsOthers.contains(knownIpPlayer)) {
-                        Bukkit.broadcast(Errors.WARNING + ChatColor.AQUA + player.getName() + ChatColor.GOLD + " shares the IP " +
-                                ChatColor.GRAY + knownIpPlayer + ChatColor.GOLD + " with " + ChatColor.AQUA +
-                                fileConfigIpAddressCheck.getString("name"), "activecraft.matchingip.notify");
+                        if (!isFirst) {
+                            strBuilder.append(", ");
+                        } else isFirst = false;
+                        strBuilder.append(knownIpPlayer);
                     }
+                }
+                if (!strBuilder.toString().equals("")) {
+                    //Bukkit.broadcast(Errors.WARNING + ChatColor.AQUA + player.getName() + ChatColor.GOLD + " shares the IP " +
+                    //        ChatColor.GRAY + strBuilder + ChatColor.GOLD + " with " + ChatColor.AQUA +
+                    //        fileConfigIpAddressCheck.getString("name"), "activecraft.matchingip.notify");
+                    Bukkit.broadcast(ChatColor.DARK_AQUA + player.getName() + ChatColor.GRAY + " shares the IP " +
+                            ChatColor.DARK_GRAY + strBuilder + ChatColor.GRAY + " with " + ChatColor.DARK_AQUA +
+                            fileConfigIpAddressCheck.getString("name"), "activecraft.matchingip.notify");
                 }
             }
         }

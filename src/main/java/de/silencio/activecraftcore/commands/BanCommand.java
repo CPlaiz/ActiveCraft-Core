@@ -2,12 +2,13 @@ package de.silencio.activecraftcore.commands;
 
 import de.silencio.activecraftcore.Main;
 import de.silencio.activecraftcore.messages.Dialogue.DialogueList;
-import de.silencio.activecraftcore.ownlisteners.DialogueListener;
+import de.silencio.activecraftcore.listener.DialogueListener;
 import de.silencio.activecraftcore.messages.Dialogue.DialogueManager;
 import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.utils.BanManager;
 import de.silencio.activecraftcore.utils.FileConfig;
 import de.silencio.activecraftcore.utils.StringUtils;
+import de.silencio.activecraftcore.utils.TimeUtils;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -150,7 +151,7 @@ public class BanCommand implements CommandExecutor, DialogueList, Listener, Dial
                         this.dialogueManager.setCompletedMessage(ChatColor.GOLD + "Banned " + ChatColor.AQUA + target.getName() + ChatColor.GOLD + " (" + target.getAddress().getAddress().toString().replace("/", "") + ").");
                         this.dialogueManager.setCancelledMessage(ChatColor.GOLD + "Cancelled ban dialogue for " + ChatColor.AQUA + target.getName() + ChatColor.GOLD + ".");
                         this.dialogueManager.add(ChatColor.GOLD + "Please enter a reason: ");
-                        this.dialogueManager.add(ChatColor.GOLD + "Please enter the ban duration (dd/MM/yyyy hh:mm): ");
+                        this.dialogueManager.add(ChatColor.GOLD + "Please enter the ban duration: ");
                         this.dialogueManager.initialize();
 
                         Date date = new Date();
@@ -167,7 +168,7 @@ public class BanCommand implements CommandExecutor, DialogueList, Listener, Dial
                         this.dialogueManager.setCompletedMessage(ChatColor.GOLD + "Banned " + ChatColor.AQUA + target.getName() + ChatColor.GOLD + "(" + ip + ").");
                         this.dialogueManager.setCancelledMessage(ChatColor.GOLD + "Cancelled ban dialogue for " + ChatColor.AQUA + target.getName() + ChatColor.GOLD + ".");
                         this.dialogueManager.add(ChatColor.GOLD + "Please enter a reason: ");
-                        this.dialogueManager.add(ChatColor.GOLD + "Please enter the ban duration (dd/MM/yyyy hh:mm): ");
+                        this.dialogueManager.add(ChatColor.GOLD + "Please enter the ban duration: ");
                         this.dialogueManager.initialize();
 
                         Date date = new Date();
@@ -185,12 +186,7 @@ public class BanCommand implements CommandExecutor, DialogueList, Listener, Dial
 
     @Override
     public void onDialogueAnswer(DialogueManager dialogueManager) {
-        if (dialogueManager.getActiveStep() == 1) {
-            if (!(dialogueManager.getTempAnswer().matches("\\d\\d/\\d\\d/\\d\\d\\d\\d \\d\\d:\\d\\d") ||
-                    dialogueManager.getTempAnswer().equalsIgnoreCase("permanent") || dialogueManager.getTempAnswer().equalsIgnoreCase("null"))) {
-                dialogueManager.goBack();
-            }
-        }
+        return;
     }
 
     @Override
@@ -202,7 +198,7 @@ public class BanCommand implements CommandExecutor, DialogueList, Listener, Dial
     public void onDialogueComplete(DialogueManager dialogueManager) {
         if (this.dialogueManager == dialogueManager) {
             if (type == BanList.Type.NAME) {
-                nameBanManager.ban(target, this.dialogueManager.getAnswer(0), convertBanDuration(this.dialogueManager.getAnswer(1)), commandSender.getName());
+                nameBanManager.ban(target, this.dialogueManager.getAnswer(0), TimeUtils.addFromStringToDate(this.dialogueManager.getAnswer(1)), commandSender.getName());
                 FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + target.getName().toLowerCase() + ".yml");
                 playerdataConfig.set("violations.bans", playerdataConfig.getInt("violations.bans") + 1);
                 playerdataConfig.saveConfig();
@@ -213,7 +209,7 @@ public class BanCommand implements CommandExecutor, DialogueList, Listener, Dial
                     }
                 });
             } else if (type == BanList.Type.IP) {
-                ipBanManager.ban(target.getAddress().getAddress().toString().replace("/", ""), this.dialogueManager.getAnswer(0), convertBanDuration(this.dialogueManager.getAnswer(1)), commandSender.getName());
+                ipBanManager.ban(target.getAddress().getAddress().toString().replace("/", ""), this.dialogueManager.getAnswer(0), TimeUtils.addFromStringToDate(this.dialogueManager.getAnswer(1)), commandSender.getName());
                 FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + target.getName().toLowerCase() + ".yml");
                 playerdataConfig.set("violations.ip-bans", playerdataConfig.getInt("violations.ip-bans") + 1);
                 playerdataConfig.saveConfig();
@@ -225,38 +221,6 @@ public class BanCommand implements CommandExecutor, DialogueList, Listener, Dial
                 });
             }
         }
-    }
-
-    public Date convertBanDuration(String string) {
-
-        Date nowDate = new Date();
-        Date addedDate = null;
-        Date finalDate = null;
-
-        if (string.matches("\\d\\d/\\d\\d/\\d\\d\\d\\d \\d\\d:\\d\\d")) {
-
-            string = string.trim();
-            String stringSub1 = string.substring(0, 10);
-            String stringSub2 = string.substring(12, 16);
-
-            String[] arrayDate = stringSub1.split("/");
-            String[] arrayTime = stringSub2.split(":");
-
-            long dayMillis = Long.parseLong(arrayDate[0]) * 24 * 60 * 60 * 1000;
-            long monthMillis = Long.parseLong(arrayDate[1]) * 30 * 24 * 60 * 60 * 1000;
-            long yearMillis = Long.parseLong(arrayDate[2]) * 365 * 60 * 60 * 1000;
-            long hourMillis = Long.parseLong(arrayTime[0]) * 60 * 60 * 1000;
-            long minuteMillis = Long.parseLong(arrayTime[1]) * 60 * 1000;
-
-            long nowMillis = nowDate.getTime();
-
-            long totalMillis = dayMillis + monthMillis + yearMillis + hourMillis + minuteMillis + nowMillis;
-
-            finalDate = new Date(totalMillis);
-        } else if (string.equalsIgnoreCase("null") || string.equalsIgnoreCase("permanent")) {
-            finalDate = null;
-        }
-        return finalDate;
     }
 
     public DialogueManager getDialogueManager() {

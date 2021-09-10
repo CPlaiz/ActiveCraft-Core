@@ -1,5 +1,7 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.events.LockdownEvent;
+import de.silencio.activecraftcore.events.PlayerUnvanishEvent;
 import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.utils.FileConfig;
 import org.bukkit.Bukkit;
@@ -28,6 +30,11 @@ public class LockdownCommand implements CommandExecutor, Listener, TabCompleter 
                 if (args.length == 1 && args[0].equalsIgnoreCase("enable")) {
                     FileConfig fileConfig = new FileConfig("config.yml");
                     if (!fileConfig.getBoolean("lockdown")) {
+
+                        LockdownEvent event = new LockdownEvent(true);
+                        Bukkit.getPluginManager().callEvent(event);
+                        if (event.isCancelled()) return false;
+
                         fileConfig.set("lockdown", true);
                         fileConfig.saveConfig();
                         sender.sendMessage(ChatColor.GOLD + "Lockdown mode was enabled. Kicking all players.");
@@ -35,6 +42,11 @@ public class LockdownCommand implements CommandExecutor, Listener, TabCompleter 
                 } else if (args.length == 1 && args[0].equalsIgnoreCase("disable")) {
                     FileConfig fileConfig = new FileConfig("config.yml");
                     if (fileConfig.getBoolean("lockdown")) {
+
+                        LockdownEvent event = new LockdownEvent(false);
+                        Bukkit.getPluginManager().callEvent(event);
+                        if (event.isCancelled()) return false;
+
                         fileConfig.set("lockdown", false);
                         fileConfig.saveConfig();
                         sender.sendMessage(ChatColor.GOLD + "Lockdown mode was disabled. Players can now join the server again.");

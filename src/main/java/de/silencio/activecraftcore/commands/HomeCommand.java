@@ -8,15 +8,19 @@ import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
-public class HomeCommand implements CommandExecutor {
+import java.util.ArrayList;
+import java.util.List;
+
+public class HomeCommand implements CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        if(sender instanceof Player) {
+        if (sender instanceof Player) {
 
             FileConfiguration homeconfig = new FileConfig("homes.yml");
 
@@ -77,5 +81,39 @@ public class HomeCommand implements CommandExecutor {
             }
         } else sender.sendMessage(Errors.NOT_A_PLAYER);
         return true;
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+        ArrayList<String> list = new ArrayList<>();
+
+        Player p = (Player) sender;
+
+        if (args.length == 0) return list;
+
+        if (args.length == 1) {
+            FileConfig warpListConfig = new FileConfig("homes.yml");
+            list.addAll(warpListConfig.getStringList(p.getName() + ".home_list"));
+            for (Player player : Bukkit.getOnlinePlayers()) {
+                list.add(player.getName());
+            }
+        } else if (args.length == 2) {
+            FileConfig warpListConfig = new FileConfig("homes.yml");
+            if (Bukkit.getPlayer(args[0]) != null) {
+                list.addAll(warpListConfig.getStringList(Bukkit.getPlayer(args[0]).getName() + ".home_list"));
+            }
+        }
+
+
+        ArrayList<String> completerList = new ArrayList<>();
+        String currentarg = args[args.length - 1].toLowerCase();
+        for (String s : list) {
+            String s1 = s.toLowerCase();
+            if (s1.startsWith(currentarg)) {
+                completerList.add(s);
+            }
+        }
+
+        return completerList;
     }
 }

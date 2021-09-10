@@ -1,7 +1,7 @@
 package de.silencio.activecraftcore.messages.Dialogue;
 
 import de.silencio.activecraftcore.Main;
-import de.silencio.activecraftcore.ownlisteners.DialogueListener;
+import de.silencio.activecraftcore.listener.DialogueListener;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;

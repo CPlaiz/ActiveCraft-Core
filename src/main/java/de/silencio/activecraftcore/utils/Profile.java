@@ -170,15 +170,15 @@ public class Profile {
         return on_duty;
     }
 
-    public boolean isLogEnabled() {
+    public boolean hasLogEnabled() {
         return log_enabled;
     }
 
-    public boolean isBypassLockdown() {
+    public boolean canBypassLockdown() {
         return bypass_lockdown;
     }
 
-    public boolean isEditSign() {
+    public boolean canEditSign() {
         return edit_sign;
     }
 

@@ -16,13 +16,6 @@ import java.util.List;
 public class StaffChatCommand implements CommandExecutor, TabCompleter {
 
     String message = "";
-    ListenerManager listenerManager = Main.getPlugin().getListenerManager();
-
-    private void triggerListener(String message, CommandSender sender) {
-        for (StaffChatListener scl : listenerManager.getStaffChatListenerList()) {
-            scl.onStaffChatMessage(sender, message);
-        }
-    }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -30,10 +23,14 @@ public class StaffChatCommand implements CommandExecutor, TabCompleter {
         for (int i = 0; i < args.length; i++) {
             message = message + args[i] + " ";
         }
+
+        StaffChatMessageEvent event = new StaffChatMessageEvent(sender, message);
+        Bukkit.getPluginManager().callEvent(event);
+        if (event.isCancelled()) return false;
+
         if (sender instanceof Player) {
-            Bukkit.broadcast(ChatColor.GOLD + "[StaffChat] " + ChatColor.AQUA + ((Player) sender).getDisplayName() + ChatColor.RESET + ": " + message, "activecraft.staffchat");
-        } else Bukkit.broadcast(ChatColor.GOLD + "[StaffChat] " + ChatColor.AQUA + sender.getName() + ChatColor.RESET + ": " + message, "activecraft.staffchat");
-        triggerListener(message, sender);
+            Bukkit.broadcast(ChatColor.GOLD + "[StaffChat] " + ChatColor.AQUA + ((Player) sender).getDisplayName() + ChatColor.RESET + ": " + event.getMessage(), "activecraft.staffchat");
+        } else Bukkit.broadcast(ChatColor.GOLD + "[StaffChat] " + ChatColor.AQUA + sender.getName() + ChatColor.RESET + ": " + event.getMessage(), "activecraft.staffchat");
 
         message = "";
         return true;

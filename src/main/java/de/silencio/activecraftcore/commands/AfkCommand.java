@@ -1,5 +1,7 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.events.LockdownEvent;
+import de.silencio.activecraftcore.events.PlayerAfkEvent;
 import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.utils.FileConfig;
 import de.silencio.activecraftcore.utils.MessageUtils;
@@ -24,12 +26,19 @@ public class AfkCommand implements CommandExecutor {
                     Player player = (Player) sender;
                     FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + player.getName().toLowerCase() + ".yml");
                     if (sender.hasPermission("activecraft.afk.self")) {
-                        
+
+                        PlayerAfkEvent event;
+
                         if(!playerdataConfig.getBoolean("afk")) {
+
+                            event = new PlayerAfkEvent(player, true);
+                            Bukkit.getPluginManager().callEvent(event);
+                            if (event.isCancelled()) return false;
+
                             setDisplaynameFromConfig(player, playerdataConfig.getString("colornick"), playerdataConfig.getString("nickname") + ChatColor.GRAY + " " + fileConfig.getString("afk-format"));
                             //player.setDisplayName(playerdataConfig.getString("nickname")+ ChatColor.GRAY + " " + fileConfig.getString("afk-format"));
                             player.sendMessage(ChatColor.GOLD + "You are now afk.");
-                            playerdataConfig.set("afk", true);
+                            playerdataConfig.set("afk", event.isAfk());
                             playerdataConfig.saveConfig();
 
                             if(fileConfig.getBoolean("announce-afk")) {
@@ -37,10 +46,15 @@ public class AfkCommand implements CommandExecutor {
                             }
 
                         } else if(playerdataConfig.getBoolean("afk")) {
+
+                            event = new PlayerAfkEvent(player, false);
+                            Bukkit.getPluginManager().callEvent(event);
+                            if (event.isCancelled()) return false;
+
                             setDisplaynameFromConfig(player, playerdataConfig.getString("colornick"), playerdataConfig.getString("nickname"));
                             //player.setDisplayName(playerdataConfig.getString("nickname"));
                             player.sendMessage(ChatColor.GOLD + "You are no longer afk.");
-                            playerdataConfig.set("afk", false);
+                            playerdataConfig.set("afk", event.isAfk());
                             playerdataConfig.saveConfig();
 
                             if(fileConfig.getBoolean("announce-afk")) {

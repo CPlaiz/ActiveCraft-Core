@@ -19,7 +19,6 @@ public class MsgCommand implements CommandExecutor {
     public static HashMap<Player, Player> playerStoring = new HashMap<>();
 
     String message = "";
-    ListenerManager listenerManager = Main.getPlugin().getListenerManager();
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -41,8 +40,13 @@ public class MsgCommand implements CommandExecutor {
                                 for (int i = 1; i < args.length; i++) {
                                     message = message + args[i] + " ";
                                 }
-                                player.sendMessage("§6[me -> " + target.getDisplayName() + "§6]§r " + message);
-                                target.sendMessage("§6[" + player.getDisplayName() + "§6 -> me]§r " + message);
+
+                                MsgEvent event = new MsgEvent(sender, target, message);
+                                Bukkit.getPluginManager().callEvent(event);
+                                if (event.isCancelled()) return false;
+
+                                player.sendMessage("§6[me -> " + target.getDisplayName() + "§6]§r " + event.getMessage());
+                                target.sendMessage("§6[" + player.getDisplayName() + "§6 -> me]§r " + event.getMessage());
                                 target.playSound(target.getLocation(), Sound.ENTITY_ARROW_HIT_PLAYER, 1f, 1f);
 
                                 FileConfig mainConfig = new FileConfig("config.yml");
@@ -54,13 +58,13 @@ public class MsgCommand implements CommandExecutor {
                                     if (onlinePlayer.hasPermission("activecraft.msg.spy")) {
                                         if(onlinePlayer != player && onlinePlayer != target) {
                                             onlinePlayer.sendMessage(ChatColor.GOLD + "[" + player.getDisplayName() + ChatColor.GOLD
-                                                    + " -> " + target.getDisplayName() + ChatColor.GOLD + "] " + ChatColor.RESET + message);
+                                                    + " -> " + target.getDisplayName() + ChatColor.GOLD + "] " + ChatColor.RESET + event.getMessage());
                                         }
                                     }
                                 }
                                 if (mainConfig.getBoolean("socialspy-to-console")) {
                                     Bukkit.getConsoleSender().sendMessage(ChatColor.GOLD + "[" + player.getDisplayName() + ChatColor.GOLD
-                                            + " -> " + target.getDisplayName() + ChatColor.GOLD + "] " + ChatColor.RESET + message);
+                                            + " -> " + target.getDisplayName() + ChatColor.GOLD + "] " + ChatColor.RESET + event.getMessage());
                                 }
                                 message = "";
 
@@ -77,18 +81,17 @@ public class MsgCommand implements CommandExecutor {
                     for (int i = 1; i < args.length; i++) {
                         message = message + args[i] + " ";
                     }
-                    target.sendMessage(ChatColor.GOLD + "[Console -> me] " + ChatColor.RESET + message);
+
+                    MsgEvent event = new MsgEvent(sender, target, message);
+                    Bukkit.getPluginManager().callEvent(event);
+                    if (event.isCancelled()) return false;
+
+                    target.sendMessage(ChatColor.GOLD + "[Console -> me] " + ChatColor.RESET + event.getMessage());
                     target.playSound(target.getLocation(), Sound.ENTITY_ARROW_HIT_PLAYER, 1f, 1f);
                     message = "";
                 } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
             } else sender.sendMessage(Errors.INVALID_PLAYER);
         }
         return true;
-    }
-
-    protected void triggerListener(CommandSender sender, Player target, String message) {
-        for (SocialSpyListener scl : listenerManager.getSocialSpyListenerList()) {
-            scl.onSocialSpy(sender, target, message);
-        }
     }
 }
