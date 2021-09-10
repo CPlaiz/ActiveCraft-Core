@@ -375,6 +375,10 @@ commands:
     description: Lists all online players.
     permission: activecraft.playerlist
     permission-message: "§cWarnig! §7You don't have the permission to do that!"
+  kick:
+    description: Kicks another player.
+    permission: activecraft.kick
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
 
 permissions:
   activecraft.heal.self:
@@ -884,9 +888,6 @@ permissions:
   activecraft.activeeffects:
     description: Permission to see active effects on players.
     default: op
-  activecraft.kick:
-    description: Permission to kick players from the server.
-    default: op
   activecraft.tpall:
     description: Permission to teleport all players to yourself.
     default: op
@@ -981,4 +982,7 @@ permissions:
     default: op
   activecraft.offinvsee:
     description: Shows a players armor and offhand-item.
+    default: op
+  activecraft.kick:
+    description: Allows the player to kick another player.
     default: op

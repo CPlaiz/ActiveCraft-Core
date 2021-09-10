@@ -1,10 +1,8 @@
 package de.silencio.activecraftcore.commands;
 
 import de.silencio.activecraftcore.Main;
+import de.silencio.activecraftcore.events.MsgEvent;
 import de.silencio.activecraftcore.messages.Errors;
-import de.silencio.activecraftcore.ownlisteners.ListenerManager;
-import de.silencio.activecraftcore.ownlisteners.SocialSpyListener;
-import de.silencio.activecraftcore.ownlisteners.StaffChatListener;
 import de.silencio.activecraftcore.utils.FileConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -12,7 +10,6 @@ import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -65,7 +62,6 @@ public class MsgCommand implements CommandExecutor {
                                     Bukkit.getConsoleSender().sendMessage(ChatColor.GOLD + "[" + player.getDisplayName() + ChatColor.GOLD
                                             + " -> " + target.getDisplayName() + ChatColor.GOLD + "] " + ChatColor.RESET + message);
                                 }
-                                triggerListener(sender, target, message);
                                 message = "";
 
                             } else sender.sendMessage(Errors.INVALID_ARGUMENTS);

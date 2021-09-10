@@ -36,7 +36,7 @@ public class PlayerlistCommand implements CommandExecutor {
                         if (!isFirst) {
                             stringBuilder.append(", ");
                         } else isFirst = false;
-                        stringBuilder.append(player.getName());
+                        stringBuilder.append(player.getDisplayName());
                     }
                 }
                 sender.sendMessage(ChatColor.GOLD + "Online players:");

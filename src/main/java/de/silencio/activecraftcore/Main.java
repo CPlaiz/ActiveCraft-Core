@@ -111,6 +111,7 @@ public final class Main extends JavaPlugin {
         pluginManager.registerEvents(new SignListener(), this);
         pluginManager.registerEvents(new SignInteractListener(), this);
         //pluginManager.registerEvents(new ProfileCommand(), this);
+        pluginManager.registerEvents(new ClearTabCompleteListener(), this);
 
         //custom Listeners
         dialogueListenerList = new DialogueListenerList();
@@ -204,6 +205,7 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginCommand("fireball").setExecutor(new FireBallCommand());
         Bukkit.getPluginCommand("playerlist").setExecutor(new PlayerlistCommand());
         Bukkit.getPluginCommand("realname").setExecutor(new RealNameCommand());
+        Bukkit.getPluginCommand("kick").setExecutor(new KickCommand());
     }
 
     public static Main getPlugin() {

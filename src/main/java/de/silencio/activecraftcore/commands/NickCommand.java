@@ -19,6 +19,9 @@ public class NickCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         if (args.length > 0) {
+            if(args[0].equalsIgnoreCase("reset")) {
+                
+            }
             if (Bukkit.getPlayer(args[0]) == null) {
                 if (sender instanceof Player) {
                     Player player = (Player) sender;

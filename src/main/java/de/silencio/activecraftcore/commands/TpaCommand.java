@@ -34,22 +34,17 @@ public class TpaCommand implements CommandExecutor {
                     Player target = Bukkit.getPlayer(args[0]);
                     Player player = (Player) sender;
                     TextComponent accept = new TextComponent(ChatColor.GREEN + "[ACCEPT]");
-                    TextComponent clickaccept = new TextComponent(ChatColor.GOLD + " Click");
-                    clickaccept.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(ChatColor.GREEN + "Click here to accept.").create()));
-                    clickaccept.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tpaccept"));
-                    accept.addExtra(clickaccept);
+                    accept.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(ChatColor.GREEN + "Click here to accept.").create()));
+                    accept.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tpaccept"));
 
                     TextComponent deny = new TextComponent(ChatColor.RED + "[DENY]");
-                    TextComponent clickdeny = new TextComponent(ChatColor.GOLD + " Click");
-                    clickdeny.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(ChatColor.RED + "Click here to deny.").create()));
-                    clickdeny.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tpadeny"));
-                    deny.addExtra(clickdeny);
+                    deny.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(ChatColor.RED + "Click here to deny.").create()));
+                    deny.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tpadeny"));
 
                     player.sendMessage(ChatColor.GOLD + "Tpa request sent to " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + ".");
                     target.sendMessage(" ");
                     target.sendMessage(ChatColor.GOLD + "Tpa request from " + ChatColor.AQUA + player.getDisplayName() + ChatColor.GOLD + ".");
-                    target.spigot().sendMessage(accept);
-                    target.spigot().sendMessage(deny);
+                    target.spigot().sendMessage(accept, deny);
                     target.sendMessage(" ");
 
                     tpaList.put(target, player);

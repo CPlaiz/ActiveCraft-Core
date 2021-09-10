@@ -2,7 +2,6 @@ package de.silencio.activecraftcore.commands;
 
 import de.silencio.activecraftcore.Main;
 import de.silencio.activecraftcore.messages.Errors;
-import de.silencio.activecraftcore.ownlisteners.VanishListener;
 import de.silencio.activecraftcore.utils.FileConfig;
 import de.silencio.activecraftcore.utils.VanishManager;
 import org.bukkit.Bukkit;

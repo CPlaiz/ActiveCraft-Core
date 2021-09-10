@@ -124,7 +124,7 @@ public class WarpCommand implements CommandExecutor, TabCompleter {
                             Location loc = warpsConfig.getLocation(s);
                             sender.sendMessage(ChatColor.GOLD + s + ": " + ChatColor.GRAY + loc.getWorld().getName() + "; " + loc.getBlockX() + "," + loc.getBlockY() + ", " + loc.getBlockZ());
                         }
-                    } else sender.sendMessage(Errors.WARNING + "There are no warps to be listed!");
+                    } else sender.sendMessage(ChatColor.GOLD + "There are no warps to be listed.");
                 } else sender.sendMessage(Errors.NO_PERMISSION);
             }
 

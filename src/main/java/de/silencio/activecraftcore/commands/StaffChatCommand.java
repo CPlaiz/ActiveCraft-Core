@@ -1,8 +1,6 @@
 package de.silencio.activecraftcore.commands;
 
-import de.silencio.activecraftcore.Main;
-import de.silencio.activecraftcore.ownlisteners.ListenerManager;
-import de.silencio.activecraftcore.ownlisteners.StaffChatListener;
+import de.silencio.activecraftcore.events.StaffChatMessageEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
