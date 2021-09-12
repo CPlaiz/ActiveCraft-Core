@@ -1,22 +1,41 @@
 package de.silencio.activecraftcore.events;
 
-import de.silencio.activecraftcore.utils.Profile;
-import org.bukkit.command.CommandSender;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 import java.util.Date;
 
-public class PlayerIpUnbanEvent extends Event {
+public class PlayerWarnAddEvent extends Event {
 
     private static final HandlerList handlers = new HandlerList();
 
     private String target;
+    private String reason;
+    private Date date;
     private boolean cancelled;
 
-    public PlayerIpUnbanEvent(String target) {
+    public PlayerWarnAddEvent(String target, String reason, Date date, String source) {
         this.target = target;
+        this.reason = reason;
+        this.date = date;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reason) {
+        this.reason = reason;
     }
 
     public String getTarget() {

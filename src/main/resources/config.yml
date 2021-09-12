@@ -27,6 +27,12 @@ vanish-format: '[V]'
 lockdown-modt: "This server is in lockdown mode. You are not able to join until this is disabled."
 lockdown-kick-message: "This server is in lockdown mode. You are not able to join until this is disabled."
 
+# Clear In Tab Complete
+hide-commands-after-plugin-name:
+  enable: true
+  except:
+    - 'minecraft:enchant'
+
 # Do not edit!
 lockdown:
 old-modt:

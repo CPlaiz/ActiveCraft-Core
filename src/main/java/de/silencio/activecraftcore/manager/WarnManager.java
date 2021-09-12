@@ -1,5 +1,10 @@
-package de.silencio.activecraftcore.utils;
+package de.silencio.activecraftcore.manager;
 
+import de.silencio.activecraftcore.events.PlayerUnbanEvent;
+import de.silencio.activecraftcore.events.PlayerWarnAddEvent;
+import de.silencio.activecraftcore.events.PlayerWarnRemoveEvent;
+import de.silencio.activecraftcore.utils.FileConfig;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
@@ -7,9 +12,10 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 
-public class WarnEntry {
+public class WarnManager {
 
     private Player player;
     public String reason;
@@ -20,7 +26,7 @@ public class WarnEntry {
     private FileConfig warnsConfig;
     private SimpleDateFormat sdf;
 
-    public WarnEntry(Player player) {
+    public WarnManager(Player player) {
         this.player = player;
         sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
         playerdataConfig = new FileConfig("playerdata" + File.separator + player.getName() + ".yml");
@@ -31,12 +37,15 @@ public class WarnEntry {
 
         OffsetDateTime offsetDateTime = OffsetDateTime.now();
 
+        //call event
+        PlayerWarnAddEvent event = new PlayerWarnAddEvent(player.getName(), reason, new Date(), source);
+        Bukkit.getPluginManager().callEvent(event);
+        if (event.isCancelled()) return;
+
         reason = reason.replace(".", "%dot%");
 
         int nextId = warnsConfig.getInt("next-id");
         List<String> warnsList = warnsConfig.getStringList(player.getName() + "." + "warn-list");
-
-        //System.out.println(warnsConfig.getString(player.getName() + "." + reason + ".id"));
 
         if ((warnsConfig.getString(player.getName() + "." + reason + ".id") == null) || reason.equalsIgnoreCase("warn-list")) {
             if (!warnsList.contains(reason)) {
@@ -69,6 +78,11 @@ public class WarnEntry {
     }
 
     public void remove(String reason) {
+        //call event
+        PlayerWarnRemoveEvent event = new PlayerWarnRemoveEvent(player.getName(), reason, new Date(), source);
+        Bukkit.getPluginManager().callEvent(event);
+        if (event.isCancelled()) return;
+
         List<String> warnsList = warnsConfig.getStringList(player.getName() + "." + "warn-list");
         if (warnsList.contains(reason.replace(".", "%dot%"))) {
             warnsList.remove(reason.replace(".", "%dot%"));
@@ -83,7 +97,7 @@ public class WarnEntry {
         player.sendMessage(ChatColor.RED + "Your warn " + ChatColor.GOLD + reason + ChatColor.RED + " has been removed");
     }
 
-    public WarnEntry getWarnEntry(String reason) {
+    public WarnManager getWarnEntry(String reason) {
         reason = reason.replace("%dot%", ".");
         this.reason = reason;
         reason = reason.replace(".", "%dot%");
@@ -93,4 +107,3 @@ public class WarnEntry {
         return this;
     }
 }
-

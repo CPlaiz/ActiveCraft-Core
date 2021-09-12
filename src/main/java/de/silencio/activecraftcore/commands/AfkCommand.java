@@ -2,6 +2,7 @@ package de.silencio.activecraftcore.commands;
 
 import de.silencio.activecraftcore.events.LockdownEvent;
 import de.silencio.activecraftcore.events.PlayerAfkEvent;
+import de.silencio.activecraftcore.manager.AfkManager;
 import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.utils.FileConfig;
 import de.silencio.activecraftcore.utils.MessageUtils;
@@ -11,6 +12,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.checkerframework.checker.units.qual.A;
 
 import java.io.File;
 
@@ -27,39 +29,10 @@ public class AfkCommand implements CommandExecutor {
                     FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + player.getName().toLowerCase() + ".yml");
                     if (sender.hasPermission("activecraft.afk.self")) {
 
-                        PlayerAfkEvent event;
-
                         if(!playerdataConfig.getBoolean("afk")) {
-
-                            event = new PlayerAfkEvent(player, true);
-                            Bukkit.getPluginManager().callEvent(event);
-                            if (event.isCancelled()) return false;
-
-                            setDisplaynameFromConfig(player, playerdataConfig.getString("colornick"), playerdataConfig.getString("nickname") + ChatColor.GRAY + " " + fileConfig.getString("afk-format"));
-                            //player.setDisplayName(playerdataConfig.getString("nickname")+ ChatColor.GRAY + " " + fileConfig.getString("afk-format"));
-                            player.sendMessage(ChatColor.GOLD + "You are now afk.");
-                            playerdataConfig.set("afk", event.isAfk());
-                            playerdataConfig.saveConfig();
-
-                            if(fileConfig.getBoolean("announce-afk")) {
-                                Bukkit.broadcastMessage(ChatColor.GRAY + "" + MessageUtils.removeColorAndFormat(fileConfig.getString("afk-format-yes").replace("%displayname%", player.getDisplayName())));
-                            }
-
-                        } else if(playerdataConfig.getBoolean("afk")) {
-
-                            event = new PlayerAfkEvent(player, false);
-                            Bukkit.getPluginManager().callEvent(event);
-                            if (event.isCancelled()) return false;
-
-                            setDisplaynameFromConfig(player, playerdataConfig.getString("colornick"), playerdataConfig.getString("nickname"));
-                            //player.setDisplayName(playerdataConfig.getString("nickname"));
-                            player.sendMessage(ChatColor.GOLD + "You are no longer afk.");
-                            playerdataConfig.set("afk", event.isAfk());
-                            playerdataConfig.saveConfig();
-
-                            if(fileConfig.getBoolean("announce-afk")) {
-                                Bukkit.broadcastMessage(ChatColor.GRAY + "" + MessageUtils.removeColorAndFormat(fileConfig.getString("afk-format-no").replace("%displayname%", player.getDisplayName())));
-                            }
+                            AfkManager.setAfk(player, true);
+                        } else if (playerdataConfig.getBoolean("afk")) {
+                            AfkManager.setAfk(player, false);
                         }
                     } else sender.sendMessage(Errors.NO_PERMISSION);
                 } else sender.sendMessage(Errors.NOT_A_PLAYER);
@@ -77,45 +50,14 @@ public class AfkCommand implements CommandExecutor {
                             return false;
                         }
                     }
+
                     if(!playerdataConfig.getBoolean("afk")) {
-                        setDisplaynameFromConfig(target, playerdataConfig.getString("colornick"), playerdataConfig.getString("nickname") + ChatColor.GRAY + " " + fileConfig.getString("afk-format"));
-                        //target.setDisplayName(playerdataConfig.getString("nickname") + ChatColor.GRAY + " " + fileConfig.getString("afk-format"));
-                        target.sendMessage(ChatColor.GOLD + "You are now afk.");
-                        sender.sendMessage(ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " is now afk.");
-                        playerdataConfig.set("afk", true);
-                        playerdataConfig.saveConfig();
-
-                        if(fileConfig.getBoolean("announce-afk")) {
-                            Bukkit.broadcastMessage(ChatColor.GRAY + "" + MessageUtils.removeColorAndFormat(fileConfig.getString("afk-format-yes").replace("%displayname%", target.getDisplayName())));
-                        }
-
+                        AfkManager.setAfk(target, true);
                     } else if(playerdataConfig.getBoolean("afk")) {
-                        setDisplaynameFromConfig(target, playerdataConfig.getString("colornick"), playerdataConfig.getString("nickname"));
-
-                        //target.setDisplayName(playerdataConfig.getString("nickname"));
-                        target.sendMessage(ChatColor.GOLD + "You are no longer afk.");
-                        sender.sendMessage(ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " is no longer afk.");
-                        playerdataConfig.set("afk", false);
-                        playerdataConfig.saveConfig();
-
-                        if(fileConfig.getBoolean("announce-afk")) {
-                            Bukkit.broadcastMessage(ChatColor.GRAY + "" + MessageUtils.removeColorAndFormat(fileConfig.getString("afk-format-no").replace("%displayname%", target.getDisplayName())));
-                        }
+                        AfkManager.setAfk(target, false);
                     }
                 } else sender.sendMessage(Errors.NO_PERMISSION);
             } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
         return true;
-    }
-
-    public void setDisplaynameFromConfig(Player p, String colorname, String displayname) {
-        for (ChatColor color : ChatColor.values()) {
-            if (colorname.toLowerCase().equals(color.name().toLowerCase())) {
-                if (!colorname.equals("BOLD") && !colorname.equals("MAGIC") && !colorname.equals("STRIKETHROUGH") &&
-                        !colorname.equals("ITALIC") && !colorname.equals("UNDERLINE") && !colorname.equals("RESET")) {
-                    p.setDisplayName(color + displayname);
-                    p.setPlayerListName(color + displayname);
-                }
-            }
-        }
     }
 }

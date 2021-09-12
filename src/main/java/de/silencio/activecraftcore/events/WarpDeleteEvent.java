@@ -1,30 +1,39 @@
 package de.silencio.activecraftcore.events;
 
 import de.silencio.activecraftcore.utils.Profile;
+import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-import java.util.Date;
-
-public class LockdownEvent extends Event {
+public class WarpDeleteEvent extends Event {
 
     private static final HandlerList handlers = new HandlerList();
 
-    private boolean lockedDown;
+    private Location location;
+    private String warpName;
     private boolean cancelled;
 
-    public LockdownEvent(boolean lockedDown) {
-        this.lockedDown = lockedDown;
+    public WarpDeleteEvent(Location location, String warpName) {
+        this.location = location;
+        this.warpName = warpName;
     }
 
-    public boolean isLockedDown() {
-        return lockedDown;
+    public Location getLocation() {
+        return location;
     }
 
-    public void setLockedDown(boolean lockedDown) {
-        this.lockedDown = lockedDown;
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
+    public String getWarpName() {
+        return warpName;
+    }
+
+    public void setWarpName(String warpName) {
+        this.warpName = warpName;
     }
 
     public boolean isCancelled() {

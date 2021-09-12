@@ -19,7 +19,6 @@ public class PlayerAfkEvent extends Event {
         this.isAfk = isAfk;
     }
 
-
     public boolean isCancelled() {
         return cancelled;
     }

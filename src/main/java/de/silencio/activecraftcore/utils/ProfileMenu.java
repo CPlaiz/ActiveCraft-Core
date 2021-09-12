@@ -1,6 +1,7 @@
 package de.silencio.activecraftcore.utils;
 
-import de.silencio.activecraftcore.Main;
+import de.silencio.activecraftcore.manager.BanManager;
+import de.silencio.activecraftcore.manager.WarnManager;
 import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.messages.Reasons;
 import org.bukkit.*;
@@ -13,7 +14,6 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.potion.PotionEffect;
@@ -22,31 +22,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-
-enum Confirmable {
-    BAN,
-    BAN_IP,
-    WARN,
-    KICK,
-    MUTE,
-    GOD,
-    VANISH,
-    CLEAR_INV,
-    TP,
-    TP_HERE,
-    KILL,
-    FLY;
-}
-
-enum Reason {
-    HACKING,
-    BOTTING,
-    UNAUTHORIZED_ALTERNATE_ACCOUNT,
-    CHATFILL_SPAM,
-    ABUSIVE_LANGUAGE,
-    SCAMMING_STEALING,
-    GRIEFING_STEALING;
-}
 
 public class ProfileMenu implements Listener {
 
@@ -149,14 +124,40 @@ public class ProfileMenu implements Listener {
     private Profile profile;
     private BanManager nameBanManager;
     private BanManager ipBanManager;
-    private WarnEntry warnEntry;
+    private WarnManager warnManager;
+
+    public enum Confirmable {
+        BAN,
+        BAN_IP,
+        WARN,
+        KICK,
+        MUTE,
+        GOD,
+        VANISH,
+        CLEAR_INV,
+        TP,
+        TP_HERE,
+        KILL,
+        FLY;
+    }
+
+    public enum Reason {
+        HACKING,
+        BOTTING,
+        UNAUTHORIZED_ALTERNATE_ACCOUNT,
+        CHATFILL_SPAM,
+        ABUSIVE_LANGUAGE,
+        SCAMMING_STEALING,
+        GRIEFING_STEALING;
+
+    }
 
     public ProfileMenu(Player player, Player target) {
         this.player = player;
         this.target = target;
         nameBanManager = new BanManager(BanList.Type.NAME);
         ipBanManager = new BanManager(BanList.Type.IP);
-        warnEntry = new WarnEntry(target);
+        warnManager = new WarnManager(target);
         newBackItem();
 
         closeStack = new ItemBuilder(Material.BARRIER).displayname(ChatColor.GOLD + "Close").build();

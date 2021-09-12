@@ -1,8 +1,5 @@
 package de.silencio.activecraftcore.events;
 
-import de.silencio.activecraftcore.utils.Profile;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
@@ -12,18 +9,19 @@ public class PlayerIpBanEvent extends Event {
 
     private static final HandlerList handlers = new HandlerList();
 
-    private CommandSender sender;
     private String target;
     private String reason;
     private Date expirationDate;
     private boolean cancelled;
 
-
-    public PlayerIpBanEvent(CommandSender sender, String target, String reason, Date expirationDate) {
-        this.sender = sender;
+    public PlayerIpBanEvent(String target, String reason, Date expirationDate, String source) {
         this.target = target;
         this.reason = reason;
         this.expirationDate = expirationDate;
+    }
+
+    public Date getExpirationDate() {
+        return expirationDate;
     }
 
     public String getReason() {
@@ -34,28 +32,8 @@ public class PlayerIpBanEvent extends Event {
         this.reason = reason;
     }
 
-    public Date getExpirationDate() {
-        return expirationDate;
-    }
-
-    public void setExpirationDate(Date expirationDate) {
-        this.expirationDate = expirationDate;
-    }
-
-    public CommandSender getSender() {
-        return sender;
-    }
-
     public String getTarget() {
         return target;
-    }
-
-    public String getMessage() {
-        return reason;
-    }
-
-    public void setMessage(String message) {
-        this.reason = message;
     }
 
     public boolean isCancelled() {

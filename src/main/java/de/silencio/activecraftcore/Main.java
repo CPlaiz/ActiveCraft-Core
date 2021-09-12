@@ -5,9 +5,8 @@ import de.silencio.activecraftcore.listener.*;
 import de.silencio.activecraftcore.listener.inventory.ProfileListener;
 import de.silencio.activecraftcore.messages.Dialogue.DialogueListenerList;
 import de.silencio.activecraftcore.messages.Dialogue.DialogueManagerList;
-import de.silencio.activecraftcore.utils.Config;
 import de.silencio.activecraftcore.utils.FileConfig;
-import de.silencio.activecraftcore.utils.VanishManager;
+import de.silencio.activecraftcore.manager.VanishManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -27,11 +26,11 @@ public final class Main extends JavaPlugin {
     private static Main plugin;
     private static VanishManager vanishManager;
 
-    private Config playtimeConfig;
-    private Config locationsConfig;
-    private Config config;
-    private Config homeconfig;
-    private static Config warpsConfig;
+    private FileConfig playtimeConfig;
+    private FileConfig locationsConfig;
+    private FileConfig config;
+    private FileConfig homeconfig;
+    private FileConfig warpsConfig;
 
 
     public DialogueManagerList dialogueManagerList;
@@ -57,11 +56,11 @@ public final class Main extends JavaPlugin {
 
         saveDefaultConfig();
 
-        config = new Config("config.yml", getDataFolder());
-        warpsConfig = new Config("warps.yml", getDataFolder());
-        playtimeConfig = new Config("playtime.yml", getDataFolder());
-        locationsConfig = new Config("locations.yml", getDataFolder());
-        homeconfig = new Config("homes.yml", getDataFolder());
+        //config = new FileConfig("config.yml");
+        //warpsConfig = new FileConfig("warps.yml");
+        //playtimeConfig = new FileConfig("playtime.yml");
+        //locationsConfig = new FileConfig("locations.yml");
+        //homeconfig = new FileConfig("homes.yml");
 
         FileConfig warplistConfig = new FileConfig("warplist.yml");
         for (String s : warplistConfig.getStringList("warplist")) {
@@ -96,7 +95,7 @@ public final class Main extends JavaPlugin {
         pluginManager.registerEvents(new JoinQuitListener(), this);
         pluginManager.registerEvents(new ProfileListener(), this);
         pluginManager.registerEvents(new OffInvSeeCommand(), this);
-        pluginManager.registerEvents(new MessageManager(), this);
+        pluginManager.registerEvents(new MessageListener(), this);
         pluginManager.registerEvents(new EnderPealCooldown(), this);
         pluginManager.registerEvents(new LogCommand(), this);
         pluginManager.registerEvents(new LockdownListener(), this);
@@ -205,7 +204,7 @@ public final class Main extends JavaPlugin {
         return plugin;
     }
 
-    public static Config getWarpsConfig() {
+    public FileConfig getWarpsConfig() {
         return warpsConfig;
     }
 

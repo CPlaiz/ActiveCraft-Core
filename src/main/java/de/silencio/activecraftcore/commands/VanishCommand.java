@@ -1,11 +1,9 @@
 package de.silencio.activecraftcore.commands;
 
 import de.silencio.activecraftcore.Main;
-import de.silencio.activecraftcore.events.PlayerUnvanishEvent;
-import de.silencio.activecraftcore.events.PlayerVanishEvent;
 import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.utils.FileConfig;
-import de.silencio.activecraftcore.utils.VanishManager;
+import de.silencio.activecraftcore.manager.VanishManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -44,13 +42,8 @@ public class VanishCommand implements CommandExecutor {
                     FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + target.getName().toLowerCase() + ".yml");
                     if (vanishManager.isVanished(target)) {
 
-                        PlayerUnvanishEvent event = new PlayerUnvanishEvent(target);
-                        Bukkit.getPluginManager().callEvent(event);
-                        if (event.isCancelled()) return false;
-
                         vanishManager.setVanished(target, false);
 
-                        setDisplaynameFromConfig(target, playerdataConfig.getString("colornick"), playerdataConfig.getString("nickname"));
                         target.sendMessage(ChatColor.GOLD + "You are now " + ChatColor.AQUA + "visible.");
                         sender.sendMessage(ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " is now " + ChatColor.AQUA + "visible.");
                         for (Player forPlayer : Bukkit.getOnlinePlayers()) {
@@ -62,17 +55,9 @@ public class VanishCommand implements CommandExecutor {
                                 forPlayer.sendMessage(joinFormat.replace("%displayname%", joinQuitWithColor(target, playerdataConfig.getString("nickname"), playerdataConfig.getString("colornick"))));
                             }
                         }
-                        //Bukkit.broadcastMessage(joinFormat.replace("%displayname%", target.getDisplayName()));
-                        playerdataConfig.set("vanished", false);
-                        playerdataConfig.saveConfig();
                     } else {
 
-                        PlayerVanishEvent event = new PlayerVanishEvent(target);
-                        Bukkit.getPluginManager().callEvent(event);
-                        if (event.isCancelled()) return false;
-
                         vanishManager.setVanished(target, true);
-                        setDisplaynameFromConfig(target, playerdataConfig.getString("colornick"), playerdataConfig.getString("nickname") + ChatColor.GRAY + " " + fileConfig.getString("vanish-format"));
                         target.sendMessage(ChatColor.GOLD + "You are now " + ChatColor.AQUA + "invisible.");
                         sender.sendMessage(ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " is now " + ChatColor.AQUA + "invisible.");
                         for (Player forPlayer : Bukkit.getOnlinePlayers()) {
@@ -84,9 +69,6 @@ public class VanishCommand implements CommandExecutor {
                                 forPlayer.sendMessage(quitFormat.replace("%displayname%", joinQuitWithColor(target, playerdataConfig.getString("nickname"), playerdataConfig.getString("colornick"))));
                             }
                         }
-                        //Bukkit.broadcastMessage(quitFormat.replace("%displayname%", target.getDisplayName()));
-                        playerdataConfig.set("vanished", true);
-                        playerdataConfig.saveConfig();
                     }
                 } else sender.sendMessage(Errors.INVALID_PLAYER);
             } else sender.sendMessage(Errors.NO_PERMISSION);
@@ -97,12 +79,7 @@ public class VanishCommand implements CommandExecutor {
                 Player player = (Player) sender;
                 if (vanishManager.isVanished(p)) {
 
-                    PlayerUnvanishEvent event = new PlayerUnvanishEvent(p);
-                    Bukkit.getPluginManager().callEvent(event);
-                    if (event.isCancelled()) return false;
-
                     vanishManager.setVanished(p, false);
-                    setDisplaynameFromConfig(p, playerdataConfig.getString("colornick"), playerdataConfig.getString("nickname"));
                     p.sendMessage(ChatColor.GOLD + "You are now " + ChatColor.AQUA + "visible.");
                     for (Player forPlayer : Bukkit.getOnlinePlayers()) {
                         if (forPlayer.hasPermission("activecraft.vanish.see")) {
@@ -113,17 +90,9 @@ public class VanishCommand implements CommandExecutor {
                             forPlayer.sendMessage(joinFormat.replace("%displayname%", joinQuitWithColor(player, playerdataConfig.getString("nickname"), playerdataConfig.getString("colornick"))));
                         }
                     }
-                    //Bukkit.broadcastMessage(joinFormat.replace("%displayname%", p.getDisplayName()));
-                    playerdataConfig.set("vanished", false);
-                    playerdataConfig.saveConfig();
                 } else {
 
-                    PlayerVanishEvent event = new PlayerVanishEvent(p);
-                    Bukkit.getPluginManager().callEvent(event);
-                    if (event.isCancelled()) return false;
-
                     vanishManager.setVanished(p, true);
-                    setDisplaynameFromConfig(p, playerdataConfig.getString("colornick"), playerdataConfig.getString("nickname") + ChatColor.GRAY + " " + fileConfig.getString("vanish-format"));
                     p.sendMessage(ChatColor.GOLD + "You are now " + ChatColor.AQUA + "invisible.");
                     for (Player forPlayer : Bukkit.getOnlinePlayers()) {
                         if (forPlayer.hasPermission("activecraft.vanish.see")) {
@@ -131,29 +100,13 @@ public class VanishCommand implements CommandExecutor {
                                 forPlayer.sendMessage(ChatColor.AQUA + ((Player) sender).getDisplayName() + ChatColor.GOLD + " is now " + ChatColor.AQUA + "invisible.");
                             }
                         } else if (forPlayer != sender) {
-
                             forPlayer.sendMessage(quitFormat.replace("%displayname%", joinQuitWithColor(player, playerdataConfig.getString("nickname"), playerdataConfig.getString("colornick"))));
                         }
                     }
-                    //Bukkit.broadcastMessage(quitFormat.replace("%displayname%", p.getDisplayName()));
-                    playerdataConfig.set("vanished", true);
-                    playerdataConfig.saveConfig();
                 }
             } else sender.sendMessage(Errors.NO_PERMISSION);
         } else sender.sendMessage(Errors.NOT_A_PLAYER);
         return true;
-    }
-
-    public void setDisplaynameFromConfig(Player p, String colorname, String displayname) {
-        for (ChatColor color : ChatColor.values()) {
-            if (colorname.toLowerCase().equals(color.name().toLowerCase())) {
-                if (!colorname.equals("BOLD") && !colorname.equals("MAGIC") && !colorname.equals("STRIKETHROUGH") &&
-                        !colorname.equals("ITALIC") && !colorname.equals("UNDERLINE") && !colorname.equals("RESET")) {
-                    p.setDisplayName(color + displayname);
-                    p.setPlayerListName(color + displayname);
-                }
-            }
-        }
     }
 
     public String joinQuitWithColor(Player p, String displayname, String colorname) {

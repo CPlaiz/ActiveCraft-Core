@@ -1,12 +1,11 @@
 package de.silencio.activecraftcore.listener;
 
 import de.silencio.activecraftcore.Main;
-import de.silencio.activecraftcore.messages.Errors;
+import de.silencio.activecraftcore.manager.VanishManager;
 import de.silencio.activecraftcore.utils.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -66,15 +65,15 @@ public class JoinQuitListener implements Listener {
 
         File file = new File(Main.getPlugin().getDataFolder() + File.separator + "playerdata" + File.separator);
 
-        Config config;
+        FileConfig config;
 
         if (!file.exists()) {
             file.mkdir();
         }
 
-        config = new Config("playerdata" + File.separator + player.getName().toLowerCase() + ".yml", Main.getPlugin().getDataFolder());
+        config = new FileConfig("playerdata" + File.separator + player.getName().toLowerCase() + ".yml");
 
-        if (config.toFileConfiguration().getKeys(true).size() == 0) {
+        if (config.getKeys(true).size() == 0) {
 
             FileConfig fileConfig = new FileConfig("playerdata" + File.separator + player.getName().toLowerCase() + ".yml");
 

@@ -2,6 +2,7 @@ package de.silencio.activecraftcore.commands;
 
 import de.silencio.activecraftcore.events.LockdownEvent;
 import de.silencio.activecraftcore.events.PlayerUnvanishEvent;
+import de.silencio.activecraftcore.manager.LockdownManager;
 import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.utils.FileConfig;
 import org.bukkit.Bukkit;
@@ -30,25 +31,13 @@ public class LockdownCommand implements CommandExecutor, Listener, TabCompleter 
                 if (args.length == 1 && args[0].equalsIgnoreCase("enable")) {
                     FileConfig fileConfig = new FileConfig("config.yml");
                     if (!fileConfig.getBoolean("lockdown")) {
-
-                        LockdownEvent event = new LockdownEvent(true);
-                        Bukkit.getPluginManager().callEvent(event);
-                        if (event.isCancelled()) return false;
-
-                        fileConfig.set("lockdown", true);
-                        fileConfig.saveConfig();
+                        LockdownManager.lockdown(true);
                         sender.sendMessage(ChatColor.GOLD + "Lockdown mode was enabled. Kicking all players.");
                     } else sender.sendMessage(Errors.WARNING + "Lockdown mode is already enabled.");
                 } else if (args.length == 1 && args[0].equalsIgnoreCase("disable")) {
                     FileConfig fileConfig = new FileConfig("config.yml");
                     if (fileConfig.getBoolean("lockdown")) {
-
-                        LockdownEvent event = new LockdownEvent(false);
-                        Bukkit.getPluginManager().callEvent(event);
-                        if (event.isCancelled()) return false;
-
-                        fileConfig.set("lockdown", false);
-                        fileConfig.saveConfig();
+                        LockdownManager.lockdown(false);
                         sender.sendMessage(ChatColor.GOLD + "Lockdown mode was disabled. Players can now join the server again.");
                     } else sender.sendMessage(Errors.WARNING + "Lockdown mode is not enabled.");
                 } else sender.sendMessage(Errors.INVALID_ARGUMENTS);

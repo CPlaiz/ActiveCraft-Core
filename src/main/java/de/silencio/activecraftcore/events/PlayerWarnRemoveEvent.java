@@ -1,19 +1,34 @@
 package de.silencio.activecraftcore.events;
 
-import de.silencio.activecraftcore.utils.Profile;
-import org.bukkit.command.CommandSender;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-public class PlayerWarnEvent extends Event {
+import java.util.Date;
+
+public class PlayerWarnRemoveEvent extends Event {
 
     private static final HandlerList handlers = new HandlerList();
 
-    private CommandSender sender;
-    private Player target;
+    private String target;
     private String reason;
+    private Date date;
     private boolean cancelled;
+
+    public PlayerWarnRemoveEvent(String target, String reason, Date date, String source) {
+        this.target = target;
+        this.reason = reason;
+        this.date = date;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
 
     public String getReason() {
         return reason;
@@ -23,26 +38,8 @@ public class PlayerWarnEvent extends Event {
         this.reason = reason;
     }
 
-    public PlayerWarnEvent(CommandSender sender, Player target, String reason) {
-        this.sender = sender;
-        this.target = target;
-        this.reason = reason;
-    }
-
-    public CommandSender getSender() {
-        return sender;
-    }
-
-    public Player getTarget() {
+    public String getTarget() {
         return target;
-    }
-
-    public String getMessage() {
-        return reason;
-    }
-
-    public void setMessage(String message) {
-        this.reason = message;
     }
 
     public boolean isCancelled() {

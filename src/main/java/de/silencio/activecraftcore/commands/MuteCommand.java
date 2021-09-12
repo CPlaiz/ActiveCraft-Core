@@ -1,5 +1,6 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.manager.MuteManager;
 import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.utils.FileConfig;
 import org.bukkit.Bukkit;
@@ -28,12 +29,7 @@ public class MuteCommand implements CommandExecutor {
                 if (label.equalsIgnoreCase("mute")) {
                     FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + target.getName().toLowerCase() + ".yml");
                     if (!playerdataConfig.getBoolean("muted")) {
-
-                        playerdataConfig.set("muted", true);
-                        playerdataConfig.set("violations.mutes", playerdataConfig.getInt("violations.mutes") + 1);
-                        playerdataConfig.set("violations.mutes", playerdataConfig.getInt("violations.mutes") + 1);
-                        playerdataConfig.saveConfig();
-
+                        MuteManager.mutePlayer(target);
                         sender.sendMessage(ChatColor.GOLD + "Muted " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + ".");
                         target.sendMessage(ChatColor.GOLD + "You have been muted.");
                     } else sender.sendMessage(Errors.WARNING + "This player is already muted.");
@@ -42,11 +38,7 @@ public class MuteCommand implements CommandExecutor {
                 if (label.equalsIgnoreCase("unmute")) {
                     FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + target.getName().toLowerCase() + ".yml");
                     if (playerdataConfig.getBoolean("muted")) {
-
-                        playerdataConfig.set("muted", false);
-                        playerdataConfig.set("default-mute", false);
-                        playerdataConfig.saveConfig();
-
+                        MuteManager.unmutePlayer(target);
                         sender.sendMessage(ChatColor.GOLD + "Unmuted " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + ".");
                         target.sendMessage(ChatColor.GOLD + "You have been unmuted.");
                     } else sender.sendMessage(Errors.WARNING + "This player is not muted.");

@@ -24,9 +24,9 @@ public class SpawnerCommand implements CommandExecutor, TabCompleter {
 
         if (args.length == 1 ) {
             String mobName = args[0];
-            EntityType type = null;
+            EntityType value = null;
             try {
-                type = EntityType.valueOf(mobName);
+                value = EntityType.valueOf(mobName);
             } catch (IllegalArgumentException exp) {
                 sender.sendMessage(Errors.WARNING + "Invalid Entity!");
                 return false;
@@ -61,12 +61,12 @@ public class SpawnerCommand implements CommandExecutor, TabCompleter {
                     return false;
                 }
                 String mobName = args[1];
-                EntityType type = null;
+                EntityType value = null;
                 try {
-                    type = EntityType.valueOf(mobName);
+                    value = EntityType.valueOf(mobName);
                 } catch (IllegalArgumentException ignored) {
                 }
-                if (type == null || type.name().equals("UNKNOWN")) {
+                if (value == null || value.name().equals("UNKNOWN")) {
                     sender.sendMessage(Errors.WARNING + "Invalid Entity!");
                     return false;
                 }

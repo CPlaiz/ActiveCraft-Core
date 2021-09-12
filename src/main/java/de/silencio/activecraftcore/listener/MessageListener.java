@@ -15,7 +15,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import java.io.File;
 
-public class MessageManager implements Listener, DialogueList {
+public class MessageListener implements Listener, DialogueList {
 
     @EventHandler (priority = EventPriority.LOWEST)
     public void onChatMessage(AsyncPlayerChatEvent event) {

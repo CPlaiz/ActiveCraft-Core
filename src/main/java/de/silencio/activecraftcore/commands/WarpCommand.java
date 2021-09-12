@@ -2,7 +2,7 @@ package de.silencio.activecraftcore.commands;
 
 import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.utils.FileConfig;
-import de.silencio.activecraftcore.utils.WarpManager;
+import de.silencio.activecraftcore.manager.WarpManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -26,16 +26,13 @@ public class WarpCommand implements CommandExecutor, TabCompleter {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         if (sender instanceof Player) {
-
             Player player = (Player) sender;
-
-
             if (label.equalsIgnoreCase("warp")) {
 
                 if (args.length == 1) {
                     if (player.hasPermission("activecraft.warp.self." + args[0])) {
                         if (WarpManager.getWarp(args[0]) != null) {
-                            player.teleport(WarpManager.getWarp(args[0]));
+                            WarpManager.warp(player, args[0]);
                             player.sendMessage(ChatColor.GOLD + "You warped to " + ChatColor.AQUA + args[0] + ChatColor.GOLD + ".");
                             player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
                         } else sender.sendMessage(Errors.WARNING + "This warp does not exist!");
@@ -55,60 +52,28 @@ public class WarpCommand implements CommandExecutor, TabCompleter {
                                     return false;
                                 }
                             }
-
-                            target.teleport(WarpManager.getWarp(args[1]));
+                            WarpManager.warp(player, args[1]);
                             player.sendMessage(ChatColor.GOLD + "Warped " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " to " + ChatColor.AQUA + args[1] + ChatColor.GOLD + ".");
                             target.sendMessage(ChatColor.GOLD + "You were warped to " + ChatColor.AQUA + args[1] + ChatColor.GOLD + " by " + ChatColor.AQUA + player.getDisplayName() + ChatColor.GOLD + ".");
                             target.playSound(target.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
                         } else sender.sendMessage(Errors.WARNING + "This warp does not exist!");
                     } else sender.sendMessage(Errors.NO_PERMISSION);
-
                 }
             }
             if (args.length == 1) {
                 if (label.equalsIgnoreCase("setwarp")) {
                     if (player.hasPermission("activecraft.setwarp")) {
                         if (WarpManager.getWarp(args[0]) == null) {
-                            FileConfig warpListConfig = new FileConfig("warplist.yml");
-                            FileConfig warpsConfig = new FileConfig("warps.yml");
-                            List<String> warpList = warpListConfig.getStringList("warplist");
-                            if (!warpList.contains(args[0])) {
-                                warpList.add(args[0]);
-                                //System.out.println(warpList);
-                            }
-                            Map<String, Boolean> childMap = new HashMap<>();
-                            childMap.put("activecraft.warp.self", true);
-                            childMap.put("activecraft.warp", true);
-                            Bukkit.getPluginManager().addPermission(new Permission("activecraft.warp.self." + args[0], "Permission to warp yourself to a specific warp.", PermissionDefault.OP, childMap));
-                            childMap.clear();
-                            childMap.put("activecraft.warp.others", true);
-                            childMap.put("activecraft.warp", true);
-                            Bukkit.getPluginManager().addPermission(new Permission("activecraft.warp.others." + args[0], "Permission to warp another player to a specific warp.", PermissionDefault.OP, childMap));
-                            warpListConfig.set("warplist", warpList);
-                            warpListConfig.saveConfig();
-
-                            player.sendMessage(ChatColor.GOLD + "Created the warp " + ChatColor.AQUA + args[0] + ChatColor.GOLD + ".");
                             WarpManager.createWarp(args[0], player.getLocation());
+                            player.sendMessage(ChatColor.GOLD + "Created the warp " + ChatColor.AQUA + args[0] + ChatColor.GOLD + ".");
                         } else sender.sendMessage(Errors.WARNING + "This warp already exists!");
                     } else sender.sendMessage(Errors.NO_PERMISSION);
 
                 } else if (label.equalsIgnoreCase("delwarp")) {
                     if (player.hasPermission("activecraft.deletewarp")) {
                         if (WarpManager.getWarp(args[0]) != null) {
-                            FileConfig warpListConfig = new FileConfig("warplist.yml");
-                            FileConfig warpsConfig = new FileConfig("warps.yml");
-                            List<String> warpList = warpListConfig.getStringList("warplist");
-
-                            warpList.remove(args[0]);
-
-                            Bukkit.getPluginManager().removePermission("activecraft.warp.self." + args[0]);
-                            Bukkit.getPluginManager().removePermission("activecraft.warp.others." + args[0]);
-
-                            warpListConfig.set("warplist", warpList);
-                            warpListConfig.saveConfig();
-
-                            player.sendMessage(ChatColor.GOLD + "Deleted the warp " + ChatColor.AQUA + args[0] + ChatColor.GOLD + ".");
                             WarpManager.deleteWarp(args[0]);
+                            player.sendMessage(ChatColor.GOLD + "Deleted the warp " + ChatColor.AQUA + args[0] + ChatColor.GOLD + ".");
                         } else sender.sendMessage(Errors.WARNING + "This warp does not exist!");
                     } else sender.sendMessage(Errors.NO_PERMISSION);
                 }

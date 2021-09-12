@@ -123,7 +123,7 @@ public class Metrics {
 
     private int getPlayerAmount() {
         try {
-            // Around MC 1.8 the return type was changed from an array to a collection,
+            // Around MC 1.8 the return value was changed from an array to a collection,
             // This fixes java.lang.NoSuchMethodError:
             // org.bukkit.Bukkit.getOnlinePlayers()Ljava/util/Collection;
             Method onlinePlayersMethod = Class.forName("org.bukkit.Server").getMethod("getOnlinePlayers");
@@ -827,7 +827,7 @@ public class Metrics {
         /**
          * A super simple representation of a JSON object.
          *
-         * <p>This class only exists to make methods of the {@link JsonObjectBuilder} type-safe and not
+         * <p>This class only exists to make methods of the {@link JsonObjectBuilder} value-safe and not
          * allow a raw string inputs for methods like {@link JsonObjectBuilder#appendField(String,
          * JsonObject)}.
          */

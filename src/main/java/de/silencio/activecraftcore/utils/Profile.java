@@ -9,8 +9,43 @@ import java.util.UUID;
 
 public class Profile {
 
+    public enum Value {
+
+        NAME,
+        NICKNAME,
+        LAST_ONLINE,
+        UUID,
+        COLOR_NICK,
+        FLYSPEED,
+        TIMES_JOINED,
+        WARNS,
+        MUTES,
+        BANS,
+        IP_BANS,
+        PLAYTIME_MINUTES,
+        PLAYTIME_HOURS,
+        AFK,
+        OP,
+        WHITELISTED,
+        GODMODE,
+        FLY,
+        MUTED,
+        DEFAULTMUTED,
+        VANISHED,
+        ON_DUTY,
+        LOG_ENABLED,
+        BYPASS_LOCKDOWN,
+        EDIT_SIGN,
+        KNOWN_IPS;
+
+        Value() {
+
+        }
+    }
+
     private Player owner;
     private FileConfig playerdataConfig;
+    private FileConfig playtimeConfig;
     private String name;
     private String nickname;
     private String last_online;
@@ -41,14 +76,15 @@ public class Profile {
     public Profile(Player player) {
         this.owner = player;
         this.playerdataConfig = new FileConfig("playerdata" + File.separator + player.getName().toLowerCase() + ".yml");
-       FileConfig playtimeConfig = new FileConfig("playtime.yml");
+        this.playtimeConfig = new FileConfig("playtime.yml");
         loadFromConfig(playerdataConfig);
-        playtime_minutes = playtimeConfig.getInt(player.getName() + ".minutes");
-        playtime_hours = playtimeConfig.getInt(player.getName() + ".hours");
+
     }
 
     public void reload() {
         this.playerdataConfig = new FileConfig("playerdata" + File.separator + owner.getName().toLowerCase() + ".yml");
+        this.playtimeConfig = new FileConfig("playtime.yml");
+        loadFromConfig(playerdataConfig);
     }
 
     private void loadFromConfig(FileConfig fileConfig) {
@@ -76,6 +112,120 @@ public class Profile {
         bypass_lockdown = fileConfig.getBoolean("lockdown-bypass");
         edit_sign = fileConfig.getBoolean("edit-sign");
         known_ips = fileConfig.getStringList("known-ips");
+
+        playtime_minutes = playtimeConfig.getInt(owner.getName() + ".minutes");
+        playtime_hours = playtimeConfig.getInt(owner.getName() + ".hours");
+
+    }
+
+    public void set(Value value, Object object) {
+        switch (value) {
+            case NAME:
+                playerdataConfig.set("name", object);
+                break;
+
+            case NICKNAME:
+                playerdataConfig.set("nickname", object);
+                break;
+
+            case LAST_ONLINE:
+                playerdataConfig.set("last-online", object);
+                break;
+
+            case UUID:
+                playerdataConfig.set("uuid", object);
+                break;
+
+            case COLOR_NICK:
+                playerdataConfig.set("colornick", object);
+                break;
+
+            case FLYSPEED:
+                playerdataConfig.set("flyspeed", object);
+                break;
+
+            case TIMES_JOINED:
+                playerdataConfig.set("times_joined", object);
+                break;
+
+            case WARNS:
+                playerdataConfig.set("violations.warns", object);
+                break;
+
+            case MUTES:
+                playerdataConfig.set("violations.mutes", object);
+                break;
+
+            case BANS:
+                playerdataConfig.set("violations.bans", object);
+                break;
+
+            case IP_BANS:
+                playerdataConfig.set("violations.ip-bans", object);
+                break;
+
+            case PLAYTIME_MINUTES:
+                playtimeConfig.set(owner.getName() + ".minutes", object);
+                break;
+
+            case PLAYTIME_HOURS:
+                playtimeConfig.set(owner.getName() + ".hours", object);
+                break;
+
+            case AFK:
+                playerdataConfig.set("afk", object);
+                break;
+
+            case OP:
+                playerdataConfig.set("op", object);
+                break;
+
+            case WHITELISTED:
+                playerdataConfig.set("whitelisted", object);
+                break;
+
+            case GODMODE:
+                playerdataConfig.set("godmode", object);
+                break;
+
+            case FLY:
+                playerdataConfig.set("fly", object);
+                break;
+
+            case MUTED:
+                playerdataConfig.set("muted", object);
+                break;
+
+            case DEFAULTMUTED:
+                playerdataConfig.set("default-mute", object);
+                break;
+
+            case VANISHED:
+                playerdataConfig.set("vanished", object);
+                break;
+
+            case ON_DUTY:
+                playerdataConfig.set("on-duty", object);
+                break;
+
+            case LOG_ENABLED:
+                playerdataConfig.set("log-enabled", object);
+                break;
+
+            case BYPASS_LOCKDOWN:
+                playerdataConfig.set("lockdown-bypass", object);
+                break;
+
+            case EDIT_SIGN:
+                playerdataConfig.set("edit-sign", object);
+                break;
+
+            case KNOWN_IPS:
+                playerdataConfig.set("known-ips", object);
+                break;
+        }
+        playerdataConfig.saveConfig();
+        playtimeConfig.saveConfig();
     }
 
     public Player getProfileOwner() {

@@ -1,223 +1,53 @@
 package de.silencio.activecraftcore.listener;
 
+import de.silencio.activecraftcore.utils.FileConfig;
+import org.bukkit.Bukkit;
+import org.bukkit.command.Command;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandSendEvent;
+import org.bukkit.plugin.Plugin;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+import java.util.logging.Level;
 
 public class ClearTabCompleteListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerClickTab(PlayerCommandSendEvent e) {
 
-        // ActiveCraft Core
-        e.getCommands().remove("activecraft-core:ad");
-        e.getCommands().remove("activecraft-core:adventure");
-        e.getCommands().remove("activecraft-core:afk");
-        e.getCommands().remove("activecraft-core:anvil");
-        e.getCommands().remove("activecraft-core:ban");
-        e.getCommands().remove("activecraft-core:ban-ip");
-        e.getCommands().remove("activecraft-core:banlist");
-        e.getCommands().remove("activecraft-core:bc");
-        e.getCommands().remove("activecraft-core:book");
-        e.getCommands().remove("activecraft-core:break");
-        e.getCommands().remove("activecraft-core:broadcast");
-        e.getCommands().remove("activecraft-core:broadcastworld");
-        e.getCommands().remove("activecraft-core:butcher");
-        e.getCommands().remove("activecraft-core:cartographytable");
-        e.getCommands().remove("activecraft-core:clear");
-        e.getCommands().remove("activecraft-core:clearinventory");
-        e.getCommands().remove("activecraft-core:colornick");
-        e.getCommands().remove("activecraft-core:cr");
-        e.getCommands().remove("activecraft-core:craftingtable");
-        e.getCommands().remove("activecraft-core:creative");
-        e.getCommands().remove("activecraft-core:delhome");
-        e.getCommands().remove("activecraft-core:delwarp");
-        e.getCommands().remove("activecraft-core:ec");
-        e.getCommands().remove("activecraft-core:edit-sign");
-        e.getCommands().remove("activecraft-core:enchant");
-        e.getCommands().remove("activecraft-core:enchanttable");
-        e.getCommands().remove("activecraft-core:enderchest");
-        e.getCommands().remove("activecraft-core:explode");
-        e.getCommands().remove("activecraft-core:feed");
-        e.getCommands().remove("activecraft-core:fireball");
-        e.getCommands().remove("activecraft-core:firework");
-        e.getCommands().remove("activecraft-core:fly");
-        e.getCommands().remove("activecraft-core:flyspeed");
-        e.getCommands().remove("activecraft-core:fw");
-        e.getCommands().remove("activecraft-core:god");
-        e.getCommands().remove("activecraft-core:grindstone");
-        e.getCommands().remove("activecraft-core:hat");
-        e.getCommands().remove("activecraft-core:heal");
-        e.getCommands().remove("activecraft-core:home");
-        e.getCommands().remove("activecraft-core:i");
-        e.getCommands().remove("activecraft-core:invsee");
-        e.getCommands().remove("activecraft-core:item");
-        e.getCommands().remove("activecraft-core:kick");
-        e.getCommands().remove("activecraft-core:kickall");
-        e.getCommands().remove("activecraft-core:knockbackstick");
-        e.getCommands().remove("activecraft-core:known-ips");
-        e.getCommands().remove("activecraft-core:lastcoords");
-        e.getCommands().remove("activecraft-core:lastonline");
-        e.getCommands().remove("activecraft-core:leathercolor");
-        e.getCommands().remove("activecraft-core:lockdown");
-        e.getCommands().remove("activecraft-core:lockdownbypass");
-        e.getCommands().remove("activecraft-core:log");
-        e.getCommands().remove("activecraft-core:loom");
-        e.getCommands().remove("activecraft-core:more");
-        e.getCommands().remove("activecraft-core:msg");
-        e.getCommands().remove("activecraft-core:mute");
-        e.getCommands().remove("activecraft-core:nick");
-        e.getCommands().remove("activecraft-core:offinvsee");
-        e.getCommands().remove("activecraft-core:opitems");
-        e.getCommands().remove("activecraft-core:ping");
-        e.getCommands().remove("activecraft-core:playerlist");
-        e.getCommands().remove("activecraft-core:playtime");
-        e.getCommands().remove("activecraft-core:portal");
-        e.getCommands().remove("activecraft-core:profile");
-        e.getCommands().remove("activecraft-core:r");
-        e.getCommands().remove("activecraft-core:ram");
-        e.getCommands().remove("activecraft-core:randomtp");
-        e.getCommands().remove("activecraft-core:realname");
-        e.getCommands().remove("activecraft-core:repair");
-        e.getCommands().remove("activecraft-core:reply");
-        e.getCommands().remove("activecraft-core:restart-server");
-        e.getCommands().remove("activecraft-core:sc");
-        e.getCommands().remove("activecraft-core:sethome");
-        e.getCommands().remove("activecraft-core:setspawn");
-        e.getCommands().remove("activecraft-core:setwarp");
-        e.getCommands().remove("activecraft-core:skull");
-        e.getCommands().remove("activecraft-core:smithingtable");
-        e.getCommands().remove("activecraft-core:sp");
-        e.getCommands().remove("activecraft-core:spawn");
-        e.getCommands().remove("activecraft-core:spawner");
-        e.getCommands().remove("activecraft-core:spectator");
-        e.getCommands().remove("activecraft-core:staffchat");
-        e.getCommands().remove("activecraft-core:stonecutter");
-        e.getCommands().remove("activecraft-core:strike");
-        e.getCommands().remove("activecraft-core:su");
-        e.getCommands().remove("activecraft-core:suicide");
-        e.getCommands().remove("activecraft-core:summon");
-        e.getCommands().remove("activecraft-core:survival");
-        e.getCommands().remove("activecraft-core:top");
-        e.getCommands().remove("activecraft-core:tpa");
-        e.getCommands().remove("activecraft-core:tpaccept");
-        e.getCommands().remove("activecraft-core:tpadeny");
-        e.getCommands().remove("activecraft-core:tpall");
-        e.getCommands().remove("activecraft-core:tphere");
-        e.getCommands().remove("activecraft-core:tpr");
-        e.getCommands().remove("activecraft-core:unban");
-        e.getCommands().remove("activecraft-core:unban-ip");
-        e.getCommands().remove("activecraft-core:unmute");
-        e.getCommands().remove("activecraft-core:v");
-        e.getCommands().remove("activecraft-core:vanish");
-        e.getCommands().remove("activecraft-core:verify");
-        e.getCommands().remove("activecraft-core:walkspeed");
-        e.getCommands().remove("activecraft-core:warn");
-        e.getCommands().remove("activecraft-core:warp");
-        e.getCommands().remove("activecraft-core:warps");
-        e.getCommands().remove("activecraft-core:weather");
-        e.getCommands().remove("activecraft-core:whereami");
-        e.getCommands().remove("activecraft-core:whois");
-        e.getCommands().remove("activecraft-core:xp");
+        FileConfig mainConfig = new FileConfig("config.yml");
+        List<String> exceptionList = mainConfig.getStringList("hide-commands-after-plugin-name.except");
 
-        //Bukkit
-        e.getCommands().remove("bukkit:about");
-        e.getCommands().remove("bukkit:?");
-        e.getCommands().remove("bukkit:help");
-        e.getCommands().remove("bukkit:pl");
-        e.getCommands().remove("bukkit:plugins");
-        e.getCommands().remove("bukkit:ver");
-        e.getCommands().remove("bukkit:version");
-        e.getCommands().remove("bukkit:reload");
-        e.getCommands().remove("bukkit:rl");
-        e.getCommands().remove("bukkit:timings");
+        if (!mainConfig.getBoolean("hide-commands-after-plugin-name.enable")) return;
 
-        // Minecraft
-        e.getCommands().remove("minecraft:help");
-        e.getCommands().remove("minecraft:list");
-        e.getCommands().remove("minecraft:me");
-        e.getCommands().remove("minecraft:msg");
-        e.getCommands().remove("minecraft:teammsg");
-        e.getCommands().remove("minecraft:tell");
-        e.getCommands().remove("minecraft:tm");
-        e.getCommands().remove("minecraft:trigger");
-        e.getCommands().remove("minecraft:w");
-        e.getCommands().remove("minecraft:advancement");
-        e.getCommands().remove("minecraft:attribute");
-        e.getCommands().remove("minecraft:ban");
-        e.getCommands().remove("minecraft:ban-ip");
-        e.getCommands().remove("minecraft:banlist");
-        e.getCommands().remove("minecraft:bossbar");
-        e.getCommands().remove("minecraft:clear");
-        e.getCommands().remove("minecraft:clone");
-        e.getCommands().remove("minecraft:data");
-        e.getCommands().remove("minecraft:datapack");
-        e.getCommands().remove("minecraft:debug");
-        e.getCommands().remove("minecraft:defaultgamemode");
-        e.getCommands().remove("minecraft:deop");
-        e.getCommands().remove("minecraft:difficulty");
-        e.getCommands().remove("minecraft:effect");
-        e.getCommands().remove("minecraft:enchant");
-        e.getCommands().remove("minecraft:execute");
-        e.getCommands().remove("minecraft:experience");
-        e.getCommands().remove("minecraft:fill");
-        e.getCommands().remove("minecraft:forceload");
-        e.getCommands().remove("minecraft:function");
-        e.getCommands().remove("minecraft:gamemode");
-        e.getCommands().remove("minecraft:gamerule");
-        e.getCommands().remove("minecraft:give");
-        e.getCommands().remove("minecraft:item");
-        e.getCommands().remove("minecraft:kick");
-        e.getCommands().remove("minecraft:kill");
-        e.getCommands().remove("minecraft:locate");
-        e.getCommands().remove("minecraft:locatebiome");
-        e.getCommands().remove("minecraft:loot");
-        e.getCommands().remove("minecraft:op");
-        e.getCommands().remove("minecraft:pardon");
-        e.getCommands().remove("minecraft:pardon-ip");
-        e.getCommands().remove("minecraft:particle");
-        e.getCommands().remove("minecraft:perf");
-        e.getCommands().remove("minecraft:playsound");
-        e.getCommands().remove("minecraft:recipe");
-        e.getCommands().remove("minecraft:reload");
-        e.getCommands().remove("minecraft:save-all");
-        e.getCommands().remove("minecraft:save-off");
-        e.getCommands().remove("minecraft:save-on");
-        e.getCommands().remove("minecraft:say");
-        e.getCommands().remove("minecraft:schedule");
-        e.getCommands().remove("minecraft:scoreboard");
-        e.getCommands().remove("minecraft:seed");
-        e.getCommands().remove("minecraft:setblock");
-        e.getCommands().remove("minecraft:setidletimeout");
-        e.getCommands().remove("minecraft:setworldspawn");
-        e.getCommands().remove("minecraft:spawnpoint");
-        e.getCommands().remove("minecraft:spectate");
-        e.getCommands().remove("minecraft:spreadplayers");
-        e.getCommands().remove("minecraft:stop");
-        e.getCommands().remove("minecraft:stopsound");
-        e.getCommands().remove("minecraft:summon");
-        e.getCommands().remove("minecraft:tag");
-        e.getCommands().remove("minecraft:team");
-        e.getCommands().remove("minecraft:teleport");
-        e.getCommands().remove("minecraft:tellraw");
-        e.getCommands().remove("minecraft:time");
-        e.getCommands().remove("minecraft:title");
-        e.getCommands().remove("minecraft:tp");
-        e.getCommands().remove("minecraft:weather");
-        e.getCommands().remove("minecraft:whitelist");
-        e.getCommands().remove("minecraft:worldborder");
-        e.getCommands().remove("minecraft:xp");
+        List<String> pluginNames = new ArrayList<>();
+        pluginNames.add("minecraft");
+        pluginNames.add("bukkit");
+        pluginNames.add("spigot");
+        pluginNames.add("paper");
+        for (Plugin plugin : Bukkit.getPluginManager().getPlugins()) {
+            pluginNames.add(plugin.getName().toLowerCase());
+        }
 
-        // Spigot
-        e.getCommands().remove("spigot:spigot");
-        e.getCommands().remove("spigot:tps");
-        e.getCommands().remove("spigot:restart");
+        List<String> toBeRemoved = new ArrayList<>();
 
-        // Paper
-        e.getCommands().remove("paper:mspt");
-        e.getCommands().remove("paper:paper");
+        for (String command : e.getCommands()) {
+            for (String pluginName : pluginNames) {
+                if (command.startsWith(pluginName + ":")) {
+                    if (!(exceptionList.contains(command) || exceptionList.contains(pluginName.replace(":", "")))) {
+                       toBeRemoved.add(command);
+                    }
+                }
+            }
+        }
 
+        for (String s : toBeRemoved) {
+            e.getCommands().remove(s);
+        }
 
         if (!e.getPlayer().hasPermission("activecraft.showvanilla")) {
             e.getCommands().remove("pl");

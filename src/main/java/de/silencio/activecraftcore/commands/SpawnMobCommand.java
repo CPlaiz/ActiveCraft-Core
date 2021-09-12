@@ -26,12 +26,12 @@ public class SpawnMobCommand implements CommandExecutor, TabCompleter {
                 if (player.hasPermission("activecraft.summon.self")) {
                     World world = player.getWorld();
 
-                    EntityType type = null;
+                    EntityType value = null;
                     try {
-                        type = EntityType.valueOf(args[0]);
+                        value = EntityType.valueOf(args[0]);
                     } catch (IllegalArgumentException ignored) {
                     }
-                    if (type == null || type.name().equals("UNKNOWN")) {
+                    if (value == null || value.name().equals("UNKNOWN")) {
                         world.spawnEntity(player.getLocation(), EntityType.valueOf(args[0]));
 
                         player.sendMessage(ChatColor.GOLD + "Summoned " + ChatColor.AQUA + args[0] + ChatColor.GOLD + ".");
@@ -54,15 +54,15 @@ public class SpawnMobCommand implements CommandExecutor, TabCompleter {
                             sender.sendMessage(Errors.INVALID_NUMBER);
                             return false;
                         }
-                        EntityType type = null;
+                        EntityType value = null;
                         try {
-                            type = EntityType.valueOf(args[0]);
+                            value = EntityType.valueOf(args[0]);
                         } catch (IllegalArgumentException ignored) {
                         }
-                        if (type != null) {
+                        if (value != null) {
                             player.sendMessage(ChatColor.GOLD + "Summoned " + ChatColor.AQUA + num + ChatColor.GOLD + "x " + ChatColor.AQUA + args[0] + ChatColor.GOLD + ".");
                             for (int i = 0; i < Integer.parseInt(args[1]); i++) {
-                                world.spawnEntity(player.getLocation(), type);
+                                world.spawnEntity(player.getLocation(), value);
                             }
                         } else sender.sendMessage(Errors.WARNING + "Invalid Entity!");
                     } else sender.sendMessage(Errors.NO_PERMISSION);
@@ -79,13 +79,13 @@ public class SpawnMobCommand implements CommandExecutor, TabCompleter {
                     }
                     World world = target.getWorld();
 
-                    EntityType type = null;
+                    EntityType value = null;
                     try {
-                        type = EntityType.valueOf(args[1]);
+                        value = EntityType.valueOf(args[1]);
                     } catch (IllegalArgumentException ignored) {
                     }
-                    if (type != null) {
-                        world.spawnEntity(target.getLocation(), type);
+                    if (value != null) {
+                        world.spawnEntity(target.getLocation(), value);
                     } else sender.sendMessage(Errors.WARNING + "Invalid Entity!");
                 }
             }
@@ -110,15 +110,15 @@ public class SpawnMobCommand implements CommandExecutor, TabCompleter {
                         }
                     }
 
-                    EntityType type = null;
+                    EntityType value = null;
                     try {
-                        type = EntityType.valueOf(args[1]);
+                        value = EntityType.valueOf(args[1]);
                     } catch (IllegalArgumentException ignored) {
                     }
-                    if (type != null) {
+                    if (value != null) {
                         sender.sendMessage(ChatColor.GOLD + "Summoned " + ChatColor.AQUA + num + ChatColor.GOLD + "x " + ChatColor.AQUA + args[1] + ChatColor.GOLD + " at " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + "'s location.");
                         for (int i = 0; i < Integer.parseInt(args[2]); i++) {
-                            target.getWorld().spawnEntity(target.getLocation(), type);
+                            target.getWorld().spawnEntity(target.getLocation(), value);
                         }
                     } else sender.sendMessage(Errors.WARNING + "Invalid Entity!");
                 } else sender.sendMessage(Errors.NO_PERMISSION);

@@ -5,7 +5,7 @@ import de.silencio.activecraftcore.messages.Dialogue.DialogueList;
 import de.silencio.activecraftcore.listener.DialogueListener;
 import de.silencio.activecraftcore.messages.Dialogue.DialogueManager;
 import de.silencio.activecraftcore.messages.Errors;
-import de.silencio.activecraftcore.utils.BanManager;
+import de.silencio.activecraftcore.manager.BanManager;
 import de.silencio.activecraftcore.utils.FileConfig;
 import de.silencio.activecraftcore.utils.StringUtils;
 import de.silencio.activecraftcore.utils.TimeUtils;
@@ -36,7 +36,7 @@ public class BanCommand implements CommandExecutor, DialogueList, Listener, Dial
     private CommandSender commandSender;
     private BanManager nameBanManager = new BanManager(BanList.Type.NAME);
     private BanManager ipBanManager = new BanManager(BanList.Type.IP);
-    private BanList.Type type;
+    private BanList.Type value;
     private StringUtils stringUtils = new StringUtils();
 
     public BanCommand() {
@@ -51,7 +51,7 @@ public class BanCommand implements CommandExecutor, DialogueList, Listener, Dial
         if (sender.hasPermission("activecraft.ban")) {
             if (label.equalsIgnoreCase("ban")) {
 
-                type = BanList.Type.NAME;
+                value = BanList.Type.NAME;
 
                 if (Bukkit.getPlayer(args[0]) == null) {
                     sender.sendMessage(Errors.INVALID_PLAYER);
@@ -67,7 +67,7 @@ public class BanCommand implements CommandExecutor, DialogueList, Listener, Dial
                     this.dialogueManager.setCompletedMessage(ChatColor.GOLD + "Banned " + ChatColor.AQUA + target.getName() + ChatColor.GOLD + ".");
                     this.dialogueManager.setCancelledMessage(ChatColor.GOLD + "Cancelled ban dialogue for " + ChatColor.AQUA + target.getName() + ChatColor.GOLD + ".");
                     this.dialogueManager.add(ChatColor.GOLD + "Please enter a reason: ");
-                    this.dialogueManager.add(ChatColor.GOLD + "Please enter the ban duration (dd/MM/yyyy hh:mm): ");
+                    this.dialogueManager.add(ChatColor.GOLD + "Please enter the ban duration: ");
                     this.dialogueManager.initialize();
 
                     Date date = new Date();
@@ -138,7 +138,7 @@ public class BanCommand implements CommandExecutor, DialogueList, Listener, Dial
             } else if (label.equalsIgnoreCase("ban-ip")) {
 
 
-                type = BanList.Type.IP;
+                value = BanList.Type.IP;
 
                 this.target = Bukkit.getPlayer(args[0]);
                 if (target != null) {
@@ -197,7 +197,7 @@ public class BanCommand implements CommandExecutor, DialogueList, Listener, Dial
     @Override
     public void onDialogueComplete(DialogueManager dialogueManager) {
         if (this.dialogueManager == dialogueManager) {
-            if (type == BanList.Type.NAME) {
+            if (value == BanList.Type.NAME) {
                 nameBanManager.ban(target, this.dialogueManager.getAnswer(0), TimeUtils.addFromStringToDate(this.dialogueManager.getAnswer(1)), commandSender.getName());
                 FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + target.getName().toLowerCase() + ".yml");
                 playerdataConfig.set("violations.bans", playerdataConfig.getInt("violations.bans") + 1);
@@ -208,7 +208,7 @@ public class BanCommand implements CommandExecutor, DialogueList, Listener, Dial
                         target.kickPlayer(dialogueManager.getAnswer(0));
                     }
                 });
-            } else if (type == BanList.Type.IP) {
+            } else if (value == BanList.Type.IP) {
                 ipBanManager.ban(target.getAddress().getAddress().toString().replace("/", ""), this.dialogueManager.getAnswer(0), TimeUtils.addFromStringToDate(this.dialogueManager.getAnswer(1)), commandSender.getName());
                 FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + target.getName().toLowerCase() + ".yml");
                 playerdataConfig.set("violations.ip-bans", playerdataConfig.getInt("violations.ip-bans") + 1);

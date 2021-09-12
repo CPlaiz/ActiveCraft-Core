@@ -2,7 +2,7 @@ package de.silencio.activecraftcore.commands;
 
 import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.utils.FileConfig;
-import de.silencio.activecraftcore.utils.WarnEntry;
+import de.silencio.activecraftcore.manager.WarnManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -18,7 +18,7 @@ import java.util.List;
 
 public class WarnCommand implements CommandExecutor, TabCompleter {
 
-    private HashMap<Player, WarnEntry> warnEntryMap = new HashMap<>();
+    private HashMap<Player, WarnManager> warnEntryMap = new HashMap<>();
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
@@ -32,7 +32,7 @@ public class WarnCommand implements CommandExecutor, TabCompleter {
             }
             Player target = Bukkit.getPlayer(args[1]);
 
-            WarnEntry warnEntry = new WarnEntry(target);
+            WarnManager warnManager = new WarnManager(target);
             if (args[0].equalsIgnoreCase("add")) {
                 StringBuilder stringBuilder = new StringBuilder();
                 if(sender.hasPermission("activecraft.warn.add")) {
@@ -45,8 +45,8 @@ public class WarnCommand implements CommandExecutor, TabCompleter {
                 } else sender.sendMessage(Errors.NO_PERMISSION);
 
                 String source = sender.getName();
-                warnEntry.add(stringBuilder.toString(), source);
-                sender.sendMessage(ChatColor.GOLD + "Warned " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + "\nReason: " + ChatColor.AQUA + warnEntry.getWarnEntry(stringBuilder.toString()).reason);
+                warnManager.add(stringBuilder.toString(), source);
+                sender.sendMessage(ChatColor.GOLD + "Warned " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + "\nReason: " + ChatColor.AQUA + warnManager.getWarnEntry(stringBuilder.toString()).reason);
             } else if (args[0].equalsIgnoreCase("remove")) {
                 StringBuilder stringBuilder = new StringBuilder();
                 if(sender.hasPermission("activecraft.warn.remove")) {
@@ -55,8 +55,8 @@ public class WarnCommand implements CommandExecutor, TabCompleter {
                             if (!(i == 2)) stringBuilder.append(" ");
                             stringBuilder.append(args[i]);
                         }
-                        sender.sendMessage(ChatColor.GOLD + "Removed warn " + warnEntry.getWarnEntry(stringBuilder.toString()).reason + " from " + ChatColor.AQUA + target.getDisplayName());
-                        warnEntry.remove(args[2]);
+                        sender.sendMessage(ChatColor.GOLD + "Removed warn " + warnManager.getWarnEntry(stringBuilder.toString()).reason + " from " + ChatColor.AQUA + target.getDisplayName());
+                        warnManager.remove(args[2]);
                     } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
                 } else sender.sendMessage(Errors.NO_PERMISSION);
             } else if (args[0].equalsIgnoreCase("get")) {
@@ -69,10 +69,10 @@ public class WarnCommand implements CommandExecutor, TabCompleter {
                         }
                         StringBuilder strBuilder = new StringBuilder();
                         strBuilder.append(ChatColor.GOLD + "-- " + target.getName() + "'s Warn Entry --\n")
-                                .append(ChatColor.GOLD + "Reason: " + ChatColor.AQUA).append(warnEntry.getWarnEntry(stringBuilder.toString()).reason)
-                                .append(ChatColor.GOLD + "\nCreated: " + ChatColor.AQUA).append(warnEntry.getWarnEntry(stringBuilder.toString()).created)
-                                .append(ChatColor.GOLD + "\nSource: " + ChatColor.AQUA).append(warnEntry.getWarnEntry(stringBuilder.toString()).source)
-                                .append(ChatColor.GOLD + "\nID: " + ChatColor.AQUA).append(warnEntry.getWarnEntry(stringBuilder.toString()).id);
+                                .append(ChatColor.GOLD + "Reason: " + ChatColor.AQUA).append(warnManager.getWarnEntry(stringBuilder.toString()).reason)
+                                .append(ChatColor.GOLD + "\nCreated: " + ChatColor.AQUA).append(warnManager.getWarnEntry(stringBuilder.toString()).created)
+                                .append(ChatColor.GOLD + "\nSource: " + ChatColor.AQUA).append(warnManager.getWarnEntry(stringBuilder.toString()).source)
+                                .append(ChatColor.GOLD + "\nID: " + ChatColor.AQUA).append(warnManager.getWarnEntry(stringBuilder.toString()).id);
                         sender.sendMessage(strBuilder.toString());
                     } else sender.sendMessage(Errors.INVALID_PLAYER);
                 } else sender.sendMessage(Errors.NO_PERMISSION);
