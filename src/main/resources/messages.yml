@@ -1,0 +1,374 @@
+# Messages Config
+# All languages and ingame messages are configured here.
+# Only edit if you know what you are doing
+# You can contribute to other translations here: %link%
+
+en:
+  errors:
+    general-warning: Warning!
+    too-many-arguments: Too many Arguments! Please recheck the command!
+    invalid-arguments: Invalid Arguments! Please recheck the command!
+    invalid-player: Player not found!
+    invalid-number: This is not a valid number!
+    invalid-world: World not found!
+    invalid-color: This is not a valid color!
+    invalid-hex: This is not a valid hex code!
+    invalid-entity: Invalid Entity!
+    number-too-large: Given number too large!
+    no-permission: You don't have the permission to do that!
+    cannot-target-self: You cannot target yourself!
+    not-a-player: You are not a player!
+    not-true-false: Please use true / false!
+    not-holding-item: You are not holding an item!
+  reasons:
+    hacking: Hacking
+    botting: Botting
+    unauthorized-alt-account: Unauthorized Alternate Account
+    spam: Spam
+    abusive-language: Abusive Language
+    stealing: Stealing
+    griefing: Griefing
+  dialogue:
+    default-header: -- Dialogue --
+    default-completed-message: Exiting dialogue...
+    default-cancelled-message: Cancelling dialogue...
+    default-invalid-answer: Invalid Answer!
+  misc:
+    default-mute-remove: Your default mute has been removed. You are now able to talk.
+    file-not-found: File config %filename% does not exist. Creating a new one...
+  commands:
+    ban:
+      ban-header: -- Ban Dialogue for %playername% --
+      ban-completed-message: Banned %playername%.
+      ban-cancelled-message: Cancelled ban dialogue for %playername%.
+      ban-enter-reason: Please enter a reason":"
+      ban-enter-time: Please enter the ban duration":"
+      already-banned: This player is already banned.
+    unban:
+      not-banned: This player is not banned.
+      unbanned-player: Unbanned %playername%.
+    banlist:
+      banlist-header: -- Ban List --
+      ban-on-hover: Unban %playername%.
+      ip-ban-on-hover: Unban %ip%
+      no-bans: There are no bans to be listed here!
+    ipban:
+      ipban-header: -- IP Ban Dialogue for %playername% (%ip%) --
+      ipban-completed-message: Banned %playername% (%ip%).
+      ipban-cancelled-message: Cancelled ip-ban dialogue for %playername% (%ip%).
+      ipban-enter-reason: Please enter a reason":"
+      ipban-enter-time: Please enter the ban duration":"
+      ip-already-banned: This IP is already banned.
+      invalid-ip: This is not a valid IP address.
+    unban-ip:
+      unbanned-ip: Unbanned %ip%
+      ip-not-banned: This IP is not banned.
+    book:
+      changed-title: Changed nook title to %title%.
+      changed-author: Changed book author to %author%.
+      changed-page: Changed the page %page%.
+      changed-generation: Changed book generation to %generation%.
+        original: original
+        copy-original: copy of original
+        copy-copy: copy of copy
+        tattered: tattered
+      added-page: Added a new page.
+      not-holding-book: You are not holding a book!
+    break:
+      break-others: Broke block infront of %displayname%.
+      break-self: Broke block infront of you.
+    broadcast:
+      broadcast-prefix: [BroadCast]
+      inlcude-message: Please include a message!
+    butcher:
+      no-mobs: No mobs nearby!
+      killed-mobs: Killed %amount% mobs.
+    clearinventory:
+      cleared-self: Cleared your inventory.
+      cleared-others: Cleared %displayname%'s inventory.
+      cleared-others-message: Your inventory was cleared by %displayname%.
+    colornick:
+      colornick-complete: Name color changed to %color%.
+      colornick-others: Name color for %displayname% changed to %color%.
+      colornick-others-message: Name color changed to %color% by %displayname%.
+    home:
+      teleport-home-complete: Teleported to %home%.
+      home-not-set: This home is not set!
+      teleport-home-others-complete: Teleported to %displayname%'s home %home%.
+      home-others-not-set: Player %displayname% does not have a home called %home%.
+    sethome:
+      home-set: Home %home% set!
+      home-others-set: Set home %home% for player %displayname%.
+    deletehome:
+      home-deleted: Home %home% deleted.
+      no-home: You do not have a home called %home%.
+      home-others-deleted: Deleted the home %home% for player %displayname%.
+    editsign:
+      enabled: Enabled sign edit mode.
+      disabled: Disabled sign edit mode.
+      enabled-others: Enabled sign edit mode for %displayname%.
+      enabled-others-message: Sign edit mode enabled by %displayname%.
+      disabled-others: Disabled sign edit mode for %displayname%
+      disabled-others-message: Sign edit mode disabled for %displayname%.
+    enchant:
+      applied-enchantment: Applied enchantment %enchantment% to your item.
+      applied-enchantment-level: Applied enchantment %enchantment% level %level% to your item.
+      cannot-be-applied: This enchantment can not be applied to this item!
+      cleared-all-enchantments: Cleared all enchantments from this item.
+      not-enchanted: Item is not enchanted!
+      glint-true: Added enchantment glint to your item.
+      glint-false: Removed enchantment glint to your item.
+    enderchest:
+      enderchest-open: Opened Enderchest.
+      enderchest-open-others: Opened Enderchest of %displayname%.
+    feed:
+      feed: You were fed.
+      feed-others: You fed %displayname%.
+      feed-others-message: You were fed by %displayname%.
+    fly:
+      enable-fly: Flight mode activated.
+      enable-fly-others: Flight mode activated for %displayname%.
+      enable-fly-others-message: Flight mode activated by %displayname%.
+      disable-fly: Flight mode deactivated.
+      disable-fly-others: Flight mode deactivated for %displayname%.
+      disable-fly-others-message: Flight mode deactivated by %displayname%.
+    flyspeed:
+      flyspeed-set: Fly speed set to %amount%.
+      flyspeed-set-others: Fly speed set to %amount% for %displayname%.
+      flyspeed-set-others-message: Fly speed set to %amount% by %displayname%.
+    god:
+      enable-god: God mode activated.
+      enable-god-others: God mode activated for %displayname%.
+      enable-god-others-message: God mode activated by %displayname%.
+      disable-god: God mode deactivated.
+      disable-god-others: God mode deactivated for %displayname%.
+      disable-god-others-message: God mode deactivated by %displayname%.
+    hat:
+      hat-success: Enjoy your new hat!
+    heal:
+      heal: You were healed.
+      heal-others: You healed %displayname%.
+      heal-others-message: You were healed by %displayname%.
+    item:
+      item-renamed: Item renamed.
+    kickall:
+      default-kickall: Kicked all players.
+      default-kickall-message: You were kicked.
+      custom-kickall: Kicked all players. \nReason":" %reason%.
+      custom-kickall-message: %reason%
+    kick:
+      default-kick: Kicked %displayname%.
+      default-kick-message: You were kicked.
+      custom-kick: Kicked %displayname%. \nReason":" %reason%
+      custom-kick-message: %reason%
+    knockbackstick:
+      knockbackstick: You were chosen to harness the power of the stick!
+      knockbackstick-lore: Dont keep your enemies closer than your friends, duh
+      knockbackstick-others: You chose %displayname% to harness the power of the stick.
+      knockbackstick-others-message: You were chosen to harness the power of the stick by %displayname%.
+    knownips:
+      knownips-header: -- Known IPs for %displayname% --
+    lastcoords:
+      never-entered-world: Player has never entered this world.
+      never-quit-server: Player has never left this server.
+      lastcoords-message: %displayname%'s last coords in %world%":" \n%coords%
+    lastonline:
+      lastonline-online: %displayname% is %lastonline%.
+      lastonline-offline: %displayname% was last online":" %lastonline%.
+    leathercolor:
+      no-leather-item: No leather item in main hand.
+    lockdown:
+      lockdown-enabled: Lockdown mode was enabled. Kicking all players...
+      lockdown-already-enabled: Lockdown mode is already enabled.
+      lockdown-disabled: Lockdown mode was disabled. Players can now join the server.
+      lockdown-not-enabled: Lockdown mode is not enabled.
+      allow-player: Allowed %displayname% to join during lockdown.
+      allow-player-extra: They will not be able to join again if they leave and do not have the permission "activecraft.lockdown.bypass".
+      allow-player-already-enabled: Lockdown bypass already enabled for %displayname%.
+      disallow-player: %displayname% will not be able to join during lockdown.
+      disallow-player-extra: If they have the permission "activecraft.lockdown.bypass" they will be able to join during lockdown once they join and leave the server again.
+      disallow-player-already-disabled: Lockdown bypass is not enabled for %displayname%.
+    log:
+      log-prefix: [Log] %displayname% executed command %command%.
+      enable-log: Log activated.
+      disable-log: Log deactivated.
+    more:
+      cannot-stack: Cannot stack to this amount! Maximum is 127.
+    msg:
+      msg-prefix-to: [me -> %displayname%] %message%
+      msg-prefix-from: [%displayname% -> me] %message%
+      socialspy-prefix-to: [%sender-displayname% -> %target-displayname%] %message%
+      socialspy-prefix-from: [%target-displayname% -> %sender-displayname%] %message%
+      console-msg-prefix: [Console -> me] %message%
+      cannot-message-self: You can't message yourself.
+      include-player: Please include a player.
+    mute:
+      mute: Muted %displayname%.
+      mute-message: You have been muted.
+      already-muted: This player is already muted.
+    unmute:
+      unmute: Unmuted %displayname%.
+      unmute-message: You have been unmuted.
+      not-muted: This player is already muted.
+    nick:
+      nick-set: Nick set to %nickname%.
+      nick-set-others: Set nickname of %displayname% to %nickname%.
+      nick-set-others-message: Nickname set to %nickname% by %displayname%.
+    ping:
+      ping-player: Pong! %ping%ms.
+      ping-console: Pong!
+    playerlist:
+      playerlist-header: Online players":"
+    playtime:
+      playtime: Playtime":" %hours% hours and %minutes% minutes.
+      playtime-others: Playtime of %displayname%":" %hours% hours and %minutes% minutes.
+    portal:
+      portal-created: Created portal.
+      portal-destroyed: Destroyed portal %name% at %coords%.
+      portal-list: Portals":"
+      portal-no-list: There are no portals to be listed.
+    quickgive:
+      quickgive-give: Gave you %blockname%.
+      quickgive-amount: Gave you %amount%x %blockname%.
+    ram:
+      ram: %freememory% MB free \n%usedmemory% MB used \n%maxmemory% MB max
+    realname:
+      realname-header: Players with the nickname %nickname%":" \n%players%
+    repair:
+      repair-sucess: Fixed your %item-displayname%.
+      cannot-be-repaired: Item can't be repaired.
+    restart-server:
+      restart-message: The server is restarting.
+      restart-title: Server Restart in %time%
+    skull:
+      give-skull: Gave yourself your head.
+      give-skull-others: Gave yourself %displayname%'s head.
+      give-skull-others-multiple: Gave yourself %amount%x %displayname%'s head.
+    spawn:
+      spawn-teleport: Teleported to spawn.
+      spawn-teleport-others: Teleported %displayname% to spawn.
+      spawn-teleport-others-message: You were teleported to spawn by %displayname%.
+      no-spawn-set: No spawn set.
+    spawner:
+      spawner-displayname: %spawner% Spawner
+      spawner-give: Gave yourself a %spawner% spawner.
+      spawner-give-others: Gave %displayname% a %spawner% spawner.
+      spawner-give-others-message: %displayname% gave you a %spawner% spawner.
+    summon:
+      summon: Summoned %mob%.
+      summon-multiple: Summoned %amount%x %mob%.
+      summon-others: Summoned %mob% at %displayname%'s position.
+      summon-others-multiple: Summoned %amount%x %mob% at %displayname%'s position.
+    staffchat:
+      staffchat-prefix: [StaffChat] %displayname%":" %message%
+      staffchat-from-console-prefix: [StaffChat] Console":" %message%
+    strike:
+      strike: Thor has struck lightning upon you!
+      strike-others: Struck %displayname% with lightning.
+    suicide:
+      suicide: You killed yourself.
+      broadcast-suicide: %displayname% committed suicide.
+      suicide-others: Made %displayname% commit suicide.
+    top:
+      top-teleport: Teleported to the top.
+      top-not-safe: Teleport is not safe!
+      top-teleport-others: Teleported %displayname% to the highest block above them.
+    tpa:
+      tpa-request-to: Tpa request sent to %displayname%.
+      tpa-request-from: Tpa request from %displayname%.
+      tpa-accept: [ACCEPT]
+      tpa-accept-hover: Click here to accept.
+      tpa-deny: [DENY]
+      tpa-deny-hover: Click here to deny.
+    tpaccept:
+      tpaccept-actionbar: Teleporting...
+      tpaccept-reciever-message: Teleported to %displayname%.
+      tpaccept-sender-message: %displayname% teleported to you.
+      no-requests: You don't have any pending TPA requests!
+    deny:
+      tpadeny-reciever-message: Denied the TPA request from %displayname%.
+      tpadeny-sender-message: %displayname% denied your TPA request.
+      no-requests: You don't have any pending TPA requests!
+    tpall:
+      tpall: Teleported all players to you.
+      tpall-message: You were teleported to %displayname%.
+      tpall-exept: %displayname% executed a tpall, but you were not teleported.
+    teleport:
+      cannot-tp-to-self: You can't teleport to yourself!
+      cannot-tp-others-to-themself: You can't teleport the player to themself!
+      teleport-to-player: Teleported to %displayname%.
+      teleport-to-coords: Teleported to %coords%.
+      teleport-player-to-player: Teleported %mover-displayname% to %reciever-displayname%.
+      teleport-player-to-coords: Teleported %displayname% to %coords%.
+    tphere:
+      cannot-tp-to-self: You can't teleport to yourself!
+      teleport-player-to-you: Teleported %displayname% to you.
+    vanish:
+      now-visible: You are now visible.
+      now-invisible: You are now invisible.
+      now-visible-others: %displayname% is now visible.
+      now-invisible-others: %displayname% is now invisible.
+    verify:
+      default-mute-remove: Verified %displayname%.
+      default-mute-remove-message: Your default mute has been removed. You are now able to talk.
+      not-default-muted: Player is not default muted!
+    walkspeed:
+      walkspeed-set: Walk speed set to %amount%.
+      walkspeed-set-others: Walk speed set to %amount% for %displayname%.
+      walkspeed-set-others-message: Walk speed set to %amount% by %displayname%.
+    warn:
+      default-warn-reason: Warned by a moderator.
+      warn-add: Warned %displayname%. \nReason":" %reason%.
+      warn-remove: Removed warn %reason% from %displayname%.
+      warn-get-header: -- %displayname%'s Warn Entry --
+      warn-get: Reason":" %reason% \nCreated":" %date-created% \nSource":" %displayname-creator% \nID":" %warn-id%
+      warned-header: You have been warned!
+      warned: Reason":" %reason$ \nWarned by":" %displayname-creator%.
+      warned-remove: Your warn %reason% has been removed.
+    warp:
+      warp-doesnt-exist: This warp does not exist!
+      warp-teleport: You warped to %warp%.
+      warp-teleport-others: Warped %displayname% to %warp%.
+      warp-teleport-others-message: You were warped to %warp% by %displayname%.
+    setwarp:
+      already-exists: This warp already exists!
+      warp-set: Created the warp %warp%.
+    deletewarp:
+      doesnt-exist: This warp does not exist!
+      warp-deleted: Deleted the warp %warp%.
+    warps:
+      warps-header: Warps":"
+      no-warps: There are no warps to be listed.
+    weather:
+      to-thunder: Changed weather in %world% to Thunder.
+      to-rain: Changed weather in %world% to Raub.
+      to-clear: Changed weather in %world% to Clear.
+    whereami:
+      whereami: You are in %world% at %coords%.
+      whereami-others: %displayname% is in %world% at %coords%.
+    whois:
+      name: Name":" %playername%
+      nickname: Nickname":" %displayname%
+      colornick: Colornick":" %colornick%
+      uuid: UUID":" %uuid%
+      is-op: Op":" %op%
+      health: Health":" %playerhealth%
+      food: Food":" %playerfood%
+      world: World":" %world%
+      coords: Coordinates":" %coords%
+      afk: AFK":" %afk%
+      client: Client":" %client%
+      address: Address":" %ip%
+      gamemode: Gamemode":" %gamemode%
+      muted: Muted":" %muted%
+      whitelisted: Whitelisted":" %whitelisted%
+      god: God":" %god%
+      vanished: Vanished":" %vanished%
+      onduty: On Duty":" %onduty%
+    xp:
+      xp-levels: Gave yourself %amount% levels.
+      xp-xp: Gave yourself %amount% xp.
+      xp-levels-others: Gave %displayname% %amount% levels.
+      xp-levels-others-message: You were given %amount% levels by %displayname%.
+      xp-xp-others: Gave %displayname% %amount% xp.
+      xp-xp-others-message: You were given %amount% xp by %displayname%.

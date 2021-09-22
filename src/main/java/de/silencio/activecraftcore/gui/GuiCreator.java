@@ -25,7 +25,7 @@ public class GuiCreator {
     private boolean hasClickSound;
     private boolean[] hasItemInSlot;
     private int rows;
-    private ItemStack itemInSlot;
+    private ItemStack[] itemInSlot;
     private InventoryHolder holder;
 
     public GuiCreator() {
@@ -63,25 +63,7 @@ public class GuiCreator {
         this.previousMenu = previousMenu;
         return this;
     }
-
-    public String getOnClickCommand() {
-        return onClickCommand;
-    }
-
-    public GuiCreator setOnClickCommand(String onClickCommand) {
-        this.onClickCommand = onClickCommand;
-        return this;
-    }
-
-    public String getOnClickGui() {
-        return onClickGui;
-    }
-
-    public GuiCreator setOnClickGui(String onClickGui) {
-        this.onClickGui = onClickGui;
-        return this;
-    }
-
+    
     public boolean isBackgroundFilled() {
         return backgroundFilled;
     }
@@ -91,7 +73,7 @@ public class GuiCreator {
         return this;
     }
 
-    public boolean isHasCloseBarrier() {
+    public boolean hasCloseBarrier() {
         return hasCloseBarrier;
     }
 
@@ -104,7 +86,7 @@ public class GuiCreator {
         return hasPlayerHead;
     }
 
-    public GuiCreator setPlayerHead(boolean hasPlayerHead) {
+    public GuiCreator setHasPlayerHead(boolean hasPlayerHead) {
         this.hasPlayerHead = hasPlayerHead;
         return this;
     }
@@ -135,8 +117,8 @@ public class GuiCreator {
         return hasItemInSlot;
     }
 
-    public GuiCreator setHasItemInSlot(boolean[] hasItemInSlot) {
-        this.hasItemInSlot = hasItemInSlot;
+    public GuiCreator setHasItemInSlot(int slot, boolean hasItem) {
+        this.hasItemInSlot[slot] = hasItem;
         return this;
     }
 
@@ -149,12 +131,12 @@ public class GuiCreator {
         return this;
     }
 
-    public ItemStack getItemInSlot() {
-        return itemInSlot;
+    public ItemStack getItemInSlot(int slot) {
+        return itemInSlot[slot];
     }
 
-    public GuiCreator setItemInSlot(ItemStack itemInSlot) {
-        this.itemInSlot = itemInSlot;
+    public GuiCreator setItemInSlot(int slot, ItemStack itemStack) {
+        this.itemInSlot[slot] = itemStack;
         return this;
     }
 
@@ -173,8 +155,11 @@ public class GuiCreator {
         inventory = Bukkit.createInventory(holder, 9 * rows, title);
 
         //set playerhead
-        if (hasPlayerHead) setItemInSlot(playerHead);
-        //if (hasBackArrow) setItemInSlot(backItem(), rows * 9 - 3);
+        if (hasPlayerHead) setItemInSlot(4, playerHead);
+        //set back item
+        if (hasBackArrow) setItemInSlot(rows * 9 - 3, new GuiBackItem());
+        //
+
 
         return inventory;
     }

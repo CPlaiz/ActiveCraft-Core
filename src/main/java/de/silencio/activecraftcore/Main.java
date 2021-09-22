@@ -9,6 +9,7 @@ import de.silencio.activecraftcore.utils.FileConfig;
 import de.silencio.activecraftcore.manager.VanishManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
@@ -32,6 +33,7 @@ public final class Main extends JavaPlugin {
     private FileConfig homeconfig;
     private FileConfig warpsConfig;
 
+    private HashMap<Player, Location> lastLocMap = new HashMap<>();
 
     public DialogueManagerList dialogueManagerList;
     public DialogueListenerList dialogueListenerList;
@@ -104,6 +106,10 @@ public final class Main extends JavaPlugin {
         pluginManager.registerEvents(new SignInteractListener(), this);
         //pluginManager.registerEvents(new ProfileCommand(), this);
         pluginManager.registerEvents(new ClearTabCompleteListener(), this);
+        pluginManager.registerEvents(new CommandStickCommand(), this);
+        pluginManager.registerEvents(new TeleportListener(), this);
+        pluginManager.registerEvents(new DeathListener(), this);
+        pluginManager.registerEvents(new LoginListener(), this);
 
         //custom Listeners
         dialogueListenerList = new DialogueListenerList();
@@ -198,6 +204,8 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginCommand("playerlist").setExecutor(new PlayerlistCommand());
         Bukkit.getPluginCommand("realname").setExecutor(new RealNameCommand());
         Bukkit.getPluginCommand("kick").setExecutor(new KickCommand());
+        Bukkit.getPluginCommand("commandstick").setExecutor(new CommandStickCommand());
+        Bukkit.getPluginCommand("back").setExecutor(new BackCommand());
     }
 
     public static Main getPlugin() {
@@ -264,4 +272,15 @@ public final class Main extends JavaPlugin {
         return dialogueListenerList;
     }
 
+    public void setLastLocationForPlayer(Player player, Location loc) {
+        lastLocMap.put(player, loc);
+    }
+
+    public Location getLastLocationForPlayer(Player player) {
+        return lastLocMap.get(player);
+    }
+
+    public HashMap<Player, Location> getLastLocMap() {
+        return lastLocMap;
+    }
 }

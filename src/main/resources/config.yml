@@ -28,7 +28,7 @@ lockdown-modt: "This server is in lockdown mode. You are not able to join until 
 lockdown-kick-message: "This server is in lockdown mode. You are not able to join until this is disabled."
 
 # Clear In Tab Complete
-hide-commands-after-plugin-name:
+hide-commands-after-plugin-name: # remove commands from tab complete which have the following format "pluginname:command"
   enable: true
   except:
     - 'minecraft:enchant'
