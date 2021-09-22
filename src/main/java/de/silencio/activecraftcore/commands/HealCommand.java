@@ -47,7 +47,7 @@ public class HealCommand implements CommandExecutor {
                             } else target.sendMessage(ChatColor.GOLD + "You were healed by " + ChatColor.AQUA + sender.getName() + ChatColor.GOLD + ".");
                             target.playSound(target.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 0.4f, 1f);
                         } else sender.sendMessage(Errors.NO_PERMISSION);
-                    } else sender.sendMessage(Errors.WARNING + "Player not found!");
+                    } else sender.sendMessage(Errors.INVALID_PLAYER);
                 } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
         return true;
     }

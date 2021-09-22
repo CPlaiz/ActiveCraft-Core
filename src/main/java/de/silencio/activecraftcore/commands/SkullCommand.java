@@ -23,6 +23,7 @@ public class SkullCommand implements CommandExecutor {
                 if (sender.hasPermission("activecraft.skull.self")) {
 
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "give @p minecraft:player_head{SkullOwner:\"" + player.getName() + "\"}");
+                    sender.sendMessage(ChatColor.GOLD + "Gave yourself your head.");
 
                 } else sender.sendMessage(Errors.NO_PERMISSION);
             }
@@ -43,7 +44,7 @@ public class SkullCommand implements CommandExecutor {
             }
 
             if(args.length == 2) {
-                if (sender.hasPermission("activecraft.skull.others")) {
+                if (sender.hasPermission("activecraft.skull.multiple")) {
                     Player target = Bukkit.getPlayer(args[0]);
                     if(player.getUniqueId().toString().equals(Bukkit.getServer().getOfflinePlayer(args[0]).getUniqueId().toString())) {
                         if (!sender.hasPermission("activecraft.skull.self")) {

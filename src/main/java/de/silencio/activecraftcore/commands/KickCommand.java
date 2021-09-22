@@ -24,6 +24,7 @@ public class KickCommand implements CommandExecutor {
                     }
                     Player target = Bukkit.getPlayer(args[0]);
                     target.kickPlayer("You were kicked.");
+                    sender.sendMessage(ChatColor.GOLD + "Kicked " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + ".");
                 }
                 if(args.length > 1) {
                     StringBuilder stringBuilder = new StringBuilder();

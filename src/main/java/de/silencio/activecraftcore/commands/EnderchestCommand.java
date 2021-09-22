@@ -46,7 +46,7 @@ public class EnderchestCommand implements CommandExecutor {
 
                     player.openInventory(target.getEnderChest());
                     player.playSound(player.getLocation(), Sound.BLOCK_ENDER_CHEST_OPEN, 1f, 1f);
-                    //player.sendMessage(ChatColor.GOLD + "Opened Enderchest of " + ChatColor.AQUA + target.getDisplayName());
+                    player.sendMessage(ChatColor.GOLD + "Opened Enderchest of " + ChatColor.AQUA + target.getDisplayName());
                 } else sender.sendMessage(Errors.TOO_MANY_ARGUMENTS);
             } else sender.sendMessage(Errors.NO_PERMISSION);
 

@@ -47,7 +47,7 @@ public class SpawnerCommand implements CommandExecutor, TabCompleter {
                     player.sendMessage(ChatColor.GOLD + "Gave yourself a " + ChatColor.AQUA + mobName.toLowerCase() + ChatColor.GOLD + " spawner.");
 
                     spawnerblock.setSpawnedType(EntityType.valueOf(mobName));
-                    spawnermeta.setDisplayName(ChatColor.AQUA + mobName.toLowerCase().replace("_", " "));
+                    spawnermeta.setDisplayName(ChatColor.AQUA + mobName.toLowerCase().replace("_", " ") + ChatColor.GOLD + " Spawner");
                     spawnermeta.setBlockState(spawnerblock);
                     spawner.setItemMeta(spawnermeta);
                     player.getInventory().addItem(spawner);

@@ -5,6 +5,7 @@ import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.utils.FileConfig;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -39,6 +40,7 @@ public class TpAcceptCommand extends TpaCommand implements CommandExecutor {
                                         tpaList.get(sender).sendActionBar(ChatColor.GOLD + "Teleporting...");
                                         tpaList.get(sender).teleport(loc);
                                         target.sendMessage(ChatColor.GOLD + "Teleported to " + ChatColor.AQUA + player.getDisplayName() + ChatColor.GOLD + ".");
+                                        target.playSound(target.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
                                         sender.sendMessage(ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " teleported to you.");
                                         cancel();
                                         tpaList.remove(sender);

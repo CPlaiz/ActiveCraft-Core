@@ -20,7 +20,8 @@ public class TpAllCommand implements CommandExecutor {
                     for (Player target : Bukkit.getOnlinePlayers()) {
                         if (!target.hasPermission("activecraft.tpall.exept")) {
                             target.teleport(player.getLocation());
-                        }
+                            target.sendMessage(ChatColor.GOLD + "You were teleported to " + ChatColor.AQUA + sender.getName() + ChatColor.GOLD + ".");
+                        } else sender.sendMessage( ChatColor.AQUA + sender.getName() + ChatColor.GOLD + " executed a tpall, but you were not teleported.");
                     }
                     sender.sendMessage(ChatColor.GOLD + "Teleported all players to you.");
                 } else sender.sendMessage(Errors.NO_PERMISSION);

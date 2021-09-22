@@ -151,7 +151,7 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginCommand("opitems").setExecutor(new OpItemsCommand());
         Bukkit.getPluginCommand("kickall").setExecutor(new KickAllCommand());
         Bukkit.getPluginCommand("ram").setExecutor(new RamCommand());
-        //Bukkit.getPluginCommand("tp").setExecutor(new TpCommand());
+        Bukkit.getPluginCommand("tp").setExecutor(new TpCommand());
         Bukkit.getPluginCommand("staffchat").setExecutor(new StaffChatCommand());
         Bukkit.getPluginCommand("reply").setExecutor(new ReplyCommand());
         Bukkit.getPluginCommand("portal").setExecutor(new PortalCommand());

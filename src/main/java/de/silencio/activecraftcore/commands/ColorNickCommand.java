@@ -5,6 +5,7 @@ import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.utils.FileConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Color;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -14,6 +15,7 @@ import org.bukkit.entity.Player;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class ColorNickCommand implements CommandExecutor, TabCompleter {
 
@@ -21,15 +23,32 @@ public class ColorNickCommand implements CommandExecutor, TabCompleter {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
             if (args.length == 1) {
                 if(sender instanceof Player) {
-                        Player player = (Player) sender;
-
+                    Player player = (Player) sender;
+                    FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + player.getName().toLowerCase() + ".yml");
                         if (sender.hasPermission("activecraft.colornick.self")) {
+
+                            if(args[0].equalsIgnoreCase("random")) {
+                                ChatColor[] colors = {ChatColor.GREEN, ChatColor.AQUA, ChatColor.BLUE,
+                                        ChatColor.GRAY, ChatColor.GOLD, ChatColor.RED, ChatColor.WHITE,
+                                        ChatColor.BLACK, ChatColor.DARK_AQUA, ChatColor.DARK_GRAY, ChatColor.DARK_GRAY,
+                                        ChatColor.DARK_BLUE, ChatColor.DARK_GREEN, ChatColor.DARK_RED,
+                                        ChatColor.DARK_PURPLE, ChatColor.LIGHT_PURPLE, ChatColor.YELLOW};
+                                int idx = new Random().nextInt(colors.length);
+                                ChatColor randomColor = colors[idx];
+
+                                    player.setPlayerListName(randomColor + playerdataConfig.getString("nickname"));
+                                    player.setDisplayName(randomColor + playerdataConfig.getString("nickname"));
+
+                                    playerdataConfig.set("colornick", randomColor.name());
+                                    playerdataConfig.saveConfig();
+
+                                    player.sendMessage(ChatColor.GOLD + "Name color changed to " + randomColor + randomColor.name());
+                            }
+
                             for (ChatColor color : ChatColor.values()) {
                                 if (args[0].toLowerCase().equals(color.name().toLowerCase())) {
-                                    if (!args[0].equals("BOLD") && !args[0].equals("MAGIC") && !args[0].equals("STRIKETHROUGH") &&
-                                            !args[0].equals("ITALIC") && !args[0].equals("UNDERLINE") && !args[0].equals("RESET")) {
-
-                                        FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + player.getName().toLowerCase() + ".yml");
+                                    if (!args[0].equalsIgnoreCase("BOLD") && !args[0].equalsIgnoreCase("MAGIC") && !args[0].equalsIgnoreCase("STRIKETHROUGH") &&
+                                            !args[0].equalsIgnoreCase("ITALIC") && !args[0].equalsIgnoreCase("UNDERLINE") && !args[0].equalsIgnoreCase("RESET")) {
 
                                         player.setPlayerListName(color + playerdataConfig.getString("nickname"));
                                         player.setDisplayName(color + playerdataConfig.getString("nickname"));
@@ -58,17 +77,38 @@ public class ColorNickCommand implements CommandExecutor, TabCompleter {
                                 return false;
                             }
                         }
+                        FileConfig targetdataConfig = new FileConfig("playerdata" + File.separator + target.getName().toLowerCase() + ".yml");
+
+                        if(args[0].equalsIgnoreCase("random")) {
+                            ChatColor[] colors = {ChatColor.GREEN, ChatColor.AQUA, ChatColor.BLUE,
+                                    ChatColor.GRAY, ChatColor.GOLD, ChatColor.RED, ChatColor.WHITE,
+                                    ChatColor.BLACK, ChatColor.DARK_AQUA, ChatColor.DARK_GRAY, ChatColor.DARK_GRAY,
+                                    ChatColor.DARK_BLUE, ChatColor.DARK_GREEN, ChatColor.DARK_RED,
+                                    ChatColor.DARK_PURPLE, ChatColor.LIGHT_PURPLE, ChatColor.YELLOW};
+                            int idx = new Random().nextInt(colors.length);
+                            ChatColor randomColor = colors[idx];
+
+                            target.setPlayerListName(randomColor + targetdataConfig.getString("nickname"));
+                            target.setDisplayName(randomColor + targetdataConfig.getString("nickname"));
+
+                            targetdataConfig.set("colornick", randomColor.name());
+                            targetdataConfig.saveConfig();
+
+                            sender.sendMessage(ChatColor.GOLD + "Name color for " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " changed to " + randomColor + randomColor.name() + ChatColor.GOLD + ".");
+                            if(sender instanceof Player) {
+                                target.sendMessage(ChatColor.GOLD + "Name color changed to " + randomColor + randomColor.name() + ChatColor.GOLD + " by " + ChatColor.AQUA + ((Player) sender).getDisplayName() + ChatColor.GOLD + ".");
+                            } else target.sendMessage(ChatColor.GOLD + "Name color changed to " + randomColor + randomColor.name() + ChatColor.GOLD + " by " + ChatColor.AQUA + sender.getName() + ChatColor.GOLD + ".");
+                        }
+
                         for (ChatColor color : ChatColor.values()) {
                             if (args[1].toLowerCase().equals(color.name().toLowerCase())) {
-                                if (!args[1].equals("BOLD") && !args[1].equals("MAGIC") && !args[1].equals("STRIKETHROUGH") &&
-                                        !args[1].equals("ITALIC") && !args[1].equals("UNDERLINE") && !args[1].equals("RESET")) {
+                                if (!args[1].equalsIgnoreCase("BOLD") && !args[1].equalsIgnoreCase("MAGIC") && !args[1].equalsIgnoreCase("STRIKETHROUGH") &&
+                                        !args[1].equalsIgnoreCase("ITALIC") && !args[1].equalsIgnoreCase("UNDERLINE") && !args[1].equalsIgnoreCase("RESET")) {
 
-                                    FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + target.getName().toLowerCase() + ".yml");
-
-                                    target.setPlayerListName(color + playerdataConfig.getString("nickname"));
-                                    target.setDisplayName(color + playerdataConfig.getString("nickname"));
-                                    playerdataConfig.set("colornick", color.name());
-                                    playerdataConfig.saveConfig();
+                                    target.setPlayerListName(color + targetdataConfig.getString("nickname"));
+                                    target.setDisplayName(color + targetdataConfig.getString("nickname"));
+                                    targetdataConfig.set("colornick", color.name());
+                                    targetdataConfig.saveConfig();
                                     sender.sendMessage(ChatColor.GOLD + "Name color for " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " changed to " + color + color.name() + ChatColor.GOLD + ".");
                                     if(sender instanceof Player) {
                                         target.sendMessage(ChatColor.GOLD + "Name color changed to " + color + color.name() + ChatColor.GOLD + " by " + ChatColor.AQUA + ((Player) sender).getDisplayName() + ChatColor.GOLD + ".");
@@ -94,18 +134,19 @@ public class ColorNickCommand implements CommandExecutor, TabCompleter {
         ArrayList<String> list = new ArrayList<>();
         if (args.length == 0) return list;
         if (args.length == 1) {
+            list.add("random");
             for (Player p : Main.getPlugin().getServer().getOnlinePlayers()) {
                 list.add(p.getName());
             }
             for (ChatColor color : ChatColor.values()) {
                 if (color != ChatColor.BOLD && color != ChatColor.MAGIC && color != ChatColor.UNDERLINE && color != ChatColor.ITALIC && color != ChatColor.STRIKETHROUGH) {
-                    list.add(color.name());
+                    list.add(color.name().toLowerCase().replace("_", " "));
                 }
             }
         } else if (args.length == 2) {
             for (ChatColor color : ChatColor.values()) {
                 if (color != ChatColor.BOLD && color != ChatColor.MAGIC && color != ChatColor.UNDERLINE && color != ChatColor.ITALIC && color != ChatColor.STRIKETHROUGH && color != ChatColor.RESET) {
-                    list.add(color.name());
+                    list.add(color.name().toLowerCase().replace("_", " "));
                 }
             }
         }

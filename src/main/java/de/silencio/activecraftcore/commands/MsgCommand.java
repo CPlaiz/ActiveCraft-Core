@@ -69,7 +69,7 @@ public class MsgCommand implements CommandExecutor {
                                 message = "";
 
                             } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
-                        } else sender.sendMessage(Errors.WARNING + " You can't message yourself!");
+                        } else sender.sendMessage(Errors.WARNING + "You can't message yourself!");
                     } else player.sendMessage(Errors.INVALID_PLAYER);
                 } else player.sendMessage(Errors.WARNING + "Please include a player.");
             } else sender.sendMessage(Errors.NO_PERMISSION);

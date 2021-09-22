@@ -51,7 +51,7 @@ public class XpCommand implements CommandExecutor {
                 }
                 Integer num = null;
                 try {
-                    num = Integer.valueOf(args[1]);
+                    num = Integer.valueOf(args[0].replace("l", ""));;
                 } catch (NumberFormatException ignored) {
                 }
                 if (num == null) {

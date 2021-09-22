@@ -2,7 +2,6 @@ package de.silencio.activecraftcore.commands;
 
 import de.silencio.activecraftcore.Main;
 import de.silencio.activecraftcore.messages.Errors;
-import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
 import org.bukkit.command.Command;

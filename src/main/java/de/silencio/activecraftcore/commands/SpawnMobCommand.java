@@ -12,7 +12,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class SpawnMobCommand implements CommandExecutor, TabCompleter {
@@ -86,6 +85,7 @@ public class SpawnMobCommand implements CommandExecutor, TabCompleter {
                     }
                     if (value != null) {
                         world.spawnEntity(target.getLocation(), value);
+                        sender.sendMessage(ChatColor.GOLD + "Summoned " + ChatColor.AQUA + args[0] + ChatColor.GOLD + " at " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + "'s position.");
                     } else sender.sendMessage(Errors.WARNING + "Invalid Entity!");
                 }
             }

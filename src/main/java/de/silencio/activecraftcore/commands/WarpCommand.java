@@ -52,7 +52,7 @@ public class WarpCommand implements CommandExecutor, TabCompleter {
                                     return false;
                                 }
                             }
-                            WarpManager.warp(player, args[1]);
+                            WarpManager.warp(target, args[1]);
                             player.sendMessage(ChatColor.GOLD + "Warped " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " to " + ChatColor.AQUA + args[1] + ChatColor.GOLD + ".");
                             target.sendMessage(ChatColor.GOLD + "You were warped to " + ChatColor.AQUA + args[1] + ChatColor.GOLD + " by " + ChatColor.AQUA + player.getDisplayName() + ChatColor.GOLD + ".");
                             target.playSound(target.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);

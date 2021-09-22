@@ -26,7 +26,7 @@ public class WhoIsCommand implements CommandExecutor {
 
                             ChatColor.GOLD + "Name: " + ChatColor.AQUA + player.getName() + "\n"
                                     + ChatColor.GOLD + "Nickname: " + ChatColor.AQUA + player.getDisplayName() + "\n"
-                                    + ChatColor.GOLD + "Colornick: " + ChatColor.AQUA + playerdataConfig.getString("colornick") + "\n"
+                                    + ChatColor.GOLD + "Colornick: " + ChatColor.AQUA + playerdataConfig.getString("colornick").toLowerCase() + "\n"
                                     + ChatColor.GOLD + "UUID: " + ChatColor.AQUA + player.getUniqueId() + "\n"
                                     + ChatColor.GOLD + "Op: " + ChatColor.AQUA + player.isOp() + "\n"
                                     + ChatColor.GOLD + "Health: " + ChatColor.AQUA + Math.round(player.getHealth()) + "\n"
@@ -87,12 +87,9 @@ public class WhoIsCommand implements CommandExecutor {
                                 + ChatColor.GOLD + "God: " + ChatColor.AQUA + playerdataConfig.getString("godmode") + "\n"
                                 + ChatColor.GOLD + "Vanished: " + ChatColor.AQUA + playerdataConfig.getString("vanished") + "\n"
                                 + ChatColor.GOLD + "On Duty: " + ChatColor.AQUA + playerdataConfig.getString("on-duty") + "\n"
-
                 );
             } else sender.sendMessage(Errors.NO_PERMISSION);
         } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
-
-
         return true;
     }
 }

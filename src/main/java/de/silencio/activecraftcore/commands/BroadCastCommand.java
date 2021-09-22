@@ -33,7 +33,7 @@ public class BroadCastCommand implements CommandExecutor, TabCompleter {
                 } else sender.sendMessage(Errors.WARNING + "Please include a message!");
             }
 
-            if(label.equalsIgnoreCase("broadcastworld")) {
+            if(label.equalsIgnoreCase("broadcastworld") || label.equalsIgnoreCase("bcw")) {
                 if(sender instanceof Player) {
                     if (args.length >= 1) {
                         String msg = "";

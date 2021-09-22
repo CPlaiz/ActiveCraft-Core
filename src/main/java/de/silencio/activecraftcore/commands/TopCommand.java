@@ -21,7 +21,6 @@ public class TopCommand implements CommandExecutor {
                 int zBlock = player.getLocation().getBlockZ();
                 double x = player.getLocation().getX();
                 double z = player.getLocation().getZ();
-                System.out.println(xBlock + ", " + zBlock + ", " + x + ", " + z);
                 Location loc = new Location(player.getWorld(), x, player.getWorld().getHighestBlockYAt(xBlock, zBlock), z, player.getLocation().getYaw(), player.getLocation().getPitch());
                 if (loc.getBlock().getType() != Material.LAVA) {
                     loc.setY(loc.getBlockY() + 1);
@@ -59,8 +58,6 @@ public class TopCommand implements CommandExecutor {
                 } else sender.sendMessage(Errors.WARNING + "Teleport is not safe!");
             } else sender.sendMessage(Errors.NO_PERMISSION);
         }
-
-
         return true;
     }
 }

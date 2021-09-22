@@ -32,6 +32,8 @@ hide-commands-after-plugin-name:
   enable: true
   except:
     - 'minecraft:enchant'
+hide-commands: # remove normal commands from tab complete
+  - 'command'
 
 # Do not edit!
 lockdown:

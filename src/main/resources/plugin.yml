@@ -25,6 +25,7 @@ commands:
     aliases:
       - "broadcastworld"
       - "bc"
+      - "bcw"
     permission: activecraft.broadcast
     permission-message: "§cWarnig! §7You don't have the permission to do that!"
   msg:
@@ -378,6 +379,20 @@ commands:
   kick:
     description: Kicks another player.
     permission: activecraft.kick
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
+  tp:
+    description: Allows the player to teleport themselves or other players.
+    permission: activecraft.tp
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
+  commandstick:
+    description: A stick that you can bind commands to.
+    aliases:
+      - "cmdstick"
+    permission: activecraft.commandstick
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
+  back:
+    description: Teleports you or another player to their last location before a teleport or death.
+    permission: activecraft.back
     permission-message: "§cWarnig! §7You don't have the permission to do that!"
 
 permissions:
@@ -768,12 +783,17 @@ permissions:
     description: Logs all commands executed on the server.
     default: op
   activecraft.skull.self:
-    description: Gives the player its own head.
+    description: Gives the player their own head.
     default: op
     children:
       activecraft.skull: true
   activecraft.skull.others:
-    description: Gives the player another players head.
+    description: Gives the player another player's head.
+    default: op
+    children:
+      activecraft.skull: true
+  activecraft.skull.multiple:
+    description: Gives the player multiple heads.
     default: op
     children:
       activecraft.skull: true
@@ -986,3 +1006,26 @@ permissions:
   activecraft.kick:
     description: Allows the player to kick another player.
     default: op
+  activecraf.tp.self:
+    description: Allows the player to teleport themselves to other players.
+    default: op
+    children:
+      actovecraft.tp: true
+  activecraf.tp.others:
+    description: Allows the player to teleport other players to other players.
+    default: op
+    children:
+      actovecraft.tp: true
+  activecraft.commandstick:
+    description: A stick that you can bind commands to.
+    default: op
+  activecraft.back.self:
+    description: Teleports you to your last location before a teleport or death.
+    default: op
+    children:
+      activecraft.back: true
+  activecraft.back.others:
+    description: Teleports another player to their last location before a teleport or death.
+    default: op
+    children:
+      activecraft.back: true

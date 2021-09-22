@@ -2,7 +2,6 @@ package de.silencio.activecraftcore.listener;
 
 import de.silencio.activecraftcore.utils.FileConfig;
 import org.bukkit.Bukkit;
-import org.bukkit.command.Command;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -11,8 +10,6 @@ import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.logging.Level;
 
 public class ClearTabCompleteListener implements Listener {
 
@@ -49,21 +46,38 @@ public class ClearTabCompleteListener implements Listener {
             e.getCommands().remove(s);
         }
 
-        if (!e.getPlayer().hasPermission("activecraft.showvanilla")) {
+        if (!e.getPlayer().hasPermission("bukkit.command.plugins")) {
             e.getCommands().remove("pl");
             e.getCommands().remove("plugins");
+        }
+        if (!e.getPlayer().hasPermission("bukkit.command.help")) {
             e.getCommands().remove("?");
+            e.getCommands().remove("help");
+        }
+        if (!e.getPlayer().hasPermission("bukkit.command.plugins")) {
             e.getCommands().remove("icanhasbukkit");
+            e.getCommands().remove("about");
+        }
+        if (!e.getPlayer().hasPermission("activecraft.vanilla.list")) {
             e.getCommands().remove("list");
+        }
+        if (!e.getPlayer().hasPermission("activecraft.vanilla.me")) {
             e.getCommands().remove("me");
+        }
+        if (!e.getPlayer().hasPermission("activecraft.vanilla.teammsg")) {
             e.getCommands().remove("teammsg");
-            e.getCommands().remove("tell");
             e.getCommands().remove("tm");
+        }
+        if (!e.getPlayer().hasPermission("activecraft.vanilla.msg")) {
+            e.getCommands().remove("tell");
+            e.getCommands().remove("w");
+        }
+        if (!e.getPlayer().hasPermission("activecraft.vanilla.trigger")) {
             e.getCommands().remove("trigger");
+        }
+        if (!e.getPlayer().hasPermission("activecraft.vanilla.version")) {
             e.getCommands().remove("ver");
             e.getCommands().remove("version");
-            e.getCommands().remove("w");
-            e.getCommands().remove("about");
         }
     }
 }
