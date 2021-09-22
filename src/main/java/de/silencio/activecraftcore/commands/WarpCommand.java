@@ -35,20 +35,20 @@ public class WarpCommand implements CommandExecutor, TabCompleter {
                             WarpManager.warp(player, args[0]);
                             player.sendMessage(ChatColor.GOLD + "You warped to " + ChatColor.AQUA + args[0] + ChatColor.GOLD + ".");
                             player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
-                        } else sender.sendMessage(Errors.WARNING + "This warp does not exist!");
-                    } else sender.sendMessage(Errors.NO_PERMISSION);
+                        } else sender.sendMessage(Errors.WARNING() + "This warp does not exist!");
+                    } else sender.sendMessage(Errors.NO_PERMISSION());
                 } else if (args.length == 2) {
                     if (player.hasPermission("activecraft.warp.others." + args[1])) {
                         if (WarpManager.getWarp(args[1]) != null) {
                             if (Bukkit.getPlayer(args[0]) == null) {
-                                sender.sendMessage(Errors.INVALID_PLAYER);
+                                sender.sendMessage(Errors.INVALID_PLAYER());
                                 return false;
                             }
                             Player target = Bukkit.getPlayer(args[0]);
 
                             if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
                                 if (!sender.hasPermission("activecraft.warp.self." + args[1])) {
-                                    sender.sendMessage(Errors.CANNOT_TARGET_SELF);
+                                    sender.sendMessage(Errors.CANNOT_TARGET_SELF());
                                     return false;
                                 }
                             }
@@ -56,8 +56,8 @@ public class WarpCommand implements CommandExecutor, TabCompleter {
                             player.sendMessage(ChatColor.GOLD + "Warped " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " to " + ChatColor.AQUA + args[1] + ChatColor.GOLD + ".");
                             target.sendMessage(ChatColor.GOLD + "You were warped to " + ChatColor.AQUA + args[1] + ChatColor.GOLD + " by " + ChatColor.AQUA + player.getDisplayName() + ChatColor.GOLD + ".");
                             target.playSound(target.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
-                        } else sender.sendMessage(Errors.WARNING + "This warp does not exist!");
-                    } else sender.sendMessage(Errors.NO_PERMISSION);
+                        } else sender.sendMessage(Errors.WARNING() + "This warp does not exist!");
+                    } else sender.sendMessage(Errors.NO_PERMISSION());
                 }
             }
             if (args.length == 1) {
@@ -66,16 +66,16 @@ public class WarpCommand implements CommandExecutor, TabCompleter {
                         if (WarpManager.getWarp(args[0]) == null) {
                             WarpManager.createWarp(args[0], player.getLocation());
                             player.sendMessage(ChatColor.GOLD + "Created the warp " + ChatColor.AQUA + args[0] + ChatColor.GOLD + ".");
-                        } else sender.sendMessage(Errors.WARNING + "This warp already exists!");
-                    } else sender.sendMessage(Errors.NO_PERMISSION);
+                        } else sender.sendMessage(Errors.WARNING() + "This warp already exists!");
+                    } else sender.sendMessage(Errors.NO_PERMISSION());
 
                 } else if (label.equalsIgnoreCase("delwarp")) {
                     if (player.hasPermission("activecraft.deletewarp")) {
                         if (WarpManager.getWarp(args[0]) != null) {
                             WarpManager.deleteWarp(args[0]);
                             player.sendMessage(ChatColor.GOLD + "Deleted the warp " + ChatColor.AQUA + args[0] + ChatColor.GOLD + ".");
-                        } else sender.sendMessage(Errors.WARNING + "This warp does not exist!");
-                    } else sender.sendMessage(Errors.NO_PERMISSION);
+                        } else sender.sendMessage(Errors.WARNING() + "This warp does not exist!");
+                    } else sender.sendMessage(Errors.NO_PERMISSION());
                 }
             }
             if (label.equalsIgnoreCase("warps")) {
@@ -90,11 +90,11 @@ public class WarpCommand implements CommandExecutor, TabCompleter {
                             sender.sendMessage(ChatColor.GOLD + s + ": " + ChatColor.GRAY + loc.getWorld().getName() + "; " + loc.getBlockX() + "," + loc.getBlockY() + ", " + loc.getBlockZ());
                         }
                     } else sender.sendMessage(ChatColor.GOLD + "There are no warps to be listed.");
-                } else sender.sendMessage(Errors.NO_PERMISSION);
+                } else sender.sendMessage(Errors.NO_PERMISSION());
             }
 
 
-        } else sender.sendMessage(Errors.NOT_A_PLAYER);
+        } else sender.sendMessage(Errors.NOT_A_PLAYER());
         return true;
     }
 

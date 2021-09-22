@@ -25,18 +25,18 @@ public class BreakCommand implements CommandExecutor {
                     player.playSound(player.getLocation(), Sound.BLOCK_STONE_BREAK, 1f, 1f);
                     block.setType(Material.AIR);
 
-                } else sender.sendMessage(Errors.NO_PERMISSION);
-            } else sender.sendMessage(Errors.NOT_A_PLAYER);
+                } else sender.sendMessage(Errors.NO_PERMISSION());
+            } else sender.sendMessage(Errors.NOT_A_PLAYER());
         } else if (args.length == 1) {
             if (sender.hasPermission("activecraft.break.other")) {
                 if (Bukkit.getPlayer(args[0]) == null) {
-                    sender.sendMessage(Errors.INVALID_PLAYER);
+                    sender.sendMessage(Errors.INVALID_PLAYER());
                     return false;
                 }
                 Player target = Bukkit.getPlayer(args[0]);
                     if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
                         if (!sender.hasPermission("activecraft.break.self")) {
-                            sender.sendMessage(Errors.CANNOT_TARGET_SELF);
+                            sender.sendMessage(Errors.CANNOT_TARGET_SELF());
                             return false;
                         }
                     }

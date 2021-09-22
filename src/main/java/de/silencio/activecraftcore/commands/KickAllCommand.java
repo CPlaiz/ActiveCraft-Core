@@ -36,7 +36,7 @@ public class KickAllCommand implements CommandExecutor {
                     }
                 }
             }
-        } else sender.sendMessage(Errors.NO_PERMISSION);
+        } else sender.sendMessage(Errors.NO_PERMISSION());
         return true;
     }
 }

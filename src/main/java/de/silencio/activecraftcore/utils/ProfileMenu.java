@@ -772,28 +772,28 @@ public class ProfileMenu implements Listener {
                             player.performCommand("clear " + target.getName());
                             renewActionInventory();
                             player.openInventory(actionMenuInv);
-                        } else player.sendMessage(Errors.NO_PERMISSION);
+                        } else player.sendMessage(Errors.NO_PERMISSION());
                         break;
                     case TP:
                         if (player.hasPermission("activecraft.tp")) {
                             player.teleport(target.getLocation());
                             renewActionInventory();
                             player.openInventory(actionMenuInv);
-                        } else player.sendMessage(Errors.NO_PERMISSION);
+                        } else player.sendMessage(Errors.NO_PERMISSION());
                         break;
                     case TP_HERE:
                         if (player.hasPermission("activecraft.tp")) {
                             target.teleport(player.getLocation());
                             renewActionInventory();
                             player.openInventory(actionMenuInv);
-                        } else player.sendMessage(Errors.NO_PERMISSION);
+                        } else player.sendMessage(Errors.NO_PERMISSION());
                         break;
                     case KILL:
                         if (player.hasPermission("activecraft.kill")) {
                             target.setHealth(0);
                             renewActionInventory();
                             player.openInventory(actionMenuInv);
-                        } else player.sendMessage(Errors.NO_PERMISSION);
+                        } else player.sendMessage(Errors.NO_PERMISSION());
                         break;
                 }
                 activeConfirmation = null;
@@ -843,7 +843,7 @@ public class ProfileMenu implements Listener {
                                 target.kickPlayer(violationReason);
                             }
                             player.closeInventory();
-                        } else player.sendMessage(Errors.NO_PERMISSION);
+                        } else player.sendMessage(Errors.NO_PERMISSION());
                         break;
                     case BAN_IP:
                         if (player.hasPermission("activecraft.ban")) {
@@ -859,19 +859,19 @@ public class ProfileMenu implements Listener {
                                 target.kickPlayer(violationReason);
                             }
                             player.closeInventory();
-                        } else player.sendMessage(Errors.NO_PERMISSION);
+                        } else player.sendMessage(Errors.NO_PERMISSION());
                         break;
                     case WARN:
                         if (player.hasPermission("activecraft.warn")) {
                             player.performCommand("warn add " + target.getName() + " " + violationReason);
                             player.closeInventory();
-                        } else player.sendMessage(Errors.NO_PERMISSION);
+                        } else player.sendMessage(Errors.NO_PERMISSION());
                         break;
                     case KICK:
                         if (player.hasPermission("activecraft.kick")) {
                             target.kickPlayer(violationReason);
                             player.closeInventory();
-                        } else player.sendMessage(Errors.NO_PERMISSION);
+                        } else player.sendMessage(Errors.NO_PERMISSION());
                         break;
                 }
             }
@@ -979,12 +979,12 @@ public class ProfileMenu implements Listener {
                     player.closeInventory();
                     player.performCommand("invsee " + target.getName());
                     player.playSound(player.getLocation(), Sound.BLOCK_CHEST_OPEN, 1f, 1f);
-                } else player.sendMessage(Errors.NO_PERMISSION);
+                } else player.sendMessage(Errors.NO_PERMISSION());
             } else if (Objects.equals(event.getCurrentItem(), this.enderchestStack)) {
                 if (player.hasPermission("activecraft.enderchest.others")) {
                     player.openInventory(target.getEnderChest());
                     player.playSound(player.getLocation(), Sound.BLOCK_ENDER_CHEST_OPEN, 1f, 1f);
-                } else player.sendMessage(Errors.NO_PERMISSION);
+                } else player.sendMessage(Errors.NO_PERMISSION());
             }
         } else if (Objects.equals(eventInv, actionMenuInv)) {
             event.setCancelled(true);

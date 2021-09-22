@@ -25,10 +25,10 @@ public class TpaDenyCommand extends TpaCommand implements CommandExecutor {
 
                         tpaList.remove(sender);
 
-                    } else sender.sendMessage(Errors.WARNING + " You don't have any pending TPA requests!");
-                } else sender.sendMessage(Errors.NO_PERMISSION);
-            } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
-        } else sender.sendMessage(Errors.NOT_A_PLAYER);
+                    } else sender.sendMessage(Errors.WARNING() + " You don't have any pending TPA requests!");
+                } else sender.sendMessage(Errors.NO_PERMISSION());
+            } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
+        } else sender.sendMessage(Errors.NOT_A_PLAYER());
         return true;
     }
 }

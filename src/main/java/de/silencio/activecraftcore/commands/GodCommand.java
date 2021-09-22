@@ -35,18 +35,18 @@ public class GodCommand implements CommandExecutor {
                         playerdataConfig.set("godmode", false);
                         playerdataConfig.saveConfig();
                     }
-                } else sender.sendMessage(Errors.NOT_A_PLAYER);
-            } else sender.sendMessage(Errors.NO_PERMISSION);
+                } else sender.sendMessage(Errors.NOT_A_PLAYER());
+            } else sender.sendMessage(Errors.NO_PERMISSION());
         } else if (args.length == 1) {
             if (sender.hasPermission("activecraft.god.others")) {
                 if (Bukkit.getPlayer(args[0]) == null) {
-                    sender.sendMessage(Errors.INVALID_PLAYER);
+                    sender.sendMessage(Errors.INVALID_PLAYER());
                     return false;
                 }
                 Player target = Bukkit.getPlayer(args[0]);
                 if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
                     if (!sender.hasPermission("activecraft.god.self")) {
-                        sender.sendMessage(Errors.CANNOT_TARGET_SELF);
+                        sender.sendMessage(Errors.CANNOT_TARGET_SELF());
                         return false;
                     }
                 }
@@ -72,9 +72,9 @@ public class GodCommand implements CommandExecutor {
                     targetdataConfig.set("godmode", false);
                     targetdataConfig.saveConfig();
                 }
-            } else sender.sendMessage(Errors.NO_PERMISSION);
+            } else sender.sendMessage(Errors.NO_PERMISSION());
         }
-        if (args.length > 2) sender.sendMessage(Errors.TOO_MANY_ARGUMENTS);
+        if (args.length > 2) sender.sendMessage(Errors.TOO_MANY_ARGUMENTS());
         return true;
     }
 }

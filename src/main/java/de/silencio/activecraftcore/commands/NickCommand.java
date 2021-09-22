@@ -38,7 +38,7 @@ public class NickCommand implements CommandExecutor {
                         playerdataConfig.saveConfig();
                         player.sendMessage(ChatColor.GOLD + "Nick set to " + ChatColor.AQUA + nickname);
                     }
-                } else sender.sendMessage(Errors.NOT_A_PLAYER);
+                } else sender.sendMessage(Errors.NOT_A_PLAYER());
 
             } else {
                 if (args.length > 1) {
@@ -55,7 +55,7 @@ public class NickCommand implements CommandExecutor {
                         Player target = Bukkit.getPlayer(args[0]);
                         if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
                             if (!sender.hasPermission("activecraft.nick.self")) {
-                                sender.sendMessage(Errors.CANNOT_TARGET_SELF);
+                                sender.sendMessage(Errors.CANNOT_TARGET_SELF());
                                 return false;
                             }
                         }
@@ -70,7 +70,7 @@ public class NickCommand implements CommandExecutor {
                         } else
                             target.sendMessage(ChatColor.GOLD + "Nickname set to " + ChatColor.AQUA + nickname + ChatColor.GOLD + " by " + ChatColor.AQUA + sender.getName());
                         setDisplaynameFromConfig(target, playerdataConfig.getString("colornick"), nickname);
-                    } else sender.sendMessage(Errors.NO_PERMISSION);
+                    } else sender.sendMessage(Errors.NO_PERMISSION());
                 } else {
                     if (sender instanceof Player) {
                         Player player = (Player) sender;
@@ -90,10 +90,10 @@ public class NickCommand implements CommandExecutor {
                             playerdataConfig.saveConfig();
                             player.sendMessage(ChatColor.GOLD + "Nick set to " + ChatColor.AQUA + nickname);
                         }
-                    } else sender.sendMessage(Errors.NOT_A_PLAYER);
+                    } else sender.sendMessage(Errors.NOT_A_PLAYER());
                 }
             }
-        } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
+        } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
         return true;
     }
 

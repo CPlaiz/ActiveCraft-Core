@@ -37,9 +37,9 @@ public class LastOnlineCommand implements CommandExecutor, TabCompleter {
                             sender.sendMessage(ChatColor.AQUA + playerdataConfig.getString("name") + ChatColor.GOLD + " is " + ChatColor.GREEN + lastonline);
                         } else
                             sender.sendMessage(ChatColor.AQUA + playerdataConfig.getString("name") + ChatColor.GOLD + " was last online: " + ChatColor.GREEN + lastonline);
-                    } else sender.sendMessage(Errors.INVALID_PLAYER);
-                } else sender.sendMessage(Errors.NO_PERMISSION);
-        } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
+                    } else sender.sendMessage(Errors.INVALID_PLAYER());
+                } else sender.sendMessage(Errors.NO_PERMISSION());
+        } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
 
         return true;
     }

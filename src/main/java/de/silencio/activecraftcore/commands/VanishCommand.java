@@ -27,7 +27,7 @@ public class VanishCommand implements CommandExecutor {
         if (args.length == 1) {
             if (sender.hasPermission("activecraft.vanish.others")) {
                 if (Bukkit.getPlayer(args[0]) == null) {
-                    sender.sendMessage(Errors.INVALID_PLAYER);
+                    sender.sendMessage(Errors.INVALID_PLAYER());
                     return false;
                 }
                 Player target = Bukkit.getPlayer(args[0]);
@@ -35,7 +35,7 @@ public class VanishCommand implements CommandExecutor {
                 if (target != null) {
                     if (sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
                         if (!sender.hasPermission("activecraft.vanish.self")) {
-                            sender.sendMessage(Errors.CANNOT_TARGET_SELF);
+                            sender.sendMessage(Errors.CANNOT_TARGET_SELF());
                             return false;
                         }
                     }
@@ -70,8 +70,8 @@ public class VanishCommand implements CommandExecutor {
                             }
                         }
                     }
-                } else sender.sendMessage(Errors.INVALID_PLAYER);
-            } else sender.sendMessage(Errors.NO_PERMISSION);
+                } else sender.sendMessage(Errors.INVALID_PLAYER());
+            } else sender.sendMessage(Errors.NO_PERMISSION());
         } else if (sender instanceof Player) {
             Player p = (Player) sender;
             FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + p.getName().toLowerCase() + ".yml");
@@ -104,8 +104,8 @@ public class VanishCommand implements CommandExecutor {
                         }
                     }
                 }
-            } else sender.sendMessage(Errors.NO_PERMISSION);
-        } else sender.sendMessage(Errors.NOT_A_PLAYER);
+            } else sender.sendMessage(Errors.NO_PERMISSION());
+        } else sender.sendMessage(Errors.NOT_A_PLAYER());
         return true;
     }
 

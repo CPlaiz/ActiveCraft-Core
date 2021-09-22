@@ -19,13 +19,13 @@ public class VerifyCommand implements CommandExecutor {
         if (sender.hasPermission("activecraft.verify")) {
             if (args.length == 1) {
                 if (Bukkit.getPlayer(args[0]) == null) {
-                    sender.sendMessage(Errors.INVALID_PLAYER);
+                    sender.sendMessage(Errors.INVALID_PLAYER());
                     return false;
                 }
                 Player target = Bukkit.getPlayer(args[0]);
 
                 if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
-                    sender.sendMessage(Errors.CANNOT_TARGET_SELF);
+                    sender.sendMessage(Errors.CANNOT_TARGET_SELF());
                     return false;
                 }
 
@@ -37,9 +37,9 @@ public class VerifyCommand implements CommandExecutor {
                     playerdataConfig.saveConfig();
                     target.sendMessage(ChatColor.GOLD + "Your default-mute has been removed. You are now able to talk.");
                     sender.sendMessage(ChatColor.GOLD + "Verified " + ChatColor.AQUA + target.getDisplayName());
-                } else sender.sendMessage(Errors.WARNING + "Player is not default-muted!");
-            } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
-        } else sender.sendMessage(Errors.NO_PERMISSION);
+                } else sender.sendMessage(Errors.WARNING() + "Player is not default-muted!");
+            } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
+        } else sender.sendMessage(Errors.NO_PERMISSION());
 
         return true;
     }

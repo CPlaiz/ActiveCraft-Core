@@ -19,7 +19,7 @@ public class KickCommand implements CommandExecutor {
             if(sender.hasPermission("activecraft.kick")) {
                 if(args.length == 1) {
                     if (Bukkit.getPlayer(args[0]) == null) {
-                        sender.sendMessage(Errors.INVALID_PLAYER);
+                        sender.sendMessage(Errors.INVALID_PLAYER());
                         return false;
                     }
                     Player target = Bukkit.getPlayer(args[0]);
@@ -33,7 +33,7 @@ public class KickCommand implements CommandExecutor {
                         stringBuilder.append(" ");
                     }
                     if (Bukkit.getPlayer(args[0]) == null) {
-                        sender.sendMessage(Errors.INVALID_PLAYER);
+                        sender.sendMessage(Errors.INVALID_PLAYER());
                         return false;
                     }
                     Player target = Bukkit.getPlayer(args[0]);
@@ -41,9 +41,9 @@ public class KickCommand implements CommandExecutor {
                     target.kickPlayer(stringBuilder.toString());
                 }
                 if(args.length == 0) {
-                    sender.sendMessage(Errors.INVALID_ARGUMENTS);
+                    sender.sendMessage(Errors.INVALID_ARGUMENTS());
                 }
-            } else sender.sendMessage(Errors.NO_PERMISSION);
+            } else sender.sendMessage(Errors.NO_PERMISSION());
         return true;
     }
 }

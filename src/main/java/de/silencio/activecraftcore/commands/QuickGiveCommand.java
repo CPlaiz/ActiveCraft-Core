@@ -25,7 +25,7 @@ public class QuickGiveCommand implements CommandExecutor, TabCompleter {
             if(sender.hasPermission("activecraft.quickgive")) {
                 if(args.length == 1) {
                     if (Material.getMaterial(args[0]) == null) {
-                        sender.sendMessage(Errors.INVALID_ARGUMENTS);
+                        sender.sendMessage(Errors.INVALID_ARGUMENTS());
                         return false;
                     }
                     Material material = Material.getMaterial(args[0].toUpperCase());
@@ -35,7 +35,7 @@ public class QuickGiveCommand implements CommandExecutor, TabCompleter {
                     player.playSound(player.getLocation(), Sound.valueOf("BLOCK_AMETHYST_BLOCK_BREAK"), 1f, 1f);
                 } else if(args.length == 2) {
                     if (Material.getMaterial(args[0]) == null) {
-                        sender.sendMessage(Errors.INVALID_ARGUMENTS);
+                        sender.sendMessage(Errors.INVALID_ARGUMENTS());
                         return false;
                     }
                     Material material = Material.getMaterial(args[0].toUpperCase());
@@ -50,10 +50,10 @@ public class QuickGiveCommand implements CommandExecutor, TabCompleter {
                         player.getInventory().addItem(itemStack);
                         sender.sendMessage(ChatColor.GOLD + "Gave you " + ChatColor.AQUA + args[1] + ChatColor.GOLD + "x " + ChatColor.AQUA + itemStack.getType().name().toLowerCase().replace("_", " "));
                         player.playSound(player.getLocation(), Sound.valueOf("BLOCK_AMETHYST_BLOCK_BREAK"), 1f, 1f);
-                    } else sender.sendMessage(Errors.INVALID_NUMBER);
-                } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
-            } else sender.sendMessage(Errors.NO_PERMISSION);
-        } else sender.sendMessage(Errors.NOT_A_PLAYER);
+                    } else sender.sendMessage(Errors.INVALID_NUMBER());
+                } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
+            } else sender.sendMessage(Errors.NO_PERMISSION());
+        } else sender.sendMessage(Errors.NOT_A_PLAYER());
         return true;
     }
 

@@ -30,10 +30,10 @@ public class TpCommand implements CommandExecutor, TabCompleter {
                             player.sendMessage(ChatColor.GOLD + "Teleported to " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + ".");
                             player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
 
-                        } else sender.sendMessage(Errors.WARNING + "You can't teleport to yourself!");
-                    } else sender.sendMessage(Errors.INVALID_PLAYER);
-                } else sender.sendMessage(Errors.NO_PERMISSION);
-            } else sender.sendMessage(Errors.NOT_A_PLAYER);
+                        } else sender.sendMessage(Errors.WARNING() + "You can't teleport to yourself!");
+                    } else sender.sendMessage(Errors.INVALID_PLAYER());
+                } else sender.sendMessage(Errors.NO_PERMISSION());
+            } else sender.sendMessage(Errors.NOT_A_PLAYER());
         }
         if (args.length == 3) {
             if (sender instanceof Player) {
@@ -55,7 +55,7 @@ public class TpCommand implements CommandExecutor, TabCompleter {
                             } catch (NumberFormatException ignored) {
                             }
                             if (numX == null) {
-                                sender.sendMessage(Errors.INVALID_NUMBER);
+                                sender.sendMessage(Errors.INVALID_NUMBER());
                                 return false;
                             }
                             finalNumX = player.getLocation().getX() + Double.parseDouble(args[0]);
@@ -67,7 +67,7 @@ public class TpCommand implements CommandExecutor, TabCompleter {
                         } catch (NumberFormatException ignored) {
                         }
                         if (numX == null) {
-                            sender.sendMessage(Errors.INVALID_NUMBER);
+                            sender.sendMessage(Errors.INVALID_NUMBER());
                             return false;
                         }
                         finalNumX = numX;
@@ -83,7 +83,7 @@ public class TpCommand implements CommandExecutor, TabCompleter {
                             } catch (NumberFormatException ignored) {
                             }
                             if (numY == null) {
-                                sender.sendMessage(Errors.INVALID_NUMBER);
+                                sender.sendMessage(Errors.INVALID_NUMBER());
                                 return false;
                             }
                             finalNumY = player.getLocation().getY() + Double.parseDouble(args[1]);
@@ -95,7 +95,7 @@ public class TpCommand implements CommandExecutor, TabCompleter {
                         } catch (NumberFormatException ignored) {
                         }
                         if (numY == null) {
-                            sender.sendMessage(Errors.INVALID_NUMBER);
+                            sender.sendMessage(Errors.INVALID_NUMBER());
                             return false;
                         }
                         finalNumY = numY;
@@ -111,7 +111,7 @@ public class TpCommand implements CommandExecutor, TabCompleter {
                             } catch (NumberFormatException ignored) {
                             }
                             if (numZ == null) {
-                                sender.sendMessage(Errors.INVALID_NUMBER);
+                                sender.sendMessage(Errors.INVALID_NUMBER());
                                 return false;
                             }
                             finalNumZ = player.getLocation().getZ() + Double.parseDouble(args[2]);
@@ -123,7 +123,7 @@ public class TpCommand implements CommandExecutor, TabCompleter {
                         } catch (NumberFormatException ignored) {
                         }
                         if (numZ == null) {
-                            sender.sendMessage(Errors.INVALID_NUMBER);
+                            sender.sendMessage(Errors.INVALID_NUMBER());
                             return false;
                         }
                         finalNumZ = numZ;
@@ -133,18 +133,18 @@ public class TpCommand implements CommandExecutor, TabCompleter {
                     player.sendMessage(ChatColor.GOLD + "Teleported to " + ChatColor.AQUA + args[0] + " " + args[1] + " " + args[2] + ChatColor.GOLD + ".");
                     player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
 
-                } else sender.sendMessage(Errors.NO_PERMISSION);
-            } else sender.sendMessage(Errors.NOT_A_PLAYER);
+                } else sender.sendMessage(Errors.NO_PERMISSION());
+            } else sender.sendMessage(Errors.NOT_A_PLAYER());
         }
 
         if (args.length == 2) {
             if (sender.hasPermission("activecraft.tp.others")) {
                 if (Bukkit.getPlayer(args[0]) == null) {
-                    sender.sendMessage(Errors.INVALID_PLAYER);
+                    sender.sendMessage(Errors.INVALID_PLAYER());
                     return false;
                 }
                 if (Bukkit.getPlayer(args[1]) == null) {
-                    sender.sendMessage(Errors.INVALID_PLAYER);
+                    sender.sendMessage(Errors.INVALID_PLAYER());
                     return false;
                 }
 
@@ -155,12 +155,12 @@ public class TpCommand implements CommandExecutor, TabCompleter {
                     target1.teleport(target2.getLocation());
                     sender.sendMessage(ChatColor.GOLD + "Teleported " + ChatColor.AQUA + target1.getDisplayName() + ChatColor.GOLD + " to " + ChatColor.AQUA + target2.getDisplayName() + ChatColor.GOLD + ".");
                     target1.playSound(target1.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
-                } else sender.sendMessage(Errors.WARNING + "Cannot teleport the player to themself!");
-            } else sender.sendMessage(Errors.NO_PERMISSION);
+                } else sender.sendMessage(Errors.WARNING() + "Cannot teleport the player to themself!");
+            } else sender.sendMessage(Errors.NO_PERMISSION());
         }
         if (args.length == 4) {
             if (Bukkit.getPlayer(args[0]) == null) {
-                sender.sendMessage(Errors.INVALID_PLAYER);
+                sender.sendMessage(Errors.INVALID_PLAYER());
                 return false;
             }
             Player target = Bukkit.getPlayer(args[0]);
@@ -181,7 +181,7 @@ public class TpCommand implements CommandExecutor, TabCompleter {
                         } catch (NumberFormatException ignored) {
                         }
                         if (numX == null) {
-                            sender.sendMessage(Errors.INVALID_NUMBER);
+                            sender.sendMessage(Errors.INVALID_NUMBER());
                             return false;
                         }
                         finalNumX = target.getLocation().getX() + Double.parseDouble(args[1]);
@@ -193,7 +193,7 @@ public class TpCommand implements CommandExecutor, TabCompleter {
                     } catch (NumberFormatException ignored) {
                     }
                     if (numX == null) {
-                        sender.sendMessage(Errors.INVALID_NUMBER);
+                        sender.sendMessage(Errors.INVALID_NUMBER());
                         return false;
                     }
                     finalNumX = numX;
@@ -209,7 +209,7 @@ public class TpCommand implements CommandExecutor, TabCompleter {
                         } catch (NumberFormatException ignored) {
                         }
                         if (numY == null) {
-                            sender.sendMessage(Errors.INVALID_NUMBER);
+                            sender.sendMessage(Errors.INVALID_NUMBER());
                             return false;
                         }
                         finalNumY = target.getLocation().getY() + Double.parseDouble(args[2]);
@@ -221,7 +221,7 @@ public class TpCommand implements CommandExecutor, TabCompleter {
                     } catch (NumberFormatException ignored) {
                     }
                     if (numY == null) {
-                        sender.sendMessage(Errors.INVALID_NUMBER);
+                        sender.sendMessage(Errors.INVALID_NUMBER());
                         return false;
                     }
                     finalNumY = numY;
@@ -237,7 +237,7 @@ public class TpCommand implements CommandExecutor, TabCompleter {
                         } catch (NumberFormatException ignored) {
                         }
                         if (numZ == null) {
-                            sender.sendMessage(Errors.INVALID_NUMBER);
+                            sender.sendMessage(Errors.INVALID_NUMBER());
                             return false;
                         }
                         finalNumZ = target.getLocation().getZ() + Double.parseDouble(args[3]);
@@ -249,7 +249,7 @@ public class TpCommand implements CommandExecutor, TabCompleter {
                     } catch (NumberFormatException ignored) {
                     }
                     if (numZ == null) {
-                        sender.sendMessage(Errors.INVALID_NUMBER);
+                        sender.sendMessage(Errors.INVALID_NUMBER());
                         return false;
                     }
                     finalNumZ = numZ;
@@ -259,10 +259,10 @@ public class TpCommand implements CommandExecutor, TabCompleter {
                 sender.sendMessage(ChatColor.GOLD + "Teleported " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " to " + ChatColor.AQUA + args[1] + " " + args[2] + " " + args[3] + ChatColor.GOLD + ".");
                 target.playSound(target.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
 
-            } else sender.sendMessage(Errors.NO_PERMISSION);
+            } else sender.sendMessage(Errors.NO_PERMISSION());
         }
         if (args.length == 0) {
-            sender.sendMessage(Errors.INVALID_ARGUMENTS);
+            sender.sendMessage(Errors.INVALID_ARGUMENTS());
         }
         return true;
     }

@@ -27,7 +27,7 @@ public class DelHomeCommand implements CommandExecutor, TabCompleter {
                         String playerName = player.getName();
 
                         if (args[0].equalsIgnoreCase("home_list")) {
-                            sender.sendMessage(Errors.INVALID_ARGUMENTS);
+                            sender.sendMessage(Errors.INVALID_ARGUMENTS());
                             return false;
                         }
 
@@ -38,28 +38,28 @@ public class DelHomeCommand implements CommandExecutor, TabCompleter {
                             homeconfig.set(playerName + "." + args[0].toLowerCase(), null);
                             homeconfig.saveConfig();
                             sender.sendMessage(ChatColor.GOLD + "Home " + ChatColor.AQUA + args[0] + ChatColor.GOLD + " deleted.");
-                        } else sender.sendMessage(Errors.WARNING + "You do not have a home called " + ChatColor.AQUA + args[0] + ChatColor.GRAY + ".");
-                    } else sender.sendMessage(Errors.NOT_A_PLAYER);
+                        } else sender.sendMessage(Errors.WARNING() + "You do not have a home called " + ChatColor.AQUA + args[0] + ChatColor.GRAY + ".");
+                    } else sender.sendMessage(Errors.NOT_A_PLAYER());
                 }
-            } else sender.sendMessage(Errors.NO_PERMISSION);
+            } else sender.sendMessage(Errors.NO_PERMISSION());
 
             if(args.length == 2) {
                 if (sender.hasPermission("activecraft.delhome.others")) {
                     if (Bukkit.getPlayer(args[0]) == null) {
-                        sender.sendMessage(Errors.INVALID_PLAYER);
+                        sender.sendMessage(Errors.INVALID_PLAYER());
                         return false;
                     }
                     Player target = Bukkit.getPlayer(args[0]);
                     if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
                         if (!sender.hasPermission("activecraft.delhome.self")) {
-                            sender.sendMessage(Errors.CANNOT_TARGET_SELF);
+                            sender.sendMessage(Errors.CANNOT_TARGET_SELF());
                             return false;
                         }
                     }
                     String targetName = target.getName();
 
                     if (args[1].equalsIgnoreCase("home_list")) {
-                        sender.sendMessage(Errors.INVALID_ARGUMENTS);
+                        sender.sendMessage(Errors.INVALID_ARGUMENTS());
                         return false;
                     }
 
@@ -71,13 +71,13 @@ public class DelHomeCommand implements CommandExecutor, TabCompleter {
                         homeconfig.saveConfig();
                         sender.sendMessage(ChatColor.GOLD + "Deleted the home " + ChatColor.AQUA + args[1] + ChatColor.GOLD + " of player " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + ".");
                     } else sender.sendMessage(ChatColor.GOLD + "Player " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " does not have a home called " + ChatColor.AQUA + args[1] + ChatColor.GOLD + ".");
-                } else sender.sendMessage(Errors.NO_PERMISSION);
+                } else sender.sendMessage(Errors.NO_PERMISSION());
             }
             if(args.length >= 3) {
-                sender.sendMessage(Errors.TOO_MANY_ARGUMENTS);
+                sender.sendMessage(Errors.TOO_MANY_ARGUMENTS());
             }
             if(args.length == 0) {
-                sender.sendMessage(Errors.INVALID_ARGUMENTS);
+                sender.sendMessage(Errors.INVALID_ARGUMENTS());
             }
         return true;
     }

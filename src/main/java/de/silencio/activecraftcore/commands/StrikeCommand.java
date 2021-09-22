@@ -16,7 +16,7 @@ public class StrikeCommand implements CommandExecutor {
             if(sender.hasPermission("activecraft.strike")) {
                 if(args.length == 1) {
                     if (Bukkit.getPlayer(args[0]) == null) {
-                        sender.sendMessage(Errors.INVALID_PLAYER);
+                        sender.sendMessage(Errors.INVALID_PLAYER());
                         return false;
                     }
                     Player target = Bukkit.getPlayer(args[0]);
@@ -25,9 +25,9 @@ public class StrikeCommand implements CommandExecutor {
                         target.getWorld().strikeLightning(target.getLocation());
                         target.sendMessage(ChatColor.GOLD + "Thor has struck lightning upon you!");
                         sender.sendMessage(ChatColor.GOLD + "Struck " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " with lightning.");
-                    } else sender.sendMessage(Errors.INVALID_PLAYER);
-                } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
-            } else sender.sendMessage(Errors.NO_PERMISSION);
+                    } else sender.sendMessage(Errors.INVALID_PLAYER());
+                } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
+            } else sender.sendMessage(Errors.NO_PERMISSION());
         return true;
     }
 }

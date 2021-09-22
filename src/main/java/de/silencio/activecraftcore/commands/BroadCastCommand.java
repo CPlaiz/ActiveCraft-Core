@@ -30,7 +30,7 @@ public class BroadCastCommand implements CommandExecutor, TabCompleter {
 
                     Bukkit.broadcastMessage("§6[BroadCast]§r " + msg);
 
-                } else sender.sendMessage(Errors.WARNING + "Please include a message!");
+                } else sender.sendMessage(Errors.WARNING() + "Please include a message!");
             }
 
             if(label.equalsIgnoreCase("broadcastworld") || label.equalsIgnoreCase("bcw")) {
@@ -49,10 +49,10 @@ public class BroadCastCommand implements CommandExecutor, TabCompleter {
                                 player.sendMessage("§6[BroadCast]§r " + msg);
                             }
                         }
-                    } else sender.sendMessage(Errors.WARNING + "Please include a message!");
-                } else sender.sendMessage(Errors.NOT_A_PLAYER);
+                    } else sender.sendMessage(Errors.WARNING() + "Please include a message!");
+                } else sender.sendMessage(Errors.NOT_A_PLAYER());
             }
-        } else sender.sendMessage(Errors.NO_PERMISSION);
+        } else sender.sendMessage(Errors.NO_PERMISSION());
         return true;
     }
 

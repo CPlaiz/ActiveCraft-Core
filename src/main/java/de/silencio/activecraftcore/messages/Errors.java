@@ -1,24 +1,40 @@
 package de.silencio.activecraftcore.messages;
 
+public class Errors extends ActiveCraftMessage {
 
-import org.bukkit.ChatColor;
+    public Errors(String input) {
+        super(input);
+    }
 
-public interface Errors {
+    public static String WARNING() {
+        return getMessage("");
+    }
 
-        String NO_PERMISSION = ChatColor.RED + "Warning! " + ChatColor.GRAY + "You don't have the permission to do that!";
+    public static String NO_PERMISSION() {
+        return getMessage("");
+    }
 
-        String INVALID_ARGUMENTS = ChatColor.RED + "Warning! " + ChatColor.GRAY + "Invalid Arguments! Please recheck the command!";
+    public static String INVALID_PLAYER() {
+        return getMessage("");
+    }
 
-        String TOO_MANY_ARGUMENTS = ChatColor.RED + "Warning! " + ChatColor.GRAY + "Too many Arguments! Please recheck the command!";
+    public static String INVALID_NUMBER() {
+        return getMessage("");
+    }
 
-        String INVALID_PLAYER = ChatColor.RED + "Warning! " + ChatColor.GRAY + "Player not found!";
+    public static String INVALID_ARGUMENTS() {
+        return getMessage("");
+    }
 
-        String INVALID_NUMBER = ChatColor.RED + "Warning! " + ChatColor.GRAY + "This is not a valid number!";
+    public static String TOO_MANY_ARGUMENTS() {
+        return getMessage("");
+    }
 
-        String NOT_A_PLAYER = ChatColor.RED + "Warning! " + ChatColor.GRAY + "You are not a player!";
+    public static String CANNOT_TARGET_SELF() {
+        return getMessage("");
+    }
 
-        String WARNING = ChatColor.RED + "Warning! " + ChatColor.GRAY;
-        
-        String CANNOT_TARGET_SELF = WARNING + "You cannot target yourself!";
-
+    public static String NOT_A_PLAYER() {
+        return getMessage("");
+    }
 }

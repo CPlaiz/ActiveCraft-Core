@@ -30,7 +30,7 @@ public class HomeCommand implements CommandExecutor, TabCompleter {
                     String playerName = player.getName();
 
                     if (args[0].equalsIgnoreCase("home_list")) {
-                        sender.sendMessage(Errors.INVALID_ARGUMENTS);
+                        sender.sendMessage(Errors.INVALID_ARGUMENTS());
                         return false;
                     }
                     if (homeconfig.contains(playerName + "." + args[0].toLowerCase())) {
@@ -38,28 +38,28 @@ public class HomeCommand implements CommandExecutor, TabCompleter {
                         sender.sendMessage(ChatColor.GOLD + "Teleported to " + ChatColor.AQUA + args[0] + ChatColor.GOLD + ".");
                         player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
 
-                    } else sender.sendMessage(Errors.WARNING + "This home is not set!");
-                } else sender.sendMessage(Errors.NO_PERMISSION);
+                    } else sender.sendMessage(Errors.WARNING() + "This home is not set!");
+                } else sender.sendMessage(Errors.NO_PERMISSION());
             }
 
             if (args.length == 2) {
                 if (sender.hasPermission("activecraft.home.others")) {
                     Player player = (Player) sender;
                     if (Bukkit.getPlayer(args[0]) == null) {
-                        sender.sendMessage(Errors.INVALID_PLAYER);
+                        sender.sendMessage(Errors.INVALID_PLAYER());
                         return false;
                     }
                     Player target = Bukkit.getPlayer(args[0]);
                     if (sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
                         if (!sender.hasPermission("activecraft.home.self")) {
-                            sender.sendMessage(Errors.CANNOT_TARGET_SELF);
+                            sender.sendMessage(Errors.CANNOT_TARGET_SELF());
                             return false;
                         }
                     }
                     String targetName = target.getName();
 
                     if (args[1].equalsIgnoreCase("home_list")) {
-                        sender.sendMessage(Errors.INVALID_ARGUMENTS);
+                        sender.sendMessage(Errors.INVALID_ARGUMENTS());
                         return false;
                     }
 
@@ -71,15 +71,15 @@ public class HomeCommand implements CommandExecutor, TabCompleter {
 
                     } else
                         sender.sendMessage(ChatColor.GOLD + "Player " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " does not have a home called " + ChatColor.AQUA + args[1] + ChatColor.GOLD + ".");
-                } else sender.sendMessage(Errors.NO_PERMISSION);
+                } else sender.sendMessage(Errors.NO_PERMISSION());
             }
             if (args.length >= 3) {
-                sender.sendMessage(Errors.TOO_MANY_ARGUMENTS);
+                sender.sendMessage(Errors.TOO_MANY_ARGUMENTS());
             }
             if (args.length == 0) {
-                sender.sendMessage(Errors.INVALID_ARGUMENTS);
+                sender.sendMessage(Errors.INVALID_ARGUMENTS());
             }
-        } else sender.sendMessage(Errors.NOT_A_PLAYER);
+        } else sender.sendMessage(Errors.NOT_A_PLAYER());
         return true;
     }
 

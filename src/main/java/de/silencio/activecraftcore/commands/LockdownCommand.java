@@ -33,16 +33,16 @@ public class LockdownCommand implements CommandExecutor, Listener, TabCompleter 
                     if (!fileConfig.getBoolean("lockdown")) {
                         LockdownManager.lockdown(true);
                         sender.sendMessage(ChatColor.GOLD + "Lockdown mode was enabled. Kicking all players.");
-                    } else sender.sendMessage(Errors.WARNING + "Lockdown mode is already enabled.");
+                    } else sender.sendMessage(Errors.WARNING() + "Lockdown mode is already enabled.");
                 } else if (args.length == 1 && args[0].equalsIgnoreCase("disable")) {
                     FileConfig fileConfig = new FileConfig("config.yml");
                     if (fileConfig.getBoolean("lockdown")) {
                         LockdownManager.lockdown(false);
                         sender.sendMessage(ChatColor.GOLD + "Lockdown mode was disabled. Players can now join the server again.");
-                    } else sender.sendMessage(Errors.WARNING + "Lockdown mode is not enabled.");
-                } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
+                    } else sender.sendMessage(Errors.WARNING() + "Lockdown mode is not enabled.");
+                } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
 
-            } else sender.sendMessage(Errors.NO_PERMISSION);
+            } else sender.sendMessage(Errors.NO_PERMISSION());
         } else if (label.equalsIgnoreCase("lockdownbypass")) {
             if (sender.hasPermission("activecraft.lockdown.allowbypass")) {
                 if (args.length == 2) {
@@ -61,7 +61,7 @@ public class LockdownCommand implements CommandExecutor, Listener, TabCompleter 
                                 sender.sendMessage(ChatColor.GOLD + "Allowed player " + ChatColor.AQUA + args[0] + ChatColor.GOLD + " to join during lockdown.");
                                 sender.sendMessage(ChatColor.GOLD + "They will not be able to join again if they leave and do not have the permission " + ChatColor.AQUA + "activecraft.lockdown.bypass" + ChatColor.GOLD + ".");
                             } else
-                                sender.sendMessage(Errors.WARNING + "Lockdown bypass is already enabled for " + playerdataConfig.getString("name"));
+                                sender.sendMessage(Errors.WARNING() + "Lockdown bypass is already enabled for " + playerdataConfig.getString("name"));
                         } else if (args[1].equalsIgnoreCase("false")) {
                             if (playerdataConfig.getBoolean("lockdown-bypass")) {
                                 playerdataConfig.set("lockdown-bypass", false);
@@ -69,11 +69,11 @@ public class LockdownCommand implements CommandExecutor, Listener, TabCompleter 
                                 sender.sendMessage(ChatColor.GOLD + "Player " + ChatColor.AQUA + args[0] + ChatColor.GOLD + " will not be able to join during lockdown.");
                                 sender.sendMessage(ChatColor.GOLD + "If they have the permission " + ChatColor.AQUA + "activecraft.lockdown.bypass" + ChatColor.GOLD + " they will be able to join during lockdown once they join and leave the server again.");
                             } else
-                                sender.sendMessage(Errors.WARNING + "Lockdown bypass is not enabled for " + playerdataConfig.getString("name"));
-                        } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
-                    } else sender.sendMessage(Errors.INVALID_PLAYER);
-                } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
-            } else sender.sendMessage(Errors.NO_PERMISSION);
+                                sender.sendMessage(Errors.WARNING() + "Lockdown bypass is not enabled for " + playerdataConfig.getString("name"));
+                        } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
+                    } else sender.sendMessage(Errors.INVALID_PLAYER());
+                } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
+            } else sender.sendMessage(Errors.NO_PERMISSION());
         }
         return true;
     }

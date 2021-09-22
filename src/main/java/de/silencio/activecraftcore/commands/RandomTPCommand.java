@@ -27,8 +27,8 @@ public class RandomTPCommand implements CommandExecutor, TabCompleter {
                     Player player = (Player) sender;
                     Location tpLoc = randomLocation(player, 3000000);
                     player.teleport(tpLoc);
-                } else sender.sendMessage(Errors.NOT_A_PLAYER);
-            } else sender.sendMessage(Errors.NO_PERMISSION);
+                } else sender.sendMessage(Errors.NOT_A_PLAYER());
+            } else sender.sendMessage(Errors.NO_PERMISSION());
         } else if (args.length == 1) {
             if (sender.hasPermission("activecraft.randomtp.others")) {
                 if (Bukkit.getPlayer(args[0]) != null) {
@@ -36,7 +36,7 @@ public class RandomTPCommand implements CommandExecutor, TabCompleter {
                     Player target = Bukkit.getPlayer(args[0]);
                     if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
                         if (!sender.hasPermission("activecraft.randomtp.self")) {
-                            sender.sendMessage(Errors.CANNOT_TARGET_SELF);
+                            sender.sendMessage(Errors.CANNOT_TARGET_SELF());
                             return false;
                         }
                     }
@@ -50,17 +50,17 @@ public class RandomTPCommand implements CommandExecutor, TabCompleter {
                     } catch (NumberFormatException ignored) {
                     }
                     if (num == null || num == 0) {
-                        sender.sendMessage(Errors.INVALID_NUMBER);
+                        sender.sendMessage(Errors.INVALID_NUMBER());
                         return false;
                     }
 
                     Location tpLoc = randomLocation(player, num);
                     player.teleport(tpLoc);
                 }
-            } else sender.sendMessage(Errors.NO_PERMISSION);
+            } else sender.sendMessage(Errors.NO_PERMISSION());
         } else {
             if (Bukkit.getPlayer(args[0]) == null) {
-                sender.sendMessage(Errors.INVALID_PLAYER);
+                sender.sendMessage(Errors.INVALID_PLAYER());
                 return false;
             }
             Player player = (Player) sender;
@@ -71,7 +71,7 @@ public class RandomTPCommand implements CommandExecutor, TabCompleter {
             } catch (NumberFormatException ignored) {
             }
             if (num == null || num == 0) {
-                sender.sendMessage(Errors.INVALID_NUMBER);
+                sender.sendMessage(Errors.INVALID_NUMBER());
                 return false;
             }
 

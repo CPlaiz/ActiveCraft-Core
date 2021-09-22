@@ -36,6 +36,7 @@ en:
   misc:
     default-mute-remove: Your default mute has been removed. You are now able to talk.
     file-not-found: File config %filename% does not exist. Creating a new one...
+    same-ip: %joined-displayname% shares the IP %ip% with %second-displayname%.
   commands:
     ban:
       ban-header: -- Ban Dialogue for %playername% --

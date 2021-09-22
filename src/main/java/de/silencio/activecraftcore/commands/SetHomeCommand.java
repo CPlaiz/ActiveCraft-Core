@@ -32,7 +32,7 @@ public class SetHomeCommand implements CommandExecutor {
                     String playerName = player.getName();
 
                     if (args[0].equalsIgnoreCase("home_list")) {
-                        sender.sendMessage(Errors.INVALID_ARGUMENTS);
+                        sender.sendMessage(Errors.INVALID_ARGUMENTS());
                         return false;
                     }
 
@@ -45,7 +45,7 @@ public class SetHomeCommand implements CommandExecutor {
                         }
                     }
                     if (!(homeList.size() < maxHomes)) {
-                        player.sendMessage(Errors.WARNING + "You cannot create more homes!");
+                        player.sendMessage(Errors.WARNING() + "You cannot create more homes!");
                         return false;
                     }
                     homeList.add(args[0]);
@@ -54,26 +54,26 @@ public class SetHomeCommand implements CommandExecutor {
                     homeconfig.saveConfig();
 
                     sender.sendMessage(ChatColor.GOLD + "Home " + ChatColor.AQUA + args[0] + ChatColor.GOLD + " set!");
-                } else sender.sendMessage(Errors.NOT_A_PLAYER);
-            } else sender.sendMessage(Errors.NO_PERMISSION);
+                } else sender.sendMessage(Errors.NOT_A_PLAYER());
+            } else sender.sendMessage(Errors.NO_PERMISSION());
         }
 
         if (args.length == 2) {
             if (sender.hasPermission("activecraft.sethome.others")) {
                 if (Bukkit.getPlayer(args[0]) == null) {
-                    sender.sendMessage(Errors.INVALID_PLAYER);
+                    sender.sendMessage(Errors.INVALID_PLAYER());
                     return false;
                 }
                 Player player = (Player) sender;
                 Player target = Bukkit.getPlayer(args[0]);
                 if (sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
                     if (!sender.hasPermission("activecraft.sethome.self")) {
-                        sender.sendMessage(Errors.CANNOT_TARGET_SELF);
+                        sender.sendMessage(Errors.CANNOT_TARGET_SELF());
                         return false;
                     }
                 }
                 if (args[1].equalsIgnoreCase("home_list")) {
-                    sender.sendMessage(Errors.INVALID_ARGUMENTS);
+                    sender.sendMessage(Errors.INVALID_ARGUMENTS());
                     return false;
                 }
                 String targetName = target.getName();
@@ -89,7 +89,7 @@ public class SetHomeCommand implements CommandExecutor {
                     }
                 }
                 if (!(homeList.size() < maxHomes)) {
-                    player.sendMessage(Errors.WARNING + "This player cannot create more homes!");
+                    player.sendMessage(Errors.WARNING() + "This player cannot create more homes!");
                     return false;
                 }
                 homeList.add(args[1]);
@@ -97,13 +97,13 @@ public class SetHomeCommand implements CommandExecutor {
                 homeconfig.set(targetName + "." + args[1].toLowerCase(), loc);
                 homeconfig.saveConfig();
                 sender.sendMessage(ChatColor.GOLD + "Set home " + ChatColor.AQUA + args[1] + ChatColor.GOLD + " for player " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " to current location.");
-            } else sender.sendMessage(Errors.NO_PERMISSION);
+            } else sender.sendMessage(Errors.NO_PERMISSION());
         }
         if (args.length >= 3) {
-            sender.sendMessage(Errors.TOO_MANY_ARGUMENTS);
+            sender.sendMessage(Errors.TOO_MANY_ARGUMENTS());
         }
         if (args.length == 0) {
-            sender.sendMessage(Errors.INVALID_ARGUMENTS);
+            sender.sendMessage(Errors.INVALID_ARGUMENTS());
         }
         return true;
     }

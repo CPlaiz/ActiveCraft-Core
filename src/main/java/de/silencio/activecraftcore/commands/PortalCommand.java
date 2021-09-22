@@ -55,7 +55,7 @@ public class PortalCommand implements CommandExecutor, TabCompleter {
 
                 }
 
-            } else sender.sendMessage(Errors.NO_PERMISSION);
+            } else sender.sendMessage(Errors.NO_PERMISSION());
         } else if (args[0].equalsIgnoreCase("destroy")) {
             if (sender.hasPermission("portals.destroy")) {
                 FileConfig portalsConfig = new FileConfig("portals.yml");
@@ -78,7 +78,7 @@ public class PortalCommand implements CommandExecutor, TabCompleter {
                                     + ", " + ChatColor.GREEN + portaly + ChatColor.GRAY + ", " + ChatColor.GREEN + portalz + ChatColor.GOLD + ".");
 
                 } else sender.sendMessage(ChatColor.RED + "Warning!" + ChatColor.GRAY + "This portal doesn't exist!");
-            } else sender.sendMessage(Errors.NO_PERMISSION);
+            } else sender.sendMessage(Errors.NO_PERMISSION());
         } else if (args[0].equalsIgnoreCase("list")) {
             if (sender.hasPermission("portals.list")) {
                 FileConfig portalsConfig = new FileConfig("portals.yml");
@@ -94,8 +94,8 @@ public class PortalCommand implements CommandExecutor, TabCompleter {
                         sender.sendMessage(ChatColor.BOLD + "" + ChatColor.GOLD + s + ": " + ChatColor.GRAY + worldname + "; " + x + ", " + y + ", " + z);
                     }
                 } else sender.sendMessage(ChatColor.RED + "Warning! " + ChatColor.GRAY + "There are no portals to be listed!");
-            } else sender.sendMessage(Errors.NO_PERMISSION);
-        } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
+            } else sender.sendMessage(Errors.NO_PERMISSION());
+        } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
 
 
         return true;

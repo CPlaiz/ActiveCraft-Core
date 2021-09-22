@@ -33,10 +33,10 @@ public class LeatherColorCommand implements CommandExecutor, TabCompleter {
                             if (sender.hasPermission("activecraft.leathercolor.vanilla")) {
                                 color = ColorUtils.bukkitColorFromString(args[0]);
                                 if (color == null) {
-                                    sender.sendMessage(Errors.WARNING + "This is not a valid color!");
+                                    sender.sendMessage(Errors.WARNING() + "This is not a valid color!");
                                     return false;
                                 }
-                            } else sender.sendMessage(Errors.NO_PERMISSION);
+                            } else sender.sendMessage(Errors.NO_PERMISSION());
                         } else {
                             if (sender.hasPermission("activecraft.leathercolor.hex")) {
                                 if (args[0].length() == 7) {
@@ -44,23 +44,23 @@ public class LeatherColorCommand implements CommandExecutor, TabCompleter {
                                         int[] rgbArray = ColorUtils.getRGB(args[0]);
                                         color = Color.fromRGB(rgbArray[0], rgbArray[1], rgbArray[2]);
                                     } else {
-                                        sender.sendMessage(Errors.WARNING + "This is not a valid hex code!");
+                                        sender.sendMessage(Errors.WARNING() + "This is not a valid hex code!");
                                         return false;
                                     }
                                 } else {
-                                    sender.sendMessage(Errors.INVALID_ARGUMENTS);
+                                    sender.sendMessage(Errors.INVALID_ARGUMENTS());
                                     return false;
                                 }
-                            } else sender.sendMessage(Errors.NO_PERMISSION);
+                            } else sender.sendMessage(Errors.NO_PERMISSION());
                         }
                         itemmeta.setColor(color);
                         mainhanditem.setItemMeta(itemmeta);
                         player.getInventory().setItemInMainHand(mainhanditem);
 
-                    } else sender.sendMessage(Errors.WARNING + "No leather item in main hand!");
-                } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
-            } else sender.sendMessage(Errors.NO_PERMISSION);
-        } else sender.sendMessage(Errors.NOT_A_PLAYER);
+                    } else sender.sendMessage(Errors.WARNING() + "No leather item in main hand!");
+                } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
+            } else sender.sendMessage(Errors.NO_PERMISSION());
+        } else sender.sendMessage(Errors.NOT_A_PLAYER());
         return true;
     }
 

@@ -25,7 +25,7 @@ public class RamCommand implements CommandExecutor, TabCompleter {
                 sender.sendMessage( ChatColor.AQUA.toString() + (runtime.totalMemory()/durch - runtime.freeMemory()/durch) + ChatColor.GOLD + " MB used");
                 sender.sendMessage( ChatColor.AQUA.toString() + runtime.maxMemory()/durch + ChatColor.GOLD + " MB max");
 
-            } else sender.sendMessage(Errors.NO_PERMISSION);
+            } else sender.sendMessage(Errors.NO_PERMISSION());
         return true;
     }
 

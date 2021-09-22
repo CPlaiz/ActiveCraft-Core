@@ -5,6 +5,7 @@ import de.silencio.activecraftcore.listener.*;
 import de.silencio.activecraftcore.listener.inventory.ProfileListener;
 import de.silencio.activecraftcore.messages.Dialogue.DialogueListenerList;
 import de.silencio.activecraftcore.messages.Dialogue.DialogueManagerList;
+import de.silencio.activecraftcore.messages.Language;
 import de.silencio.activecraftcore.utils.FileConfig;
 import de.silencio.activecraftcore.manager.VanishManager;
 import org.bukkit.Bukkit;
@@ -18,6 +19,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public final class Main extends JavaPlugin {
@@ -26,6 +28,8 @@ public final class Main extends JavaPlugin {
     public static Main instance;
     private static Main plugin;
     private static VanishManager vanishManager;
+
+    private Language language;
 
     private FileConfig playtimeConfig;
     private FileConfig locationsConfig;
@@ -58,11 +62,7 @@ public final class Main extends JavaPlugin {
 
         saveDefaultConfig();
 
-        //config = new FileConfig("config.yml");
-        //warpsConfig = new FileConfig("warps.yml");
-        //playtimeConfig = new FileConfig("playtime.yml");
-        //locationsConfig = new FileConfig("locations.yml");
-        //homeconfig = new FileConfig("homes.yml");
+        language = Language.valueOf(new FileConfig("config.yml").getString("language").toUpperCase());
 
         FileConfig warplistConfig = new FileConfig("warplist.yml");
         for (String s : warplistConfig.getStringList("warplist")) {
@@ -262,6 +262,14 @@ public final class Main extends JavaPlugin {
                 }
             }
         }, 20 * 60, 20 * 60);
+    }
+
+    public Language getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(Language language) {
+        this.language = language;
     }
 
     public DialogueManagerList getDialogueManagerList() {

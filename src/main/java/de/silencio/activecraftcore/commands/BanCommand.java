@@ -54,7 +54,7 @@ public class BanCommand implements CommandExecutor, DialogueList, Listener, Dial
                 value = BanList.Type.NAME;
 
                 if (Bukkit.getPlayer(args[0]) == null) {
-                    sender.sendMessage(Errors.INVALID_PLAYER);
+                    sender.sendMessage(Errors.INVALID_PLAYER());
                     return false;
                 }
                 this.target = Bukkit.getPlayer(args[0]);
@@ -71,12 +71,12 @@ public class BanCommand implements CommandExecutor, DialogueList, Listener, Dial
                     this.dialogueManager.initialize();
 
                     Date date = new Date();
-                } else sender.sendMessage(Errors.WARNING + "This player is already banned.");
+                } else sender.sendMessage(Errors.WARNING() + "This player is already banned.");
             } else if (label.equalsIgnoreCase("unban")) {
                 if (nameBanManager.isBanned(args[0])) {
                     nameBanManager.unban(args[0]);
                     sender.sendMessage(ChatColor.GOLD + "Unbanned " + ChatColor.AQUA + args[0]);
-                } else sender.sendMessage(Errors.WARNING + "This player is not banned.");
+                } else sender.sendMessage(Errors.WARNING() + "This player is not banned.");
             } else if (label.equalsIgnoreCase("banlist")) {
                 if (sender.hasPermission("activecraft.banlist")) {
 
@@ -155,7 +155,7 @@ public class BanCommand implements CommandExecutor, DialogueList, Listener, Dial
                         this.dialogueManager.initialize();
 
                         Date date = new Date();
-                    } else sender.sendMessage(Errors.WARNING + "This player is already banned.");
+                    } else sender.sendMessage(Errors.WARNING() + "This player is already banned.");
                 } else if (stringUtils.isValidInet4Address(args[0])) {
                     if (!ipBanManager.isBanned(args[0])) {
 
@@ -172,15 +172,15 @@ public class BanCommand implements CommandExecutor, DialogueList, Listener, Dial
                         this.dialogueManager.initialize();
 
                         Date date = new Date();
-                    } else sender.sendMessage(Errors.WARNING + "This player is already banned.");
-                } else sender.sendMessage(Errors.WARNING + "This is not a valid IP address");
+                    } else sender.sendMessage(Errors.WARNING() + "This player is already banned.");
+                } else sender.sendMessage(Errors.WARNING() + "This is not a valid IP address");
             } else if (label.equalsIgnoreCase("unban-ip")) {
                 //System.out.println(args[0]);
                 //System.out.println(ipBanManager.isBanned(args[0]));
                 ipBanManager.unban(args[0]);
                 sender.sendMessage(ChatColor.GOLD + "Unbanned " + ChatColor.AQUA + args[0]);
             }
-        } else sender.sendMessage(Errors.NO_PERMISSION);
+        } else sender.sendMessage(Errors.NO_PERMISSION());
         return true;
     }
 

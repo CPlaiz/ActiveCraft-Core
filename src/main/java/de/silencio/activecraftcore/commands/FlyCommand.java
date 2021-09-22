@@ -34,18 +34,18 @@ public class FlyCommand implements CommandExecutor {
                             fileConfig.set("fly", true);
                             fileConfig.saveConfig();
                         }
-                    } else sender.sendMessage(Errors.NO_PERMISSION);
-                } else sender.sendMessage(Errors.NOT_A_PLAYER);
+                    } else sender.sendMessage(Errors.NO_PERMISSION());
+                } else sender.sendMessage(Errors.NOT_A_PLAYER());
             } else if (args.length == 1) {
                 if (sender.hasPermission("activecraft.fly.others")) {
                     if (Bukkit.getPlayer(args[0]) == null) {
-                        sender.sendMessage(Errors.INVALID_PLAYER);
+                        sender.sendMessage(Errors.INVALID_PLAYER());
                         return false;
                     }
                     Player target = Bukkit.getPlayer(args[0]);
                     if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
                         if (!sender.hasPermission("activecraft.fly.self")) {
-                            sender.sendMessage(Errors.CANNOT_TARGET_SELF);
+                            sender.sendMessage(Errors.CANNOT_TARGET_SELF());
                             return false;
                         }
                     }
@@ -68,8 +68,8 @@ public class FlyCommand implements CommandExecutor {
                         fileConfig.set("fly", true);
                         fileConfig.saveConfig();
                     }
-                } else sender.sendMessage(Errors.NO_PERMISSION);
-            } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
+                } else sender.sendMessage(Errors.NO_PERMISSION());
+            } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
         }
 
         if (label.equalsIgnoreCase("flyspeed")) {
@@ -89,14 +89,14 @@ public class FlyCommand implements CommandExecutor {
                                 player.sendMessage(ChatColor.GOLD + "Fly speed set to " + ChatColor.AQUA + args[0] + ChatColor.GOLD + ".");
                                 fileConfig.set("flyspeed", Integer.parseInt(args[0]));
                                 fileConfig.saveConfig();
-                            } else sender.sendMessage(Errors.WARNING + "Given number is too large!");
-                        } else sender.sendMessage(Errors.WARNING + "This is not a valid number!");
-                    } else sender.sendMessage(Errors.NO_PERMISSION);
-                } else sender.sendMessage(Errors.NOT_A_PLAYER);
+                            } else sender.sendMessage(Errors.WARNING() + "Given number is too large!");
+                        } else sender.sendMessage(Errors.WARNING() + "This is not a valid number!");
+                    } else sender.sendMessage(Errors.NO_PERMISSION());
+                } else sender.sendMessage(Errors.NOT_A_PLAYER());
             } else if (args.length == 2) {
                 if (sender.hasPermission("activecraft.flyspeed.others")) {
                     if (Bukkit.getPlayer(args[0]) == null) {
-                        sender.sendMessage(Errors.INVALID_PLAYER);
+                        sender.sendMessage(Errors.INVALID_PLAYER());
                         return false;
                     }
                     Integer num = null;
@@ -117,10 +117,10 @@ public class FlyCommand implements CommandExecutor {
                             sender.sendMessage(ChatColor.GOLD + "Fly speed set to " + ChatColor.AQUA + args[1] + ChatColor.GOLD + " for " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + ".");
                             fileConfig.set("flyspeed", Integer.parseInt(args[1]));
                             fileConfig.saveConfig();
-                        } else sender.sendMessage(Errors.WARNING + "Given number is too large!");
-                    } else sender.sendMessage(Errors.INVALID_NUMBER);
-                } else sender.sendMessage(Errors.NO_PERMISSION);
-            } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
+                        } else sender.sendMessage(Errors.WARNING() + "Given number is too large!");
+                    } else sender.sendMessage(Errors.INVALID_NUMBER());
+                } else sender.sendMessage(Errors.NO_PERMISSION());
+            } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
         }
         return true;
     }

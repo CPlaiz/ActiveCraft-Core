@@ -90,7 +90,7 @@ public class EnchantCommand implements CommandExecutor, TabCompleter {
                                 eitem.addUnsafeEnchantment(Enchantment.BINDING_CURSE, 1);
                                 player.sendMessage(ChatColor.GOLD + "Applied enchantment " + ChatColor.AQUA + args[0].replace("_", " ") + ChatColor.GOLD + " to your item.");
                                 player.playSound(player.getLocation(), Sound.BLOCK_ENCHANTMENT_TABLE_USE, 1f, 1f);
-                            } else sender.sendMessage(Errors.WARNING + "This enchantment cannot be applied to this item!");
+                            } else sender.sendMessage(Errors.WARNING() + "This enchantment cannot be applied to this item!");
                         }
 
                         if (args[0].equalsIgnoreCase("curse_of_vanishing") && args.length == 1) {
@@ -112,8 +112,8 @@ public class EnchantCommand implements CommandExecutor, TabCompleter {
                                             player.playSound(player.getLocation(), Sound.BLOCK_ENCHANTMENT_TABLE_USE, 1f, 1f);
                                         }
                                     }
-                                } else sender.sendMessage(Errors.WARNING + "Item is not enchanted!");
-                            } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
+                                } else sender.sendMessage(Errors.WARNING() + "Item is not enchanted!");
+                            } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
                         }
 
                         if (args.length == 2 && args[0].equalsIgnoreCase("glint")) {
@@ -136,7 +136,7 @@ public class EnchantCommand implements CommandExecutor, TabCompleter {
 
                                 player.sendMessage(ChatColor.GOLD + "Removed enchantment glint to your item.");
                                 player.playSound(player.getLocation(), Sound.BLOCK_ENCHANTMENT_TABLE_USE, 1f, 1f);
-                            } else sender.sendMessage(Errors.WARNING + "Please use true / false!");
+                            } else sender.sendMessage(Errors.WARNING() + "Please use true / false!");
                         }
 
                         if (args.length == 2 && !args[0].equalsIgnoreCase("glint") && !args[0].equalsIgnoreCase("curse_of_binding") && !args[0].equalsIgnoreCase("curse_of_vanishing")) {
@@ -186,7 +186,7 @@ public class EnchantCommand implements CommandExecutor, TabCompleter {
                                 } catch (NumberFormatException ignored) {
                                 }
                                 if (num == null) {
-                                    sender.sendMessage(Errors.INVALID_NUMBER);
+                                    sender.sendMessage(Errors.INVALID_NUMBER());
                                     return false;
                                 }
                                 int level = Integer.parseInt(args[1]);
@@ -196,14 +196,14 @@ public class EnchantCommand implements CommandExecutor, TabCompleter {
 
                                 player.sendMessage(ChatColor.GOLD + "Applied enchantment " + ChatColor.AQUA + args[0].replace("_", " ") + " " + level + ChatColor.GOLD + " to your item.");
                                 player.playSound(player.getLocation(), Sound.BLOCK_ENCHANTMENT_TABLE_USE, 1f, 1f);
-                            } else sender.sendMessage(Errors.WARNING + "You are not holding an item.");
+                            } else sender.sendMessage(Errors.WARNING() + "You are not holding an item.");
                         } else if (args.length > 2) {
-                            sender.sendMessage(Errors.TOO_MANY_ARGUMENTS);
+                            sender.sendMessage(Errors.TOO_MANY_ARGUMENTS());
                         }
-                    } else sender.sendMessage(Errors.WARNING + "You are not holding an item!");
-                } else sender.sendMessage(Errors.NO_PERMISSION);
+                    } else sender.sendMessage(Errors.WARNING() + "You are not holding an item!");
+                } else sender.sendMessage(Errors.NO_PERMISSION());
             }
-        } else sender.sendMessage(Errors.NOT_A_PLAYER);
+        } else sender.sendMessage(Errors.NOT_A_PLAYER());
         return true;
     }
 

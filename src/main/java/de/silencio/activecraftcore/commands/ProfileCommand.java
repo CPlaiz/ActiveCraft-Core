@@ -35,7 +35,7 @@ public class ProfileCommand implements CommandExecutor, Listener {
                 if (args.length == 1) {
                     Player player = (Player) sender;
                     if (Bukkit.getPlayer(args[0]) == null) {
-                        sender.sendMessage(Errors.INVALID_PLAYER);
+                        sender.sendMessage(Errors.INVALID_PLAYER());
                         return false;
                     }
                     Player target = Bukkit.getPlayer(args[0]);
@@ -47,9 +47,9 @@ public class ProfileCommand implements CommandExecutor, Listener {
                         Bukkit.getPluginManager().registerEvents(profileMenu, Main.getPlugin());
                     } else profileMenu = profileList.getProfileList().get(player);
                     profileMenu.openProfile();
-                } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
-            } else sender.sendMessage(Errors.NO_PERMISSION);
-        } else sender.sendMessage(Errors.NOT_A_PLAYER);
+                } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
+            } else sender.sendMessage(Errors.NO_PERMISSION());
+        } else sender.sendMessage(Errors.NOT_A_PLAYER());
         return true;
     }
 

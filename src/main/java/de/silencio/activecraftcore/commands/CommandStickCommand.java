@@ -64,10 +64,10 @@ public class CommandStickCommand implements CommandExecutor, Listener, TabComple
                         commandStickMeta.setLore(lore);
                         commandStick.setItemMeta(commandStickMeta);
                         player.getInventory().addItem(commandStick);
-                    } else sender.sendMessage(Errors.WARNING + "Invalid Command!");
+                    } else sender.sendMessage(Errors.WARNING() + "Invalid Command!");
                 }
-            } else sender.sendMessage(Errors.NO_PERMISSION);
-        } else sender.sendMessage(Errors.NOT_A_PLAYER);
+            } else sender.sendMessage(Errors.NO_PERMISSION());
+        } else sender.sendMessage(Errors.NOT_A_PLAYER());
         return true;
     }
 

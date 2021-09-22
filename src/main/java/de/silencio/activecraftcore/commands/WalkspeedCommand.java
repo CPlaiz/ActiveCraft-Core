@@ -27,21 +27,21 @@ public class WalkspeedCommand implements CommandExecutor {
                     } catch (NumberFormatException ignored) {
                     }
                     if (num == null) {
-                        sender.sendMessage(Errors.INVALID_NUMBER);
+                        sender.sendMessage(Errors.INVALID_NUMBER());
                         return false;
                     }
                     if (Integer.parseInt(args[0]) <= 10) {
                         playerdataConfig.set("walkspeed", args[0]);
                         player.setWalkSpeed((float) Integer.parseInt(args[0]) / 10);
                         player.sendMessage(ChatColor.GOLD + "Walk speed set to " + ChatColor.AQUA + args[0] + ChatColor.GOLD + ".");
-                    } else sender.sendMessage(Errors.WARNING + "Given number is too large!");
-                } else sender.sendMessage(Errors.NO_PERMISSION);
-            } else sender.sendMessage(Errors.NOT_A_PLAYER);
+                    } else sender.sendMessage(Errors.WARNING() + "Given number is too large!");
+                } else sender.sendMessage(Errors.NO_PERMISSION());
+            } else sender.sendMessage(Errors.NOT_A_PLAYER());
             return true;
         } else if (args.length == 2) {
             if (sender.hasPermission("activecraft.walkspeed.others"))
                 if (Bukkit.getPlayer(args[0]) == null) {
-                    sender.sendMessage(Errors.INVALID_PLAYER);
+                    sender.sendMessage(Errors.INVALID_PLAYER());
                     return false;
                 }
             Integer num = null;
@@ -50,14 +50,14 @@ public class WalkspeedCommand implements CommandExecutor {
             } catch (NumberFormatException ignored) {
             }
             if (num == null) {
-                sender.sendMessage(Errors.INVALID_NUMBER);
+                sender.sendMessage(Errors.INVALID_NUMBER());
                 return false;
             }
             Player target = Bukkit.getPlayer(args[0]);
 
             if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
                 if (!sender.hasPermission("activecraft.walkspeed.self")) {
-                    sender.sendMessage(Errors.CANNOT_TARGET_SELF);
+                    sender.sendMessage(Errors.CANNOT_TARGET_SELF());
                     return false;
                 }
             }
@@ -68,7 +68,7 @@ public class WalkspeedCommand implements CommandExecutor {
                 target.setWalkSpeed((float) Integer.parseInt(args[0]) / 10);
                 sender.sendMessage(ChatColor.GOLD + "Walk speed set to " + ChatColor.AQUA + args[1] + ChatColor.GOLD + " for " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + ".");
                 target.sendMessage(ChatColor.GOLD + "Walk speed set to " + ChatColor.AQUA + args[1] + ChatColor.GOLD + " by " + ChatColor.AQUA + sender.getName() + ChatColor.GOLD + ".");
-            } else sender.sendMessage(Errors.WARNING + "Given number is too large!");
+            } else sender.sendMessage(Errors.WARNING() + "Given number is too large!");
         }
         return true;
     }

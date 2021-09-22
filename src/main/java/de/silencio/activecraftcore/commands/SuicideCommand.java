@@ -22,19 +22,19 @@ public class SuicideCommand implements CommandExecutor {
                         player.sendMessage(ChatColor.GOLD + "You killed yourself.");
                         Bukkit.broadcastMessage(ChatColor.AQUA + player.getDisplayName() + ChatColor.GOLD + " committed suicide.");
 
-                    } else sender.sendMessage(Errors.NO_PERMISSION);
-                } else sender.sendMessage(Errors.NOT_A_PLAYER);
+                    } else sender.sendMessage(Errors.NO_PERMISSION());
+                } else sender.sendMessage(Errors.NOT_A_PLAYER());
             } else if(args.length == 1) {
                 if(sender.hasPermission("activecraft.suicide.others")) {
                     if (Bukkit.getPlayer(args[0]) == null) {
-                        sender.sendMessage(Errors.INVALID_PLAYER);
+                        sender.sendMessage(Errors.INVALID_PLAYER());
                         return false;
                     }
                     Player target = Bukkit.getPlayer(args[0]);
 
                     if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
                         if (!sender.hasPermission("activecraft.suicide.self")) {
-                            sender.sendMessage(Errors.CANNOT_TARGET_SELF);
+                            sender.sendMessage(Errors.CANNOT_TARGET_SELF());
                             return false;
                         }
                     }
@@ -43,8 +43,8 @@ public class SuicideCommand implements CommandExecutor {
                     sender.sendMessage(ChatColor.GOLD + "Made " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " commit suicide.");
                     Bukkit.broadcastMessage(ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " committed suicide.");
 
-                } else sender.sendMessage(Errors.NO_PERMISSION);
-            } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
+                } else sender.sendMessage(Errors.NO_PERMISSION());
+            } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
         return true;
     }
 }

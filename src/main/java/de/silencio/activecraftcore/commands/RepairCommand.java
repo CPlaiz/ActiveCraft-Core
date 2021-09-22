@@ -31,12 +31,12 @@ public class RepairCommand implements CommandExecutor {
                             item.setItemMeta(meta);
                             sender.sendMessage(ChatColor.GOLD + "Fixed your " + ChatColor.AQUA + meta.getDisplayName() + ChatColor.GOLD + ".");
                             player.playSound(player.getLocation(), Sound.BLOCK_ANVIL_USE, 1f, 1f);
-                        } else sender.sendMessage(Errors.WARNING + "Item can't be repaired!");
-                    } else sender.sendMessage(Errors.WARNING + "No item in hand!");
+                        } else sender.sendMessage(Errors.WARNING() + "Item can't be repaired!");
+                    } else sender.sendMessage(Errors.WARNING() + "No item in hand!");
 
-            } else sender.sendMessage(Errors.NO_PERMISSION);
+            } else sender.sendMessage(Errors.NO_PERMISSION());
 
-        } else sender.sendMessage(Errors.NOT_A_PLAYER);
+        } else sender.sendMessage(Errors.NOT_A_PLAYER());
         return true;
     }
 }

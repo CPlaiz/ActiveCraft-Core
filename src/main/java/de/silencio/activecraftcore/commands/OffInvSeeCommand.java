@@ -30,7 +30,7 @@ public class OffInvSeeCommand implements CommandExecutor, Listener {
         if (sender instanceof Player){
             if (sender.hasPermission("activecraft.offinvsee")) {
                 if (Bukkit.getPlayer(args[0]) == null) {
-                    sender.sendMessage(Errors.INVALID_PLAYER);
+                    sender.sendMessage(Errors.INVALID_PLAYER());
                     return false;
                 }
                 target = Bukkit.getPlayer(args[0]);
@@ -62,8 +62,8 @@ public class OffInvSeeCommand implements CommandExecutor, Listener {
                 this.armorinv.setItem(5, target.getInventory().getItemInOffHand());
 
                 ((Player) sender).openInventory(this.armorinv);
-            } else sender.sendMessage(Errors.NO_PERMISSION);
-        } else sender.sendMessage(Errors.NOT_A_PLAYER);
+            } else sender.sendMessage(Errors.NO_PERMISSION());
+        } else sender.sendMessage(Errors.NOT_A_PLAYER());
         return true;
     }
 

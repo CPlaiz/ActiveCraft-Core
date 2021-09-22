@@ -22,11 +22,11 @@ public class HealCommand implements CommandExecutor {
                             player.setFoodLevel(20);
                             player.sendMessage(ChatColor.GOLD + "You were healed.");
                             player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 0.4f, 1f);
-                        } else sender.sendMessage(Errors.NO_PERMISSION);
-                    } else sender.sendMessage(Errors.NOT_A_PLAYER);
+                        } else sender.sendMessage(Errors.NO_PERMISSION());
+                    } else sender.sendMessage(Errors.NOT_A_PLAYER());
                 } else if(args.length == 1) {
                     if (Bukkit.getPlayer(args[0]) == null) {
-                        sender.sendMessage(Errors.INVALID_PLAYER);
+                        sender.sendMessage(Errors.INVALID_PLAYER());
                         return false;
                     }
                     Player target = Bukkit.getPlayer(args[0]);
@@ -35,7 +35,7 @@ public class HealCommand implements CommandExecutor {
                         if(sender.hasPermission("activecraft.heal.others")) {
                             if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
                                 if (!sender.hasPermission("activecraft.god.self")) {
-                                    sender.sendMessage(Errors.CANNOT_TARGET_SELF);
+                                    sender.sendMessage(Errors.CANNOT_TARGET_SELF());
                                     return false;
                                 }
                             }
@@ -46,9 +46,9 @@ public class HealCommand implements CommandExecutor {
                                 target.sendMessage(ChatColor.GOLD + "You were healed by " + ChatColor.AQUA + ((Player) sender).getDisplayName() + ChatColor.GOLD + ".");
                             } else target.sendMessage(ChatColor.GOLD + "You were healed by " + ChatColor.AQUA + sender.getName() + ChatColor.GOLD + ".");
                             target.playSound(target.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 0.4f, 1f);
-                        } else sender.sendMessage(Errors.NO_PERMISSION);
-                    } else sender.sendMessage(Errors.INVALID_PLAYER);
-                } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
+                        } else sender.sendMessage(Errors.NO_PERMISSION());
+                    } else sender.sendMessage(Errors.INVALID_PLAYER());
+                } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
         return true;
     }
 }

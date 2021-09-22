@@ -29,7 +29,7 @@ public class ButcherCommand implements CommandExecutor {
                     player.sendMessage(ChatColor.GOLD + "Killed " + ChatColor.AQUA + amount + ChatColor.GOLD + " mobs.");
 
                     if(amount == 0) {
-                        sender.sendMessage(Errors.WARNING + "No mobs nearby!");
+                        sender.sendMessage(Errors.WARNING() + "No mobs nearby!");
                     }
                     for (int i = 0; i < amount; i++) {
                         Entity e = enemies.get(i);
@@ -47,9 +47,9 @@ public class ButcherCommand implements CommandExecutor {
                             }
                         }
                     }
-                } else sender.sendMessage(Errors.TOO_MANY_ARGUMENTS);
-            } else sender.sendMessage(Errors.NO_PERMISSION);
-        } else sender.sendMessage(Errors.NOT_A_PLAYER);
+                } else sender.sendMessage(Errors.TOO_MANY_ARGUMENTS());
+            } else sender.sendMessage(Errors.NO_PERMISSION());
+        } else sender.sendMessage(Errors.NOT_A_PLAYER());
         return true;
     }
 }

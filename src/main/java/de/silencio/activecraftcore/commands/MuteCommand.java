@@ -21,7 +21,7 @@ public class MuteCommand implements CommandExecutor {
 
             if (args.length == 1) {
                 if (Bukkit.getPlayer(args[0]) == null) {
-                    sender.sendMessage(Errors.INVALID_PLAYER);
+                    sender.sendMessage(Errors.INVALID_PLAYER());
                     return false;
                 }
                 Player target = Bukkit.getPlayer(args[0]);
@@ -32,7 +32,7 @@ public class MuteCommand implements CommandExecutor {
                         MuteManager.mutePlayer(target);
                         sender.sendMessage(ChatColor.GOLD + "Muted " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + ".");
                         target.sendMessage(ChatColor.GOLD + "You have been muted.");
-                    } else sender.sendMessage(Errors.WARNING + "This player is already muted.");
+                    } else sender.sendMessage(Errors.WARNING() + "This player is already muted.");
                 }
 
                 if (label.equalsIgnoreCase("unmute")) {
@@ -41,10 +41,10 @@ public class MuteCommand implements CommandExecutor {
                         MuteManager.unmutePlayer(target);
                         sender.sendMessage(ChatColor.GOLD + "Unmuted " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + ".");
                         target.sendMessage(ChatColor.GOLD + "You have been unmuted.");
-                    } else sender.sendMessage(Errors.WARNING + "This player is not muted.");
+                    } else sender.sendMessage(Errors.WARNING() + "This player is not muted.");
                 }
-            } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
-        } else sender.sendMessage(Errors.NO_PERMISSION);
+            } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
+        } else sender.sendMessage(Errors.NO_PERMISSION());
         return true;
     }
 }

@@ -28,7 +28,7 @@ public class SpawnerCommand implements CommandExecutor, TabCompleter {
             try {
                 value = EntityType.valueOf(mobName);
             } catch (IllegalArgumentException exp) {
-                sender.sendMessage(Errors.WARNING + "Invalid Entity!");
+                sender.sendMessage(Errors.WARNING() + "Invalid Entity!");
                 return false;
             }
             if (sender instanceof Player) {
@@ -52,12 +52,12 @@ public class SpawnerCommand implements CommandExecutor, TabCompleter {
                     spawner.setItemMeta(spawnermeta);
                     player.getInventory().addItem(spawner);
 
-                } else sender.sendMessage(Errors.NO_PERMISSION);
-            } else sender.sendMessage(Errors.NOT_A_PLAYER);
+                } else sender.sendMessage(Errors.NO_PERMISSION());
+            } else sender.sendMessage(Errors.NOT_A_PLAYER());
         } else {
             if (args.length == 2) {
                 if (Bukkit.getPlayer(args[0]) == null) {
-                    sender.sendMessage(Errors.INVALID_PLAYER);
+                    sender.sendMessage(Errors.INVALID_PLAYER());
                     return false;
                 }
                 String mobName = args[1];
@@ -67,7 +67,7 @@ public class SpawnerCommand implements CommandExecutor, TabCompleter {
                 } catch (IllegalArgumentException ignored) {
                 }
                 if (value == null || value.name().equals("UNKNOWN")) {
-                    sender.sendMessage(Errors.WARNING + "Invalid Entity!");
+                    sender.sendMessage(Errors.WARNING() + "Invalid Entity!");
                     return false;
                 }
 
@@ -76,7 +76,7 @@ public class SpawnerCommand implements CommandExecutor, TabCompleter {
                     Player target = Bukkit.getPlayer(args[0]);
                     if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
                         if (!sender.hasPermission("activecraft.spawner.self")) {
-                            sender.sendMessage(Errors.CANNOT_TARGET_SELF);
+                            sender.sendMessage(Errors.CANNOT_TARGET_SELF());
                             return false;
                         }
                     }
@@ -96,8 +96,8 @@ public class SpawnerCommand implements CommandExecutor, TabCompleter {
                     target.getInventory().addItem(spawner);
 
 
-                } else sender.sendMessage(Errors.NO_PERMISSION);
-            } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
+                } else sender.sendMessage(Errors.NO_PERMISSION());
+            } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
         }
         return true;
     }

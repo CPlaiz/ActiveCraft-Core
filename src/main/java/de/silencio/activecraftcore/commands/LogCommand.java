@@ -46,9 +46,9 @@ public class LogCommand implements CommandExecutor, Listener, TabCompleter{
                     playerdataConfig.set("log-enabled", false);
                     playerdataConfig.saveConfig();
                 }
-            } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
-            } else sender.sendMessage(Errors.NO_PERMISSION);
-        } else sender.sendMessage(Errors.NOT_A_PLAYER);
+            } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
+            } else sender.sendMessage(Errors.NO_PERMISSION());
+        } else sender.sendMessage(Errors.NOT_A_PLAYER());
         return true;
     }
 

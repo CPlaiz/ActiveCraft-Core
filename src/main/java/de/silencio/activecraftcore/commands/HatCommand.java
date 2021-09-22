@@ -37,11 +37,11 @@ public class HatCommand implements CommandExecutor {
                     player.getInventory().setHelmet(handitem);
                     player.getInventory().setItemInMainHand(setEmptyHand);
                     player.sendMessage(ChatColor.GOLD + "Enjoy your new hat!");
-                } else sender.sendMessage(Errors.WARNING + "You need to hold an item in your hand!");
+                } else sender.sendMessage(Errors.WARNING() + "You need to hold an item in your hand!");
 
-            } else sender.sendMessage(Errors.NO_PERMISSION);
+            } else sender.sendMessage(Errors.NO_PERMISSION());
 
-        } else sender.sendMessage(Errors.NOT_A_PLAYER);
+        } else sender.sendMessage(Errors.NOT_A_PLAYER());
         return true;
     }
 }

@@ -20,18 +20,18 @@ public class ClearInvCommand implements CommandExecutor {
                     Player player = (Player) sender;
                     player.sendMessage(ChatColor.GOLD + "Cleared your inventory.");
                     player.getInventory().clear();
-                } else sender.sendMessage(Errors.NOT_A_PLAYER);
-            } else sender.sendMessage(Errors.NO_PERMISSION);
+                } else sender.sendMessage(Errors.NOT_A_PLAYER());
+            } else sender.sendMessage(Errors.NO_PERMISSION());
         } else if (args.length == 1) {
             if (sender.hasPermission("activecraft.clearinv.others")) {
                 if (Bukkit.getPlayer(args[0]) == null) {
-                    sender.sendMessage(Errors.INVALID_PLAYER);
+                    sender.sendMessage(Errors.INVALID_PLAYER());
                     return false;
                 }
                 Player target = Bukkit.getPlayer(args[0]);
                 if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
                     if (!sender.hasPermission("activecraft.clearinv.self")) {
-                        sender.sendMessage(Errors.CANNOT_TARGET_SELF);
+                        sender.sendMessage(Errors.CANNOT_TARGET_SELF());
                         return false;
                     }
                 }
@@ -41,11 +41,11 @@ public class ClearInvCommand implements CommandExecutor {
                 } else
                     target.sendMessage(ChatColor.GOLD + "Your inventory was cleared by " + ChatColor.AQUA + sender.getName());
                 target.getInventory().clear();
-            } else sender.sendMessage(Errors.NO_PERMISSION);
+            } else sender.sendMessage(Errors.NO_PERMISSION());
         }
 
         if (args.length > 1) {
-            sender.sendMessage(Errors.TOO_MANY_ARGUMENTS);
+            sender.sendMessage(Errors.TOO_MANY_ARGUMENTS());
         }
         return true;
     }

@@ -17,7 +17,7 @@ public class PingCommand implements CommandExecutor {
 
             if (sender.hasPermission("activecraft.ping")) {
                 sender.sendMessage(ChatColor.GOLD + "Pong! " + ChatColor.AQUA + player.getPing() + ChatColor.GOLD + "ms.");
-            } else sender.sendMessage(Errors.NO_PERMISSION);
+            } else sender.sendMessage(Errors.NO_PERMISSION());
         } else sender.sendMessage(ChatColor.GOLD + "Pong!");
         return true;
     }

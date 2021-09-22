@@ -25,10 +25,10 @@ public class SpawnCommand implements CommandExecutor {
                     spawns.set("spawn", LocationUtils.loc2Str(player.getLocation()));
                     spawns.saveConfig();
                     player.sendMessage(ChatColor.GOLD + "Set Spawn to current location.");
-                } else player.sendMessage(Errors.NO_PERMISSION);
+                } else player.sendMessage(Errors.NO_PERMISSION());
                 return true;
             }
-        } else sender.sendMessage(Errors.INVALID_PLAYER);
+        } else sender.sendMessage(Errors.INVALID_PLAYER());
 
                 if (spawns.contains("spawn")) {
                     if (args.length == 0) {
@@ -38,13 +38,13 @@ public class SpawnCommand implements CommandExecutor {
                                 LocationUtils.teleport(player, LocationUtils.str2Loc(spawns.getString("spawn")));
                                 player.sendMessage(ChatColor.GOLD + "Teleported to " + ChatColor.AQUA + "Spawn" + ChatColor.GOLD + ".");
                                 player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
-                            } else sender.sendMessage(Errors.NO_PERMISSION);
-                        } else sender.sendMessage(Errors.NOT_A_PLAYER);
+                            } else sender.sendMessage(Errors.NO_PERMISSION());
+                        } else sender.sendMessage(Errors.NOT_A_PLAYER());
                     } else if (args.length == 1) {
                         Player target = Bukkit.getPlayer(args[0]);
                         if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
                             if (!sender.hasPermission("activecraft.spawn.self")) {
-                                sender.sendMessage(Errors.CANNOT_TARGET_SELF);
+                                sender.sendMessage(Errors.CANNOT_TARGET_SELF());
                                 return false;
                             }
                         }
@@ -54,10 +54,10 @@ public class SpawnCommand implements CommandExecutor {
                                 target.sendMessage(ChatColor.GOLD + "You were teleported to " + ChatColor.AQUA + "Spawn" + ChatColor.GOLD + " by " + ChatColor.AQUA + sender.getName());
                                 sender.sendMessage(ChatColor.GOLD + "Teleported " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " to " + ChatColor.AQUA + "Spawn" + ChatColor.GOLD + ".");
                                 target.playSound(target.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
-                            } else sender.sendMessage(Errors.NO_PERMISSION);
-                        } else sender.sendMessage(Errors.INVALID_PLAYER);
-                    } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
-                } else sender.sendMessage(Errors.WARNING + "No Spawn set.");
+                            } else sender.sendMessage(Errors.NO_PERMISSION());
+                        } else sender.sendMessage(Errors.INVALID_PLAYER());
+                    } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
+                } else sender.sendMessage(Errors.WARNING() + "No Spawn set.");
         return true;
     }
 }

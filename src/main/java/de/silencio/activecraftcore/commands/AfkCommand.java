@@ -34,11 +34,11 @@ public class AfkCommand implements CommandExecutor {
                         } else if (playerdataConfig.getBoolean("afk")) {
                             AfkManager.setAfk(player, false);
                         }
-                    } else sender.sendMessage(Errors.NO_PERMISSION);
-                } else sender.sendMessage(Errors.NOT_A_PLAYER);
+                    } else sender.sendMessage(Errors.NO_PERMISSION());
+                } else sender.sendMessage(Errors.NOT_A_PLAYER());
             } else if(args.length == 1) {
                 if (Bukkit.getPlayer(args[0]) == null) {
-                    sender.sendMessage(Errors.INVALID_PLAYER);
+                    sender.sendMessage(Errors.INVALID_PLAYER());
                     return false;
                 }
                 Player target = Bukkit.getPlayer(args[0]);
@@ -46,7 +46,7 @@ public class AfkCommand implements CommandExecutor {
                 if (sender.hasPermission("activecraft.afk.others")) {
                     if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
                         if (!sender.hasPermission("activecraft.afk.self")) {
-                            sender.sendMessage(Errors.CANNOT_TARGET_SELF);
+                            sender.sendMessage(Errors.CANNOT_TARGET_SELF());
                             return false;
                         }
                     }
@@ -56,8 +56,8 @@ public class AfkCommand implements CommandExecutor {
                     } else if(playerdataConfig.getBoolean("afk")) {
                         AfkManager.setAfk(target, false);
                     }
-                } else sender.sendMessage(Errors.NO_PERMISSION);
-            } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
+                } else sender.sendMessage(Errors.NO_PERMISSION());
+            } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
         return true;
     }
 }

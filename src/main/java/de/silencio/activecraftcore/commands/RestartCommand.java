@@ -37,7 +37,7 @@ public class RestartCommand implements CommandExecutor, TabCompleter {
                     } catch (NumberFormatException ignored) {
                     }
                     if (num == null) {
-                        sender.sendMessage(Errors.INVALID_NUMBER);
+                        sender.sendMessage(Errors.INVALID_NUMBER());
                         return false;
                     }
                     System.out.println(args[0]);
@@ -91,8 +91,8 @@ public class RestartCommand implements CommandExecutor, TabCompleter {
                     }
                 };
                 titletimer.runTaskTimer(Main.getPlugin(), 0, 20);
-            } else sender.sendMessage(Errors.NO_PERMISSION);
-        } else sender.sendMessage(Errors.NOT_A_PLAYER);
+            } else sender.sendMessage(Errors.NO_PERMISSION());
+        } else sender.sendMessage(Errors.NOT_A_PLAYER());
         return true;
     }
 

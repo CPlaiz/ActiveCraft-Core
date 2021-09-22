@@ -16,7 +16,7 @@ public class InvseeCommand implements CommandExecutor {
             if (sender instanceof Player) {
                 Player player = (Player) sender;
                 if (Bukkit.getPlayer(args[0]) == null) {
-                    sender.sendMessage(Errors.INVALID_PLAYER);
+                    sender.sendMessage(Errors.INVALID_PLAYER());
                     return false;
                 }
                 Player target = Bukkit.getPlayer(args[0]);
@@ -26,9 +26,9 @@ public class InvseeCommand implements CommandExecutor {
                     player.openInventory(target.getInventory());
                     player.playSound(player.getLocation(), Sound.BLOCK_CHEST_OPEN, 1f, 1f);
                     
-                } else sender.sendMessage(Errors.NO_PERMISSION);
-            } else sender.sendMessage(Errors.NOT_A_PLAYER);
-        } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
+                } else sender.sendMessage(Errors.NO_PERMISSION());
+            } else sender.sendMessage(Errors.NOT_A_PLAYER());
+        } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
         return true;
     }
 }

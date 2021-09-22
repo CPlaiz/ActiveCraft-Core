@@ -29,7 +29,7 @@ public class MsgCommand implements CommandExecutor {
 
                 if (args.length >= 1) {
                     if (Bukkit.getPlayer(args[0]) == null) {
-                        sender.sendMessage(Errors.INVALID_PLAYER);
+                        sender.sendMessage(Errors.INVALID_PLAYER());
                         return false;
                     }
                     Player target = Bukkit.getPlayer(args[0]);
@@ -68,11 +68,11 @@ public class MsgCommand implements CommandExecutor {
                                 }
                                 message = "";
 
-                            } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
-                        } else sender.sendMessage(Errors.WARNING + "You can't message yourself!");
-                    } else player.sendMessage(Errors.INVALID_PLAYER);
-                } else player.sendMessage(Errors.WARNING + "Please include a player.");
-            } else sender.sendMessage(Errors.NO_PERMISSION);
+                            } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
+                        } else sender.sendMessage(Errors.WARNING() + "You can't message yourself!");
+                    } else player.sendMessage(Errors.INVALID_PLAYER());
+                } else player.sendMessage(Errors.WARNING() + "Please include a player.");
+            } else sender.sendMessage(Errors.NO_PERMISSION());
         } else if (args.length >= 1) {
             Player target = Bukkit.getPlayer(args[0]);
 
@@ -89,8 +89,8 @@ public class MsgCommand implements CommandExecutor {
                     target.sendMessage(ChatColor.GOLD + "[Console -> me] " + ChatColor.RESET + event.getMessage());
                     target.playSound(target.getLocation(), Sound.ENTITY_ARROW_HIT_PLAYER, 1f, 1f);
                     message = "";
-                } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
-            } else sender.sendMessage(Errors.INVALID_PLAYER);
+                } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
+            } else sender.sendMessage(Errors.INVALID_PLAYER());
         }
         return true;
     }

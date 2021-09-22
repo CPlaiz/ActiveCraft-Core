@@ -32,7 +32,7 @@ public class FireWorkCommand implements CommandExecutor {
                     } catch (NumberFormatException ignored) {
                     }
                     if (num == null) {
-                        sender.sendMessage(Errors.INVALID_NUMBER);
+                        sender.sendMessage(Errors.INVALID_NUMBER());
                         return false;
                     }
                     for (int i = Integer.parseInt(args[0]); i > 0; i--) {
@@ -69,7 +69,7 @@ public class FireWorkCommand implements CommandExecutor {
                     } catch (NumberFormatException ignored) {
                     }
                     if (num == null) {
-                        sender.sendMessage(Errors.INVALID_NUMBER);
+                        sender.sendMessage(Errors.INVALID_NUMBER());
                         return false;
                     }
 
@@ -79,7 +79,7 @@ public class FireWorkCommand implements CommandExecutor {
                     } catch (NumberFormatException ignored) {
                     }
                     if (num1 == null) {
-                        sender.sendMessage(Errors.INVALID_NUMBER);
+                        sender.sendMessage(Errors.INVALID_NUMBER());
                         return false;
                     }
 
@@ -144,8 +144,8 @@ public class FireWorkCommand implements CommandExecutor {
 
                     fw.setFireworkMeta(fwm);
                 }
-            } else sender.sendMessage(Errors.NO_PERMISSION);
-        } else sender.sendMessage(Errors.NOT_A_PLAYER);
+            } else sender.sendMessage(Errors.NO_PERMISSION());
+        } else sender.sendMessage(Errors.NOT_A_PLAYER());
         return true;
     }
 }

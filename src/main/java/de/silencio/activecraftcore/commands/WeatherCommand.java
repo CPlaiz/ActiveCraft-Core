@@ -31,11 +31,11 @@ public class WeatherCommand implements CommandExecutor, TabCompleter {
                     } else if (Objects.equals(args[0], "clear")) {
                         player.getWorld().setClearWeatherDuration(999999999);
                         player.sendMessage(ChatColor.GOLD + "Changed weather in " + ChatColor.AQUA + player.getWorld().getName() + ChatColor.GOLD + " to " + ChatColor.AQUA + "Clear" + ChatColor.GOLD + ".");
-                    } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
-                } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
-            } else sender.sendMessage(Errors.NO_PERMISSION);
+                    } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
+                } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
+            } else sender.sendMessage(Errors.NO_PERMISSION());
 
-        } else sender.sendMessage(Errors.NOT_A_PLAYER);
+        } else sender.sendMessage(Errors.NOT_A_PLAYER());
         return true;
     }
 

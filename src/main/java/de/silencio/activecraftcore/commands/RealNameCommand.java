@@ -48,9 +48,9 @@ public class RealNameCommand implements CommandExecutor, TabCompleter {
                       associatedPlayers.append(s);
                   }
                   sender.sendMessage(ChatColor.GOLD + "Players with the nickname " + ChatColor.AQUA + args[0] + ChatColor.GOLD + ": \n" + ChatColor.AQUA + associatedPlayers);
-                } else sender.sendMessage(Errors.NO_PERMISSION);
-            } else sender.sendMessage(Errors.NOT_A_PLAYER);
-        } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
+                } else sender.sendMessage(Errors.NO_PERMISSION());
+            } else sender.sendMessage(Errors.NOT_A_PLAYER());
+        } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
         return true;
     }
 

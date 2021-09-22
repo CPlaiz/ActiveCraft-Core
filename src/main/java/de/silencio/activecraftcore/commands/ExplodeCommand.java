@@ -25,7 +25,7 @@ public class ExplodeCommand implements CommandExecutor, TabCompleter {
                 Player player = (Player) sender;
                 player.getWorld().createExplosion(player.getLocation(), DEFAULT_POWER, DEFAULT_FIRE, DEFAULT_BREAK_BLOCKS);
                 return false;
-            } else sender.sendMessage(Errors.NOT_A_PLAYER);
+            } else sender.sendMessage(Errors.NOT_A_PLAYER());
         }
         if (Bukkit.getPlayer(args[0]) == null) {
             if (sender instanceof Player) {
@@ -39,7 +39,7 @@ public class ExplodeCommand implements CommandExecutor, TabCompleter {
                             } catch (NumberFormatException ignored) {
                             }
                             if (num == null) {
-                                sender.sendMessage(Errors.INVALID_NUMBER);
+                                sender.sendMessage(Errors.INVALID_NUMBER());
                                 return false;
                             }
 
@@ -52,7 +52,7 @@ public class ExplodeCommand implements CommandExecutor, TabCompleter {
                             } catch (NumberFormatException ignored) {
                             }
                             if (num1 == null) {
-                                sender.sendMessage(Errors.INVALID_NUMBER);
+                                sender.sendMessage(Errors.INVALID_NUMBER());
                                 return false;
                             }
                             Boolean bool = null;
@@ -61,7 +61,7 @@ public class ExplodeCommand implements CommandExecutor, TabCompleter {
                             } catch (NumberFormatException ignored) {
                             }
                             if (bool == null) {
-                                sender.sendMessage(Errors.INVALID_ARGUMENTS);
+                                sender.sendMessage(Errors.INVALID_ARGUMENTS());
                                 return false;
                             }
                             player.getWorld().createExplosion(player.getLocation(), Float.parseFloat(args[0]), Boolean.parseBoolean(args[1]), DEFAULT_BREAK_BLOCKS);
@@ -73,7 +73,7 @@ public class ExplodeCommand implements CommandExecutor, TabCompleter {
                             } catch (NumberFormatException ignored) {
                             }
                             if (num2 == null) {
-                                sender.sendMessage(Errors.INVALID_NUMBER);
+                                sender.sendMessage(Errors.INVALID_NUMBER());
                                 return false;
                             }
                             Boolean bool1 = null;
@@ -82,7 +82,7 @@ public class ExplodeCommand implements CommandExecutor, TabCompleter {
                             } catch (NumberFormatException ignored) {
                             }
                             if (bool1 == null) {
-                                sender.sendMessage(Errors.INVALID_ARGUMENTS);
+                                sender.sendMessage(Errors.INVALID_ARGUMENTS());
                                 return false;
                             }
                             Boolean bool2 = null;
@@ -91,20 +91,20 @@ public class ExplodeCommand implements CommandExecutor, TabCompleter {
                             } catch (NumberFormatException ignored) {
                             }
                             if (bool2 == null) {
-                                sender.sendMessage(Errors.INVALID_ARGUMENTS);
+                                sender.sendMessage(Errors.INVALID_ARGUMENTS());
                                 return false;
                             }
                             player.getWorld().createExplosion(player.getLocation(), Float.parseFloat(args[0]), Boolean.parseBoolean(args[1]), Boolean.parseBoolean(args[2]));
                             break;
                     }
-                } else sender.sendMessage(Errors.NO_PERMISSION);
-            } else sender.sendMessage(Errors.NOT_A_PLAYER);
+                } else sender.sendMessage(Errors.NO_PERMISSION());
+            } else sender.sendMessage(Errors.NOT_A_PLAYER());
         } else {
             Player target = Bukkit.getPlayer(args[0]);
             if (sender.hasPermission("activecraft.explode.others")) {
                 if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
                     if (!sender.hasPermission("activecraft.explode.self")) {
-                        sender.sendMessage(Errors.CANNOT_TARGET_SELF);
+                        sender.sendMessage(Errors.CANNOT_TARGET_SELF());
                         return false;
                     }
                 }
@@ -119,7 +119,7 @@ public class ExplodeCommand implements CommandExecutor, TabCompleter {
                         } catch (NumberFormatException ignored) {
                         }
                         if (num == null) {
-                            sender.sendMessage(Errors.INVALID_NUMBER);
+                            sender.sendMessage(Errors.INVALID_NUMBER());
                             return false;
                         }
 
@@ -132,7 +132,7 @@ public class ExplodeCommand implements CommandExecutor, TabCompleter {
                         } catch (NumberFormatException ignored) {
                         }
                         if (num1 == null) {
-                            sender.sendMessage(Errors.INVALID_NUMBER);
+                            sender.sendMessage(Errors.INVALID_NUMBER());
                             return false;
                         }
                         Boolean bool = null;
@@ -141,7 +141,7 @@ public class ExplodeCommand implements CommandExecutor, TabCompleter {
                         } catch (NumberFormatException ignored) {
                         }
                         if (bool == null) {
-                            sender.sendMessage(Errors.INVALID_ARGUMENTS);
+                            sender.sendMessage(Errors.INVALID_ARGUMENTS());
                             return false;
                         }
                         target.getWorld().createExplosion(target.getLocation(), Float.parseFloat(args[1]), Boolean.parseBoolean(args[2]), DEFAULT_BREAK_BLOCKS);
@@ -153,7 +153,7 @@ public class ExplodeCommand implements CommandExecutor, TabCompleter {
                         } catch (NumberFormatException ignored) {
                         }
                         if (num2 == null) {
-                            sender.sendMessage(Errors.INVALID_NUMBER);
+                            sender.sendMessage(Errors.INVALID_NUMBER());
                             return false;
                         }
                         Boolean bool1 = null;
@@ -162,7 +162,7 @@ public class ExplodeCommand implements CommandExecutor, TabCompleter {
                         } catch (NumberFormatException ignored) {
                         }
                         if (bool1 == null) {
-                            sender.sendMessage(Errors.INVALID_ARGUMENTS);
+                            sender.sendMessage(Errors.INVALID_ARGUMENTS());
                             return false;
                         }
                         Boolean bool2 = null;
@@ -171,13 +171,13 @@ public class ExplodeCommand implements CommandExecutor, TabCompleter {
                         } catch (NumberFormatException ignored) {
                         }
                         if (bool2 == null) {
-                            sender.sendMessage(Errors.INVALID_ARGUMENTS);
+                            sender.sendMessage(Errors.INVALID_ARGUMENTS());
                             return false;
                         }
                         target.getWorld().createExplosion(target.getLocation(), Float.parseFloat(args[1]), Boolean.parseBoolean(args[2]), Boolean.parseBoolean(args[3]));
                         break;
                 }
-            } else sender.sendMessage(Errors.NO_PERMISSION);
+            } else sender.sendMessage(Errors.NO_PERMISSION());
         }
         return true;
     }

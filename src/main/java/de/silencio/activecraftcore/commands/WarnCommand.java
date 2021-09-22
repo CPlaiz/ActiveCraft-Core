@@ -27,7 +27,7 @@ public class WarnCommand implements CommandExecutor, TabCompleter {
 
         if (args.length >= 2) {
             if (Bukkit.getPlayer(args[1]) == null) {
-                sender.sendMessage(Errors.INVALID_PLAYER);
+                sender.sendMessage(Errors.INVALID_PLAYER());
                 return false;
             }
             Player target = Bukkit.getPlayer(args[1]);
@@ -42,7 +42,7 @@ public class WarnCommand implements CommandExecutor, TabCompleter {
                             stringBuilder.append(args[i]);
                         }
                     } else stringBuilder.append("Warned by a moderator.");
-                } else sender.sendMessage(Errors.NO_PERMISSION);
+                } else sender.sendMessage(Errors.NO_PERMISSION());
 
                 String source = sender.getName();
                 warnManager.add(stringBuilder.toString(), source);
@@ -57,8 +57,8 @@ public class WarnCommand implements CommandExecutor, TabCompleter {
                         }
                         sender.sendMessage(ChatColor.GOLD + "Removed warn " + warnManager.getWarnEntry(stringBuilder.toString()).reason + " from " + ChatColor.AQUA + target.getDisplayName());
                         warnManager.remove(args[2]);
-                    } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
-                } else sender.sendMessage(Errors.NO_PERMISSION);
+                    } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
+                } else sender.sendMessage(Errors.NO_PERMISSION());
             } else if (args[0].equalsIgnoreCase("get")) {
                 StringBuilder stringBuilder = new StringBuilder();
                 if(sender.hasPermission("activecraft.warn.get")) {
@@ -74,10 +74,10 @@ public class WarnCommand implements CommandExecutor, TabCompleter {
                                 .append(ChatColor.GOLD + "\nSource: " + ChatColor.AQUA).append(warnManager.getWarnEntry(stringBuilder.toString()).source)
                                 .append(ChatColor.GOLD + "\nID: " + ChatColor.AQUA).append(warnManager.getWarnEntry(stringBuilder.toString()).id);
                         sender.sendMessage(strBuilder.toString());
-                    } else sender.sendMessage(Errors.INVALID_PLAYER);
-                } else sender.sendMessage(Errors.NO_PERMISSION);
+                    } else sender.sendMessage(Errors.INVALID_PLAYER());
+                } else sender.sendMessage(Errors.NO_PERMISSION());
             }
-        } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
+        } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
         return true;
     }
 

@@ -18,11 +18,11 @@ public class WhereAmICommand implements CommandExecutor {
                 Player player = (Player) sender;
                 if (sender.hasPermission("activecraft.whereami.self")) {
                     sender.sendMessage(ChatColor.GOLD + "You are in " + ChatColor.AQUA + player.getWorld().getName() + ChatColor.GOLD + " at x" + ChatColor.AQUA + player.getLocation().getBlockX() + ChatColor.GOLD + " y" + ChatColor.AQUA + player.getLocation().getBlockY() + ChatColor.GOLD + " z" + ChatColor.AQUA + player.getLocation().getBlockZ());
-                } else sender.sendMessage(Errors.NO_PERMISSION);
-            } else sender.sendMessage(Errors.NOT_A_PLAYER);
+                } else sender.sendMessage(Errors.NO_PERMISSION());
+            } else sender.sendMessage(Errors.NOT_A_PLAYER());
         } else if (args.length == 1) {
             if (Bukkit.getPlayer(args[0]) == null) {
-                sender.sendMessage(Errors.INVALID_PLAYER);
+                sender.sendMessage(Errors.INVALID_PLAYER());
                 return false;
             }
             Player target = Bukkit.getPlayer(args[0]);
@@ -30,15 +30,15 @@ public class WhereAmICommand implements CommandExecutor {
                 if (sender.hasPermission("activecraft.whereami.others")) {
                     if (sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
                         if (!sender.hasPermission("activecraft.whereami.self")) {
-                            sender.sendMessage(Errors.CANNOT_TARGET_SELF);
+                            sender.sendMessage(Errors.CANNOT_TARGET_SELF());
                             return false;
                         }
                     }
 
                     sender.sendMessage(ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " is in " + ChatColor.AQUA + target.getWorld().getName() + ChatColor.GOLD + " at x" + ChatColor.AQUA + target.getLocation().getBlockX() + ChatColor.GOLD + " y" + ChatColor.AQUA + target.getLocation().getBlockY() + ChatColor.GOLD + " z" + ChatColor.AQUA + target.getLocation().getBlockZ());
-                } else sender.sendMessage(Errors.NO_PERMISSION);
+                } else sender.sendMessage(Errors.NO_PERMISSION());
             }
-        } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
+        } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
         return true;
     }
 }

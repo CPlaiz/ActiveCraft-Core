@@ -45,7 +45,7 @@ public class BookCommand implements CommandExecutor, TabCompleter {
                                 bookmeta.setTitle(title);
                                 book.setItemMeta(bookmeta);
                                 sender.sendMessage(ChatColor.GOLD + "Changed book title to " + ChatColor.AQUA + title + ChatColor.GOLD + ".");
-                            } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
+                            } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
                         } else if (args[0].equalsIgnoreCase("author")) {
                             if (args.length >= 2) {
                                 ItemStack book = player.getInventory().getItemInMainHand();
@@ -60,7 +60,7 @@ public class BookCommand implements CommandExecutor, TabCompleter {
                                 bookmeta.setAuthor(author);
                                 book.setItemMeta(bookmeta);
                                 sender.sendMessage(ChatColor.GOLD + "Changed book author to " + ChatColor.AQUA + author + ChatColor.GOLD + ".");
-                            } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
+                            } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
                         } else if (args[0].equalsIgnoreCase("editpage")) {
                             if (args.length >= 3) {
                                 ItemStack book = player.getInventory().getItemInMainHand();
@@ -74,13 +74,13 @@ public class BookCommand implements CommandExecutor, TabCompleter {
                                 } catch (NumberFormatException ignored) {
                                 }
                                 if (num == null) {
-                                    sender.sendMessage(Errors.INVALID_NUMBER);
+                                    sender.sendMessage(Errors.INVALID_NUMBER());
                                     return false;
                                 }
                                 bookmeta.setPage(Integer.parseInt(args[1]), editpage);
                                 book.setItemMeta(bookmeta);
                                 sender.sendMessage(ChatColor.GOLD + "Changed the page " + ChatColor.AQUA + num + ChatColor.GOLD + ".");
-                            } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
+                            } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
                         } else if (args[0].equalsIgnoreCase("addpage")) {
                             if (args.length >= 2) {
                                 ItemStack book = player.getInventory().getItemInMainHand();
@@ -123,14 +123,14 @@ public class BookCommand implements CommandExecutor, TabCompleter {
                                     bookmeta.setGeneration(BookMeta.Generation.TATTERED);
                                     book.setItemMeta(bookmeta);
                                     sender.sendMessage(ChatColor.GOLD + "Changed book generation to " + ChatColor.AQUA + "tattered" + ChatColor.GOLD + ".");
-                                } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
+                                } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
 
-                            } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
-                        } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
-                    } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
-                } else sender.sendMessage(Errors.WARNING + "You are not holding a book!");
-            } else sender.sendMessage(Errors.NO_PERMISSION);
-        } else sender.sendMessage(Errors.NOT_A_PLAYER);
+                            } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
+                        } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
+                    } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
+                } else sender.sendMessage(Errors.WARNING() + "You are not holding a book!");
+            } else sender.sendMessage(Errors.NO_PERMISSION());
+        } else sender.sendMessage(Errors.NOT_A_PLAYER());
         return true;
     }
 

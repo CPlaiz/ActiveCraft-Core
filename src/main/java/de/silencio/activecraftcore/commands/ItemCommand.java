@@ -29,7 +29,7 @@ public class ItemCommand implements CommandExecutor, TabCompleter {
 
                     if (args.length == 2) {
                         if (Material.getMaterial(args[1]) == null) {
-                            sender.sendMessage(Errors.INVALID_ARGUMENTS);
+                            sender.sendMessage(Errors.INVALID_ARGUMENTS());
                             return false;
                         }
                         Material material = Material.getMaterial(args[1].toUpperCase());
@@ -40,7 +40,7 @@ public class ItemCommand implements CommandExecutor, TabCompleter {
                     }
                     if (args.length == 3) {
                         if (Material.getMaterial(args[1]) == null) {
-                            sender.sendMessage(Errors.WARNING + "You need to hold an item in your hand!");
+                            sender.sendMessage(Errors.WARNING() + "You need to hold an item in your hand!");
                             return false;
                         }
                         Material material = Material.getMaterial(args[1].toUpperCase());
@@ -51,7 +51,7 @@ public class ItemCommand implements CommandExecutor, TabCompleter {
                         } catch (NumberFormatException ignored) {
                         }
                         if (num == null) {
-                            sender.sendMessage(Errors.INVALID_NUMBER);
+                            sender.sendMessage(Errors.INVALID_NUMBER());
                             return false;
                         }
                         itemStack.setAmount(Integer.parseInt(args[2]));
@@ -60,12 +60,12 @@ public class ItemCommand implements CommandExecutor, TabCompleter {
                         player.playSound(player.getLocation(), Sound.valueOf("BLOCK_AMETHYST_BLOCK_BREAK"), 1f, 1f);
                     }
 
-                } else sender.sendMessage(Errors.NO_PERMISSION);
+                } else sender.sendMessage(Errors.NO_PERMISSION());
             } else if (args[0].equalsIgnoreCase("name")) {
                 if (player.hasPermission("activecraft.item.name")) {
                     if (args.length > 1) {
                         if (player.getInventory().getItemInMainHand().getType() == Material.AIR) {
-                            sender.sendMessage(Errors.WARNING + "You need to hold an item in your hand!");
+                            sender.sendMessage(Errors.WARNING() + "You need to hold an item in your hand!");
                             return false;
                         }
 
@@ -76,7 +76,7 @@ public class ItemCommand implements CommandExecutor, TabCompleter {
                         }
 
                         if (player.getInventory().getItemInMainHand().getType() == Material.AIR) {
-                            sender.sendMessage(Errors.INVALID_ARGUMENTS);
+                            sender.sendMessage(Errors.INVALID_ARGUMENTS());
                             return false;
                         }
                         ItemStack stack = player.getInventory().getItemInMainHand();
@@ -85,13 +85,13 @@ public class ItemCommand implements CommandExecutor, TabCompleter {
                         stack.setItemMeta(meta);
 
                         sender.sendMessage(ChatColor.GOLD + "Item renamed");
-                    } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
-                } else sender.sendMessage(Errors.NO_PERMISSION);
+                    } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
+                } else sender.sendMessage(Errors.NO_PERMISSION());
             } else if (args[0].equalsIgnoreCase("lore")) {
                 if (player.hasPermission("activecraft.item.lore")) {
                     if (args.length > 1) {
                         if (player.getInventory().getItemInMainHand().getType() == Material.AIR) {
-                            sender.sendMessage(Errors.WARNING + "You need to hold an item in your hand!");
+                            sender.sendMessage(Errors.WARNING() + "You need to hold an item in your hand!");
                             return false;
                         }
                         ItemStack stack = player.getInventory().getItemInMainHand();
@@ -130,8 +130,8 @@ public class ItemCommand implements CommandExecutor, TabCompleter {
                         }
 
 
-                    } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
-                } else sender.sendMessage(Errors.NO_PERMISSION);
+                    } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
+                } else sender.sendMessage(Errors.NO_PERMISSION());
             } else if (args[0].equalsIgnoreCase("tag")) {
                 if (player.hasPermission("activecraft.item.tag")) {
                     if (args.length > 1) {
@@ -149,11 +149,11 @@ public class ItemCommand implements CommandExecutor, TabCompleter {
                         stack.setItemMeta(meta);
 
                         sender.sendMessage(ChatColor.GOLD + "Item renamed");
-                    } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
-                } else sender.sendMessage(Errors.NO_PERMISSION);
-            } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
+                    } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
+                } else sender.sendMessage(Errors.NO_PERMISSION());
+            } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
 
-        } else sender.sendMessage(Errors.NOT_A_PLAYER);
+        } else sender.sendMessage(Errors.NOT_A_PLAYER());
 
         return false;
     }

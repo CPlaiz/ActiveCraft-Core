@@ -34,7 +34,7 @@ public class LastCoordsCommand implements CommandExecutor, TabCompleter {
                 if (sender.hasPermission("activecraft.lastcoords")) {
                     FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + args[0].toLowerCase() + ".yml");
                     if (Bukkit.getWorld(args[1]) == null) {
-                        sender.sendMessage(Errors.WARNING + "World not found!");
+                        sender.sendMessage(Errors.WARNING() + "World not found!");
                         return false;
                     }
 
@@ -42,7 +42,7 @@ public class LastCoordsCommand implements CommandExecutor, TabCompleter {
 
                     Location lastLocation = playerdataConfig.getLocation("last-location." + args[1]);
                     if (lastLocation == null) {
-                        sender.sendMessage(Errors.WARNING + "Player has never entered this world.");
+                        sender.sendMessage(Errors.WARNING() + "Player has never entered this world.");
                         return false;
                     }
                     sender.sendMessage(ChatColor.AQUA + playerdataConfig.getString("name") + "'s " + ChatColor.GOLD + "last coords in " + ChatColor.AQUA + world.getName() + ChatColor.GOLD
@@ -52,8 +52,8 @@ public class LastCoordsCommand implements CommandExecutor, TabCompleter {
                             + ", Yaw: " + ChatColor.AQUA + (int) lastLocation.getYaw() + ChatColor.GOLD
                             + ", Pitch: " + ChatColor.AQUA + (int) lastLocation.getPitch()
                     );
-                } else sender.sendMessage(Errors.NO_PERMISSION);
-            } else sender.sendMessage(Errors.INVALID_PLAYER);
+                } else sender.sendMessage(Errors.NO_PERMISSION());
+            } else sender.sendMessage(Errors.INVALID_PLAYER());
 
         } else if (args.length == 1) {
             FileConfig playerList = new FileConfig("playerlist.yml");
@@ -68,7 +68,7 @@ public class LastCoordsCommand implements CommandExecutor, TabCompleter {
                     
                     Location lastLocation = playerdataConfig.getLocation("last-location.BEFORE_QUIT");
                     if (lastLocation == null) {
-                        sender.sendMessage(Errors.WARNING + "Player has never left this server!");
+                        sender.sendMessage(Errors.WARNING() + "Player has never left this server!");
                         return false;
                     }
                     World world = lastLocation.getWorld();
@@ -79,9 +79,9 @@ public class LastCoordsCommand implements CommandExecutor, TabCompleter {
                             + ", Yaw: " + ChatColor.AQUA + (int) lastLocation.getYaw() + ChatColor.GOLD
                             + ", Pitch: " + ChatColor.AQUA + (int) lastLocation.getPitch()
                     );
-                } else sender.sendMessage(Errors.NO_PERMISSION);
-            } else sender.sendMessage(Errors.INVALID_PLAYER);
-        } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
+                } else sender.sendMessage(Errors.NO_PERMISSION());
+            } else sender.sendMessage(Errors.INVALID_PLAYER());
+        } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
 
         return true;
     }

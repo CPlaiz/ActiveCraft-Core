@@ -39,7 +39,7 @@ public class PlayerlistCommand implements CommandExecutor {
                 }
                 sender.sendMessage(ChatColor.GOLD + "Online players:");
                 sender.sendMessage(stringBuilder.toString());
-            } else sender.sendMessage(Errors.NO_PERMISSION);
+            } else sender.sendMessage(Errors.NO_PERMISSION());
         return true;
     }
 }

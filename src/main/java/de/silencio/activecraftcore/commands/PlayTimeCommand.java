@@ -27,17 +27,17 @@ public class PlayTimeCommand implements CommandExecutor, TabCompleter {
                     int hours = fileConfig.getInt(sender.getName() + ".hours");
                     int minutes = fileConfig.getInt(sender.getName() + ".minutes");
                     sender.sendMessage(ChatColor.GOLD + "Playtime: " + ChatColor.AQUA + hours + ChatColor.GOLD + " Hours and " + ChatColor.AQUA + minutes + ChatColor.GOLD + " Minutes");
-                } else sender.sendMessage(Errors.NOT_A_PLAYER);
-            } else sender.sendMessage(Errors.NO_PERMISSION);
+                } else sender.sendMessage(Errors.NOT_A_PLAYER());
+            } else sender.sendMessage(Errors.NO_PERMISSION());
         } else if (args.length == 1) {
             if (sender.hasPermission("activecraft.playtime.others")) {
                 if (Bukkit.getPlayer(args[0]) != null) {
-                    sender.sendMessage(Errors.INVALID_PLAYER);
+                    sender.sendMessage(Errors.INVALID_PLAYER());
                     return false;
                 }
                 if(sender.getName().toLowerCase().equals(Bukkit.getPlayer(args[0]).getName().toLowerCase())) {
                     if (!sender.hasPermission("activecraft.playtime.self")) {
-                        sender.sendMessage(Errors.CANNOT_TARGET_SELF);
+                        sender.sendMessage(Errors.CANNOT_TARGET_SELF());
                         return false;
                     }
                 }
@@ -47,8 +47,8 @@ public class PlayTimeCommand implements CommandExecutor, TabCompleter {
                     int minutes = fileConfig.getInt(args[0] + ".minutes");
                     sender.sendMessage(ChatColor.GOLD + "Playtime of " + ChatColor.AQUA + args[0] + ChatColor.GOLD + ": " + ChatColor.AQUA + hours + ChatColor.GOLD + " Hours and " + ChatColor.AQUA + minutes + ChatColor.GOLD + " Minutes");
                 }
-            } else sender.sendMessage(Errors.NO_PERMISSION);
-        } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
+            } else sender.sendMessage(Errors.NO_PERMISSION());
+        } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
         return true;
     }
 

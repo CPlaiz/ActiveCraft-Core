@@ -19,7 +19,7 @@ public class KnownIpsCommand implements CommandExecutor {
         if (sender.hasPermission("activecraft.listips")) {
             if (args.length == 1) {
                 if (Bukkit.getPlayer(args[0]) == null) {
-                    sender.sendMessage(Errors.INVALID_PLAYER);
+                    sender.sendMessage(Errors.INVALID_PLAYER());
                     return false;
                 }
                 Player target = Bukkit.getPlayer(args[0]);
@@ -37,8 +37,8 @@ public class KnownIpsCommand implements CommandExecutor {
                 sender.sendMessage(ChatColor.GOLD + "-- Known IPs for " + target.getName() + "\n"
                                 + ChatColor.WHITE + stringBuilder.toString()
                         );
-            } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
-        } else sender.sendMessage(Errors.NO_PERMISSION);
+            } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
+        } else sender.sendMessage(Errors.NO_PERMISSION());
 
         return true;
     }

@@ -36,18 +36,18 @@ public class EditSignCommand implements CommandExecutor {
                             playerdataConfig.saveConfig();
                             sender.sendMessage(ChatColor.GOLD + "Enabled Sign Edit Mode");
                         }
-                    } else sender.sendMessage(Errors.NO_PERMISSION);
-                } else sender.sendMessage(Errors.NOT_A_PLAYER);
+                    } else sender.sendMessage(Errors.NO_PERMISSION());
+                } else sender.sendMessage(Errors.NOT_A_PLAYER());
             } else {
                 if(sender.hasPermission("activecraft.editsign.others")) {
                     if (Bukkit.getPlayer(args[0]) == null) {
-                        sender.sendMessage(Errors.INVALID_PLAYER);
+                        sender.sendMessage(Errors.INVALID_PLAYER());
                         return false;
                     }
                     Player target = Bukkit.getPlayer(args[0]);
                     if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
                         if (!sender.hasPermission("activecraft.editsign.self")) {
-                            sender.sendMessage(Errors.CANNOT_TARGET_SELF);
+                            sender.sendMessage(Errors.CANNOT_TARGET_SELF());
                             return false;
                         }
                     }
@@ -69,7 +69,7 @@ public class EditSignCommand implements CommandExecutor {
                         } else
                             target.sendMessage(ChatColor.GOLD + "Sign Edit Mode enabled by " + ChatColor.AQUA + sender.getName());
                     }
-                } else sender.sendMessage(Errors.NO_PERMISSION);
+                } else sender.sendMessage(Errors.NO_PERMISSION());
             }
         return true;
     }

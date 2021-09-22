@@ -607,8 +607,8 @@ public class OpItemsCommand implements CommandExecutor, TabCompleter {
                         hoe.setItemMeta(hoemeta);
                         player.getInventory().addItem(hoe);
                     }
-                }else sender.sendMessage(Errors.INVALID_ARGUMENTS);
-            } else sender.sendMessage(Errors.NOT_A_PLAYER);
+                }else sender.sendMessage(Errors.INVALID_ARGUMENTS());
+            } else sender.sendMessage(Errors.NOT_A_PLAYER());
         return true;
         }
 

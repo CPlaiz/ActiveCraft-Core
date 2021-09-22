@@ -131,7 +131,7 @@ public class JoinQuitListener implements Listener {
                     }
                 }
                 if (!strBuilder.toString().equals("")) {
-                    //Bukkit.broadcast(Errors.WARNING + ChatColor.AQUA + player.getName() + ChatColor.GOLD + " shares the IP " +
+                    //Bukkit.broadcast(Errors.WARNING() + ChatColor.AQUA + player.getName() + ChatColor.GOLD + " shares the IP " +
                     //        ChatColor.GRAY + strBuilder + ChatColor.GOLD + " with " + ChatColor.AQUA +
                     //        fileConfigIpAddressCheck.getString("name"), "activecraft.matchingip.notify");
                     Bukkit.broadcast(ChatColor.DARK_AQUA + player.getName() + ChatColor.GRAY + " shares the IP " +

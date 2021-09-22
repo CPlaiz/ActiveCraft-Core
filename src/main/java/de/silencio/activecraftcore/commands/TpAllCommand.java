@@ -24,8 +24,8 @@ public class TpAllCommand implements CommandExecutor {
                         } else sender.sendMessage( ChatColor.AQUA + sender.getName() + ChatColor.GOLD + " executed a tpall, but you were not teleported.");
                     }
                     sender.sendMessage(ChatColor.GOLD + "Teleported all players to you.");
-                } else sender.sendMessage(Errors.NO_PERMISSION);
-            } else sender.sendMessage(Errors.NOT_A_PLAYER);
+                } else sender.sendMessage(Errors.NO_PERMISSION());
+            } else sender.sendMessage(Errors.NOT_A_PLAYER());
         return true;
     }
 }

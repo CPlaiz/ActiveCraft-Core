@@ -18,23 +18,23 @@ public class TphereCommand implements CommandExecutor {
             if (args.length == 1) {
                 if (sender.hasPermission("activecraft.tphere")) {
                     if (Bukkit.getPlayer(args[0]) == null) {
-                        sender.sendMessage(Errors.INVALID_PLAYER);
+                        sender.sendMessage(Errors.INVALID_PLAYER());
                         return false;
                     }
                     Player target = Bukkit.getPlayer(args[0]);
                     Player player = (Player) sender;
 
                     if(target == player) {
-                        player.sendMessage(Errors.WARNING + "You can't teleport to yourself!");
+                        player.sendMessage(Errors.WARNING() + "You can't teleport to yourself!");
                         return false;
                     }
 
                     target.teleport(player.getLocation());
                     sender.sendMessage(ChatColor.GOLD + "Teleported " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " to you.");
 
-                } else sender.sendMessage(Errors.NO_PERMISSION);
-            } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
-        } else sender.sendMessage(Errors.NOT_A_PLAYER);
+                } else sender.sendMessage(Errors.NO_PERMISSION());
+            } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
+        } else sender.sendMessage(Errors.NOT_A_PLAYER());
         return true;
     }
 }

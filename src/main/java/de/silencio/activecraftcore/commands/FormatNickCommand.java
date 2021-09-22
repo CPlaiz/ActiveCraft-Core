@@ -39,13 +39,13 @@ public class FormatNickCommand implements CommandExecutor, TabCompleter {
                             }
                         }
                     }
-                } else sender.sendMessage(Errors.NO_PERMISSION);
-            } else sender.sendMessage(Errors.NOT_A_PLAYER);
+                } else sender.sendMessage(Errors.NO_PERMISSION());
+            } else sender.sendMessage(Errors.NOT_A_PLAYER());
         }
 
         if (args.length == 2) {
             if (Bukkit.getPlayer(args[0]) == null) {
-                sender.sendMessage(Errors.INVALID_PLAYER);
+                sender.sendMessage(Errors.INVALID_PLAYER());
                 return false;
             }
             Player target = Bukkit.getPlayer(args[0]);
@@ -53,7 +53,7 @@ public class FormatNickCommand implements CommandExecutor, TabCompleter {
             if (sender.hasPermission("activecraft.formatnick.others")) {
                 if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
                     if (!sender.hasPermission("activecraft.formatnick.self")) {
-                        sender.sendMessage(Errors.CANNOT_TARGET_SELF);
+                        sender.sendMessage(Errors.CANNOT_TARGET_SELF());
                         return false;
                     }
                 }
@@ -78,14 +78,14 @@ public class FormatNickCommand implements CommandExecutor, TabCompleter {
                         }
                     }
                 }
-            } else sender.sendMessage(Errors.NO_PERMISSION);
+            } else sender.sendMessage(Errors.NO_PERMISSION());
         }
 
         if (args.length == 0) {
-            sender.sendMessage(Errors.INVALID_ARGUMENTS);
+            sender.sendMessage(Errors.INVALID_ARGUMENTS());
         }
         if (args.length > 2) {
-            sender.sendMessage(Errors.TOO_MANY_ARGUMENTS);
+            sender.sendMessage(Errors.TOO_MANY_ARGUMENTS());
         }
         return true;
     }

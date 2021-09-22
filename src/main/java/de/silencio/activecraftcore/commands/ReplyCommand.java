@@ -52,10 +52,10 @@ public class ReplyCommand extends MsgCommand implements CommandExecutor {
                                     + " -> " + answerTarget.getDisplayName() + ChatColor.GOLD + "] " + ChatColor.RESET + message);
                         }
                         message = "";
-                    } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
-                } else sender.sendMessage(Errors.INVALID_PLAYER);
-            } else sender.sendMessage(Errors.NO_PERMISSION);
-        } else sender.sendMessage(Errors.NOT_A_PLAYER);
+                    } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
+                } else sender.sendMessage(Errors.INVALID_PLAYER());
+            } else sender.sendMessage(Errors.NO_PERMISSION());
+        } else sender.sendMessage(Errors.NOT_A_PLAYER());
         return true;
     }
 }

@@ -23,7 +23,7 @@ public class FireBallCommand implements CommandExecutor {
                     } catch (NumberFormatException ignored) {
                     }
                     if (num == null) {
-                        sender.sendMessage(Errors.INVALID_NUMBER);
+                        sender.sendMessage(Errors.INVALID_NUMBER());
                         return false;
                     }
                     Boolean bool = null;
@@ -32,16 +32,16 @@ public class FireBallCommand implements CommandExecutor {
                     } catch (NumberFormatException ignored) {
                     }
                     if (bool == null) {
-                        sender.sendMessage(Errors.INVALID_ARGUMENTS);
+                        sender.sendMessage(Errors.INVALID_ARGUMENTS());
                         return false;
                     }
 
                     Fireball fireball = (Fireball) player.getWorld().spawnEntity(player.getLocation(), EntityType.FIREBALL);
                     fireball.setYield(Float.parseFloat(args[0]));
                     fireball.setIsIncendiary(Boolean.parseBoolean(args[1]));
-                } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
-            } else sender.sendMessage(Errors.NO_PERMISSION);
-        } else sender.sendMessage(Errors.NOT_A_PLAYER);
+                } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
+            } else sender.sendMessage(Errors.NO_PERMISSION());
+        } else sender.sendMessage(Errors.NOT_A_PLAYER());
         return true;
     }
 }

@@ -34,9 +34,9 @@ public class SpawnMobCommand implements CommandExecutor, TabCompleter {
                         world.spawnEntity(player.getLocation(), EntityType.valueOf(args[0]));
 
                         player.sendMessage(ChatColor.GOLD + "Summoned " + ChatColor.AQUA + args[0] + ChatColor.GOLD + ".");
-                    } else sender.sendMessage(Errors.WARNING + "Invalid Entity!");
-                } else sender.sendMessage(Errors.NO_PERMISSION);
-            } else sender.sendMessage(Errors.NO_PERMISSION);
+                    } else sender.sendMessage(Errors.WARNING() + "Invalid Entity!");
+                } else sender.sendMessage(Errors.NO_PERMISSION());
+            } else sender.sendMessage(Errors.NO_PERMISSION());
         } else if (args.length == 2) {
             if (Bukkit.getPlayer(args[0]) == null) {
                 if (sender instanceof Player) {
@@ -50,7 +50,7 @@ public class SpawnMobCommand implements CommandExecutor, TabCompleter {
                         } catch (NumberFormatException ignored) {
                         }
                         if (num == null) {
-                            sender.sendMessage(Errors.INVALID_NUMBER);
+                            sender.sendMessage(Errors.INVALID_NUMBER());
                             return false;
                         }
                         EntityType value = null;
@@ -63,16 +63,16 @@ public class SpawnMobCommand implements CommandExecutor, TabCompleter {
                             for (int i = 0; i < Integer.parseInt(args[1]); i++) {
                                 world.spawnEntity(player.getLocation(), value);
                             }
-                        } else sender.sendMessage(Errors.WARNING + "Invalid Entity!");
-                    } else sender.sendMessage(Errors.NO_PERMISSION);
-                } else sender.sendMessage(Errors.NOT_A_PLAYER);
+                        } else sender.sendMessage(Errors.WARNING() + "Invalid Entity!");
+                    } else sender.sendMessage(Errors.NO_PERMISSION());
+                } else sender.sendMessage(Errors.NOT_A_PLAYER());
             } else {
                 if (sender.hasPermission("activecraft.summon.others")) {
                     Player target = Bukkit.getPlayer(args[0]);
 
                     if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
                         if (!sender.hasPermission("activecraft.summon.self")) {
-                            sender.sendMessage(Errors.CANNOT_TARGET_SELF);
+                            sender.sendMessage(Errors.CANNOT_TARGET_SELF());
                             return false;
                         }
                     }
@@ -86,7 +86,7 @@ public class SpawnMobCommand implements CommandExecutor, TabCompleter {
                     if (value != null) {
                         world.spawnEntity(target.getLocation(), value);
                         sender.sendMessage(ChatColor.GOLD + "Summoned " + ChatColor.AQUA + args[0] + ChatColor.GOLD + " at " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + "'s position.");
-                    } else sender.sendMessage(Errors.WARNING + "Invalid Entity!");
+                    } else sender.sendMessage(Errors.WARNING() + "Invalid Entity!");
                 }
             }
         } else if (args.length == 3) {
@@ -100,12 +100,12 @@ public class SpawnMobCommand implements CommandExecutor, TabCompleter {
                     } catch (NumberFormatException ignored) {
                     }
                     if (num == null) {
-                        sender.sendMessage(Errors.INVALID_NUMBER);
+                        sender.sendMessage(Errors.INVALID_NUMBER());
                         return false;
                     }
                     if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
                         if (!sender.hasPermission("activecraft.summon.self.multiple")) {
-                            sender.sendMessage(Errors.CANNOT_TARGET_SELF);
+                            sender.sendMessage(Errors.CANNOT_TARGET_SELF());
                             return false;
                         }
                     }
@@ -120,10 +120,10 @@ public class SpawnMobCommand implements CommandExecutor, TabCompleter {
                         for (int i = 0; i < Integer.parseInt(args[2]); i++) {
                             target.getWorld().spawnEntity(target.getLocation(), value);
                         }
-                    } else sender.sendMessage(Errors.WARNING + "Invalid Entity!");
-                } else sender.sendMessage(Errors.NO_PERMISSION);
-            } else sender.sendMessage(Errors.INVALID_PLAYER);
-        } else sender.sendMessage(Errors.INVALID_ARGUMENTS);
+                    } else sender.sendMessage(Errors.WARNING() + "Invalid Entity!");
+                } else sender.sendMessage(Errors.NO_PERMISSION());
+            } else sender.sendMessage(Errors.INVALID_PLAYER());
+        } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
         return true;
     }
 
