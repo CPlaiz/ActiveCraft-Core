@@ -1,5 +1,6 @@
 package de.silencio.activecraftcore.manager;
 
+import de.silencio.activecraftcore.Main;
 import de.silencio.activecraftcore.events.*;
 import de.silencio.activecraftcore.utils.StringUtils;
 import org.bukkit.BanEntry;
@@ -26,9 +27,15 @@ public class BanManager {
     public void ban(String target, String reason, Date expires, String source) {
 
         if (banListType == BanList.Type.NAME) {
-            PlayerBanEvent event = new PlayerBanEvent(target, reason, expires, source);
-            Bukkit.getPluginManager().callEvent(event);
-            if (event.isCancelled()) return;
+            Bukkit.getScheduler().runTask(Main.getPlugin(), new Runnable() {
+                @Override
+                public void run() {
+                    PlayerBanEvent event = new PlayerBanEvent(target, reason, expires, source);
+                    System.out.println(event.getTarget() + ", " + event.getReason() + ", " + event.getExpirationDate() + ", " + event.getSource());
+                    Bukkit.getPluginManager().callEvent(event);
+                    if (event.isCancelled()) return;
+                }
+            });
         } else if (banListType == BanList.Type.IP) {
             if (StringUtils.isValidInet4Address(target)) {
                 return;
@@ -43,7 +50,7 @@ public class BanManager {
     public void ban(Player target, String reason, Date expires, String source) {
         ban(target.getName(), reason, expires, source);
     }
-    
+
 
     public BanList getBanList() {
         return banList;
@@ -64,6 +71,7 @@ public class BanManager {
         }
         banList.pardon(target);
     }
+
     public void unban(Player target) {
         unban(target.getName());
     }

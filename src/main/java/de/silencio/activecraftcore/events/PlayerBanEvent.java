@@ -14,18 +14,14 @@ public class PlayerBanEvent extends Event {
 
     private String target;
     private String reason;
+    private String source;
     private Date expirationDate;
     private boolean cancelled;
-
-    public PlayerBanEvent(Player target, String reason, Date expirationDate, String source) {
-        this.target = target.getName();
-        this.reason = reason;
-        this.expirationDate = expirationDate;
-    }
 
     public PlayerBanEvent(String target, String reason, Date expirationDate, String source) {
         this.target = target;
         this.reason = reason;
+        this.source = source;
         this.expirationDate = expirationDate;
     }
 
@@ -55,6 +51,18 @@ public class PlayerBanEvent extends Event {
 
     public static HandlerList getHandlerList() {
         return handlers;
+    }
+
+    public Date getExpirationDate() {
+        return expirationDate;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
     }
 
 }

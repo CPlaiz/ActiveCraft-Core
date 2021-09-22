@@ -11,6 +11,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.LightningStrike;
 import org.bukkit.entity.Player;
+import org.bukkit.permissions.Permission;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +37,17 @@ public class SetHomeCommand implements CommandExecutor {
                     }
 
                     List<String> homeList = homeconfig.getStringList(playerName + ".home_list");
+                    int maxHomes = 1;
+                    for (Permission perm : Bukkit.getPluginManager().getPermissions()) {
+                        if (perm.getName().startsWith("activecraft.maxhomes.")) {
+                            String[] permParts = perm.getName().split("\\.");
+                            maxHomes = Integer.parseInt(permParts[2]);
+                        }
+                    }
+                    if (!(homeList.size() < maxHomes)) {
+                        player.sendMessage(Errors.WARNING + "You cannot create more homes!");
+                        return false;
+                    }
                     homeList.add(args[0]);
                     homeconfig.set(playerName + ".home_list", homeList);
                     homeconfig.set(playerName + "." + args[0].toLowerCase(), loc);
@@ -69,6 +81,17 @@ public class SetHomeCommand implements CommandExecutor {
                 Location loc = ((Player) sender).getLocation();
 
                 List<String> homeList = homeconfig.getStringList(targetName + ".home_list");
+                int maxHomes = 1;
+                for (Permission perm : Bukkit.getPluginManager().getPermissions()) {
+                    if (perm.getName().startsWith("activecraft.maxhomes.")) {
+                        String[] permParts = perm.getName().split(".");
+                        maxHomes = Integer.parseInt(permParts[2]);
+                    }
+                }
+                if (!(homeList.size() < maxHomes)) {
+                    player.sendMessage(Errors.WARNING + "This player cannot create more homes!");
+                    return false;
+                }
                 homeList.add(args[1]);
                 homeconfig.set(targetName + ".home_list", homeList);
                 homeconfig.set(targetName + "." + args[1].toLowerCase(), loc);

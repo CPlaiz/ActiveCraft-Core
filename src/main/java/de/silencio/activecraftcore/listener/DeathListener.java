@@ -1,18 +1,17 @@
 package de.silencio.activecraftcore.listener;
 
+import de.silencio.activecraftcore.Main;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
 public class DeathListener implements Listener {
 
-    @EventHandler
+    @EventHandler (priority = EventPriority.HIGH)
     public void PlayerDeathEvent(PlayerDeathEvent event) {
-        //if(event.getDeathMessage().toLowerCase().contains(event.getEntity() + "died")) {
-         //   event.setDeathMessage(ChatColor.AQUA + event.getEntity().getName() + ChatColor.GOLD + " committed suicide.");
-        //}
-
-
-
+        Player player = event.getEntity();
+        Main.getPlugin().setLastLocationForPlayer(player, player.getLocation());
     }
 }
