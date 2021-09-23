@@ -1,17 +1,18 @@
 package de.silencio.activecraftcore.messages;
 
+import de.silencio.activecraftcore.Main;
 import de.silencio.activecraftcore.utils.FileConfig;
 
-public abstract class ActiveCraftMessage {
+public class ActiveCraftMessage {
 
-    protected static FileConfig fileConfig;
+    private FileConfig fileConfig;
 
-    public ActiveCraftMessage(String input) {
-        fileConfig = new FileConfig(input);
+    public ActiveCraftMessage() {
+        fileConfig = new FileConfig("messages.yml");
     }
 
-    protected static String getMessage(String input) {
-        return fileConfig.getString(input);
+    public String getMessage(MessageType type, String input) {
+        return fileConfig.getString(Main.getPlugin().getLanguage().name().toLowerCase() + "." + type.name().toLowerCase() + "." + input);
     }
 
 }

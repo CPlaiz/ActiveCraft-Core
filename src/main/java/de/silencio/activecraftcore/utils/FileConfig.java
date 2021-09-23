@@ -7,6 +7,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.logging.Level;
 
 public class FileConfig extends YamlConfiguration {
 
@@ -19,7 +20,7 @@ public class FileConfig extends YamlConfiguration {
             load(this.path);
         } catch (InvalidConfigurationException | IOException ex) {
             if (ex instanceof FileNotFoundException) {
-                Main.getPlugin().getLogger().severe("File config " + filename + " doesn't exist. Creating a new one.");
+                Main.getPlugin().getLogger().log(Level.INFO, "File config " + filename + " doesn't exist. Creating a new one.");
             } else ex.printStackTrace();
         }
     }

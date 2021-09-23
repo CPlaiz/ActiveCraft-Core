@@ -12,6 +12,7 @@ mute-new-players: false
 remove-default-mute-after: 10 #in minutes | 0 to disable
 check-for-matching-ips: true
 socialspy-to-console: false
+language: 'en'
 
 # AFK Settings
 afk-format: '[AFK]'

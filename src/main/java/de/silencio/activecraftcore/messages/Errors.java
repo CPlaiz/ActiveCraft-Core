@@ -1,41 +1,42 @@
 package de.silencio.activecraftcore.messages;
 
-public class Errors extends ActiveCraftMessage {
+import de.silencio.activecraftcore.Main;
+import org.bukkit.ChatColor;
 
-    public Errors(String input) {
-        super(input);
-    }
+public class Errors {
+
+    static ActiveCraftMessage acm = Main.getPlugin().getActiveCraftMessage();
 
     public static String WARNING() {
-        return getMessage("");
+        return acm.getMessage(MessageType.ERROR, "general-warning");
     }
 
     public static String NO_PERMISSION() {
-        return getMessage("");
+        return ChatColor.RED + WARNING() + ChatColor.GRAY + acm.getMessage(MessageType.ERROR, "no-permission");
     }
 
     public static String INVALID_PLAYER() {
-        return getMessage("");
+        return ChatColor.RED + WARNING() + ChatColor.GRAY + acm.getMessage(MessageType.ERROR, "invalid-player");
     }
 
     public static String INVALID_NUMBER() {
-        return getMessage("");
+        return ChatColor.RED + WARNING() + ChatColor.GRAY + acm.getMessage(MessageType.ERROR, "invalid-number");
     }
 
     public static String INVALID_ARGUMENTS() {
-        return getMessage("");
+        return ChatColor.RED + WARNING() + ChatColor.GRAY + acm.getMessage(MessageType.ERROR, "invalid-arguments");
     }
 
     public static String TOO_MANY_ARGUMENTS() {
-        return getMessage("");
+        return ChatColor.RED + WARNING() + ChatColor.GRAY + acm.getMessage(MessageType.ERROR, "too-many-arguments");
     }
 
     public static String CANNOT_TARGET_SELF() {
-        return getMessage("");
+        return ChatColor.RED + WARNING() + ChatColor.GRAY + acm.getMessage(MessageType.ERROR, "cannot-target-self");
     }
 
-    public static String NOT_A_PLAYER() {
-        return getMessage("");
+    public static String INVALID_COLOR() {
+        return ChatColor.RED + WARNING() + ChatColor.GRAY + acm.getMessage(MessageType.ERROR, "invalid-color");
     }
 
     public static String INVALID_HEX() {

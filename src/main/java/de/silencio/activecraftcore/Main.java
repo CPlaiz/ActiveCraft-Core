@@ -3,8 +3,9 @@ package de.silencio.activecraftcore;
 import de.silencio.activecraftcore.commands.*;
 import de.silencio.activecraftcore.listener.*;
 import de.silencio.activecraftcore.listener.inventory.ProfileListener;
-import de.silencio.activecraftcore.messages.Dialogue.DialogueListenerList;
-import de.silencio.activecraftcore.messages.Dialogue.DialogueManagerList;
+import de.silencio.activecraftcore.messages.ActiveCraftMessage;
+import de.silencio.activecraftcore.dialogue.DialogueListenerList;
+import de.silencio.activecraftcore.dialogue.DialogueManagerList;
 import de.silencio.activecraftcore.messages.Language;
 import de.silencio.activecraftcore.utils.FileConfig;
 import de.silencio.activecraftcore.manager.VanishManager;
@@ -61,8 +62,14 @@ public final class Main extends JavaPlugin {
         startTimer();
 
         saveDefaultConfig();
+        
+        File file = new File(getDataFolder(), "messages.yml");
+        if(!file.exists()) {
+            saveResource("messages.yml", false);
+        }
 
         language = Language.valueOf(new FileConfig("config.yml").getString("language").toUpperCase());
+        activeCraftMessage = new ActiveCraftMessage();
 
         FileConfig warplistConfig = new FileConfig("warplist.yml");
         for (String s : warplistConfig.getStringList("warplist")) {
@@ -270,6 +277,14 @@ public final class Main extends JavaPlugin {
 
     public void setLanguage(Language language) {
         this.language = language;
+    }
+
+    public ActiveCraftMessage getActiveCraftMessage() {
+        return activeCraftMessage;
+    }
+
+    public void setActiveCraftMessage(ActiveCraftMessage activeCraftMessage) {
+        this.activeCraftMessage = activeCraftMessage;
     }
 
     public DialogueManagerList getDialogueManagerList() {
