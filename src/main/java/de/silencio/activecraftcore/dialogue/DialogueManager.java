@@ -1,4 +1,4 @@
-package de.silencio.activecraftcore.messages.Dialogue;
+package de.silencio.activecraftcore.dialogue;
 
 import de.silencio.activecraftcore.Main;
 import de.silencio.activecraftcore.listener.DialogueListener;

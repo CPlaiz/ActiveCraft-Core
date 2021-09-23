@@ -3,373 +3,749 @@
 # Only edit if you know what you are doing
 # You can contribute to other translations here: %link%
 
+# Globally available Placeholders
+# - %s_displayname% -> The displayname of the person who executed the command
+# - %t_displayname% -> The displayname of the person targeted by the command
+# - %s_playername% -> The real name of the person who executed the command
+# - %t_playername% -> The real name of the person targeted by the command
+
 en:
-  errors:
-    general-warning: Warning!
-    too-many-arguments: Too many Arguments! Please recheck the command!
-    invalid-arguments: Invalid Arguments! Please recheck the command!
-    invalid-player: Player not found!
-    invalid-number: This is not a valid number!
-    invalid-world: World not found!
-    invalid-color: This is not a valid color!
-    invalid-hex: This is not a valid hex code!
-    invalid-entity: Invalid Entity!
-    number-too-large: Given number too large!
-    no-permission: You don't have the permission to do that!
-    cannot-target-self: You cannot target yourself!
-    not-a-player: You are not a player!
-    not-true-false: Please use true / false!
-    not-holding-item: You are not holding an item!
-  reasons:
-    hacking: Hacking
-    botting: Botting
-    unauthorized-alt-account: Unauthorized Alternate Account
-    spam: Spam
-    abusive-language: Abusive Language
-    stealing: Stealing
-    griefing: Griefing
+  error:
+    general-warning: 'Warning!'
+    too-many-arguments: 'Too many Arguments! Please recheck the command!'
+    invalid-arguments: 'Invalid Arguments! Please recheck the command!'
+    invalid-player: 'Player not found!'
+    invalid-number: 'This is not a valid number!'
+    invalid-world: 'World not found!'
+    invalid-color: 'This is not a valid color!'
+    invalid-hex: 'This is not a valid hex code!'
+    invalid-entity: 'Invalid Entity!'
+    number-too-large: 'Given number too large!'
+    no-permission: "You don't have the permission to do that!"
+    cannot-target-self: 'You cannot target yourself!'
+    not-a-player: 'You are not a player!'
+    not-true-false: 'Please use true / false!'
+    not-holding-item: 'You are not holding an item!'
+  reason:
+    hacking: 'Hacking'
+    botting: 'Botting'
+    unauthorized-alt-account: 'Unauthorized Alternate Account'
+    spam: 'Spam'
+    abusive-language: 'Abusive Language'
+    stealing: 'Stealing'
+    griefing: 'Griefing'
   dialogue:
-    default-header: -- Dialogue --
-    default-completed-message: Exiting dialogue...
-    default-cancelled-message: Cancelling dialogue...
-    default-invalid-answer: Invalid Answer!
+    default-header: '-- Dialogue --'
+    default-completed-message: 'Exiting dialogue...'
+    default-cancelled-message: 'Cancelling dialogue...'
+    default-invalid-answer: 'Invalid Answer!'
   misc:
-    default-mute-remove: Your default mute has been removed. You are now able to talk.
-    file-not-found: File config %filename% does not exist. Creating a new one...
-    same-ip: %joined-displayname% shares the IP %ip% with %second-displayname%.
+    default-mute-remove: 'Your default mute has been removed. You are now able to talk.'
+    file-not-found: 'File config %filename% does not exist. Creating a new one...'
+    same-ip: '%t1_displayname% shares the IP %ip% with %t2_displayname%.'
+  command:
+    ban:
+      ban-header: '-- Ban Dialogue for %t_playername% --'
+      ban-completed-message: 'Banned %t_playername%.'
+      ban-cancelled-message: 'Cancelled ban dialogue for %t_playername%.'
+      ban-enter-reason: 'Please enter a reason:'
+      ban-enter-time: 'Please enter the ban duration:'
+      already-banned: 'This player is already banned.'
+    unban:
+      not-banned: 'This player is not banned.'
+      unbanned-player: 'Unbanned %t_playername%.'
+    banlist:
+      banlist-header: '-- Ban List --'
+      ban-on-hover: 'Unban %t_playername%.'
+      ip-ban-on-hover: 'Unban %ip%'
+      no-bans: 'There are no bans to be listed here!'
+    ipban:
+      ipban-header: '-- IP Ban Dialogue for %t_playername% (%ip%) --'
+      ipban-completed-message: 'Banned %t_playername% (%ip%).'
+      ipban-cancelled-message: 'Cancelled ip-ban dialogue for %t_playername% (%ip%).'
+      ipban-enter-reason: 'Please enter a reason:'
+      ipban-enter-time: 'Please enter the ban duration:'
+      ip-already-banned: 'This IP is already banned.'
+      invalid-ip: 'This is not a valid IP address.'
+    unban-ip:
+      unbanned-ip: 'Unbanned %ip%'
+      ip-not-banned: 'This IP is not banned.'
+    book:
+      changed-title: 'Changed book title to %title%.'
+      changed-author: 'Changed book author to %author%.'
+      changed-page: 'Changed the page %page%.'
+      changed-generation: 'Changed book generation to %generation%.'
+      original: 'original'
+      copy-original: 'copy of original'
+      copy-copy: 'copy of copy'
+      tattered: 'tattered'
+      added-page: 'Added a new page.'
+      not-holding-book: 'You are not holding a book!'
+    break:
+      break-others: 'Broke block infront of %t_displayname%.'
+      break-self: 'Broke block infront of you.'
+    broadcast:
+      broadcast-prefix: '[BroadCast]'
+      inlcude-message: 'Please include a message!'
+    butcher:
+      no-mobs: 'No mobs nearby!'
+      killed-mobs: 'Killed %amount% mobs.'
+    clearinventory:
+      cleared-self: 'Cleared your inventory.'
+      cleared-others: "Cleared %t_displayname%'s inventory."
+      cleared-others-message: 'Your inventory was cleared by %s_displayname%.'
+    colornick:
+      colornick-complete: 'Name color changed to %color%.'
+      colornick-others: 'Name color for %t_displayname% changed to %color%.'
+      colornick-others-message: 'Name color changed to %color% by %s_displayname%.'
+    home:
+      teleport-home-complete: 'Teleported to %home%.'
+      home-not-set: 'This home is not set!'
+      teleport-home-others-complete: "Teleported to %t_displayname%'s home %home%."
+      home-others-not-set: 'Player %t_displayname% does not have a home called %home%.'
+    sethome:
+      home-set: 'Home %home% set!'
+      home-others-set: 'Set home %home% for player %t_displayname%.'
+    deletehome:
+      home-deleted: 'Home %home% deleted.'
+      no-home: 'You do not have a home called %home%.'
+      home-others-deleted: 'Deleted the home %home% of player %t_displayname%.'
+    editsign:
+      enabled: 'Enabled sign edit mode.'
+      disabled: 'Disabled sign edit mode.'
+      enabled-others: 'Enabled sign edit mode for %t_displayname%.'
+      enabled-others-message: 'Sign edit mode enabled by %s_displayname%.'
+      disabled-others: 'Disabled sign edit mode for %t_displayname%'
+      disabled-others-message: 'Sign edit mode disabled by %s_displayname%.'
+    enchant:
+      applied-enchantment: 'Applied enchantment %enchantment% to your item.'
+      applied-enchantment-level: 'Applied enchantment %enchantment% level %level% to your item.'
+      cannot-be-applied: 'This enchantment can not be applied to this item!'
+      cleared-all-enchantments: 'Cleared all enchantments from this item.'
+      not-enchanted: 'Item is not enchanted!'
+      glint-true: 'Added enchantment glint to your item.'
+      glint-false: 'Removed enchantment glint to your item.'
+    enderchest:
+      enderchest-open: 'Opened Enderchest.'
+      enderchest-open-others: 'Opened Enderchest of %t_displayname%.'
+    feed:
+      feed: 'You were fed.'
+      feed-others: 'You fed %t_displayname%.'
+      feed-others-message: 'You were fed by %s_displayname%.'
+    fly:
+      enable-fly: 'Flight mode activated.'
+      enable-fly-others: 'Flight mode activated for %t_displayname%.'
+      enable-fly-others-message: 'Flight mode activated by %s_displayname%.'
+      disable-fly: 'Flight mode deactivated.'
+      disable-fly-others: 'Flight mode deactivated for %t_displayname%.'
+      disable-fly-others-message: 'Flight mode deactivated by %s_displayname%.'
+    flyspeed:
+      flyspeed-set: 'Fly speed set to %amount%.'
+      flyspeed-set-others: 'Fly speed set to %amount% for %t_displayname%.'
+      flyspeed-set-others-message: 'Fly speed set to %amount% by %s_displayname%.'
+    god:
+      enable-god: 'God mode activated.'
+      enable-god-others: 'God mode activated for %t_displayname%.'
+      enable-god-others-message: 'God mode activated by %s_displayname%.'
+      disable-god: 'God mode deactivated.'
+      disable-god-others: 'God mode deactivated for %t_displayname%.'
+      disable-god-others-message: 'God mode deactivated by %s_displayname%.'
+    hat:
+      hat-success: 'Enjoy your new hat!'
+    heal:
+      heal: 'You were healed.'
+      heal-others: 'You healed %t_displayname%.'
+      heal-others-message: 'You were healed by %s_displayname%.'
+    item:
+      item-renamed: 'Item renamed.'
+    kickall:
+      default-kickall: 'Kicked all players.'
+      default-kickall-message: 'You were kicked.'
+      custom-kickall: 'Kicked all players. \nReason: %reason%.'
+      custom-kickall-message: '%reason%'
+    kick:
+      default-kick: 'Kicked %t_displayname%.'
+      default-kick-message: 'You were kicked.'
+      custom-kick: 'Kicked %t_displayname%. \nReason: %reason%'
+      custom-kick-message: '%reason%'
+    knockbackstick:
+      knockbackstick: 'You were chosen to harness the power of the stick!'
+      knockbackstick-lore: "Don't keep your enemies closer than your friends, duh"
+      knockbackstick-others: 'You chose %t_displayname% to harness the power of the stick.'
+      knockbackstick-others-message: 'You were chosen to harness the power of the stick by %s_displayname%.'
+    knownips:
+      knownips-header: '-- Known IPs for %t_displayname% --'
+    lastcoords:
+      never-entered-world: 'Player has never entered this world.'
+      never-quit-server: 'Player has never left this server.'
+      lastcoords-message: "%t_displayname%'s last coords in %world%: \n%coords%"
+    lastonline:
+      lastonline-online: '%t_displayname% is %lastonline%.'
+      lastonline-offline: '%t_displayname% was last online: %lastonline%.'
+    leathercolor:
+      no-leather-item: 'No leather item in main hand.'
+    lockdown:
+      lockdown-enabled: 'Lockdown mode was enabled. Kicking all players...'
+      lockdown-already-enabled: 'Lockdown mode is already enabled.'
+      lockdown-disabled: 'Lockdown mode was disabled. Players can now join the server.'
+      lockdown-not-enabled: 'Lockdown mode is not enabled.'
+      allow-player: 'Allowed %t_displayname% to join during lockdown.'
+      allow-player-extra: 'They will not be able to join again if they leave and do not have the permission "activecraft.lockdown.bypass".'
+      allow-player-already-enabled: 'Lockdown bypass already enabled for %t_displayname%.'
+      disallow-player: '%t_displayname% will not be able to join during lockdown.'
+      disallow-player-extra: 'If they have the permission "activecraft.lockdown.bypass" they will be able to join during lockdown once they join and leave the server again.'
+      disallow-player-already-disabled: 'Lockdown bypass is not enabled for %t_displayname%.'
+    log:
+      log-prefix: '[Log] %t_displayname% executed command %command%.'
+      enable-log: 'Log activated.'
+      disable-log: 'Log deactivated.'
+    more:
+      cannot-stack: 'Cannot stack to this amount! Maximum is 127.'
+    msg:
+      msg-prefix-to: '[me -> %t_displayname%] %message%'
+      msg-prefix-from: '[%s_displayname% -> me] %message%'
+      socialspy-prefix-to: '[%s_displayname% -> %t_displayname%] %message%'
+      socialspy-prefix-from: '[%_displayname% -> %s_displayname%] %message%'
+      console-msg-prefix: '[Console -> me] %message%'
+      cannot-message-self: "You can't message yourself."
+      include-player: 'Please include a player.'
+    mute:
+      mute: 'Muted %t_displayname%.'
+      mute-message: 'You have been muted.'
+      already-muted: 'This player is already muted.'
+    unmute:
+      unmute: 'Unmuted %t_displayname%.'
+      unmute-message: 'You have been unmuted.'
+      not-muted: 'This player is already muted.'
+    nick:
+      nick-set: 'Nick set to %nickname%.'
+      nick-set-others: 'Set nickname of %t_displayname% to %nickname%.'
+      nick-set-others-message: 'Nickname set to %nickname% by %s_displayname%.'
+    ping:
+      ping-player: 'Pong! %ping%ms.'
+      ping-console: 'Pong!'
+    playerlist:
+      playerlist-header: 'Online players:'
+    playtime:
+      playtime: 'Playtime: %hours% hours and %minutes% minutes.'
+      playtime-others: 'Playtime of %t_displayname%: %hours% hours and %minutes% minutes.'
+    portal:
+      portal-created: 'Created portal.'
+      portal-destroyed: 'Destroyed portal %name% at %coords%.'
+      portal-list: 'Portals:'
+      portal-no-list: 'There are no portals to be listed.'
+    quickgive:
+      quickgive-give: 'Gave you %blockname%.'
+      quickgive-amount: 'Gave you %amount%x %blockname%.'
+    ram:
+      ram: '%freememory% MB free \n%usedmemory% MB used \n%maxmemory% MB max'
+    realname:
+      realname-header: 'Players with the nickname %nickname%: \n%players%'
+    repair:
+      repair-sucess: 'Fixed your %item-displayname%.'
+      cannot-be-repaired: "Item can't be repaired."
+    restart-server:
+      restart-message: 'The server is restarting.'
+      restart-title: 'Server Restart in %time%'
+    skull:
+      give-skull: 'Gave yourself your head.'
+      give-skull-others: "Gave yourself %t_displayname%'s head."
+      give-skull-others-multiple: "Gave yourself %amount%x %t_displayname%'s head."
+    spawn:
+      spawn-teleport: 'Teleported to spawn.'
+      spawn-teleport-others: 'Teleported %t_displayname% to spawn.'
+      spawn-teleport-others-message: 'You were teleported to spawn by %s_displayname%.'
+      no-spawn-set: 'No spawn set.'
+    spawner:
+      spawner-displayname: '%spawner% Spawner'
+      spawner-give: 'Gave yourself a %spawner% spawner.'
+      spawner-give-others: 'Gave %t_displayname% a %spawner% spawner.'
+      spawner-give-others-message: '%s_displayname% gave you a %spawner% spawner.'
+    summon:
+      summon: 'Summoned %mob%.'
+      summon-multiple: 'Summoned %amount%x %mob%.'
+      summon-others: "Summoned %mob% at %t_displayname%'s position."
+      summon-others-multiple: "Summoned %amount%x %mob% at %t_displayname%'s position."
+    staffchat:
+      staffchat-prefix: '[StaffChat] %s_displayname%: %message%'
+      staffchat-from-console-prefix: '[StaffChat] Console: %message%'
+    strike:
+      strike: 'Thor has struck lightning upon you!'
+      strike-others: 'Struck %t_displayname% with lightning.'
+    suicide:
+      suicide: 'You killed yourself.'
+      broadcast-suicide: '%t_displayname% committed suicide.'
+      suicide-others: 'Made %t_displayname% commit suicide.'
+    top:
+      top-teleport: 'Teleported to the top.'
+      top-not-safe: 'Teleport is not safe!'
+      top-teleport-others: 'Teleported %t_displayname% to the highest block above them.'
+    tpa:
+      tpa-request-to: 'Tpa request sent to %t_displayname%.'
+      tpa-request-from: 'Tpa request from %s_displayname%.'
+      tpa-accept: '[ACCEPT]'
+      tpa-accept-hover: 'Click here to accept.'
+      tpa-deny: '[DENY]'
+      tpa-deny-hover: 'Click here to deny.'
+    tpaccept:
+      tpaccept-actionbar: 'Teleporting...'
+      tpaccept-reciever-message: 'Teleported to %s_displayname%.'
+      tpaccept-sender-message: '%t_displayname% teleported to you.'
+      no-requests: "You don't have any pending TPA requests!"
+    deny:
+      tpadeny-reciever-message: 'Denied the TPA request from %s_displayname%.'
+      tpadeny-sender-message: '%t_displayname% denied your TPA request.'
+      no-requests: "You don't have any pending TPA requests!"
+    tpall:
+      tpall: 'Teleported all players to you.'
+      tpall-message: 'You were teleported to %displayname%.'
+      tpall-exept: '%s_displayname% executed a tpall, but you were not teleported.'
+    teleport:
+      cannot-tp-to-self: "You can't teleport to yourself!"
+      cannot-tp-others-to-themself: "You can't teleport the player to themself!"
+      teleport-to-player: 'Teleported to %t_displayname%.'
+      teleport-to-coords: 'Teleported to %coords%.'
+      teleport-player-to-player: 'Teleported %t1_displayname% to %t2_displayname%.'
+      teleport-player-to-coords: 'Teleported %t_displayname% to %coords%.'
+    tphere:
+      cannot-tp-to-self: "You can't teleport to yourself!"
+      teleport-player-to-you: 'Teleported %displayname% to you.'
+    vanish:
+      now-visible: 'You are now visible.'
+      now-invisible: 'You are now invisible.'
+      now-visible-others: '%t_displayname% is now visible.'
+      now-invisible-others: '%t_displayname% is now invisible.'
+    verify:
+      default-mute-remove: 'Verified %displayname%.'
+      default-mute-remove-message: 'Your default mute has been removed. You are now able to talk.'
+      not-default-muted: 'Player is not default muted!'
+    walkspeed:
+      walkspeed-set: 'Walk speed set to %amount%.'
+      walkspeed-set-others: 'Walk speed set to %amount% for %t_displayname%.'
+      walkspeed-set-others-message: 'Walk speed set to %amount% by %s_displayname%.'
+    warn:
+      default-warn-reason: 'Warned by a moderator.'
+      warn-add: 'Warned %t_displayname%. \nReason: %reason%.'
+      warn-remove: 'Removed warn %reason% from %t_displayname%.'
+      warn-get-header: "-- %t_displayname%'s Warn Entry --"
+      warn-get: 'Reason: %reason% \nCreated: %date-created% \nSource: %s_displayname% \nID: %warn-id%'
+      warned-header: 'You have been warned!'
+      warned: 'Reason: %reason% \nWarned by: %s_displayname%.'
+      warned-remove: 'Your warn %reason% has been removed.'
+    warp:
+      warp-doesnt-exist: 'This warp does not exist!'
+      warp-teleport: 'You warped to %warp%.'
+      warp-teleport-others: 'Warped %t_displayname% to %warp%.'
+      warp-teleport-others-message: 'You were warped to %warp% by %s_displayname%.'
+    setwarp:
+      already-exists: 'This warp already exists!'
+      warp-set: 'Created the warp %warp%.'
+    deletewarp:
+      doesnt-exist: 'This warp does not exist!'
+      warp-deleted: 'Deleted the warp %warp%.'
+    warps:
+      warps-header: 'Warps:'
+      no-warps: 'There are no warps to be listed.'
+    weather:
+      to-thunder: 'Changed weather in %world% to Thunder.'
+      to-rain: 'Changed weather in %world% to Rain.'
+      to-clear: 'Changed weather in %world% to Clear.'
+    whereami:
+      whereami: 'You are in %world% at %coords%.'
+      whereami-others: '%t_displayname% is in %world% at %coords%.'
+    whois:
+      name: 'Name: %playername%'
+      nickname: 'Nickname: %displayname%'
+      colornick: 'Colornick: %colornick%'
+      uuid: 'UUID: %uuid%'
+      is-op: 'Op: %op%'
+      health: 'Health: %playerhealth%'
+      food: 'Food: %playerfood%'
+      world: 'World: %world%'
+      coords: 'Coordinates: %coords%'
+      afk: 'AFK: %afk%'
+      client: 'Client: %client%'
+      address: 'Address: %ip%'
+      gamemode: 'Gamemode: %gamemode%'
+      muted: 'Muted: %muted%'
+      whitelisted: 'Whitelisted: %whitelisted%'
+      god: 'God: %god%'
+      vanished: 'Vanished: %vanished%'
+    xp:
+      xp-levels: 'Gave yourself %amount% levels.'
+      xp-xp: 'Gave yourself %amount% xp.'
+      xp-levels-others: 'Gave %t_displayname% %amount% levels.'
+      xp-levels-others-message: 'You were given %amount% levels by %s_displayname%.'
+      xp-xp-others: 'Gave %t_displayname% %amount% xp.'
+      xp-xp-others-message: 'You were given %amount% xp by %t_displayname%.'
+
+
+de:
+  errors:
+    general-warning: 'Warnung!'
+    too-many-arguments: 'Zu viele Argumente! Bitte überprüfe den Befehl!'
+    invalid-arguments: 'Ungültige Argumente! Bitte überprüfe den Befehl!'
+    invalid-player: 'Spieler nicht gefunden!'
+    invalid-number: 'Das ist keine gültige Zahl!'
+    invalid-world: 'Welt nicht gefunden!'
+    invalid-color: 'Das ist keine gültige Farbe!'
+    invalid-hex: 'Das ist kein gültiger hex code!'
+    invalid-entity: 'Ungültige Entität!'
+    number-too-large: 'Die gegebene Zahl ist zu groß!'
+    no-permission: 'Du hast nicht die Berechtigung, um das zu tun!'
+    cannot-target-self: 'Du kannst dich nicht selbst auswählen!'
+    not-a-player: 'Du bist kein Spieler!'
+    not-true-false: 'Bitte benutze true / false!'
+    not-holding-item: 'Du hältst kein Item in der Hand!'
+  reasons:
+    hacking: 'Hacking'
+    botting: 'Botting'
+    unauthorized-alt-account: 'Unauthorisierter Zweitaccount'
+    spam: 'Spam'
+    abusive-language: 'Unangemessene Sprache'
+    stealing: 'Diebstahl'
+    griefing: 'Griefing'
+  dialogue:
+    default-header: '-- Dialog --'
+    default-completed-message: 'Beende Dialog...'
+    default-cancelled-message: 'Dialog abbrechen...'
+    default-invalid-answer: 'Üngültige Antwort!'
+  misc:
+    default-mute-remove: 'Deine standartmäßige Stummschaltung wurde aufgehoben. Du kannst nun sprechen.'
+    file-not-found: 'Die Datei %filename% existiert nicht. Erstelle eine neue...'
+    same-ip: '%t1-displayname% teilt dieselbe IP %ip% mit %t2-displayname%.'
   commands:
     ban:
-      ban-header: -- Ban Dialogue for %playername% --
-      ban-completed-message: Banned %playername%.
-      ban-cancelled-message: Cancelled ban dialogue for %playername%.
-      ban-enter-reason: Please enter a reason":"
-      ban-enter-time: Please enter the ban duration":"
-      already-banned: This player is already banned.
+      ban-header: '-- Ban Dialog für %t_playername% --'
+      ban-completed-message: '%t_playername% wurde gebannt.'
+      ban-cancelled-message: 'Ban Dialog für %t_playername% wurde abgebrochen.'
+      ban-enter-reason: 'Bitte gib einen Grund an:'
+      ban-enter-time: 'Bitte gib eine Bandauer an:'
+      already-banned: 'Dieser Spieler ist bereits gebannt.'
     unban:
-      not-banned: This player is not banned.
-      unbanned-player: Unbanned %playername%.
+      not-banned: 'Dieser Spieler ist nicht gebannt.'
+      unbanned-player: '%t_playername% wurde entbannt.'
     banlist:
-      banlist-header: -- Ban List --
-      ban-on-hover: Unban %playername%.
-      ip-ban-on-hover: Unban %ip%
-      no-bans: There are no bans to be listed here!
+      banlist-header: '-- Ban Liste --'
+      ban-on-hover: '%t_playername% entbannen'
+      ip-ban-on-hover: '%ip% entbannen'
+      no-bans: 'Es gibt keine Bans, die hier aufgelistet werden könnten!'
     ipban:
-      ipban-header: -- IP Ban Dialogue for %playername% (%ip%) --
-      ipban-completed-message: Banned %playername% (%ip%).
-      ipban-cancelled-message: Cancelled ip-ban dialogue for %playername% (%ip%).
-      ipban-enter-reason: Please enter a reason":"
-      ipban-enter-time: Please enter the ban duration":"
-      ip-already-banned: This IP is already banned.
-      invalid-ip: This is not a valid IP address.
+      ipban-header: '-- IP Ban Dialog für %t_playername% (%ip%) --'
+      ipban-completed-message: '%t_playername% (%ip%) wurde gebannt.'
+      ipban-cancelled-message: 'Ban Dialog für  %t_playername% (%ip%) wurde abgebrochen.'
+      ipban-enter-reason: 'Bitte gib einen Grund an:'
+      ipban-enter-time: 'Bitte gib eine Bandauer an:'
+      ip-already-banned: 'Diese IP ist schon gebannt.'
+      invalid-ip: 'Diese IP Aresse ist ungültig.'
     unban-ip:
-      unbanned-ip: Unbanned %ip%
-      ip-not-banned: This IP is not banned.
+      unbanned-ip: '%ip% wurde entbannt.'
+      ip-not-banned: 'Diese IP Adresse ist nicht gebannt.'
     book:
-      changed-title: Changed nook title to %title%.
-      changed-author: Changed book author to %author%.
-      changed-page: Changed the page %page%.
-      changed-generation: Changed book generation to %generation%.
-        original: original
-        copy-original: copy of original
-        copy-copy: copy of copy
-        tattered: tattered
-      added-page: Added a new page.
-      not-holding-book: You are not holding a book!
+      changed-title: 'Buch Titel zu %title% geändert.'
+      changed-author: 'Buch Author zu %author% geändert.'
+      changed-page: 'Buchseiter %page% wurde bearbeitet.'
+      changed-generation: 'Generation zu %generation% geändert.'
+      original: 'original'
+      copy-original: 'kopie des originals'
+      copy-copy: 'kopie einer kopie'
+      tattered: 'zerflättert'
+      added-page: 'Neue Seite hinzugefügt.'
+      not-holding-book: 'Du hälst kein Buch in der Hand!'
     break:
-      break-others: Broke block infront of %displayname%.
-      break-self: Broke block infront of you.
+      break-others: 'Der Block vor %t_displayname% wurde zerstört.'
+      break-self: 'Der Block vor dir wurde zerstört.'
     broadcast:
-      broadcast-prefix: [BroadCast]
-      inlcude-message: Please include a message!
+      broadcast-prefix: '[BroadCast]'
+      inlcude-message: 'Bitte schreibe eine Nachricht!'
     butcher:
-      no-mobs: No mobs nearby!
-      killed-mobs: Killed %amount% mobs.
+      no-mobs: 'Keine Monster in der Nähe!'
+      killed-mobs: '%amount% Monster wurden getötet.'
     clearinventory:
-      cleared-self: Cleared your inventory.
-      cleared-others: Cleared %displayname%'s inventory.
-      cleared-others-message: Your inventory was cleared by %displayname%.
+      cleared-self: 'Inventar geleert.'
+      cleared-others: 'Inventar von %t_displayname% geleert.'
+      cleared-others-message: 'Dein Inventar wurde von %s_displayname% geleert.'
     colornick:
-      colornick-complete: Name color changed to %color%.
-      colornick-others: Name color for %displayname% changed to %color%.
-      colornick-others-message: Name color changed to %color% by %displayname%.
+      colornick-complete: 'Deine Namensfarbe wurde zu %color% geändert.'
+      colornick-others: 'Namensfarbe für %t_displayname% zu %color% geändert.'
+      colornick-others-message: 'Deine Namensfarbe wurde zu %color% von %s_displayname% geändert.'
     home:
-      teleport-home-complete: Teleported to %home%.
-      home-not-set: This home is not set!
-      teleport-home-others-complete: Teleported to %displayname%'s home %home%.
-      home-others-not-set: Player %displayname% does not have a home called %home%.
+      teleport-home-complete: 'Du wurderst zu %home% teleportiert.'
+      home-not-set: 'Dieses Home esixtiert nicht!'
+      teleport-home-others-complete: 'Du wurdest zu dem Home %home% von %t_displayname% teleportiert.'
+      home-others-not-set: 'Der spieler %t_displayname% hat kein Home mit dem Namen %home%.'
     sethome:
-      home-set: Home %home% set!
-      home-others-set: Set home %home% for player %displayname%.
+      home-set: 'Das Home %home% wurde erstellt!'
+      home-others-set: 'Das Home %home% wurde für den Spieler %t_displayname% erstellt.'
     deletehome:
-      home-deleted: Home %home% deleted.
-      no-home: You do not have a home called %home%.
-      home-others-deleted: Deleted the home %home% for player %displayname%.
+      home-deleted: 'Das Home %home% wurde gelöscht.'
+      no-home: 'Du hast kein Home mit dem Namen %home%.'
+      home-others-deleted: 'Du hast das Home %home% von Spieler %t_displayname% gelöscht.'
     editsign:
-      enabled: Enabled sign edit mode.
-      disabled: Disabled sign edit mode.
-      enabled-others: Enabled sign edit mode for %displayname%.
-      enabled-others-message: Sign edit mode enabled by %displayname%.
-      disabled-others: Disabled sign edit mode for %displayname%
-      disabled-others-message: Sign edit mode disabled for %displayname%.
+      enabled: 'Aktiviere Schildbearbeitungsmodus.'
+      disabled: 'Deaktiviere Schildbearbeitungsmodus.'
+      enabled-others: 'Aktiviere Schildbearbeitungsmodus für %t_displayname%.'
+      enabled-others-message: 'Schildbearbeitungsmodus von  %s_displayname% aktiviert.'
+      disabled-others: 'Deaktiviere Schildbearbeitungsmodus für %t_displayname%.'
+      disabled-others-message: 'Schildbearbeitungsmodus von  %s_displayname% deaktiviert.'
     enchant:
-      applied-enchantment: Applied enchantment %enchantment% to your item.
-      applied-enchantment-level: Applied enchantment %enchantment% level %level% to your item.
-      cannot-be-applied: This enchantment can not be applied to this item!
-      cleared-all-enchantments: Cleared all enchantments from this item.
-      not-enchanted: Item is not enchanted!
-      glint-true: Added enchantment glint to your item.
-      glint-false: Removed enchantment glint to your item.
+      applied-enchantment: 'Verzauberung %enchantment% wurde zu deinem Item hinzugefügt.'
+      applied-enchantment-level: 'Verzauberung %enchantment% Stufe %level% wurde zu deinem Item hinzugefügt.'
+      cannot-be-applied: 'Diese Verzauberung wird von deinem Item nicht unterstützt.'
+      cleared-all-enchantments: 'Alle Verzauberungen wurden von deinem Item entfernt.'
+      not-enchanted: 'Item ist nicht Verzaubert!'
+      glint-true: 'Der Verzauberungsglanz wurde zu deinem Item hinzugefügt.'
+      glint-false: 'Der Verzauberungsglanz wurde von deinem Item entfernt.'
     enderchest:
-      enderchest-open: Opened Enderchest.
-      enderchest-open-others: Opened Enderchest of %displayname%.
+      enderchest-open: 'Enderchest geöffnet.'
+      enderchest-open-others: 'Enderchest von %t_displayname% geöffnet.'
     feed:
-      feed: You were fed.
-      feed-others: You fed %displayname%.
-      feed-others-message: You were fed by %displayname%.
+      feed: 'Dein Hunger wurde aufgefüllt.'
+      feed-others: 'Du hast den Hunger von %t_displayname% aufgefüllt.'
+      feed-others-message: 'You were fed by %s_displayname%.'
     fly:
-      enable-fly: Flight mode activated.
-      enable-fly-others: Flight mode activated for %displayname%.
-      enable-fly-others-message: Flight mode activated by %displayname%.
-      disable-fly: Flight mode deactivated.
-      disable-fly-others: Flight mode deactivated for %displayname%.
-      disable-fly-others-message: Flight mode deactivated by %displayname%.
+      enable-fly: 'Flugmodus aktiviert.'
+      enable-fly-others: 'Flugmodus für %t_displayname% aktiviert.'
+      enable-fly-others-message: 'Flugmodus von %s_displayname% aktiviert.'
+      disable-fly: 'Flugmodus deaktiviert.'
+      disable-fly-others: 'Flugmodus für %t_displayname% deaktiviert.'
+      disable-fly-others-message: 'Flugmodus von %s_displayname% deaktiviert.'
     flyspeed:
-      flyspeed-set: Fly speed set to %amount%.
-      flyspeed-set-others: Fly speed set to %amount% for %displayname%.
-      flyspeed-set-others-message: Fly speed set to %amount% by %displayname%.
+      flyspeed-set: 'Fluggeschwindigkeit zu %amount% gesetzt.'
+      flyspeed-set-others: 'Fluggeschwindigkeit für %t_displayname% zu %amount% gesetzt.'
+      flyspeed-set-others-message: 'Fluggeschwindigkeit von %s_displayname% zu %amount% gesetzt.'
     god:
-      enable-god: God mode activated.
-      enable-god-others: God mode activated for %displayname%.
-      enable-god-others-message: God mode activated by %displayname%.
-      disable-god: God mode deactivated.
-      disable-god-others: God mode deactivated for %displayname%.
-      disable-god-others-message: God mode deactivated by %displayname%.
+      enable-god: 'Unsterblichkeit aktiviert.'
+      enable-god-others: 'Unsterblichkeit für %t_displayname% aktiviert.'
+      enable-god-others-message: 'Unsterblichkeit wurde von %s_displayname% aktiviert.'
+      disable-god: 'Unsterblichkeit deaktiviert.'
+      disable-god-others: 'Unsterblichkeit für %t_displayname% deaktiviert.'
+      disable-god-others-message: 'Unsterblichkeit wurde von %s_displayname% deaktiviert.'
     hat:
-      hat-success: Enjoy your new hat!
+      hat-success: 'Viel Spaß mit deinem neuen Hut!'
     heal:
-      heal: You were healed.
-      heal-others: You healed %displayname%.
-      heal-others-message: You were healed by %displayname%.
+      heal: 'Du wurdest geheilt.'
+      heal-others: 'Du hast %t_displayname% geheilt.'
+      heal-others-message: 'Du wurdest von %s_displayname% geheilt.'
     item:
-      item-renamed: Item renamed.
+      item-renamed: 'Item umbenannt.'
     kickall:
-      default-kickall: Kicked all players.
-      default-kickall-message: You were kicked.
-      custom-kickall: Kicked all players. \nReason":" %reason%.
-      custom-kickall-message: %reason%
+      default-kickall: 'Alle spieler wurden gekickt.'
+      default-kickall-message: 'Du wurdest gekickt.'
+      custom-kickall: 'Alle spieler wurden gekickt. \nGrund: %reason%.'
+      custom-kickall-message: '%reason%'
     kick:
-      default-kick: Kicked %displayname%.
-      default-kick-message: You were kicked.
-      custom-kick: Kicked %displayname%. \nReason":" %reason%
-      custom-kick-message: %reason%
+      default-kick: '%t_displayname% wurde gekickt.'
+      default-kick-message: 'Du wurdest gekickt.'
+      custom-kick: '%t_displayname% wurde gekickt. \nGrund: %reason%'
+      custom-kick-message: '%reason%'
     knockbackstick:
-      knockbackstick: You were chosen to harness the power of the stick!
-      knockbackstick-lore: Dont keep your enemies closer than your friends, duh
-      knockbackstick-others: You chose %displayname% to harness the power of the stick.
-      knockbackstick-others-message: You were chosen to harness the power of the stick by %displayname%.
+      knockbackstick: 'Du wurdest auserwählt um die Macht des Stockes zu nutzen'
+      knockbackstick-lore: 'Halte deine Feinde nicht näher als deine Freunde!'
+      knockbackstick-others: 'Du hast %t_displayname% auserwählt um die Macht des Stockes zu nutzen'
+      knockbackstick-others-message: 'Du wurdest von %s_displayname% auserwählt um die Macht des Stockes zu nutzen.'
     knownips:
-      knownips-header: -- Known IPs for %displayname% --
+      knownips-header: '-- Bekannte IPs für %t_displayname% --'
     lastcoords:
-      never-entered-world: Player has never entered this world.
-      never-quit-server: Player has never left this server.
-      lastcoords-message: %displayname%'s last coords in %world%":" \n%coords%
+      never-entered-world: 'Dieser spieler hat die welt noch nie betreten.'
+      never-quit-server: 'Dieser spieler hat den Server noch nie verlassen'
+      lastcoords-message: 'letzte Koordinaten von %t_displayname% in %world%: \n%coords%'
     lastonline:
-      lastonline-online: %displayname% is %lastonline%.
-      lastonline-offline: %displayname% was last online":" %lastonline%.
+      lastonline-online: '%t_displayname% ist %lastonline%.'
+      lastonline-offline: '%t_displayname% war zuletzt online: %lastonline%.'
     leathercolor:
-      no-leather-item: No leather item in main hand.
+      no-leather-item: 'Kein Leder-item in der Hand.'
     lockdown:
-      lockdown-enabled: Lockdown mode was enabled. Kicking all players...
-      lockdown-already-enabled: Lockdown mode is already enabled.
-      lockdown-disabled: Lockdown mode was disabled. Players can now join the server.
-      lockdown-not-enabled: Lockdown mode is not enabled.
-      allow-player: Allowed %displayname% to join during lockdown.
-      allow-player-extra: They will not be able to join again if they leave and do not have the permission "activecraft.lockdown.bypass".
-      allow-player-already-enabled: Lockdown bypass already enabled for %displayname%.
-      disallow-player: %displayname% will not be able to join during lockdown.
-      disallow-player-extra: If they have the permission "activecraft.lockdown.bypass" they will be able to join during lockdown once they join and leave the server again.
-      disallow-player-already-disabled: Lockdown bypass is not enabled for %displayname%.
+      lockdown-enabled: 'Lockdown wurde aktiviert. Alle spieler werden gekickt...'
+      lockdown-already-enabled: 'Lockdown ist schon aktiviert.'
+      lockdown-disabled: 'Lockdown wurde deaktiviert. Spieler können nun wieder auf den Server.'
+      lockdown-not-enabled: 'Lockdown ist nicht aktiviert.'
+      allow-player: '%t_displayname% kann nun während des Lockdowns dem Server beitreten.'
+      allow-player-extra: 'Der spieler kann nicht wieder beitreten wenn er verlässt und nicht die Permission "activecraft.lockdown.bypass" hat.'
+      allow-player-already-enabled: 'Lockdown umgehung schon für %t_displayname% aktiviert.'
+      disallow-player: '%t_displayname% wird nun nicht mehr während dem Lockdown beitreten können.'
+      disallow-player-extra: 'Wenn der Spieler die Permission "activecraft.lockdown.bypass" hat, kann dieser wieder während des Lockdowns beitreten, wenn er wieder nach dem Lockdown beitretet.'
+      disallow-player-already-disabled: 'Lockdown umgehung ist für %t_displayname% nicht aktiviert.'
     log:
-      log-prefix: [Log] %displayname% executed command %command%.
-      enable-log: Log activated.
-      disable-log: Log deactivated.
+      log-prefix: '[Log] %t_displayname% hat einen command ausgeführt: %command%.'
+      enable-log: 'Log aktiviert.'
+      disable-log: 'Log deaktiviert.'
     more:
-      cannot-stack: Cannot stack to this amount! Maximum is 127.
+      cannot-stack: 'Kann nicht zu dieser Menge stapeln! Maximal ist 127.'
     msg:
-      msg-prefix-to: [me -> %displayname%] %message%
-      msg-prefix-from: [%displayname% -> me] %message%
-      socialspy-prefix-to: [%sender-displayname% -> %target-displayname%] %message%
-      socialspy-prefix-from: [%target-displayname% -> %sender-displayname%] %message%
-      console-msg-prefix: [Console -> me] %message%
-      cannot-message-self: You can't message yourself.
-      include-player: Please include a player.
+      msg-prefix-to: '[Ich -> %t_displayname%] %message%'
+      msg-prefix-from: '[%s_displayname% -> Mir] %message%'
+      socialspy-prefix-to: '[%s_displayname% -> %t_displayname%] %message%'
+      socialspy-prefix-from: '[%t_displayname% -> %s_displayname%] %message%'
+      console-msg-prefix: '[Console -> Mir] %message%'
+      cannot-message-self: 'Du kannst dir selbst keine Nachrichten schreiben.'
+      include-player: 'Bitte erwähne einen Spieler.'
     mute:
-      mute: Muted %displayname%.
-      mute-message: You have been muted.
-      already-muted: This player is already muted.
+      mute: '%t_displayname% wurde gestummt.'
+      mute-message: 'Du wurdest gestummt.'
+      already-muted: 'Dieser spieler ist schon gestummt.'
     unmute:
-      unmute: Unmuted %displayname%.
-      unmute-message: You have been unmuted.
-      not-muted: This player is already muted.
+      unmute: '%t_displayname% wurde entstummt.'
+      unmute-message: 'Du wurdest entstummt.'
+      not-muted: 'Dieser spieler ist nicht gestummt.'
     nick:
-      nick-set: Nick set to %nickname%.
-      nick-set-others: Set nickname of %displayname% to %nickname%.
-      nick-set-others-message: Nickname set to %nickname% by %displayname%.
+      nick-set: 'Spitzname zu %nickname% gesetzt.'
+      nick-set-others: 'Spitznamen von %t_displayname% zu %nickname% gesetzt.'
+      nick-set-others-message: 'Spitzname wurde von %s_displayname% zu %nickname% geändert.'
     ping:
-      ping-player: Pong! %ping%ms.
-      ping-console: Pong!
+      ping-player: 'Pong! %ping%ms.'
+      ping-console: 'Pong!'
     playerlist:
-      playerlist-header: Online players":"
+      playerlist-header: 'Online spieler:'
     playtime:
-      playtime: Playtime":" %hours% hours and %minutes% minutes.
-      playtime-others: Playtime of %displayname%":" %hours% hours and %minutes% minutes.
+      playtime: 'Spielzeit: %hours% Stunden und %minutes% Minuten.'
+      playtime-others: 'Spielzeit von %t_displayname%: %hours% Stunden und %minutes% Minuten.'
     portal:
-      portal-created: Created portal.
-      portal-destroyed: Destroyed portal %name% at %coords%.
-      portal-list: Portals":"
-      portal-no-list: There are no portals to be listed.
+      portal-created: 'Portal wurde erstellt.'
+      portal-destroyed: 'Portal %name% bei %coords% wurde zerstört.'
+      portal-list: 'Portale:'
+      portal-no-list: 'Es gibt keine Portale die gelistet werden können.'
     quickgive:
-      quickgive-give: Gave you %blockname%.
-      quickgive-amount: Gave you %amount%x %blockname%.
+      quickgive-give: 'Dir wurde %blockname% gegeben.'
+      quickgive-amount: 'Dir wurden %amount%x %blockname% gegeben.'
     ram:
-      ram: %freememory% MB free \n%usedmemory% MB used \n%maxmemory% MB max
+      ram: '%freememory% MB Frei \n%usedmemory% MB Benutzt \n%maxmemory% MB Maximal'
     realname:
-      realname-header: Players with the nickname %nickname%":" \n%players%
+      realname-header: 'Spieler mit dem Spitznamen %nickname%: \n%players%'
     repair:
-      repair-sucess: Fixed your %item-displayname%.
-      cannot-be-repaired: Item can't be repaired.
+      repair-sucess: 'Dein %item-displayname% wurde repariert.'
+      cannot-be-repaired: 'Dieses Item kann nicht repariert werden.'
     restart-server:
-      restart-message: The server is restarting.
-      restart-title: Server Restart in %time%
+      restart-message: 'Der server startet neu.'
+      restart-title: 'Der server startet in %time% neu'
     skull:
-      give-skull: Gave yourself your head.
-      give-skull-others: Gave yourself %displayname%'s head.
-      give-skull-others-multiple: Gave yourself %amount%x %displayname%'s head.
+      give-skull: 'Dir wurde dein Kopf gegeben.'
+      give-skull-others: 'Dir wurde der Kopf von %t_displayname% gegeben.'
+      give-skull-others-multiple: 'Dir wurden %amount%x Köpfe von %t_displayname% gegeben.'
     spawn:
-      spawn-teleport: Teleported to spawn.
-      spawn-teleport-others: Teleported %displayname% to spawn.
-      spawn-teleport-others-message: You were teleported to spawn by %displayname%.
-      no-spawn-set: No spawn set.
+      spawn-teleport: 'Teleporte zum Spawn.'
+      spawn-teleport-others: 'Teleporte %t_displayname% zum Spawn.'
+      spawn-teleport-others-message: 'Du wurdest von %s_displayname% zum Spawn teleportiert.'
+      no-spawn-set: 'Kein Spawn gesetzt.'
     spawner:
-      spawner-displayname: %spawner% Spawner
-      spawner-give: Gave yourself a %spawner% spawner.
-      spawner-give-others: Gave %displayname% a %spawner% spawner.
-      spawner-give-others-message: %displayname% gave you a %spawner% spawner.
+      spawner-displayname: '%spawner% Spawner'
+      spawner-give: 'Dir wurde ein %spawner% spawner gegeben.'
+      spawner-give-others: 'Du hast %t_displayname% einen %spawner% spawner gegeben.'
+      spawner-give-others-message: '%s_displayname% hat dir einen %spawner% spawner gegeben.'
     summon:
-      summon: Summoned %mob%.
-      summon-multiple: Summoned %amount%x %mob%.
-      summon-others: Summoned %mob% at %displayname%'s position.
-      summon-others-multiple: Summoned %amount%x %mob% at %displayname%'s position.
+      summon: 'Du hast %mob% beschwört.'
+      summon-multiple: 'Du hast %amount%x %mob% beschwört.'
+      summon-others: 'Du hast %mob% bei der Position von %t_displayname% beschwört.'
+      summon-others-multiple: 'Du hast %amount%x %mob% bei der Position von %t_displayname% beschwört.'
     staffchat:
-      staffchat-prefix: [StaffChat] %displayname%":" %message%
-      staffchat-from-console-prefix: [StaffChat] Console":" %message%
+      staffchat-prefix: '[StaffChat] %s_displayname%: %message%'
+      staffchat-from-console-prefix: '[StaffChat] Console: %message%'
     strike:
-      strike: Thor has struck lightning upon you!
-      strike-others: Struck %displayname% with lightning.
+      strike: 'Thor hat dich mit einem Blitz getroffen!'
+      strike-others: 'Du hast %t_displayname% mit einem Blitz getroffen.'
     suicide:
-      suicide: You killed yourself.
-      broadcast-suicide: %displayname% committed suicide.
-      suicide-others: Made %displayname% commit suicide.
+      suicide: 'Du hast Selbstmord begangen.'
+      broadcast-suicide: '%t_displayname% hat Selbstmord begangen.'
+      suicide-others: 'Du hast %t_displayname% Selbstmord begehen lassen.'
     top:
-      top-teleport: Teleported to the top.
-      top-not-safe: Teleport is not safe!
-      top-teleport-others: Teleported %displayname% to the highest block above them.
+      top-teleport: 'Teleporte zum höchsten Block.'
+      top-not-safe: 'Höchster Block ist nicht sicher!'
+      top-teleport-others: 'Du hast %t_displayname% zum höchsten Block über ihm teleportiert.'
     tpa:
-      tpa-request-to: Tpa request sent to %displayname%.
-      tpa-request-from: Tpa request from %displayname%.
-      tpa-accept: [ACCEPT]
-      tpa-accept-hover: Click here to accept.
-      tpa-deny: [DENY]
-      tpa-deny-hover: Click here to deny.
+      tpa-request-to: 'Teleportierungsanfrage zu %t_displayname% gesendet.'
+      tpa-request-from: 'Teleportierungsanfrage von %s_displayname%.'
+      tpa-accept: '[ANNEHMEN]'
+      tpa-accept-hover: 'Clicke hier zum annehmen.'
+      tpa-deny: '[ABLEHNEN]'
+      tpa-deny-hover: 'Clicke hier zum abbrechen.'
     tpaccept:
-      tpaccept-actionbar: Teleporting...
-      tpaccept-reciever-message: Teleported to %displayname%.
-      tpaccept-sender-message: %displayname% teleported to you.
-      no-requests: You don't have any pending TPA requests!
+      tpaccept-actionbar: 'Teleportiere...'
+      tpaccept-reciever-message: 'Du wurdest zu %s_displayname% teleportiert.'
+      tpaccept-sender-message: '%t_displayname% hat sich zu dir teleportiert.'
+      no-requests: 'Du hast keine ausstehenden Teleportierungsanfragen!'
     deny:
-      tpadeny-reciever-message: Denied the TPA request from %displayname%.
-      tpadeny-sender-message: %displayname% denied your TPA request.
-      no-requests: You don't have any pending TPA requests!
+      tpadeny-reciever-message: 'Du hast die Teleportierungsanfrage von %s_displayname% abgelehnt.'
+      tpadeny-sender-message: '%t_displayname% hat deine Teleportierungsanfrage abgelehnt.'
+      no-requests: 'Du hast keine ausstehenden Teleportierungsanfragen!'
     tpall:
-      tpall: Teleported all players to you.
-      tpall-message: You were teleported to %displayname%.
-      tpall-exept: %displayname% executed a tpall, but you were not teleported.
+      tpall: 'Du hast alle Spieler zu dir teleportiert.'
+      tpall-message: 'Du wurdest zu %s_displayname% teleportiert.'
+      tpall-exept: '%s_displayname% hat alle Spieler zu sich teleportiert, aber zu wurdest nicht teleportiert.'
     teleport:
-      cannot-tp-to-self: You can't teleport to yourself!
-      cannot-tp-others-to-themself: You can't teleport the player to themself!
-      teleport-to-player: Teleported to %displayname%.
-      teleport-to-coords: Teleported to %coords%.
-      teleport-player-to-player: Teleported %mover-displayname% to %reciever-displayname%.
-      teleport-player-to-coords: Teleported %displayname% to %coords%.
+      cannot-tp-to-self: 'Du kannst dich nicht zu dir selbst teleportieren'
+      cannot-tp-others-to-themself: 'Du kannst diesen Spieler nicht zu ihm selbst teleportieren!'
+      teleport-to-player: 'Du wurdest zu %s_displayname% teleportiert.'
+      teleport-to-coords: 'Du wurdest zu %coords% teleportiert.'
+      teleport-player-to-player: 'Du hast %t1_displayname% zu %t2_displayname% teleportiert.'
+      teleport-player-to-coords: 'Du hast %t_displayname% zu %coords% teleportiert.'
     tphere:
-      cannot-tp-to-self: You can't teleport to yourself!
-      teleport-player-to-you: Teleported %displayname% to you.
+      cannot-tp-to-self: 'Du kannst dich nicht zu dir selbst teleportieren'
+      teleport-player-to-you: 'Du hast %t_displayname% zu dir teleportiert.'
     vanish:
-      now-visible: You are now visible.
-      now-invisible: You are now invisible.
-      now-visible-others: %displayname% is now visible.
-      now-invisible-others: %displayname% is now invisible.
+      now-visible: 'Du bist nun sichtbar.'
+      now-invisible: 'Du bist nun unsichtbar.'
+      now-visible-others: '%t_displayname% ist nun sichtbar.'
+      now-invisible-others: '%t_displayname% ist nun unstichtbar.'
     verify:
-      default-mute-remove: Verified %displayname%.
-      default-mute-remove-message: Your default mute has been removed. You are now able to talk.
-      not-default-muted: Player is not default muted!
+      default-mute-remove: 'Du hast %t_displayname% verifiziert.'
+      default-mute-remove-message: 'Deine Standardstummschaltung wurde entfernt. Du kannst nun im Chat schreiben.'
+      not-default-muted: 'Dieser spieler ist nicht standardmäßig stummgeschaltet!'
     walkspeed:
-      walkspeed-set: Walk speed set to %amount%.
-      walkspeed-set-others: Walk speed set to %amount% for %displayname%.
-      walkspeed-set-others-message: Walk speed set to %amount% by %displayname%.
+      walkspeed-set: 'Gehgeschwindigkeit zu %amount% gesetzt.'
+      walkspeed-set-others: 'Gehgeschwindigkeit zu %amount% für %t_displayname% gesetzt.'
+      walkspeed-set-others-message: 'Gehgeschwindigkeit zu %amount% durch %s_displayname% gesetzt.'
     warn:
-      default-warn-reason: Warned by a moderator.
-      warn-add: Warned %displayname%. \nReason":" %reason%.
-      warn-remove: Removed warn %reason% from %displayname%.
-      warn-get-header: -- %displayname%'s Warn Entry --
-      warn-get: Reason":" %reason% \nCreated":" %date-created% \nSource":" %displayname-creator% \nID":" %warn-id%
-      warned-header: You have been warned!
-      warned: Reason":" %reason$ \nWarned by":" %displayname-creator%.
-      warned-remove: Your warn %reason% has been removed.
+      default-warn-reason: 'Durch einen Moderator gewarnt.'
+      warn-add: 'Du hast %t_displayname% gewarnt. \nGrund: %reason%.'
+      warn-remove: 'Du hast die Warnung %reason% von %t_displayname% entfernt.'
+      warn-get-header: '-- Warnungen von %t_displayname% --'
+      warn-get: 'Grund: %reason% \nErstelldatum: %date-created% \nWarner: %s_displayname% \nID: %warn-id%'
+      warned-header: 'Du wurdest gewarnt!'
+      warned: 'Grund: %reason% \nGewarnt von: %s_displayname%.'
+      warned-remove: 'Deine Warnung %reason% wurde entfernt.'
     warp:
-      warp-doesnt-exist: This warp does not exist!
-      warp-teleport: You warped to %warp%.
-      warp-teleport-others: Warped %displayname% to %warp%.
-      warp-teleport-others-message: You were warped to %warp% by %displayname%.
+      warp-doesnt-exist: 'Dieser Warp existiert nicht'
+      warp-teleport: 'Du hast dich zu %warp% teleportiert.'
+      warp-teleport-others: 'Du hast %t1_displayname% zu %warp% teleportiert.'
+      warp-teleport-others-message: 'Du wurdest von %s_displayname% zu %warp% teleportiert.'
     setwarp:
-      already-exists: This warp already exists!
-      warp-set: Created the warp %warp%.
+      already-exists: 'Dieser Warp existiert bereits!'
+      warp-set: 'Du hast den Warp %warp% erstellt.'
     deletewarp:
-      doesnt-exist: This warp does not exist!
-      warp-deleted: Deleted the warp %warp%.
+      doesnt-exist: 'Dieser Warp existiert nicht!'
+      warp-deleted: 'Du hast den Warp %warp% gelöscht.'
     warps:
-      warps-header: Warps":"
-      no-warps: There are no warps to be listed.
+      warps-header: 'Warps:'
+      no-warps: 'Es existieren keine Warps.'
     weather:
-      to-thunder: Changed weather in %world% to Thunder.
-      to-rain: Changed weather in %world% to Raub.
-      to-clear: Changed weather in %world% to Clear.
+      to-thunder: 'Du hast das Wetter in %world% zu Gewitter geändert.'
+      to-rain: 'Du hast das Wetter in %world% zu Regen geändert.'
+      to-clear: 'Du hast das Wetter in %world% zu Sonne geändert.'
     whereami:
-      whereami: You are in %world% at %coords%.
-      whereami-others: %displayname% is in %world% at %coords%.
+      whereami: 'Du bist in %world% bei den Koordinaten %coords%.'
+      whereami-others: '%t_displayname% ist in %world% bei den Koordinaten %coords%.'
     whois:
-      name: Name":" %playername%
-      nickname: Nickname":" %displayname%
-      colornick: Colornick":" %colornick%
-      uuid: UUID":" %uuid%
-      is-op: Op":" %op%
-      health: Health":" %playerhealth%
-      food: Food":" %playerfood%
-      world: World":" %world%
-      coords: Coordinates":" %coords%
-      afk: AFK":" %afk%
-      client: Client":" %client%
-      address: Address":" %ip%
-      gamemode: Gamemode":" %gamemode%
-      muted: Muted":" %muted%
-      whitelisted: Whitelisted":" %whitelisted%
-      god: God":" %god%
-      vanished: Vanished":" %vanished%
-      onduty: On Duty":" %onduty%
+      name: 'Name: %playername%'
+      nickname: 'Spitzname: %displayname%'
+      colornick: 'Namensfarbe: %colornick%'
+      uuid: 'UUID: %uuid%'
+      is-op: 'Op: %op%'
+      health: 'Level: %playerhealth%'
+      food: 'Essen: %playerfood%'
+      world: 'Welt: %world%'
+      coords: 'Koordinaten: %coords%'
+      afk: 'AFK: %afk%'
+      client: 'Client: %client%'
+      address: 'Addresse: %ip%'
+      gamemode: 'Gamemode: %gamemode%'
+      muted: 'Stummgeschaltet: %muted%'
+      whitelisted: 'Gewhitelistet: %whitelisted%'
+      god: 'Unsterblich: %god%'
+      vanished: 'Unsichtbar: %vanished%'
     xp:
-      xp-levels: Gave yourself %amount% levels.
-      xp-xp: Gave yourself %amount% xp.
-      xp-levels-others: Gave %displayname% %amount% levels.
-      xp-levels-others-message: You were given %amount% levels by %displayname%.
-      xp-xp-others: Gave %displayname% %amount% xp.
-      xp-xp-others-message: You were given %amount% xp by %displayname%.
+      xp-levels: 'Du hast dir %amount% Level gegeben.'
+      xp-xp: 'Du hast dir %amount% Erfahrungspunkte gegeben.'
+      xp-levels-others: 'Du hast %t_displayname% %amount% Level gegeben.'
+      xp-levels-others-message: 'Dir wurden %amount% Level von %s_displayname% gegeben.'
+      xp-xp-others: 'Du hast %t_displayname% %amount% Erfahrungspunkte gegeben.'
+      xp-xp-others-message: 'Dir wurden %amount% Erfahrungspunkte von %s_displayname% gegeben.'

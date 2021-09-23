@@ -18,28 +18,28 @@ public class PlayerlistCommand implements CommandExecutor {
 
             if(sender.hasPermission("activecraft.playerlist")) {
 
-                StringBuilder stringBuilder = new StringBuilder();
-                FileConfig mainConfig = new FileConfig("config.yml");
-                boolean isFirst = true;
-                for(Player player : Bukkit.getOnlinePlayers()) {
-                    FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + player.getName().toLowerCase() + ".yml");
-                    if (playerdataConfig.getBoolean("vanished")) {
-                        if (sender.hasPermission("activecraft.vanish.see")) {
-                            if (!isFirst) {
-                                stringBuilder.append(", ");
-                            } else isFirst = false;
-                            stringBuilder.append(player.getName() + ChatColor.GRAY + " " + mainConfig.getString("vanish-format"));
-                        }
-                    } else {
+            StringBuilder stringBuilder = new StringBuilder();
+            FileConfig mainConfig = new FileConfig("config.yml");
+            boolean isFirst = true;
+            for(Player player : Bukkit.getOnlinePlayers()) {
+                FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + player.getName().toLowerCase() + ".yml");
+                if (playerdataConfig.getBoolean("vanished")) {
+                    if (sender.hasPermission("activecraft.vanish.see")) {
                         if (!isFirst) {
-                            stringBuilder.append(", ");
+                            stringBuilder.append(ChatColor.WHITE + ", ");
                         } else isFirst = false;
-                        stringBuilder.append(player.getDisplayName());
+                        stringBuilder.append(player.getName() + ChatColor.GRAY + " " + mainConfig.getString("vanish-format"));
                     }
+                } else {
+                    if (!isFirst) {
+                        stringBuilder.append(ChatColor.WHITE + ", ");
+                    } else isFirst = false;
+                    stringBuilder.append(player.getDisplayName());
                 }
-                sender.sendMessage(ChatColor.GOLD + "Online players:");
-                sender.sendMessage(stringBuilder.toString());
-            } else sender.sendMessage(Errors.NO_PERMISSION());
+            }
+            sender.sendMessage(ChatColor.GOLD + "Online players:");
+            sender.sendMessage(stringBuilder.toString());
+        } else sender.sendMessage(Errors.NO_PERMISSION());
         return true;
     }
 }

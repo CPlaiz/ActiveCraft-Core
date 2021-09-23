@@ -19,7 +19,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 public final class Main extends JavaPlugin {
@@ -30,6 +29,7 @@ public final class Main extends JavaPlugin {
     private static VanishManager vanishManager;
 
     private Language language;
+    private ActiveCraftMessage activeCraftMessage;
 
     private FileConfig playtimeConfig;
     private FileConfig locationsConfig;

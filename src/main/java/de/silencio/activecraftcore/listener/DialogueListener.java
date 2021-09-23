@@ -1,6 +1,6 @@
 package de.silencio.activecraftcore.listener;
 
-import de.silencio.activecraftcore.messages.Dialogue.DialogueManager;
+import de.silencio.activecraftcore.dialogue.DialogueManager;
 
 public interface DialogueListener {
 

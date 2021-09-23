@@ -8,12 +8,12 @@ public interface Reasons {
 
     String UNAUTHORIZED_ALTERNATE_ACCOUNT = "Unauthorized Alternate Account";
 
-    String CHATFILL_SPAM = "Chatfill / Spam";
+    String SPAM = "Spam";
 
     String ABUSIVE_LANGUAGE = "Abusive Language";
 
-    String SCAMMING_STEALING = "Scamming / Stealing";
+    String STEALING = "Stealing";
 
-    String GRIEFING_STEALING = "Griefing / Stealing";
+    String GRIEFING = "Griefing";
 
 }

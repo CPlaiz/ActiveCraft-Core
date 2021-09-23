@@ -30,7 +30,7 @@ public class SpawnMobCommand implements CommandExecutor, TabCompleter {
                         value = EntityType.valueOf(args[0]);
                     } catch (IllegalArgumentException ignored) {
                     }
-                    if (value == null || value.name().equals("UNKNOWN")) {
+                    if (value != null) {
                         world.spawnEntity(player.getLocation(), EntityType.valueOf(args[0]));
 
                         player.sendMessage(ChatColor.GOLD + "Summoned " + ChatColor.AQUA + args[0] + ChatColor.GOLD + ".");

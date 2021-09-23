@@ -1,9 +1,9 @@
 package de.silencio.activecraftcore.commands;
 
 import de.silencio.activecraftcore.Main;
-import de.silencio.activecraftcore.messages.Dialogue.DialogueList;
+import de.silencio.activecraftcore.dialogue.DialogueList;
 import de.silencio.activecraftcore.listener.DialogueListener;
-import de.silencio.activecraftcore.messages.Dialogue.DialogueManager;
+import de.silencio.activecraftcore.dialogue.DialogueManager;
 import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.manager.BanManager;
 import de.silencio.activecraftcore.utils.FileConfig;
