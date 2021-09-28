@@ -339,8 +339,8 @@ public class ProfileMenu implements Listener {
         }
         {
             reasonStack_hacking = new ItemBuilder(Material.PAPER)
-                    .displayname(ChatColor.GOLD + Reasons.HACKING)
-                    .lore(ChatColor.GRAY + "Set the reason to " + ChatColor.DARK_AQUA + Reasons.HACKING)
+                    .displayname(ChatColor.GOLD + Reasons.HACKING())
+                    .lore(ChatColor.GRAY + "Set the reason to " + ChatColor.DARK_AQUA + Reasons.HACKING())
                     .build();
 
             activeReason = Reason.HACKING;
@@ -350,8 +350,8 @@ public class ProfileMenu implements Listener {
         }
         {
             reasonStack_botting = new ItemBuilder(Material.PAPER)
-                    .displayname(ChatColor.GOLD + Reasons.BOTTING)
-                    .lore(ChatColor.GRAY + "Set the reason to " + ChatColor.DARK_AQUA + Reasons.BOTTING)
+                    .displayname(ChatColor.GOLD + Reasons.BOTTING())
+                    .lore(ChatColor.GRAY + "Set the reason to " + ChatColor.DARK_AQUA + Reasons.BOTTING())
                     .build();
 
             activeReason = Reason.BOTTING;
@@ -361,8 +361,8 @@ public class ProfileMenu implements Listener {
         }
         {
             reasonStack_abusive_lang = new ItemBuilder(Material.PAPER)
-                    .displayname(ChatColor.GOLD + Reasons.ABUSIVE_LANGUAGE)
-                    .lore(ChatColor.GRAY + "Set the reason to " + ChatColor.DARK_AQUA + Reasons.ABUSIVE_LANGUAGE)
+                    .displayname(ChatColor.GOLD + Reasons.ABUSIVE_LANGUAGE())
+                    .lore(ChatColor.GRAY + "Set the reason to " + ChatColor.DARK_AQUA + Reasons.ABUSIVE_LANGUAGE())
                     .build();
 
             activeReason = Reason.ABUSIVE_LANGUAGE;
@@ -372,8 +372,8 @@ public class ProfileMenu implements Listener {
         }
         {
             reasonStack_spam = new ItemBuilder(Material.PAPER)
-                    .displayname(ChatColor.GOLD + Reasons.SPAM)
-                    .lore(ChatColor.GRAY + "Set the reason to " + ChatColor.DARK_AQUA + Reasons.SPAM)
+                    .displayname(ChatColor.GOLD + Reasons.SPAM())
+                    .lore(ChatColor.GRAY + "Set the reason to " + ChatColor.DARK_AQUA + Reasons.SPAM())
                     .build();
 
             activeReason = Reason.CHATFILL_SPAM;
@@ -383,8 +383,8 @@ public class ProfileMenu implements Listener {
         }
         {
             reasonStack_griefing = new ItemBuilder(Material.PAPER)
-                    .displayname(ChatColor.GOLD + Reasons.GRIEFING)
-                    .lore(ChatColor.GRAY + "Set the reason to " + ChatColor.DARK_AQUA + Reasons.GRIEFING)
+                    .displayname(ChatColor.GOLD + Reasons.GRIEFING())
+                    .lore(ChatColor.GRAY + "Set the reason to " + ChatColor.DARK_AQUA + Reasons.GRIEFING())
                     .build();
 
             activeReason = Reason.GRIEFING_STEALING;
@@ -394,8 +394,8 @@ public class ProfileMenu implements Listener {
         }
         {
             reasonStack_scamming = new ItemBuilder(Material.PAPER)
-                    .displayname(ChatColor.GOLD + Reasons.STEALING)
-                    .lore(ChatColor.GRAY + "Set the reason to " + ChatColor.DARK_AQUA + Reasons.STEALING)
+                    .displayname(ChatColor.GOLD + Reasons.STEALING())
+                    .lore(ChatColor.GRAY + "Set the reason to " + ChatColor.DARK_AQUA + Reasons.STEALING())
                     .build();
 
             activeReason = Reason.SCAMMING_STEALING;
@@ -405,8 +405,8 @@ public class ProfileMenu implements Listener {
         }
         {
             reasonStack_unauthorized_alt_acc = new ItemBuilder(Material.PAPER)
-                    .displayname(ChatColor.GOLD + Reasons.UNAUTHORIZED_ALTERNATE_ACCOUNT)
-                    .lore(ChatColor.GRAY + "Set the reason to " + ChatColor.DARK_AQUA + Reasons.UNAUTHORIZED_ALTERNATE_ACCOUNT)
+                    .displayname(ChatColor.GOLD + Reasons.UNAUTHORIZED_ALTERNATE_ACCOUNT())
+                    .lore(ChatColor.GRAY + "Set the reason to " + ChatColor.DARK_AQUA + Reasons.UNAUTHORIZED_ALTERNATE_ACCOUNT())
                     .build();
 
             activeReason = Reason.UNAUTHORIZED_ALTERNATE_ACCOUNT;
@@ -537,7 +537,7 @@ public class ProfileMenu implements Listener {
                         }
                     }
                     reasonsTimeInv.setItem(event.getSlot() + 9, selectedStack);
-                    violationReason = Reasons.HACKING;
+                    violationReason = Reasons.HACKING();
                 }
             } else if (Objects.equals(event.getCurrentItem(), this.reasonStack_botting)) {
                 if ((Objects.equals(reasonsTimeInv.getItem(event.getSlot() + 9), not_selectedStack))) {
@@ -547,7 +547,7 @@ public class ProfileMenu implements Listener {
                         }
                     }
                     reasonsTimeInv.setItem(event.getSlot() + 9, selectedStack);
-                    violationReason = Reasons.BOTTING;
+                    violationReason = Reasons.BOTTING();
                 }
             } else if (Objects.equals(event.getCurrentItem(), this.reasonStack_unauthorized_alt_acc)) {
                 if ((Objects.equals(reasonsTimeInv.getItem(event.getSlot() + 9), not_selectedStack))) {
@@ -557,7 +557,7 @@ public class ProfileMenu implements Listener {
                         }
                     }
                     reasonsTimeInv.setItem(event.getSlot() + 9, selectedStack);
-                    violationReason = Reasons.UNAUTHORIZED_ALTERNATE_ACCOUNT;
+                    violationReason = Reasons.UNAUTHORIZED_ALTERNATE_ACCOUNT();
                 }
             } else if (Objects.equals(event.getCurrentItem(), this.reasonStack_griefing)) {
                 if ((Objects.equals(reasonsTimeInv.getItem(event.getSlot() + 9), not_selectedStack))) {
@@ -567,7 +567,7 @@ public class ProfileMenu implements Listener {
                         }
                     }
                     reasonsTimeInv.setItem(event.getSlot() + 9, selectedStack);
-                    violationReason = Reasons.GRIEFING;
+                    violationReason = Reasons.GRIEFING();
                 }
             } else if (Objects.equals(event.getCurrentItem(), this.reasonStack_scamming)) {
                 if ((Objects.equals(reasonsTimeInv.getItem(event.getSlot() + 9), not_selectedStack))) {
@@ -577,7 +577,7 @@ public class ProfileMenu implements Listener {
                         }
                     }
                     reasonsTimeInv.setItem(event.getSlot() + 9, selectedStack);
-                    violationReason = Reasons.STEALING;
+                    violationReason = Reasons.STEALING();
                 }
             } else if (Objects.equals(event.getCurrentItem(), this.reasonStack_spam)) {
                 if ((Objects.equals(reasonsTimeInv.getItem(event.getSlot() + 9), not_selectedStack))) {
@@ -587,7 +587,7 @@ public class ProfileMenu implements Listener {
                         }
                     }
                     reasonsTimeInv.setItem(event.getSlot() + 9, selectedStack);
-                    violationReason = Reasons.SPAM;
+                    violationReason = Reasons.SPAM();
                 }
             } else if (Objects.equals(event.getCurrentItem(), this.reasonStack_abusive_lang)) {
                 if ((Objects.equals(reasonsTimeInv.getItem(event.getSlot() + 9), not_selectedStack))) {
@@ -597,7 +597,7 @@ public class ProfileMenu implements Listener {
                         }
                     }
                     reasonsTimeInv.setItem(event.getSlot() + 9, selectedStack);
-                    violationReason = Reasons.ABUSIVE_LANGUAGE;
+                    violationReason = Reasons.ABUSIVE_LANGUAGE();
                 }
             }
 
@@ -686,7 +686,7 @@ public class ProfileMenu implements Listener {
                         }
                     }
                     reasonsInv.setItem(event.getSlot() + 9, selectedStack);
-                    violationReason = Reasons.HACKING;
+                    violationReason = Reasons.HACKING();
                 }
             } else if (Objects.equals(event.getCurrentItem(), this.reasonStack_botting)) {
                 if ((Objects.equals(reasonsInv.getItem(event.getSlot() + 9), not_selectedStack))) {
@@ -696,7 +696,7 @@ public class ProfileMenu implements Listener {
                         }
                     }
                     reasonsInv.setItem(event.getSlot() + 9, selectedStack);
-                    violationReason = Reasons.BOTTING;
+                    violationReason = Reasons.BOTTING();
                 }
             } else if (Objects.equals(event.getCurrentItem(), this.reasonStack_unauthorized_alt_acc)) {
                 if ((Objects.equals(reasonsInv.getItem(event.getSlot() + 9), not_selectedStack))) {
@@ -706,7 +706,7 @@ public class ProfileMenu implements Listener {
                         }
                     }
                     reasonsInv.setItem(event.getSlot() + 9, selectedStack);
-                    violationReason = Reasons.UNAUTHORIZED_ALTERNATE_ACCOUNT;
+                    violationReason = Reasons.UNAUTHORIZED_ALTERNATE_ACCOUNT();
                 }
             } else if (Objects.equals(event.getCurrentItem(), this.reasonStack_griefing)) {
                 if ((Objects.equals(reasonsInv.getItem(event.getSlot() + 9), not_selectedStack))) {
@@ -716,7 +716,7 @@ public class ProfileMenu implements Listener {
                         }
                     }
                     reasonsInv.setItem(event.getSlot() + 9, selectedStack);
-                    violationReason = Reasons.GRIEFING;
+                    violationReason = Reasons.GRIEFING();
                 }
             } else if (Objects.equals(event.getCurrentItem(), this.reasonStack_scamming)) {
                 if ((Objects.equals(reasonsInv.getItem(event.getSlot() + 9), not_selectedStack))) {
@@ -726,7 +726,7 @@ public class ProfileMenu implements Listener {
                         }
                     }
                     reasonsInv.setItem(event.getSlot() + 9, selectedStack);
-                    violationReason = Reasons.STEALING;
+                    violationReason = Reasons.STEALING();
                 }
             } else if (Objects.equals(event.getCurrentItem(), this.reasonStack_spam)) {
                 if ((Objects.equals(reasonsInv.getItem(event.getSlot() + 9), not_selectedStack))) {
@@ -736,7 +736,7 @@ public class ProfileMenu implements Listener {
                         }
                     }
                     reasonsInv.setItem(event.getSlot() + 9, selectedStack);
-                    violationReason = Reasons.SPAM;
+                    violationReason = Reasons.SPAM();
                 }
             } else if (Objects.equals(event.getCurrentItem(), this.reasonStack_abusive_lang)) {
                 if ((Objects.equals(reasonsInv.getItem(event.getSlot() + 9), not_selectedStack))) {
@@ -746,7 +746,7 @@ public class ProfileMenu implements Listener {
                         }
                     }
                     reasonsInv.setItem(event.getSlot() + 9, selectedStack);
-                    violationReason = Reasons.ABUSIVE_LANGUAGE;
+                    violationReason = Reasons.ABUSIVE_LANGUAGE();
                 }
             }
         }
