@@ -28,7 +28,7 @@ public class SpawnerCommand implements CommandExecutor, TabCompleter {
             try {
                 value = EntityType.valueOf(mobName);
             } catch (IllegalArgumentException exp) {
-                sender.sendMessage(Errors.WARNING() + "Invalid Entity!");
+                sender.sendMessage(Errors.INVALID_ENTITY());
                 return false;
             }
             if (sender instanceof Player) {
@@ -67,7 +67,7 @@ public class SpawnerCommand implements CommandExecutor, TabCompleter {
                 } catch (IllegalArgumentException ignored) {
                 }
                 if (value == null || value.name().equals("UNKNOWN")) {
-                    sender.sendMessage(Errors.WARNING() + "Invalid Entity!");
+                    sender.sendMessage(Errors.INVALID_ENTITY());
                     return false;
                 }
 

@@ -1,19 +1,41 @@
 package de.silencio.activecraftcore.messages;
 
-public interface Reasons {
+import de.silencio.activecraftcore.Main;
+import org.bukkit.ChatColor;
 
-    String HACKING = "Hacking";
+public class Reasons {
 
-    String BOTTING = "Botting";
+    static ActiveCraftMessage acm = Main.getPlugin().getActiveCraftMessage();
 
-    String UNAUTHORIZED_ALTERNATE_ACCOUNT = "Unauthorized Alternate Account";
+    public static String WARNING() {
+        return acm.getMessage(MessageType.REASON, "general-warning");
+    }
 
-    String SPAM = "Spam";
+    public static String HACKING() {
+        return acm.getMessage(MessageType.REASON, "no-permission");
+    }
 
-    String ABUSIVE_LANGUAGE = "Abusive Language";
+    public static String BOTTING() {
+        return acm.getMessage(MessageType.REASON, "invalid-player");
+    }
 
-    String STEALING = "Stealing";
+    public static String UNAUTHORIZED_ALTERNATE_ACCOUNT() {
+        return acm.getMessage(MessageType.REASON, "invalid-number");
+    }
 
-    String GRIEFING = "Griefing";
+    public static String SPAM() {
+        return acm.getMessage(MessageType.REASON, "invalid-arguments");
+    }
 
+    public static String ABUSIVE_LANGUAGE() {
+        return acm.getMessage(MessageType.REASON, "too-many-arguments");
+    }
+
+    public static String STEALING() {
+        return acm.getMessage(MessageType.REASON, "cannot-target-self");
+    }
+
+    public static String GRIEFING() {
+        return acm.getMessage(MessageType.REASON, "invalid-color");
+    }
 }

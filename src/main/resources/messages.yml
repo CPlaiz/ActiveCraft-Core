@@ -242,9 +242,9 @@ en:
     realname:
       realname-header: 'Players with the nickname %nickname%: \n%players%'
     repair:
-      repair-sucess: 'Fixed your %item-displayname%.'
+      repair-success: 'Fixed your %item-displayname%.'
       cannot-be-repaired: "Item can't be repaired."
-    restart-server:
+    restartserver:
       restart-message: 'The server is restarting.'
       restart-title: 'Server Restart in %time%'
     skull:
@@ -291,24 +291,24 @@ en:
       tpaccept-actionbar: 'Teleporting...'
       tpaccept-reciever-message: 'Teleported to %s_displayname%.'
       tpaccept-sender-message: '%t_displayname% teleported to you.'
-      no-requests: "You don't have any pending TPA requests!"
-    deny:
+      no-requests-accept: "You don't have any pending TPA requests!"
+    tpadeny:
       tpadeny-reciever-message: 'Denied the TPA request from %s_displayname%.'
       tpadeny-sender-message: '%t_displayname% denied your TPA request.'
-      no-requests: "You don't have any pending TPA requests!"
+      no-requests-deny: "You don't have any pending TPA requests!"
     tpall:
       tpall: 'Teleported all players to you.'
       tpall-message: 'You were teleported to %displayname%.'
       tpall-exept: '%s_displayname% executed a tpall, but you were not teleported.'
     teleport:
-      cannot-tp-to-self: "You can't teleport to yourself!"
+      cannot-tp-to-self-teleport: "You can't teleport to yourself!"
       cannot-tp-others-to-themself: "You can't teleport the player to themself!"
       teleport-to-player: 'Teleported to %t_displayname%.'
       teleport-to-coords: 'Teleported to %coords%.'
       teleport-player-to-player: 'Teleported %t1_displayname% to %t2_displayname%.'
       teleport-player-to-coords: 'Teleported %t_displayname% to %coords%.'
     tphere:
-      cannot-tp-to-self: "You can't teleport to yourself!"
+      cannot-tp-to-self-tphere: "You can't teleport to yourself!"
       teleport-player-to-you: 'Teleported %displayname% to you.'
     vanish:
       now-visible: 'You are now visible.'

@@ -89,8 +89,8 @@ public class FlyCommand implements CommandExecutor {
                                 player.sendMessage(ChatColor.GOLD + "Fly speed set to " + ChatColor.AQUA + args[0] + ChatColor.GOLD + ".");
                                 fileConfig.set("flyspeed", Integer.parseInt(args[0]));
                                 fileConfig.saveConfig();
-                            } else sender.sendMessage(Errors.WARNING() + "Given number is too large!");
-                        } else sender.sendMessage(Errors.WARNING() + "This is not a valid number!");
+                            } else sender.sendMessage(Errors.NUMBER_TOO_LARGE());
+                        } else sender.sendMessage(Errors.INVALID_NUMBER());
                     } else sender.sendMessage(Errors.NO_PERMISSION());
                 } else sender.sendMessage(Errors.NOT_A_PLAYER());
             } else if (args.length == 2) {
@@ -117,7 +117,7 @@ public class FlyCommand implements CommandExecutor {
                             sender.sendMessage(ChatColor.GOLD + "Fly speed set to " + ChatColor.AQUA + args[1] + ChatColor.GOLD + " for " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + ".");
                             fileConfig.set("flyspeed", Integer.parseInt(args[1]));
                             fileConfig.saveConfig();
-                        } else sender.sendMessage(Errors.WARNING() + "Given number is too large!");
+                        } else sender.sendMessage(Errors.NUMBER_TOO_LARGE());
                     } else sender.sendMessage(Errors.INVALID_NUMBER());
                 } else sender.sendMessage(Errors.NO_PERMISSION());
             } else sender.sendMessage(Errors.INVALID_ARGUMENTS());

@@ -196,11 +196,11 @@ public class EnchantCommand implements CommandExecutor, TabCompleter {
 
                                 player.sendMessage(ChatColor.GOLD + "Applied enchantment " + ChatColor.AQUA + args[0].replace("_", " ") + " " + level + ChatColor.GOLD + " to your item.");
                                 player.playSound(player.getLocation(), Sound.BLOCK_ENCHANTMENT_TABLE_USE, 1f, 1f);
-                            } else sender.sendMessage(Errors.WARNING() + "You are not holding an item.");
+                            } else sender.sendMessage(Errors.NOT_HOLDING_ITEM());
                         } else if (args.length > 2) {
                             sender.sendMessage(Errors.TOO_MANY_ARGUMENTS());
                         }
-                    } else sender.sendMessage(Errors.WARNING() + "You are not holding an item!");
+                    } else sender.sendMessage(Errors.NOT_HOLDING_ITEM());
                 } else sender.sendMessage(Errors.NO_PERMISSION());
             }
         } else sender.sendMessage(Errors.NOT_A_PLAYER());

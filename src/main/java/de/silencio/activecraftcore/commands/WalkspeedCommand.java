@@ -34,7 +34,7 @@ public class WalkspeedCommand implements CommandExecutor {
                         playerdataConfig.set("walkspeed", args[0]);
                         player.setWalkSpeed((float) Integer.parseInt(args[0]) / 10);
                         player.sendMessage(ChatColor.GOLD + "Walk speed set to " + ChatColor.AQUA + args[0] + ChatColor.GOLD + ".");
-                    } else sender.sendMessage(Errors.WARNING() + "Given number is too large!");
+                    } else sender.sendMessage(Errors.NUMBER_TOO_LARGE());
                 } else sender.sendMessage(Errors.NO_PERMISSION());
             } else sender.sendMessage(Errors.NOT_A_PLAYER());
             return true;
@@ -68,7 +68,7 @@ public class WalkspeedCommand implements CommandExecutor {
                 target.setWalkSpeed((float) Integer.parseInt(args[0]) / 10);
                 sender.sendMessage(ChatColor.GOLD + "Walk speed set to " + ChatColor.AQUA + args[1] + ChatColor.GOLD + " for " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + ".");
                 target.sendMessage(ChatColor.GOLD + "Walk speed set to " + ChatColor.AQUA + args[1] + ChatColor.GOLD + " by " + ChatColor.AQUA + sender.getName() + ChatColor.GOLD + ".");
-            } else sender.sendMessage(Errors.WARNING() + "Given number is too large!");
+            } else sender.sendMessage(Errors.NUMBER_TOO_LARGE());
         }
         return true;
     }

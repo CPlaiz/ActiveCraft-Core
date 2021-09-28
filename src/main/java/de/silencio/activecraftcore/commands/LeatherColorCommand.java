@@ -44,7 +44,7 @@ public class LeatherColorCommand implements CommandExecutor, TabCompleter {
                                         int[] rgbArray = ColorUtils.getRGB(args[0]);
                                         color = Color.fromRGB(rgbArray[0], rgbArray[1], rgbArray[2]);
                                     } else {
-                                        sender.sendMessage(Errors.WARNING() + "This is not a valid hex code!");
+                                        sender.sendMessage(Errors.INVALID_HEX());
                                         return false;
                                     }
                                 } else {

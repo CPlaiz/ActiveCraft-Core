@@ -4,6 +4,8 @@ import de.silencio.activecraftcore.Main;
 import de.silencio.activecraftcore.dialogue.DialogueList;
 import de.silencio.activecraftcore.listener.DialogueListener;
 import de.silencio.activecraftcore.dialogue.DialogueManager;
+import de.silencio.activecraftcore.messages.ActiveCraftMessage;
+import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.manager.BanManager;
 import de.silencio.activecraftcore.utils.FileConfig;
@@ -63,20 +65,20 @@ public class BanCommand implements CommandExecutor, DialogueList, Listener, Dial
                     this.commandSender = sender;
 
                     this.dialogueManager = new DialogueManager((Player) sender);
-                    this.dialogueManager.setHeader(ChatColor.GOLD + "-- Ban Dialogue for " + ChatColor.AQUA + target.getName() + ChatColor.GOLD + " --");
-                    this.dialogueManager.setCompletedMessage(ChatColor.GOLD + "Banned " + ChatColor.AQUA + target.getName() + ChatColor.GOLD + ".");
-                    this.dialogueManager.setCancelledMessage(ChatColor.GOLD + "Cancelled ban dialogue for " + ChatColor.AQUA + target.getName() + ChatColor.GOLD + ".");
-                    this.dialogueManager.add(ChatColor.GOLD + "Please enter a reason: ");
-                    this.dialogueManager.add(ChatColor.GOLD + "Please enter the ban duration: ");
+                    this.dialogueManager.setHeader(CommandMessages.BAN_HEADER(target, sender));
+                    this.dialogueManager.setCompletedMessage(CommandMessages.BAN_COMPLETED_MESSAGE(target, sender));
+                    this.dialogueManager.setCancelledMessage(CommandMessages.BAN_CANCELLED_MESSAGE(target, sender));
+                    this.dialogueManager.add(CommandMessages.BAN_ENTER_REASON(target, sender));
+                    this.dialogueManager.add(CommandMessages.BAN_ENTER_TIME(target, sender));
                     this.dialogueManager.initialize();
 
                     Date date = new Date();
-                } else sender.sendMessage(Errors.WARNING() + "This player is already banned.");
+                } else sender.sendMessage(CommandMessages.ALREAEDY_BANNED(target, sender));
             } else if (label.equalsIgnoreCase("unban")) {
                 if (nameBanManager.isBanned(args[0])) {
                     nameBanManager.unban(args[0]);
-                    sender.sendMessage(ChatColor.GOLD + "Unbanned " + ChatColor.AQUA + args[0]);
-                } else sender.sendMessage(Errors.WARNING() + "This player is not banned.");
+                    sender.sendMessage(CommandMessages.UNBANNED_PLAYER(target, sender));
+                } else sender.sendMessage(CommandMessages.NOT_BANNED(target, sender));
             } else if (label.equalsIgnoreCase("banlist")) {
                 if (sender.hasPermission("activecraft.banlist")) {
 
@@ -99,7 +101,8 @@ public class BanCommand implements CommandExecutor, DialogueList, Listener, Dial
 
                         for (String s : tempBanListName) {
                             TextComponent textComponent = new TextComponent();
-                            textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, TextComponent.fromLegacyText(ChatColor.GOLD + "Unban " + ChatColor.AQUA + s)));
+                            Player target = Bukkit.getPlayer(s);
+                            textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, TextComponent.fromLegacyText(CommandMessages.BAN_ON_HOVER(target, sender))));
                             textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/unban " + s));
                             textComponent.setText(s + ", ");
                             //textComponentList.add(textComponent);
@@ -107,7 +110,7 @@ public class BanCommand implements CommandExecutor, DialogueList, Listener, Dial
                         }
                         for (String s : tempBanListIP) {
                             TextComponent textComponent = new TextComponent();
-                            textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, TextComponent.fromLegacyText(ChatColor.GOLD + "Unban " + ChatColor.AQUA + s)));
+                            textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, TextComponent.fromLegacyText(CommandMessages.IP_BAN_ON_HOVER(target, sender).replace("%ip%", s.toString()))));
                             textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/unban-ip " + s));
                             FileConfig playerlist = new FileConfig("playerlist.yml");
                             StringBuilder stringBuilder = new StringBuilder();
@@ -131,9 +134,9 @@ public class BanCommand implements CommandExecutor, DialogueList, Listener, Dial
                             componentBuilder.append(textComponent);
                         }
 
-                        sender.sendMessage(ChatColor.GOLD + "-- Ban List --");
+                        sender.sendMessage(CommandMessages.BANLIST_HEADER(target, sender));
                         sender.sendMessage(componentBuilder.create());
-                    } else sender.sendMessage(ChatColor.GOLD + "There are no bans to be listed here!");
+                    } else sender.sendMessage(CommandMessages.NO_BANS(target, sender));
                 }
             } else if (label.equalsIgnoreCase("ban-ip")) {
 
@@ -147,15 +150,15 @@ public class BanCommand implements CommandExecutor, DialogueList, Listener, Dial
                         this.commandSender = sender;
 
                         this.dialogueManager = new DialogueManager((Player) sender);
-                        this.dialogueManager.setHeader(ChatColor.GOLD + "-- IP Ban Dialogue for " + ChatColor.AQUA + target.getName() + ChatColor.GOLD + " --");
-                        this.dialogueManager.setCompletedMessage(ChatColor.GOLD + "Banned " + ChatColor.AQUA + target.getName() + ChatColor.GOLD + " (" + target.getAddress().getAddress().toString().replace("/", "") + ").");
-                        this.dialogueManager.setCancelledMessage(ChatColor.GOLD + "Cancelled ban dialogue for " + ChatColor.AQUA + target.getName() + ChatColor.GOLD + ".");
-                        this.dialogueManager.add(ChatColor.GOLD + "Please enter a reason: ");
-                        this.dialogueManager.add(ChatColor.GOLD + "Please enter the ban duration: ");
+                        this.dialogueManager.setHeader(CommandMessages.IPBAN_HEADER(target, sender).replace("%ip%", target.getAddress().getAddress().toString().replace("/", "")));
+                        this.dialogueManager.setCompletedMessage(CommandMessages.BAN_COMPLETED_MESSAGE(target, sender).replace("%ip%", target.getAddress().getAddress().toString().replace("/", "")));
+                        this.dialogueManager.setCancelledMessage(CommandMessages.IPBAN_CANCELLED_MESSAGE(target, sender));
+                        this.dialogueManager.add(CommandMessages.IPBAN_ENTER_REASON(target, sender));
+                        this.dialogueManager.add(CommandMessages.IPBAN_ENTER_TIME(target, sender));
                         this.dialogueManager.initialize();
 
                         Date date = new Date();
-                    } else sender.sendMessage(Errors.WARNING() + "This player is already banned.");
+                    } else sender.sendMessage(CommandMessages.IP_ALREADY_BANNED(target, sender));
                 } else if (stringUtils.isValidInet4Address(args[0])) {
                     if (!ipBanManager.isBanned(args[0])) {
 
@@ -164,21 +167,19 @@ public class BanCommand implements CommandExecutor, DialogueList, Listener, Dial
                         this.commandSender = sender;
 
                         this.dialogueManager = new DialogueManager((Player) sender);
-                        this.dialogueManager.setHeader(ChatColor.GOLD + "-- IP Ban Dialogue for " + ChatColor.AQUA + ip + ChatColor.GOLD + " --");
-                        this.dialogueManager.setCompletedMessage(ChatColor.GOLD + "Banned " + ChatColor.AQUA + target.getName() + ChatColor.GOLD + "(" + ip + ").");
-                        this.dialogueManager.setCancelledMessage(ChatColor.GOLD + "Cancelled ban dialogue for " + ChatColor.AQUA + target.getName() + ChatColor.GOLD + ".");
-                        this.dialogueManager.add(ChatColor.GOLD + "Please enter a reason: ");
-                        this.dialogueManager.add(ChatColor.GOLD + "Please enter the ban duration: ");
+                        this.dialogueManager.setHeader(CommandMessages.IPBAN_HEADER(target, sender).replace("%ip%", target.getAddress().getAddress().toString().replace("/", "")));
+                        this.dialogueManager.setCompletedMessage(CommandMessages.BAN_COMPLETED_MESSAGE(target, sender).replace("%ip%", target.getAddress().getAddress().toString().replace("/", "")));
+                        this.dialogueManager.setCancelledMessage(CommandMessages.IPBAN_CANCELLED_MESSAGE(target, sender));
+                        this.dialogueManager.add(CommandMessages.IPBAN_ENTER_REASON(target, sender));
+                        this.dialogueManager.add(CommandMessages.IPBAN_ENTER_TIME(target, sender));
                         this.dialogueManager.initialize();
 
                         Date date = new Date();
-                    } else sender.sendMessage(Errors.WARNING() + "This player is already banned.");
-                } else sender.sendMessage(Errors.WARNING() + "This is not a valid IP address");
+                    } else sender.sendMessage(CommandMessages.IP_ALREADY_BANNED(target, sender));
+                } else sender.sendMessage(CommandMessages.INVALID_IP(target, sender));
             } else if (label.equalsIgnoreCase("unban-ip")) {
-                //System.out.println(args[0]);
-                //System.out.println(ipBanManager.isBanned(args[0]));
                 ipBanManager.unban(args[0]);
-                sender.sendMessage(ChatColor.GOLD + "Unbanned " + ChatColor.AQUA + args[0]);
+                sender.sendMessage(CommandMessages.UNBANNED_IP(target, sender));
             }
         } else sender.sendMessage(Errors.NO_PERMISSION());
         return true;

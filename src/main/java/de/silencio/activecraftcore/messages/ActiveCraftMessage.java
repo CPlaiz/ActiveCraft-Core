@@ -15,4 +15,10 @@ public class ActiveCraftMessage {
         return fileConfig.getString(Main.getPlugin().getLanguage().name().toLowerCase() + "." + type.name().toLowerCase() + "." + input);
     }
 
+    public String getMessage(MessageType type, CommandType cmdType , String input) {
+        return fileConfig.getString(Main.getPlugin().getLanguage().name().toLowerCase()
+                + "." + type.name().toLowerCase()
+                + "." + cmdType.name().toLowerCase()
+                + "." + input);
+    }
 }
