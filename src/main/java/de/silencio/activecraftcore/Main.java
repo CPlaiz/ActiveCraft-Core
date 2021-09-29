@@ -1,6 +1,9 @@
 package de.silencio.activecraftcore;
 
 import de.silencio.activecraftcore.commands.*;
+import de.silencio.activecraftcore.gui.Gui;
+import de.silencio.activecraftcore.gui.GuiData;
+import de.silencio.activecraftcore.gui.GuiHistoryMap;
 import de.silencio.activecraftcore.listener.*;
 import de.silencio.activecraftcore.listener.inventory.ProfileListener;
 import de.silencio.activecraftcore.messages.ActiveCraftMessage;
@@ -38,6 +41,10 @@ public final class Main extends JavaPlugin {
     private FileConfig homeconfig;
     private FileConfig warpsConfig;
 
+    private GuiData guiData;
+    private GuiHistoryMap guiHistoryMap;
+    private HashMap<Integer, Gui> guiList;
+
     private HashMap<Player, Location> lastLocMap = new HashMap<>();
 
     public DialogueManagerList dialogueManagerList;
@@ -54,6 +61,11 @@ public final class Main extends JavaPlugin {
         this.dialogueManagerList = new DialogueManagerList();
         this.dialogueListenerList = new DialogueListenerList();
         this.vanishManager = new VanishManager(this);
+
+        //gui creator stuff
+        guiData = new GuiData();
+        guiList = new HashMap<>();
+        guiHistoryMap = new GuiHistoryMap();
 
         int pluginId = 12627;
         Metrics metrics = new Metrics(this, pluginId);
@@ -305,5 +317,33 @@ public final class Main extends JavaPlugin {
 
     public HashMap<Player, Location> getLastLocMap() {
         return lastLocMap;
+    }
+
+    public GuiData getGuiData() {
+        return guiData;
+    }
+
+    public void setGuiData(GuiData guiData) {
+        this.guiData = guiData;
+    }
+
+    public HashMap<Integer, Gui> getGuiList() {
+        return guiList;
+    }
+
+    public void setGuiList(HashMap<Integer, Gui> guiList) {
+        this.guiList = guiList;
+    }
+
+    public Gui getGuiById(int id) {
+        return this.guiList.get(id);
+    }
+
+    public GuiHistoryMap getGuiHistoryMap() {
+        return guiHistoryMap;
+    }
+
+    public void setGuiHistoryMap(GuiHistoryMap guiHistoryMap) {
+        this.guiHistoryMap = guiHistoryMap;
     }
 }

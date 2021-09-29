@@ -5,14 +5,14 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class GuiBackItem extends GuiItem {
+public class GuiCloseItem extends GuiItem {
 
     private int position;
 
-    public GuiBackItem(int position) {
-        super(Material.ARROW);
+    public GuiCloseItem(int position) {
+        super(Material.BARRIER);
         ItemMeta itemMeta = this.getItemMeta();
-        itemMeta.setDisplayName(ChatColor.GOLD + "Go back");
+        itemMeta.setDisplayName(ChatColor.RED + "Close");
         this.setItemMeta(itemMeta);
         this.position = position;
     }

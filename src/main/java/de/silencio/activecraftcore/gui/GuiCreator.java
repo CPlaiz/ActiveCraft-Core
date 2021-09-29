@@ -1,35 +1,33 @@
 package de.silencio.activecraftcore.gui;
 
-import de.silencio.activecraftcore.utils.ItemBuilder;
+import de.silencio.activecraftcore.Main;
+import de.silencio.activecraftcore.events.GuiCreateEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.entity.Item;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
-import org.bukkit.inventory.ItemStack;
 
 public class GuiCreator {
 
     private Inventory inventory;
 
     private String title;
-    private String internalName;
-    private String previousMenu;
-    private String onClickCommand;
-    private String onClickGui;
     private GuiPlayerHead playerHead;
+    private GuiBackItem backItem;
+    private GuiCloseItem closeItem;
     private boolean backgroundFilled;
-    private boolean hasCloseBarrier;
-    private boolean hasPlayerHead;
-    private boolean hasBackArrow;
-    private boolean hasClickSound;
-    private boolean[] hasItemInSlot;
     private int rows;
-    private ItemStack[] itemInSlot;
+    private GuiItem[] itemInSlot = new GuiItem[55];
     private InventoryHolder holder;
 
+    public GuiCreator(int rows) {
+        this.setTitle("GUI");
+        this.rows = rows;
+    }
+
     public GuiCreator() {
-        ItemBuilder itemBuilder = new ItemBuilder(Material.CROSSBOW);
+        this.setTitle("GUI");
+        this.rows = 1;
     }
 
     public String getTitle() {
@@ -38,7 +36,6 @@ public class GuiCreator {
 
     public GuiCreator setTitle(String title) {
         this.title = title;
-        playerHead = new GuiPlayerHead();
         return this;
     }
 
@@ -46,79 +43,35 @@ public class GuiCreator {
         return playerHead;
     }
 
-    public String getInternalName() {
-        return internalName;
-    }
-
-    public GuiCreator setInternalName(String internalName) {
-        this.internalName = internalName;
-        return this;
-    }
-
-    public String getPreviousMenu() {
-        return previousMenu;
-    }
-
-    public GuiCreator setPreviousMenu(String previousMenu) {
-        this.previousMenu = previousMenu;
-        return this;
-    }
-    
     public boolean isBackgroundFilled() {
         return backgroundFilled;
     }
 
-    public GuiCreator setBackgroundFilled(boolean backgroundFilled) {
+    public GuiCreator fillBackground(boolean backgroundFilled) {
         this.backgroundFilled = backgroundFilled;
         return this;
     }
 
-    public boolean hasCloseBarrier() {
-        return hasCloseBarrier;
+    public GuiCloseItem getCloseItem() {
+        return closeItem;
     }
 
-    public GuiCreator setHasCloseBarrier(boolean hasCloseBarrier) {
-        this.hasCloseBarrier = hasCloseBarrier;
+    public GuiCreator setCloseItem(GuiCloseItem closeItem) {
+        this.closeItem = closeItem;
         return this;
     }
 
-    public boolean hasPlayerHead() {
-        return hasPlayerHead;
-    }
-
-    public GuiCreator setHasPlayerHead(boolean hasPlayerHead) {
-        this.hasPlayerHead = hasPlayerHead;
-        return this;
-    }
-    public GuiCreator setPlayerHead(boolean hasPlayerHead, int position) {
-        this.hasPlayerHead = hasPlayerHead;
+    public GuiCreator setPlayerHead(GuiPlayerHead guiPlayerHead) {
+        this.playerHead = guiPlayerHead;
         return this;
     }
 
-    public boolean hasBackArrow() {
-        return hasBackArrow;
+    public GuiBackItem getBackItem() {
+        return backItem;
     }
 
-    public GuiCreator setHasBackArrow(boolean hasBackArrow) {
-        this.hasBackArrow = hasBackArrow;
-        return this;
-    }
-
-    public boolean isHasClickSound() {
-        return hasClickSound;
-    }
-
-    public GuiCreator setHasClickSound(boolean hasClickSound) {
-        this.hasClickSound = hasClickSound;
-        return this;
-    }
-
-    public boolean[] getHasItemInSlot() {
-        return hasItemInSlot;
-    }
-
-    public GuiCreator setHasItemInSlot(int slot, boolean hasItem) {
-        this.hasItemInSlot[slot] = hasItem;
+    public GuiCreator setBackItem(GuiBackItem guiBackItem) {
+        this.backItem = guiBackItem;
         return this;
     }
 
@@ -131,12 +84,12 @@ public class GuiCreator {
         return this;
     }
 
-    public ItemStack getItemInSlot(int slot) {
+    public GuiItem getItemInSlot(int slot) {
         return itemInSlot[slot];
     }
 
-    public GuiCreator setItemInSlot(int slot, ItemStack itemStack) {
-        this.itemInSlot[slot] = itemStack;
+    public GuiCreator setItemInSlot(GuiItem itemInSlot, int slot) {
+        this.itemInSlot[slot] = itemInSlot;
         return this;
     }
 
@@ -149,18 +102,48 @@ public class GuiCreator {
         return this;
     }
 
-    public Inventory build() {
+    public Gui build() {
+
+        GuiCreateEvent event = new GuiCreateEvent(this, holder, rows, title,
+                playerHead, backItem, closeItem, backgroundFilled, itemInSlot);
+        Bukkit.getPluginManager().callEvent(event);
+
+        this.holder = event.getHolder();
+        this.rows = event.getRows();
+        this.title = event.getTitle();
+        this.playerHead = event.getPlayerHead();
+        this.backItem = event.getBackItem();
+        this.closeItem = event.getCloseItem();
+        this.backgroundFilled = event.isBackgroundFilled();
+        this.itemInSlot = event.getItemInSlot();
+
         if (rows == 0) rows = 1;
         if (rows >= 6) rows = 6;
         inventory = Bukkit.createInventory(holder, 9 * rows, title);
 
         //set playerhead
-        if (hasPlayerHead) setItemInSlot(4, playerHead);
-        //set back item
-        if (hasBackArrow) setItemInSlot(rows * 9 - 3, new GuiBackItem());
-        //
+        if (playerHead != null) setItemInSlot(playerHead, playerHead.getPosition());
+        //set backItem
+        if (backItem != null) setItemInSlot(backItem, backItem.getPosition());
 
+        if (closeItem != null) setItemInSlot(closeItem, closeItem.getPosition());
 
-        return inventory;
+        if (backgroundFilled) {
+            for (int i = 0; i < itemInSlot.length; i++) {
+                if (itemInSlot[i] == null) setItemInSlot(new GuiItem(Material.GRAY_STAINED_GLASS_PANE).setDisplayName(""), i);
+            }
+        }
+
+        for (int i = 0; i < itemInSlot.length; i++) {
+            if (i >= rows*9) break;
+            GuiItem item = itemInSlot[i];
+            inventory.setItem(i, item);
+            if (item != null) {
+                Main.getPlugin().getGuiData().addToCorrespondingGuiItem(inventory.getItem(i), item);
+            }
+        }
+
+        Main.getPlugin().getGuiData().addToGuiList(inventory, itemInSlot);
+        return new Gui(inventory, this);
     }
 }

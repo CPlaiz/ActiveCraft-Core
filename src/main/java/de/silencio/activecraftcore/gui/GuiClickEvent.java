@@ -1,22 +1,46 @@
 package de.silencio.activecraftcore.gui;
 
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.bukkit.event.inventory.ClickType;
+import org.bukkit.event.inventory.InventoryAction;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
+
+import java.util.List;
 
 public class GuiClickEvent extends Event {
 
-    private Type type;
-    private Inventory inventory;
-    private int position;
-    private boolean cancelled;
-
     private static final HandlerList handlers = new HandlerList();
 
-    public GuiClickEvent(Type type, Inventory inventory, int position) {
-        this.type = type;
-        this.inventory = inventory;
-        this.position = position;
+    private boolean cancelled;
+    private GuiItem currentItem;
+    private ClickType click;
+    private int slot;
+    private Inventory clickedInventory;
+    private InventoryAction action;
+    private GuiItem cursor;
+    private int hotbarButton;
+    private int rawSlot;
+    private InventoryType.SlotType slotType;
+    private List<HumanEntity> viewers;
+    private InventoryView view;
+    private InventoryClickEvent invClickEvent;
+
+    public GuiClickEvent(GuiItem guiItem, InventoryClickEvent event) {
+        this.invClickEvent = event;
+        this.currentItem = guiItem;
+        this.click = event.getClick();
+        this.slot = event.getSlot();
+        this.clickedInventory = event.getClickedInventory();
+        this.action = event.getAction();
+        this.rawSlot = event.getRawSlot();
+        this.slotType = event.getSlotType();
+        this.viewers = event.getViewers();
+        this.view = event.getView();
     }
 
     public boolean isCancelled() {
@@ -24,7 +48,8 @@ public class GuiClickEvent extends Event {
     }
 
     public void setCancelled(boolean cancel) {
-        cancelled = true;
+        cancelled = cancel;
+        invClickEvent.setCancelled(cancel);
     }
 
     public HandlerList getHandlers() {
@@ -35,9 +60,55 @@ public class GuiClickEvent extends Event {
         return handlers;
     }
 
-    enum Type {
-        OPEN_INVENTORY;
-        Type() {
-        }
+    public GuiItem getCurrentItem() {
+        return currentItem;
+    }
+
+    public void setCurrentItem(GuiItem currentItem) {
+        this.currentItem = currentItem;
+    }
+
+    public ClickType getClick() {
+        return click;
+    }
+
+    public int getSlot() {
+        return slot;
+    }
+
+    public Inventory getClickedInventory() {
+        return clickedInventory;
+    }
+
+    public InventoryAction getAction() {
+        return action;
+    }
+
+    public GuiItem getCursor() {
+        return cursor;
+    }
+
+    public void setCursor(GuiItem cursor) {
+        this.cursor = cursor;
+    }
+
+    public int getHotbarButton() {
+        return hotbarButton;
+    }
+
+    public int getRawSlot() {
+        return rawSlot;
+    }
+
+    public InventoryType.SlotType getSlotType() {
+        return slotType;
+    }
+
+    public List<HumanEntity> getViewers() {
+        return viewers;
+    }
+
+    public InventoryView getView() {
+        return view;
     }
 }
