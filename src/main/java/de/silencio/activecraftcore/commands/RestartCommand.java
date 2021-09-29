@@ -40,7 +40,6 @@ public class RestartCommand implements CommandExecutor, TabCompleter {
                         sender.sendMessage(Errors.INVALID_NUMBER());
                         return false;
                     }
-                    System.out.println(args[0]);
                     this.time = Integer.parseInt(args[0]);
                 }
 

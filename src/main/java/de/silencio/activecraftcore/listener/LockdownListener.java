@@ -18,7 +18,6 @@ public class LockdownListener implements Listener {
         if (isLockedDown) {
             String playername = event.getPlayerProfile().getName();
             FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + playername.toLowerCase() + ".yml");
-            //System.out.println(playername);
             if(!playerdataConfig.getBoolean("lockdown-bypass")) {
                 event.setLoginResult(AsyncPlayerPreLoginEvent.Result.KICK_OTHER);
                 event.setKickMessage(fileConfig.getString("lockdown-kick-message"));

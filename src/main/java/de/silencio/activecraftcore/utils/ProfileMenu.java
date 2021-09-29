@@ -838,7 +838,6 @@ public class ProfileMenu implements Listener {
                                 Date nowDate = new Date();
                                 long nowMillis = nowDate.getTime();
                                 Date expires = new Date((long) banTime * 60 * 1000 + nowMillis);
-                                System.out.println(expires);
                                 nameBanManager.ban(target, violationReason, expires, player.getName());
                                 target.kickPlayer(violationReason);
                             }
@@ -854,7 +853,6 @@ public class ProfileMenu implements Listener {
                                 Date nowDate = new Date();
                                 long nowMillis = nowDate.getTime();
                                 Date expires = new Date((long) banTime * 60 * 1000 + nowMillis);
-                                System.out.println(expires);
                                 ipBanManager.ban(target.getAddress().getAddress().toString().replace("/", ""), violationReason, expires, player.getName());
                                 target.kickPlayer(violationReason);
                             }
