@@ -7,7 +7,6 @@ import de.silencio.activecraftcore.gui.GuiHistoryMap;
 import de.silencio.activecraftcore.listener.*;
 import de.silencio.activecraftcore.listener.inventory.ProfileListener;
 import de.silencio.activecraftcore.messages.ActiveCraftMessage;
-import de.silencio.activecraftcore.dialogue.DialogueListenerList;
 import de.silencio.activecraftcore.dialogue.DialogueManagerList;
 import de.silencio.activecraftcore.messages.Language;
 import de.silencio.activecraftcore.utils.FileConfig;
@@ -22,7 +21,9 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public final class Main extends JavaPlugin {
@@ -47,8 +48,8 @@ public final class Main extends JavaPlugin {
 
     private HashMap<Player, Location> lastLocMap = new HashMap<>();
 
-    public DialogueManagerList dialogueManagerList;
-    public DialogueListenerList dialogueListenerList;
+    private DialogueManagerList dialogueManagerList;
+    private List<Player> dialogueList;
 
     public Main() {
         instance = this;
@@ -59,7 +60,7 @@ public final class Main extends JavaPlugin {
     public void onEnable() {
         // Plugin startup logic
         this.dialogueManagerList = new DialogueManagerList();
-        this.dialogueListenerList = new DialogueListenerList();
+        this.dialogueList = new ArrayList<Player>();
         this.vanishManager = new VanishManager(this);
 
         //gui creator stuff
@@ -123,16 +124,11 @@ public final class Main extends JavaPlugin {
         pluginManager.registerEvents(new LockdownCommand(), this);
         pluginManager.registerEvents(new SignListener(), this);
         pluginManager.registerEvents(new SignInteractListener(), this);
-        //pluginManager.registerEvents(new ProfileCommand(), this);
         pluginManager.registerEvents(new ClearTabCompleteListener(), this);
         pluginManager.registerEvents(new CommandStickCommand(), this);
         pluginManager.registerEvents(new TeleportListener(), this);
         pluginManager.registerEvents(new DeathListener(), this);
         pluginManager.registerEvents(new LoginListener(), this);
-
-        //custom Listeners
-        dialogueListenerList = new DialogueListenerList();
-
 
         // commands
 
@@ -183,7 +179,7 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginCommand("lastonline").setExecutor(new LastOnlineCommand());
         Bukkit.getPluginCommand("whois").setExecutor(new WhoIsCommand());
         Bukkit.getPluginCommand("i").setExecutor(new QuickGiveCommand());
-        //Bukkit.getPluginCommand("butcher").setExecutor(new ButcherCommand());
+        Bukkit.getPluginCommand("butcher").setExecutor(new ButcherCommand());
         Bukkit.getPluginCommand("item").setExecutor(new ItemCommand());
         Bukkit.getPluginCommand("ban").setExecutor(new BanCommand());
         Bukkit.getPluginCommand("whereami").setExecutor(new WhereAmICommand());
@@ -225,6 +221,7 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginCommand("kick").setExecutor(new KickCommand());
         Bukkit.getPluginCommand("commandstick").setExecutor(new CommandStickCommand());
         Bukkit.getPluginCommand("back").setExecutor(new BackCommand());
+        Bukkit.getPluginCommand("test").setExecutor(new GuiCreatorTestCommand());
     }
 
     public static Main getPlugin() {
@@ -303,10 +300,6 @@ public final class Main extends JavaPlugin {
         return dialogueManagerList;
     }
 
-    public DialogueListenerList getDialogueListenerList() {
-        return dialogueListenerList;
-    }
-
     public void setLastLocationForPlayer(Player player, Location loc) {
         lastLocMap.put(player, loc);
     }
@@ -346,4 +339,21 @@ public final class Main extends JavaPlugin {
     public void setGuiHistoryMap(GuiHistoryMap guiHistoryMap) {
         this.guiHistoryMap = guiHistoryMap;
     }
+
+    public List<Player> getDialogueList() {
+        return dialogueList;
+    }
+
+    public void setDialogueList(List<Player> dialogueList) {
+        this.dialogueList = dialogueList;
+    }
+
+    public void addToDialogueList(Player player) {
+        this.dialogueList.add(player);
+    }
+
+    public void removeFromDialogueList(Player player) {
+        this.dialogueList.remove(player);
+    }
+
 }

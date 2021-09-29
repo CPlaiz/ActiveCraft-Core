@@ -31,7 +31,6 @@ public class BanManager {
                 @Override
                 public void run() {
                     PlayerBanEvent event = new PlayerBanEvent(target, reason, expires, source);
-                    System.out.println(event.getTarget() + ", " + event.getReason() + ", " + event.getExpirationDate() + ", " + event.getSource());
                     Bukkit.getPluginManager().callEvent(event);
                     if (event.isCancelled()) return;
                 }

@@ -1,15 +1,22 @@
 package de.silencio.activecraftcore.dialogue;
 
 import de.silencio.activecraftcore.Main;
+import de.silencio.activecraftcore.events.DialogueAnswerEvent;
+import de.silencio.activecraftcore.events.DialogueCancelEvent;
+import de.silencio.activecraftcore.events.DialogueCompleteEvent;
+import de.silencio.activecraftcore.events.PlayerBanEvent;
 import de.silencio.activecraftcore.listener.DialogueListener;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
+import org.bukkit.util.io.BukkitObjectInputStream;
 
+import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DialogueManager implements DialogueList, Listener {
+public class DialogueManager implements Listener {
 
     private List<String> dialogueSteps = new ArrayList<>();
     private String[] answers;
@@ -18,7 +25,6 @@ public class DialogueManager implements DialogueList, Listener {
     private int steps;
     private boolean dialogueActive;
     private DialogueManagerList dialogueManagerList;
-    private DialogueListenerList dialogueListenerList;
     private String header;
     private String completedMessage;
     private String cancelledMessage;
@@ -26,16 +32,15 @@ public class DialogueManager implements DialogueList, Listener {
     private String tempAnswer;
 
     public DialogueManager(Player player) {
-        if (dialogueList.contains(player)) {
-            dialogueList.remove(player);
+        if (Main.getPlugin().getDialogueList().contains(player)) {
+            Main.getPlugin().addToDialogueList(player);
         }
         dialogueManagerList = Main.getPlugin().getDialogueManagerList();
-        dialogueList.add(player);
+        Main.getPlugin().addToDialogueList(player);
         this.player = player;
         activeStep = 0;
         dialogueActive = false;
         dialogueManagerList.addDialogueManager(player, this);
-        dialogueListenerList = Main.getPlugin().getDialogueListenerList();
         header = ChatColor.GOLD + "-- Dialogue --";
         completedMessage = ChatColor.GOLD + "Exiting dialogue...";
         cancelledMessage = ChatColor.GOLD + "Cancelling dialogue...";
@@ -52,22 +57,42 @@ public class DialogueManager implements DialogueList, Listener {
     public void answer(String answer) {
         if (dialogueActive) {
             if (answer.equals("exit") || answer.equals("cancel")) {
+
+                //send to listener
+                DialogueManager dialogueManager = this;
+                Bukkit.getScheduler().runTask(Main.getPlugin(), new Runnable() {
+                    @Override
+                    public void run() {
+                        DialogueCancelEvent event = new DialogueCancelEvent(dialogueManager);
+                        Bukkit.getPluginManager().callEvent(event);
+                        if (event.isCancelled()) return;
+                    }
+                });
+
+
                 player.sendMessage(cancelledMessage);
                 exit();
-                //send to listener
-                for (DialogueListener dialogueListener : dialogueListenerList.getDialogueListenerList()) {
-                    dialogueListener.onDialogueCancel(this);
-                }
                 return;
             }
             this.tempAnswer = answer;
-            for (DialogueListener dialogueListener : dialogueListenerList.getDialogueListenerList()) {
-                dialogueListener.onDialogueAnswer(this);
-            }
+
+            //send to listener
+            DialogueManager dialogueManager = this;
+            Bukkit.getScheduler().runTask(Main.getPlugin(), new Runnable() {
+                @Override
+                public void run() {
+                    DialogueAnswerEvent event = new DialogueAnswerEvent(dialogueManager);
+                    Bukkit.getPluginManager().callEvent(event);
+                    if (event.isCancelled()) return;
+                }
+            });
+
+
             if (answerPassing) {
                 player.sendMessage(ChatColor.GREEN + "> " + answer);
                 this.answers[activeStep] = answer;
                 this.activeStep += 1;
+
             } else {
                 player.sendMessage(ChatColor.RED + "Invalid Answer!");
             }
@@ -80,9 +105,16 @@ public class DialogueManager implements DialogueList, Listener {
             player.sendMessage(completedMessage);
             exit();
             //send to listener
-            for (DialogueListener dialogueListener : dialogueListenerList.getDialogueListenerList()) {
-                dialogueListener.onDialogueComplete(this);
-            }
+            DialogueManager dialogueManager = this;
+            Bukkit.getScheduler().runTask(Main.getPlugin(), new Runnable() {
+                @Override
+                public void run() {
+                    DialogueCompleteEvent event = new DialogueCompleteEvent(dialogueManager);
+                    Bukkit.getPluginManager().callEvent(event);
+                    if (event.isCancelled()) return;
+                }
+            });
+
             return;
         }
 
@@ -118,7 +150,7 @@ public class DialogueManager implements DialogueList, Listener {
 
     public void exit() {
         dialogueActive = false;
-        this.dialogueList.remove(player);
+        Main.getPlugin().removeFromDialogueList(player);
     }
 
     public void setHeader(String header) {

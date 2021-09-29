@@ -1,7 +1,6 @@
 package de.silencio.activecraftcore.listener;
 
 import de.silencio.activecraftcore.Main;
-import de.silencio.activecraftcore.dialogue.DialogueList;
 import de.silencio.activecraftcore.dialogue.DialogueManager;
 import de.silencio.activecraftcore.utils.FileConfig;
 import de.silencio.activecraftcore.utils.MessageUtils;
@@ -15,7 +14,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 import java.io.File;
 
-public class MessageListener implements Listener, DialogueList {
+public class MessageListener implements Listener {
 
     @EventHandler (priority = EventPriority.LOWEST)
     public void onChatMessage(AsyncPlayerChatEvent event) {
@@ -24,7 +23,7 @@ public class MessageListener implements Listener, DialogueList {
         message = MessageUtils.replaceFormat(message);
         Player player = event.getPlayer();
 
-        if (!dialogueList.contains(player)) {
+        if (!Main.getPlugin().getDialogueList().contains(player)) {
 
             FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + player.getName().toLowerCase() + ".yml");
 
@@ -53,7 +52,7 @@ public class MessageListener implements Listener, DialogueList {
             }
         } else {
 
-            DialogueManager dialogueManager = Main.getPlugin().dialogueManagerList.getDialogueManager(player);
+            DialogueManager dialogueManager = Main.getPlugin().getDialogueManagerList().getDialogueManager(player);
             dialogueManager.answer(event.getMessage());
             event.setCancelled(true);
         }

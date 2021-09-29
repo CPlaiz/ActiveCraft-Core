@@ -1,8 +1,7 @@
 package de.silencio.activecraftcore.commands;
 
 import de.silencio.activecraftcore.Main;
-import de.silencio.activecraftcore.dialogue.DialogueList;
-import de.silencio.activecraftcore.listener.DialogueListener;
+import de.silencio.activecraftcore.events.DialogueCompleteEvent;
 import de.silencio.activecraftcore.dialogue.DialogueManager;
 import de.silencio.activecraftcore.messages.ActiveCraftMessage;
 import de.silencio.activecraftcore.messages.CommandMessages;
@@ -24,12 +23,13 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 import java.io.File;
 import java.util.*;
 
-public class BanCommand implements CommandExecutor, DialogueList, Listener, DialogueListener, TabCompleter {
+public class BanCommand implements CommandExecutor, Listener, TabCompleter {
 
     private Map<Player, List<String>> banDialogueList = new HashMap<>();
 
@@ -42,13 +42,10 @@ public class BanCommand implements CommandExecutor, DialogueList, Listener, Dial
     private StringUtils stringUtils = new StringUtils();
 
     public BanCommand() {
-        Main.getPlugin().dialogueListenerList.addListener(this);
+        Bukkit.getPluginManager().registerEvents(this, Main.getPlugin());
     }
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-
-        //System.out.println(Main.getPlugin().getDialogueListenerList().toString());
-
 
         if (sender.hasPermission("activecraft.ban")) {
             if (label.equalsIgnoreCase("ban")) {
@@ -185,19 +182,10 @@ public class BanCommand implements CommandExecutor, DialogueList, Listener, Dial
         return true;
     }
 
-    @Override
-    public void onDialogueAnswer(DialogueManager dialogueManager) {
-        return;
-    }
+    @EventHandler
+    public void onDialogueComplete(DialogueCompleteEvent event) {
 
-    @Override
-    public void onDialogueCancel(DialogueManager dialogueManager) {
-        return;
-    }
-
-    @Override
-    public void onDialogueComplete(DialogueManager dialogueManager) {
-        if (this.dialogueManager == dialogueManager) {
+        if (this.dialogueManager == event.getDialogueManager()) {
             if (value == BanList.Type.NAME) {
                 nameBanManager.ban(target, this.dialogueManager.getAnswer(0), TimeUtils.addFromStringToDate(this.dialogueManager.getAnswer(1)), commandSender.getName());
                 FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + target.getName().toLowerCase() + ".yml");
@@ -217,7 +205,7 @@ public class BanCommand implements CommandExecutor, DialogueList, Listener, Dial
                 Bukkit.getScheduler().runTask(Main.getPlugin(), new Runnable() {
                     @Override
                     public void run() {
-                        target.kickPlayer(dialogueManager.getAnswer(0));
+                        target.kickPlayer(event.getDialogueManager().getAnswer(0));
                     }
                 });
             }
