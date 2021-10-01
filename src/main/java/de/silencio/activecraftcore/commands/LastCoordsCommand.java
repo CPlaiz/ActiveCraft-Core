@@ -74,13 +74,14 @@ public class LastCoordsCommand implements CommandExecutor, TabCompleter {
                         return false;
                     }
                     World world = lastLocation.getWorld();
-                    sender.sendMessage(ChatColor.AQUA + playerdataConfig.getString("name") + "'s " + ChatColor.GOLD + "last coords in " + ChatColor.AQUA + world.getName() + ChatColor.GOLD
+                    sender.sendMessage(CommandMessages.LASTCOORDS_MESSAGE(Bukkit.getPlayer(playerdataConfig.getString("name").toString()),
+                            ChatColor.GOLD + "last coords in " + ChatColor.AQUA + world.getName() + ChatColor.GOLD
                             + ": \nX: " + ChatColor.AQUA + lastLocation.getBlockX() + ChatColor.GOLD
                             + ", Y: " + ChatColor.AQUA + lastLocation.getBlockY() + ChatColor.GOLD
                             + ", Z: " + ChatColor.AQUA + lastLocation.getBlockZ() + ChatColor.GOLD
                             + ", Yaw: " + ChatColor.AQUA + (int) lastLocation.getYaw() + ChatColor.GOLD
                             + ", Pitch: " + ChatColor.AQUA + (int) lastLocation.getPitch()
-                    );
+                    ));
                 } else sender.sendMessage(Errors.NO_PERMISSION());
             } else sender.sendMessage(Errors.INVALID_PLAYER());
         } else sender.sendMessage(Errors.INVALID_ARGUMENTS());

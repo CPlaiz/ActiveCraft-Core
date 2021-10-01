@@ -3,6 +3,7 @@ package de.silencio.activecraftcore.manager;
 import de.silencio.activecraftcore.events.PlayerUnbanEvent;
 import de.silencio.activecraftcore.events.PlayerWarnAddEvent;
 import de.silencio.activecraftcore.events.PlayerWarnRemoveEvent;
+import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.utils.FileConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -71,9 +72,8 @@ public class WarnManager {
 
         playerdataConfig.set("violations.warns", playerdataConfig.getInt("violations.warns") + 1);
         playerdataConfig.saveConfig();
-        player.sendMessage(ChatColor.RED + "YOU HAVE BEEN WARNED!\n" +
-                ChatColor.GOLD + "Reason: " + ChatColor.AQUA + reason.replace("%dot%", ".") + "\n" +
-                ChatColor.GOLD + "Warned by " + ChatColor.AQUA + source
+        player.sendMessage(CommandMessages.WARNED_HEADER() + "\n" +
+                CommandMessages.WARNED(source, reason.replace("%dot%", "."))
         );
     }
 
@@ -94,7 +94,7 @@ public class WarnManager {
 
         playerdataConfig.set("violations.warns", playerdataConfig.getInt("violations.warns") - 1);
         playerdataConfig.saveConfig();
-        player.sendMessage(ChatColor.RED + "Your warn " + ChatColor.GOLD + reason + ChatColor.RED + " has been removed");
+        player.sendMessage(CommandMessages.WARNED_REMOVE(reason));
     }
 
     public WarnManager getWarnEntry(String reason) {

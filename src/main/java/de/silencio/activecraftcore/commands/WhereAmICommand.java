@@ -1,5 +1,6 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -17,7 +18,9 @@ public class WhereAmICommand implements CommandExecutor {
             if (sender instanceof Player) {
                 Player player = (Player) sender;
                 if (sender.hasPermission("activecraft.whereami.self")) {
-                    sender.sendMessage(ChatColor.GOLD + "You are in " + ChatColor.AQUA + player.getWorld().getName() + ChatColor.GOLD + " at x" + ChatColor.AQUA + player.getLocation().getBlockX() + ChatColor.GOLD + " y" + ChatColor.AQUA + player.getLocation().getBlockY() + ChatColor.GOLD + " z" + ChatColor.AQUA + player.getLocation().getBlockZ());
+                    sender.sendMessage(CommandMessages.WHEREAMI(player.getWorld().getName(), player.getLocation().getBlockX() + "" + ChatColor.GOLD
+                            + " y" + ChatColor.AQUA + player.getLocation().getBlockY() + ChatColor.GOLD +
+                            " z" + ChatColor.AQUA + player.getLocation().getBlockZ()));
                 } else sender.sendMessage(Errors.NO_PERMISSION());
             } else sender.sendMessage(Errors.NOT_A_PLAYER());
         } else if (args.length == 1) {
@@ -35,7 +38,10 @@ public class WhereAmICommand implements CommandExecutor {
                         }
                     }
 
-                    sender.sendMessage(ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " is in " + ChatColor.AQUA + target.getWorld().getName() + ChatColor.GOLD + " at x" + ChatColor.AQUA + target.getLocation().getBlockX() + ChatColor.GOLD + " y" + ChatColor.AQUA + target.getLocation().getBlockY() + ChatColor.GOLD + " z" + ChatColor.AQUA + target.getLocation().getBlockZ());
+                    sender.sendMessage(CommandMessages.WHEREAMI_OTHERS(target, target.getWorld().getName(),
+                            target.getLocation().getBlockX() + "" + ChatColor.GOLD
+                                    + " y" + ChatColor.AQUA + target.getLocation().getBlockY() + ChatColor.GOLD +
+                                    " z" + ChatColor.AQUA + target.getLocation().getBlockZ()));
                 } else sender.sendMessage(Errors.NO_PERMISSION());
             }
         } else sender.sendMessage(Errors.INVALID_ARGUMENTS());

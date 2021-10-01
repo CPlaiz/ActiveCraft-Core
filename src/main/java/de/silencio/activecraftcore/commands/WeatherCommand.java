@@ -1,5 +1,6 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -24,13 +25,13 @@ public class WeatherCommand implements CommandExecutor, TabCompleter {
                 if (args.length == 1) {
                     if (Objects.equals(args[0], "thunder")) {
                         player.getWorld().setThundering(true);
-                        player.sendMessage(ChatColor.GOLD + "Changed weather in " + ChatColor.AQUA + player.getWorld().getName() + ChatColor.GOLD + " to " + ChatColor.AQUA + "Thunder" + ChatColor.GOLD + ".");
+                        player.sendMessage(CommandMessages.TO_THUNDER(player.getWorld().getName()));
                     } else if (Objects.equals(args[0], "rain")) {
                         player.getWorld().setStorm(true);
-                        player.sendMessage(ChatColor.GOLD + "Changed weather in " + ChatColor.AQUA + player.getWorld().getName() + ChatColor.GOLD + " to " + ChatColor.AQUA + "Rain" + ChatColor.GOLD + ".");
+                        player.sendMessage(CommandMessages.TO_RAIN(player.getWorld().getName()));
                     } else if (Objects.equals(args[0], "clear")) {
                         player.getWorld().setClearWeatherDuration(999999999);
-                        player.sendMessage(ChatColor.GOLD + "Changed weather in " + ChatColor.AQUA + player.getWorld().getName() + ChatColor.GOLD + " to " + ChatColor.AQUA + "Clear" + ChatColor.GOLD + ".");
+                        player.sendMessage(CommandMessages.TO_CLEAR(player.getWorld().getName()));
                     } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
                 } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
             } else sender.sendMessage(Errors.NO_PERMISSION());

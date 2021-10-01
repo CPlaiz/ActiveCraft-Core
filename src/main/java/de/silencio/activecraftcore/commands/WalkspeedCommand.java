@@ -1,5 +1,6 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.utils.FileConfig;
 import net.md_5.bungee.api.ChatMessageType;
@@ -33,7 +34,7 @@ public class WalkspeedCommand implements CommandExecutor {
                     if (Integer.parseInt(args[0]) <= 10) {
                         playerdataConfig.set("walkspeed", args[0]);
                         player.setWalkSpeed((float) Integer.parseInt(args[0]) / 10);
-                        player.sendMessage(ChatColor.GOLD + "Walk speed set to " + ChatColor.AQUA + args[0] + ChatColor.GOLD + ".");
+                        player.sendMessage(CommandMessages.WALKSPEED_SET(args[0]));
                     } else sender.sendMessage(Errors.NUMBER_TOO_LARGE());
                 } else sender.sendMessage(Errors.NO_PERMISSION());
             } else sender.sendMessage(Errors.NOT_A_PLAYER());
@@ -66,8 +67,8 @@ public class WalkspeedCommand implements CommandExecutor {
             if (Integer.parseInt(args[1]) <= 10) {
                 targetdataConfig.set("walkspeed", args[1]);
                 target.setWalkSpeed((float) Integer.parseInt(args[0]) / 10);
-                sender.sendMessage(ChatColor.GOLD + "Walk speed set to " + ChatColor.AQUA + args[1] + ChatColor.GOLD + " for " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + ".");
-                target.sendMessage(ChatColor.GOLD + "Walk speed set to " + ChatColor.AQUA + args[1] + ChatColor.GOLD + " by " + ChatColor.AQUA + sender.getName() + ChatColor.GOLD + ".");
+                sender.sendMessage(CommandMessages.WALKSPEED_SET_OTHERS(target, args[1]));
+                target.sendMessage(CommandMessages.WALKSPEED_SET_OTHERS_MESSAGE(sender, args[1]));
             } else sender.sendMessage(Errors.NUMBER_TOO_LARGE());
         }
         return true;

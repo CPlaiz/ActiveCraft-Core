@@ -1,5 +1,6 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.utils.FileConfig;
 import org.bukkit.Bukkit;
@@ -35,9 +36,9 @@ public class VerifyCommand implements CommandExecutor {
                 if (defaultmute) {
                     playerdataConfig.set("default-mute", false);
                     playerdataConfig.saveConfig();
-                    target.sendMessage(ChatColor.GOLD + "Your default-mute has been removed. You are now able to talk.");
-                    sender.sendMessage(ChatColor.GOLD + "Verified " + ChatColor.AQUA + target.getDisplayName());
-                } else sender.sendMessage(Errors.WARNING() + "Player is not default-muted!");
+                    target.sendMessage(CommandMessages.DEFAULT_MUTE_REMOVE());
+                    sender.sendMessage(CommandMessages.DEFAULT_MUTE_REMOVE_MESSAGE(target));
+                } else sender.sendMessage(Errors.WARNING() + CommandMessages.NOT_DEFAULT_MUTED());
             } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
         } else sender.sendMessage(Errors.NO_PERMISSION());
 

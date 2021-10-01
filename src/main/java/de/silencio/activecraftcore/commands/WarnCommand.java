@@ -1,5 +1,6 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.utils.FileConfig;
 import de.silencio.activecraftcore.manager.WarnManager;
@@ -41,12 +42,12 @@ public class WarnCommand implements CommandExecutor, TabCompleter {
                             if (!(i == 2)) stringBuilder.append(" ");
                             stringBuilder.append(args[i]);
                         }
-                    } else stringBuilder.append("Warned by a moderator.");
+                    } else stringBuilder.append(CommandMessages.DEFAULT_WARN_REASON());
                 } else sender.sendMessage(Errors.NO_PERMISSION());
 
                 String source = sender.getName();
                 warnManager.add(stringBuilder.toString(), source);
-                sender.sendMessage(ChatColor.GOLD + "Warned " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + "\nReason: " + ChatColor.AQUA + warnManager.getWarnEntry(stringBuilder.toString()).reason);
+                sender.sendMessage( CommandMessages.WARN_ADD(target, stringBuilder.toString()));
             } else if (args[0].equalsIgnoreCase("remove")) {
                 StringBuilder stringBuilder = new StringBuilder();
                 if(sender.hasPermission("activecraft.warn.remove")) {
@@ -55,7 +56,7 @@ public class WarnCommand implements CommandExecutor, TabCompleter {
                             if (!(i == 2)) stringBuilder.append(" ");
                             stringBuilder.append(args[i]);
                         }
-                        sender.sendMessage(ChatColor.GOLD + "Removed warn " + warnManager.getWarnEntry(stringBuilder.toString()).reason + " from " + ChatColor.AQUA + target.getDisplayName());
+                        sender.sendMessage(CommandMessages.WARN_REMOVE(target, warnManager.getWarnEntry(stringBuilder.toString()).reason));
                         warnManager.remove(args[2]);
                     } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
                 } else sender.sendMessage(Errors.NO_PERMISSION());
@@ -68,11 +69,11 @@ public class WarnCommand implements CommandExecutor, TabCompleter {
                             stringBuilder.append(args[i]);
                         }
                         StringBuilder strBuilder = new StringBuilder();
-                        strBuilder.append(ChatColor.GOLD + "-- " + target.getName() + "'s Warn Entry --\n")
-                                .append(ChatColor.GOLD + "Reason: " + ChatColor.AQUA).append(warnManager.getWarnEntry(stringBuilder.toString()).reason)
-                                .append(ChatColor.GOLD + "\nCreated: " + ChatColor.AQUA).append(warnManager.getWarnEntry(stringBuilder.toString()).created)
-                                .append(ChatColor.GOLD + "\nSource: " + ChatColor.AQUA).append(warnManager.getWarnEntry(stringBuilder.toString()).source)
-                                .append(ChatColor.GOLD + "\nID: " + ChatColor.AQUA).append(warnManager.getWarnEntry(stringBuilder.toString()).id);
+                        strBuilder.append(CommandMessages.WARN_GET_HEADER(target) + "\n")
+                                        .append(CommandMessages.WARN_GET(warnManager.getWarnEntry(stringBuilder.toString()).source,
+                                                warnManager.getWarnEntry(stringBuilder.toString()).reason,
+                                                warnManager.getWarnEntry(stringBuilder.toString()).created,
+                                                warnManager.getWarnEntry(stringBuilder.toString()).id + ""));
                         sender.sendMessage(strBuilder.toString());
                     } else sender.sendMessage(Errors.INVALID_PLAYER());
                 } else sender.sendMessage(Errors.NO_PERMISSION());

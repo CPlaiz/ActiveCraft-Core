@@ -100,7 +100,7 @@ en:
       cleared-others: "Cleared %t_displayname%'s inventory."
       cleared-others-message: 'Your inventory was cleared by %s_displayname%.'
     colornick:
-      colornick-complete: 'Name color changed to %color%.'
+      colornick-self: 'Name color changed to %color%.'
       colornick-others: 'Name color for %t_displayname% changed to %color%.'
       colornick-others-message: 'Name color changed to %color% by %s_displayname%.'
     home:
@@ -327,8 +327,8 @@ en:
       now-visible-others: '%t_displayname% is now visible.'
       now-invisible-others: '%t_displayname% is now invisible.'
     verify:
-      default-mute-remove: 'Verified %displayname%.'
-      default-mute-remove-message: 'Your default mute has been removed. You are now able to talk.'
+      default-mute-remove-message: 'Verified %displayname%.'
+      default-mute-remove: 'Your default mute has been removed. You are now able to talk.'
       not-default-muted: 'Player is not default muted!'
     walkspeed:
       walkspeed-set: 'Walk speed set to %amount%.'
@@ -349,7 +349,7 @@ en:
       warp-teleport-others: 'Warped %t_displayname% to %warp%.'
       warp-teleport-others-message: 'You were warped to %warp% by %s_displayname%.'
     setwarp:
-      already-exists: 'This warp already exists!'
+      warp-already-exists: 'This warp already exists!'
       warp-set: 'Created the warp %warp%.'
     deletewarp:
       doesnt-exist: 'This warp does not exist!'
@@ -725,7 +725,7 @@ de:
       warp-teleport-others: 'Du hast %t_displayname% zu %warp% teleportiert.'
       warp-teleport-others-message: 'Du wurdest von %s_displayname% zu %warp% teleportiert.'
     setwarp:
-      already-exists: 'Dieser Warp existiert bereits!'
+      warp-already-exists: 'Dieser Warp existiert bereits!'
       warp-set: 'Du hast den Warp %warp% erstellt.'
     deletewarp:
       doesnt-exist: 'Dieser Warp existiert nicht!'

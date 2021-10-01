@@ -1,6 +1,7 @@
 package de.silencio.activecraftcore.commands;
 
 import de.silencio.activecraftcore.Main;
+import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.utils.FileConfig;
 import de.silencio.activecraftcore.manager.VanishManager;
@@ -44,12 +45,12 @@ public class VanishCommand implements CommandExecutor {
 
                         vanishManager.setVanished(target, false);
 
-                        target.sendMessage(ChatColor.GOLD + "You are now " + ChatColor.AQUA + "visible.");
-                        sender.sendMessage(ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " is now " + ChatColor.AQUA + "visible.");
+                        target.sendMessage(CommandMessages.NOW_VISIBLE());
+                        sender.sendMessage(CommandMessages.NOW_VISIBLE_OTHERS(target));
                         for (Player forPlayer : Bukkit.getOnlinePlayers()) {
                             if (forPlayer.hasPermission("activecraft.vanish.see")) {
                                 if (forPlayer != sender && forPlayer != target) {
-                                    forPlayer.sendMessage(ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " is now " + ChatColor.AQUA + "visible.");
+                                    forPlayer.sendMessage(CommandMessages.NOW_VISIBLE_OTHERS(target));
                                 }
                             } else if (forPlayer != sender && forPlayer != target) {
                                 forPlayer.sendMessage(joinFormat.replace("%displayname%", joinQuitWithColor(target, playerdataConfig.getString("nickname"), playerdataConfig.getString("colornick"))));
@@ -58,12 +59,12 @@ public class VanishCommand implements CommandExecutor {
                     } else {
 
                         vanishManager.setVanished(target, true);
-                        target.sendMessage(ChatColor.GOLD + "You are now " + ChatColor.AQUA + "invisible.");
-                        sender.sendMessage(ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " is now " + ChatColor.AQUA + "invisible.");
+                        target.sendMessage(CommandMessages.NOW_INVISIBLE());
+                        sender.sendMessage(CommandMessages.NOW_INVISIBLE_OTHERS(target));
                         for (Player forPlayer : Bukkit.getOnlinePlayers()) {
                             if (forPlayer.hasPermission("activecraft.vanish.see")) {
                                 if (forPlayer != sender && forPlayer != target) {
-                                    forPlayer.sendMessage(ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " is now " + ChatColor.AQUA + "invisible.");
+                                    forPlayer.sendMessage(CommandMessages.NOW_INVISIBLE_OTHERS(target));
                                 }
                             } else if (forPlayer != sender && forPlayer != target) {
                                 forPlayer.sendMessage(quitFormat.replace("%displayname%", joinQuitWithColor(target, playerdataConfig.getString("nickname"), playerdataConfig.getString("colornick"))));
@@ -80,11 +81,11 @@ public class VanishCommand implements CommandExecutor {
                 if (vanishManager.isVanished(p)) {
 
                     vanishManager.setVanished(p, false);
-                    p.sendMessage(ChatColor.GOLD + "You are now " + ChatColor.AQUA + "visible.");
+                    p.sendMessage(CommandMessages.NOW_VISIBLE());
                     for (Player forPlayer : Bukkit.getOnlinePlayers()) {
                         if (forPlayer.hasPermission("activecraft.vanish.see")) {
                             if (forPlayer != sender) {
-                                forPlayer.sendMessage(ChatColor.AQUA + player.getDisplayName() + ChatColor.GOLD + " is now " + ChatColor.AQUA + "visible.");
+                                forPlayer.sendMessage(CommandMessages.NOW_VISIBLE_OTHERS(player));
                             }
                         } else if (forPlayer != sender) {
                             forPlayer.sendMessage(joinFormat.replace("%displayname%", joinQuitWithColor(player, playerdataConfig.getString("nickname"), playerdataConfig.getString("colornick"))));
@@ -93,11 +94,11 @@ public class VanishCommand implements CommandExecutor {
                 } else {
 
                     vanishManager.setVanished(p, true);
-                    p.sendMessage(ChatColor.GOLD + "You are now " + ChatColor.AQUA + "invisible.");
+                    p.sendMessage(CommandMessages.NOW_INVISIBLE());
                     for (Player forPlayer : Bukkit.getOnlinePlayers()) {
                         if (forPlayer.hasPermission("activecraft.vanish.see")) {
                             if (forPlayer != sender) {
-                                forPlayer.sendMessage(ChatColor.AQUA + ((Player) sender).getDisplayName() + ChatColor.GOLD + " is now " + ChatColor.AQUA + "invisible.");
+                                forPlayer.sendMessage(CommandMessages.NOW_INVISIBLE_OTHERS(player));
                             }
                         } else if (forPlayer != sender) {
                             forPlayer.sendMessage(quitFormat.replace("%displayname%", joinQuitWithColor(player, playerdataConfig.getString("nickname"), playerdataConfig.getString("colornick"))));

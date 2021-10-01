@@ -1,5 +1,6 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -27,11 +28,11 @@ public class XpCommand implements CommandExecutor {
                         if (args[0].endsWith("l")) {
                             player.giveExpLevels(Integer.parseInt(args[0].replace("l", "")));
                             player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f);
-                            player.sendMessage(ChatColor.GOLD + "Gave yourself " + ChatColor.AQUA + args[0].replace("l", "") + ChatColor.GOLD + " levels.");
+                            player.sendMessage(CommandMessages.XP_LEVELS(args[0].replace("l", "")));
                         } else {
                             player.giveExp(Integer.parseInt(args[0]));
                             player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f);
-                            player.sendMessage(ChatColor.GOLD + "Gave yourself " + ChatColor.AQUA + args[0] + ChatColor.GOLD + " xp.");
+                            player.sendMessage(CommandMessages.XP_XP(args[0].replace("l", "")));
                         }
                     } else sender.sendMessage(Errors.NO_PERMISSION());
                 } else sender.sendMessage(Errors.INVALID_NUMBER());
@@ -62,18 +63,17 @@ public class XpCommand implements CommandExecutor {
                     if (args[1].endsWith("l")) {
                         target.giveExpLevels(Integer.parseInt(args[1].replace("l", "")));
                         target.playSound(target.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f);
-                        sender.sendMessage(ChatColor.GOLD + "Gave " + ChatColor.AQUA + target.getDisplayName() + " " + args[1].replace("l", "") + ChatColor.GOLD + " levels.");
+                        sender.sendMessage(CommandMessages.XP_LEVELS_OTHERS(target, args[1].replace("l", "")));
                         if (sender instanceof Player) {
-                            target.sendMessage(ChatColor.GOLD + "You were given " + ChatColor.AQUA + args[1].replace("l", "") + ChatColor.GOLD + " levels by " + ChatColor.AQUA + ((Player) sender).getDisplayName() + ChatColor.GOLD + ".");
-                        } else  target.sendMessage(ChatColor.GOLD + "You were given " + ChatColor.AQUA + args[1].replace("l", "") + ChatColor.GOLD + " levels by " + ChatColor.AQUA + sender.getName() + ChatColor.GOLD + ".");
+                            target.sendMessage(CommandMessages.XP_LEVELS_OTHERS_MESSAGE(sender, args[1]));
+                        } else  target.sendMessage(CommandMessages.XP_LEVELS_OTHERS_MESSAGE(sender, args[1]));
                     } else {
                         target.giveExp(Integer.parseInt(args[1]));
                         target.playSound(target.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f);
-                        sender.sendMessage(ChatColor.GOLD + "Gave " + ChatColor.AQUA + target.getDisplayName() + " " + args[1] + ChatColor.GOLD + " xp.");
+                        sender.sendMessage(CommandMessages.XP_XP_OTHERS(target, args[1].replace("l", "")));
                         if (sender instanceof Player) {
-                            target.sendMessage(ChatColor.GOLD + "You were given " + ChatColor.AQUA + args[1] + ChatColor.GOLD + " xp by " + ChatColor.AQUA + ((Player) sender).getDisplayName() + ChatColor.GOLD + ".");
-                        } else target.sendMessage(ChatColor.GOLD + "You were given " + ChatColor.AQUA + args[1] + ChatColor.GOLD + " xp by " + ChatColor.AQUA + sender.getName() + ChatColor.GOLD + ".");
-
+                            target.sendMessage(CommandMessages.XP_XP_OTHERS_MESSAGE(sender, args[1].replace("l", "")));
+                        } else  target.sendMessage(CommandMessages.XP_XP_OTHERS_MESSAGE(sender, args[1].replace("l", "")));
                     }
                 } else sender.sendMessage(Errors.INVALID_PLAYER());
             } else sender.sendMessage(Errors.NO_PERMISSION());

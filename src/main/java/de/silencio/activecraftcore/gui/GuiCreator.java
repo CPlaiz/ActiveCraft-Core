@@ -130,7 +130,7 @@ public class GuiCreator {
 
         if (backgroundFilled) {
             for (int i = 0; i < itemInSlot.length; i++) {
-                if (itemInSlot[i] == null) setItemInSlot(new GuiItem(Material.GRAY_STAINED_GLASS_PANE).setDisplayName(""), i);
+                if (itemInSlot[i] == null) setItemInSlot(new GuiItem(Material.GRAY_STAINED_GLASS_PANE).setDisplayName(" "), i);
             }
         }
 

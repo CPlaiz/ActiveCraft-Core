@@ -4,6 +4,7 @@ import de.silencio.activecraftcore.commands.*;
 import de.silencio.activecraftcore.gui.Gui;
 import de.silencio.activecraftcore.gui.GuiData;
 import de.silencio.activecraftcore.gui.GuiHistoryMap;
+import de.silencio.activecraftcore.gui.GuiListener;
 import de.silencio.activecraftcore.listener.*;
 import de.silencio.activecraftcore.listener.inventory.ProfileListener;
 import de.silencio.activecraftcore.messages.ActiveCraftMessage;
@@ -136,7 +137,6 @@ public final class Main extends JavaPlugin {
 
 
         // commands
-
         Bukkit.getPluginCommand("heal").setExecutor(new HealCommand());
         Bukkit.getPluginCommand("spawn").setExecutor(new SpawnCommand());
         Bukkit.getPluginCommand("ping").setExecutor(new PingCommand());
