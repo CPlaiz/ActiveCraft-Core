@@ -1,5 +1,6 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -19,7 +20,7 @@ public class FeedCommand implements CommandExecutor {
                         Player player = (Player) sender;
                         if(sender.hasPermission("activecraft.feed.self")) {
                             player.setFoodLevel(20);
-                            player.sendMessage(ChatColor.GOLD + "You were fed.");
+                            player.sendMessage(CommandMessages.FEED());
                             player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_BURP, 1f, 1f);
                         }
                     } else sender.sendMessage(Errors.NOT_A_PLAYER());
@@ -32,18 +33,14 @@ public class FeedCommand implements CommandExecutor {
                     if(target != null) {
                         if (sender.hasPermission("activecraft.feed.others")) {
                             if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
-                                if (!sender.hasPermission("activecraft.afk.self")) {
+                                if (!sender.hasPermission("activecraft.feed.self")) {
                                     sender.sendMessage(Errors.CANNOT_TARGET_SELF());
                                     return false;
                                 }
                             }
                             target.setFoodLevel(20);
-                            sender.sendMessage(ChatColor.GOLD + "You fed " + ChatColor.AQUA + target.getDisplayName());
-                            if (sender instanceof Player) {
-                                target.sendMessage(ChatColor.GOLD + "You were fed by " + ChatColor.AQUA + ((Player) sender).getDisplayName() + ChatColor.GOLD + ".");
-                            } else {
-                                target.sendMessage(ChatColor.GOLD + "You were fed by " + ChatColor.AQUA + sender.getName() + ChatColor.GOLD + ".");
-                            }
+                            sender.sendMessage(CommandMessages.FEED_OTHERS(target));
+                            target.sendMessage(CommandMessages.FEED_OTHERS_MESSAGE(sender));
 
                             target.playSound(target.getLocation(), Sound.ENTITY_PLAYER_BURP, 1f, 1f);
                         } else sender.sendMessage(Errors.NO_PERMISSION());

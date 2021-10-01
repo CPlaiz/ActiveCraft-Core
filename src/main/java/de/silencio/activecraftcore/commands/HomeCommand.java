@@ -1,5 +1,6 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.utils.FileConfig;
 import org.bukkit.Bukkit;
@@ -35,10 +36,10 @@ public class HomeCommand implements CommandExecutor, TabCompleter {
                     }
                     if (homeconfig.contains(playerName + "." + args[0].toLowerCase())) {
                         player.teleport(homeconfig.getLocation(playerName + "." + args[0].toLowerCase()));
-                        sender.sendMessage(ChatColor.GOLD + "Teleported to " + ChatColor.AQUA + args[0] + ChatColor.GOLD + ".");
+                        sender.sendMessage(CommandMessages.TELEPORT_HOME_COMPLETE(args[0].toString()));
                         player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
 
-                    } else sender.sendMessage(Errors.WARNING() + "This home is not set!");
+                    } else sender.sendMessage(Errors.WARNING() + CommandMessages.HOME_NOT_SET());
                 } else sender.sendMessage(Errors.NO_PERMISSION());
             }
 
@@ -66,11 +67,11 @@ public class HomeCommand implements CommandExecutor, TabCompleter {
                     if (homeconfig.contains(targetName + "." + args[1].toLowerCase())) {
 
                         player.teleport(homeconfig.getLocation(targetName + "." + args[1].toLowerCase()));
-                        sender.sendMessage(ChatColor.GOLD + "Teleported to " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + "'s home " + ChatColor.AQUA + args[1] + ChatColor.GOLD + ".");
+                        sender.sendMessage(CommandMessages.TELEPORT_HOME_OTHERS_COMPLETE(target, args[1].toString()));
                         player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
 
                     } else
-                        sender.sendMessage(ChatColor.GOLD + "Player " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " does not have a home called " + ChatColor.AQUA + args[1] + ChatColor.GOLD + ".");
+                        sender.sendMessage(CommandMessages.HOME_OTHERS_NOT_SET(target, args[1].toString()));
                 } else sender.sendMessage(Errors.NO_PERMISSION());
             }
             if (args.length >= 3) {

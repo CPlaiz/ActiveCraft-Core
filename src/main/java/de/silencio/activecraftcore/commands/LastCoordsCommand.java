@@ -1,6 +1,7 @@
 package de.silencio.activecraftcore.commands;
 
 import de.silencio.activecraftcore.Main;
+import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.utils.FileConfig;
 import org.bukkit.Bukkit;
@@ -34,7 +35,7 @@ public class LastCoordsCommand implements CommandExecutor, TabCompleter {
                 if (sender.hasPermission("activecraft.lastcoords")) {
                     FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + args[0].toLowerCase() + ".yml");
                     if (Bukkit.getWorld(args[1]) == null) {
-                        sender.sendMessage(Errors.WARNING() + "World not found!");
+                        sender.sendMessage(Errors.WARNING() + " World not found!");
                         return false;
                     }
 
@@ -42,16 +43,17 @@ public class LastCoordsCommand implements CommandExecutor, TabCompleter {
 
                     Location lastLocation = playerdataConfig.getLocation("last-location." + args[1]);
                     if (lastLocation == null) {
-                        sender.sendMessage(Errors.WARNING() + "Player has never entered this world.");
+                        sender.sendMessage(Errors.WARNING() + " " + CommandMessages.NEVER_ENTERED_WORLD());
                         return false;
                     }
-                    sender.sendMessage(ChatColor.AQUA + playerdataConfig.getString("name") + "'s " + ChatColor.GOLD + "last coords in " + ChatColor.AQUA + world.getName() + ChatColor.GOLD
-                            + ": \nX: " + ChatColor.AQUA + lastLocation.getBlockX() + ChatColor.GOLD
-                            + ", Y: " + ChatColor.AQUA + lastLocation.getBlockY() + ChatColor.GOLD
-                            + ", Z: " + ChatColor.AQUA + lastLocation.getBlockZ() + ChatColor.GOLD
-                            + ", Yaw: " + ChatColor.AQUA + (int) lastLocation.getYaw() + ChatColor.GOLD
-                            + ", Pitch: " + ChatColor.AQUA + (int) lastLocation.getPitch()
-                    );
+                    sender.sendMessage(CommandMessages.LASTCOORDS_MESSAGE(Bukkit.getPlayer(playerdataConfig.getString("name").toString()),
+                            ChatColor.GOLD + "last coords in " + ChatColor.AQUA + world.getName() + ChatColor.GOLD
+                                    + ": \nX: " + ChatColor.AQUA + lastLocation.getBlockX() + ChatColor.GOLD
+                                    + ", Y: " + ChatColor.AQUA + lastLocation.getBlockY() + ChatColor.GOLD
+                                    + ", Z: " + ChatColor.AQUA + lastLocation.getBlockZ() + ChatColor.GOLD
+                                    + ", Yaw: " + ChatColor.AQUA + (int) lastLocation.getYaw() + ChatColor.GOLD
+                                    + ", Pitch: " + ChatColor.AQUA + (int) lastLocation.getPitch()
+                    ));
                 } else sender.sendMessage(Errors.NO_PERMISSION());
             } else sender.sendMessage(Errors.INVALID_PLAYER());
 
@@ -68,7 +70,7 @@ public class LastCoordsCommand implements CommandExecutor, TabCompleter {
                     
                     Location lastLocation = playerdataConfig.getLocation("last-location.BEFORE_QUIT");
                     if (lastLocation == null) {
-                        sender.sendMessage(Errors.WARNING() + "Player has never left this server!");
+                        sender.sendMessage(Errors.WARNING() + " " + CommandMessages.NEVER_QUIT_SERVER());
                         return false;
                     }
                     World world = lastLocation.getWorld();

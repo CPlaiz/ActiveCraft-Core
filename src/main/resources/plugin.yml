@@ -394,6 +394,10 @@ commands:
     description: Teleports you or another player to their last location before a teleport or death.
     permission: activecraft.back
     permission-message: "§cWarnig! §7You don't have the permission to do that!"
+  tablemenu:
+    description: A menu for all workstations.
+    permission: activecraft.tablemenu
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
 
 permissions:
   activecraft.heal.self:
@@ -1029,3 +1033,6 @@ permissions:
     default: op
     children:
       activecraft.back: true
+  activecraft.tablemenu:
+    description: A menu for all workstations.
+    default: op

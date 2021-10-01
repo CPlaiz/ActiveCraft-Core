@@ -1,6 +1,7 @@
 package de.silencio.activecraftcore.commands;
 
 import de.silencio.activecraftcore.Main;
+import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -23,8 +24,8 @@ public class BackCommand implements CommandExecutor {
 
                     if (lastLoc != null) {
                         player.teleport(lastLoc);
-                        sender.sendMessage(ChatColor.GOLD + "Teleported to last location.");
-                    } else sender.sendMessage(Errors.WARNING() + "No location to return to!");
+                        sender.sendMessage(CommandMessages.TELEPORTED_BACK());
+                    } else sender.sendMessage(CommandMessages.NO_RETURN_LOCATION());
 
                 } else sender.sendMessage(Errors.NO_PERMISSION());
             } else if(args.length >= 2) sender.sendMessage(Errors.TOO_MANY_ARGUMENTS());
@@ -45,8 +46,8 @@ public class BackCommand implements CommandExecutor {
 
                 if (lastLoc != null) {
                     target.teleport(lastLoc);
-                    sender.sendMessage(ChatColor.GOLD + "Teleported " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " to their last location.");
-                } else sender.sendMessage(Errors.WARNING() + "No location to return " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " to!");
+                    sender.sendMessage(CommandMessages.TELEPORTED_BACK_OTHERS(target));
+                } else sender.sendMessage(CommandMessages.NO_RETURN_LOCATION_OTHERS(target));
 
             } else sender.sendMessage(Errors.NO_PERMISSION());
         }

@@ -1,5 +1,6 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -32,15 +33,13 @@ public class HatCommand implements CommandExecutor {
                     player.getInventory().addItem(helmetitem);
                     player.getInventory().setHelmet(handitem);
                     player.getInventory().setItemInMainHand(setEmptyHand);
-                    player.sendMessage(ChatColor.GOLD + "Enjoy your new hat!");
+                    player.sendMessage(CommandMessages.HAT_SUCCESS());
                 } else if (handitem.getType() != Material.AIR) {
                     player.getInventory().setHelmet(handitem);
                     player.getInventory().setItemInMainHand(setEmptyHand);
-                    player.sendMessage(ChatColor.GOLD + "Enjoy your new hat!");
-                } else sender.sendMessage(Errors.WARNING() + "You need to hold an item in your hand!");
-
+                    player.sendMessage(CommandMessages.HAT_SUCCESS());
+                } else sender.sendMessage(Errors.WARNING() + " " + Errors.NOT_HOLDING_ITEM());
             } else sender.sendMessage(Errors.NO_PERMISSION());
-
         } else sender.sendMessage(Errors.NOT_A_PLAYER());
         return true;
     }

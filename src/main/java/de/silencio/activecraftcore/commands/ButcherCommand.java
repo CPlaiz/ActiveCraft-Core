@@ -1,5 +1,6 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
@@ -26,10 +27,10 @@ public class ButcherCommand implements CommandExecutor {
                     List<Entity> enemies = player.getNearbyEntities(200, 500, 200);
                     int amount = enemies.size();
 
-                    player.sendMessage(ChatColor.GOLD + "Killed " + ChatColor.AQUA + amount + ChatColor.GOLD + " mobs.");
+                    player.sendMessage(CommandMessages.KILLED_MOBS(amount + ""));
 
                     if(amount == 0) {
-                        sender.sendMessage(Errors.WARNING() + "No mobs nearby!");
+                        sender.sendMessage(Errors.WARNING() + CommandMessages.NO_MOBS());
                     }
                     for (int i = 0; i < amount; i++) {
                         Entity e = enemies.get(i);

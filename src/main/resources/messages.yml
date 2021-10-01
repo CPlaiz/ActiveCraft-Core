@@ -70,6 +70,11 @@ en:
     unban-ip:
       unbanned-ip: 'Unbanned %ip%'
       ip-not-banned: 'This IP is not banned.'
+    back:
+      teleported-back: 'teleported to last location.'
+      no-return-location: 'No location to return to!'
+      teleported-back-others: 'You teleported %t_displayname% to their last location.'
+      no-return-location-others: 'No location to return %t_displayname% to!'
     book:
       changed-title: 'Changed book title to %title%.'
       changed-author: 'Changed book author to %author%.'
@@ -106,10 +111,13 @@ en:
     sethome:
       home-set: 'Home %home% set!'
       home-others-set: 'Set home %home% for player %t_displayname%.'
+      max-homes: 'You cannot create more homes!'
+      max-homes-others: 'This player cannot create more homes!'
     deletehome:
       home-deleted: 'Home %home% deleted.'
       no-home: 'You do not have a home called %home%.'
       home-others-deleted: 'Deleted the home %home% of player %t_displayname%.'
+      no-home-others: 'Player %t_displayname% does not have a home called %home%!'
     editsign:
       enabled: 'Enabled sign edit mode.'
       disabled: 'Disabled sign edit mode.'
@@ -118,7 +126,7 @@ en:
       disabled-others: 'Disabled sign edit mode for %t_displayname%'
       disabled-others-message: 'Sign edit mode disabled by %s_displayname%.'
     enchant:
-      applied-enchantment: 'Applied enchantment %enchantment% to your item.'
+      applied-enchantment: 'Applied enchantment %enchantment% %maxlevel% to your item.'
       applied-enchantment-level: 'Applied enchantment %enchantment% level %level% to your item.'
       cannot-be-applied: 'This enchantment can not be applied to this item!'
       cleared-all-enchantments: 'Cleared all enchantments from this item.'
@@ -158,6 +166,9 @@ en:
       heal-others-message: 'You were healed by %s_displayname%.'
     item:
       item-renamed: 'Item renamed.'
+      item-lore-add: 'Added to lore.'
+      item-lore-clear: 'Cleared lore.'
+      item-lore-set: 'set lore.'
     kickall:
       default-kickall: 'Kicked all players.'
       default-kickall-message: 'You were kicked.'
@@ -441,6 +452,11 @@ de:
     unban-ip:
       unbanned-ip: '%ip% wurde entbannt.'
       ip-not-banned: 'Diese IP Adresse ist nicht gebannt.'
+    back:
+      teleported-back: 'Du wurdest zu deiner letzten position teleportiert.'
+      no-return-location: 'Keine Position zu die du zurück kannst!'
+      teleported-back-others: 'Du hast %t_displayname% zu seiner letzten position teleportiert.'
+      no-return-location-others: 'Keine Position zu der %t_displayname% zurückkehren kann!'
     book:
       changed-title: 'Buch Titel zu %title% geändert.'
       changed-author: 'Buch Author zu %author% geändert.'
@@ -706,7 +722,7 @@ de:
     warp:
       warp-doesnt-exist: 'Dieser Warp existiert nicht'
       warp-teleport: 'Du hast dich zu %warp% teleportiert.'
-      warp-teleport-others: 'Du hast %t1_displayname% zu %warp% teleportiert.'
+      warp-teleport-others: 'Du hast %t_displayname% zu %warp% teleportiert.'
       warp-teleport-others-message: 'Du wurdest von %s_displayname% zu %warp% teleportiert.'
     setwarp:
       already-exists: 'Dieser Warp existiert bereits!'

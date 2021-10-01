@@ -129,6 +129,11 @@ public final class Main extends JavaPlugin {
         pluginManager.registerEvents(new TeleportListener(), this);
         pluginManager.registerEvents(new DeathListener(), this);
         pluginManager.registerEvents(new LoginListener(), this);
+        pluginManager.registerEvents(new TableMenuListener(), this);
+
+        //gui
+        pluginManager.registerEvents(new GuiListener(), this);
+
 
         // commands
 
@@ -221,7 +226,7 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginCommand("kick").setExecutor(new KickCommand());
         Bukkit.getPluginCommand("commandstick").setExecutor(new CommandStickCommand());
         Bukkit.getPluginCommand("back").setExecutor(new BackCommand());
-        Bukkit.getPluginCommand("test").setExecutor(new GuiCreatorTestCommand());
+        Bukkit.getPluginCommand("tablemenu").setExecutor(new TableMenuCommand());
     }
 
     public static Main getPlugin() {

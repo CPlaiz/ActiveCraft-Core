@@ -1,5 +1,6 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.utils.FileConfig;
 import org.bukkit.Bukkit;
@@ -8,12 +9,9 @@ import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.LightningStrike;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SetHomeCommand implements CommandExecutor {
@@ -45,7 +43,7 @@ public class SetHomeCommand implements CommandExecutor {
                         }
                     }
                     if (!(homeList.size() < maxHomes)) {
-                        player.sendMessage(Errors.WARNING() + "You cannot create more homes!");
+                        player.sendMessage(Errors.WARNING() + CommandMessages.MAX_HOMES());
                         return false;
                     }
                     homeList.add(args[0]);
@@ -53,7 +51,7 @@ public class SetHomeCommand implements CommandExecutor {
                     homeconfig.set(playerName + "." + args[0].toLowerCase(), loc);
                     homeconfig.saveConfig();
 
-                    sender.sendMessage(ChatColor.GOLD + "Home " + ChatColor.AQUA + args[0] + ChatColor.GOLD + " set!");
+                    sender.sendMessage(CommandMessages.HOME_SET(args[0].toString()));
                 } else sender.sendMessage(Errors.NOT_A_PLAYER());
             } else sender.sendMessage(Errors.NO_PERMISSION());
         }
@@ -89,14 +87,14 @@ public class SetHomeCommand implements CommandExecutor {
                     }
                 }
                 if (!(homeList.size() < maxHomes)) {
-                    player.sendMessage(Errors.WARNING() + "This player cannot create more homes!");
+                    player.sendMessage(Errors.WARNING() + CommandMessages.MAX_HOMES_OTHERS());
                     return false;
                 }
                 homeList.add(args[1]);
                 homeconfig.set(targetName + ".home_list", homeList);
                 homeconfig.set(targetName + "." + args[1].toLowerCase(), loc);
                 homeconfig.saveConfig();
-                sender.sendMessage(ChatColor.GOLD + "Set home " + ChatColor.AQUA + args[1] + ChatColor.GOLD + " for player " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " to current location.");
+                sender.sendMessage(CommandMessages.HOME_OTHERS_SET(target, args[1].toString()));
             } else sender.sendMessage(Errors.NO_PERMISSION());
         }
         if (args.length >= 3) {

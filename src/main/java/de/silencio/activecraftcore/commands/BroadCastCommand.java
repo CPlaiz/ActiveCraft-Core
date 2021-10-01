@@ -1,5 +1,6 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.utils.MessageUtils;
 import org.bukkit.Bukkit;
@@ -28,9 +29,9 @@ public class BroadCastCommand implements CommandExecutor, TabCompleter {
                     msg = MessageUtils.replaceColor(msg);
                     msg = MessageUtils.replaceFormat(msg);
 
-                    Bukkit.broadcastMessage("§6[BroadCast]§r " + msg);
+                    Bukkit.broadcastMessage(CommandMessages.BROADCAST_PREFIX() + msg);
 
-                } else sender.sendMessage(Errors.WARNING() + "Please include a message!");
+                } else sender.sendMessage(Errors.WARNING() + CommandMessages.INCLUDE_MESSAGE());
             }
 
             if(label.equalsIgnoreCase("broadcastworld") || label.equalsIgnoreCase("bcw")) {
@@ -46,10 +47,10 @@ public class BroadCastCommand implements CommandExecutor, TabCompleter {
                         for (Player player : Bukkit.getOnlinePlayers()) {
                             Player senderplayer = (Player) sender;
                             if (player.getWorld() == senderplayer.getWorld()) {
-                                player.sendMessage("§6[BroadCast]§r " + msg);
+                                player.sendMessage(CommandMessages.BROADCAST_PREFIX() + msg);
                             }
                         }
-                    } else sender.sendMessage(Errors.WARNING() + "Please include a message!");
+                    } else sender.sendMessage(Errors.WARNING() + CommandMessages.INCLUDE_MESSAGE());
                 } else sender.sendMessage(Errors.NOT_A_PLAYER());
             }
         } else sender.sendMessage(Errors.NO_PERMISSION());

@@ -7,6 +7,7 @@ public enum CommandType {
     BANLIST,
     IPBAN,
     UNBAN_IP,
+    BACK,
     BOOK,
     BREAK,
     BROADCAST,

@@ -1,5 +1,6 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -15,11 +16,11 @@ public class KickAllCommand implements CommandExecutor {
 
         if (sender.hasPermission("activecraft.kickall")) {
             if (!(args.length > 0)) {
-                sender.sendMessage(ChatColor.GOLD + "Kicked all players.");
+                sender.sendMessage(CommandMessages.DEFAULT_KICKALL());
 
                 for (Player player : Bukkit.getOnlinePlayers()) {
                     if (!player.hasPermission("activecraft.kickall.bypass")) {
-                        player.kickPlayer("You were kicked.");
+                        player.kickPlayer(CommandMessages.DEFAULT_KICKALL_MESSAGE());
                     }
                 }
             } else {
@@ -28,11 +29,11 @@ public class KickAllCommand implements CommandExecutor {
                     stringBuilder.append(arg);
                     stringBuilder.append(" ");
                 }
-                sender.sendMessage(ChatColor.GOLD + "Kicked all players. \n" + ChatColor.AQUA + "Reason: " + stringBuilder);
+                sender.sendMessage(CommandMessages.CUSTOM_KICKALL(stringBuilder.toString()));
 
                 for (Player player : Bukkit.getOnlinePlayers()) {
                     if (!player.hasPermission("activecraft.kickall.bypass")) {
-                        player.kickPlayer(stringBuilder.toString());
+                        player.kickPlayer(CommandMessages.CUSTOM_KICKALL_MESSAGE(stringBuilder.toString()));
                     }
                 }
             }

@@ -1,6 +1,7 @@
 package de.silencio.activecraftcore.commands;
 
 import de.silencio.activecraftcore.Main;
+import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.utils.FileConfig;
 import org.bukkit.Bukkit;
@@ -55,7 +56,7 @@ public class ColorNickCommand implements CommandExecutor, TabCompleter {
                                         player.setDisplayName(color + playerdataConfig.getString("nickname"));
                                         playerdataConfig.set("colornick", color.name());
                                         playerdataConfig.saveConfig();
-                                        player.sendMessage(ChatColor.GOLD + "Name color changed to " + color + color.name());
+                                        player.sendMessage(CommandMessages.COLORNICK_SELF(color.name()));
                                     }
                                 }
                             }
@@ -95,10 +96,8 @@ public class ColorNickCommand implements CommandExecutor, TabCompleter {
                             targetdataConfig.set("colornick", randomColor.name());
                             targetdataConfig.saveConfig();
 
-                            sender.sendMessage(ChatColor.GOLD + "Name color for " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " changed to " + randomColor + randomColor.name() + ChatColor.GOLD + ".");
-                            if(sender instanceof Player) {
-                                target.sendMessage(ChatColor.GOLD + "Name color changed to " + randomColor + randomColor.name() + ChatColor.GOLD + " by " + ChatColor.AQUA + ((Player) sender).getDisplayName() + ChatColor.GOLD + ".");
-                            } else target.sendMessage(ChatColor.GOLD + "Name color changed to " + randomColor + randomColor.name() + ChatColor.GOLD + " by " + ChatColor.AQUA + sender.getName() + ChatColor.GOLD + ".");
+                            sender.sendMessage(CommandMessages.COLORNICK_OTHERS(target, randomColor.name()));
+                            target.sendMessage(CommandMessages.COLORNICK_OTHERS_MESSAGE(sender, randomColor.name()));
                         }
 
                         for (ChatColor color : ChatColor.values()) {
@@ -110,10 +109,8 @@ public class ColorNickCommand implements CommandExecutor, TabCompleter {
                                     target.setDisplayName(color + targetdataConfig.getString("nickname"));
                                     targetdataConfig.set("colornick", color.name());
                                     targetdataConfig.saveConfig();
-                                    sender.sendMessage(ChatColor.GOLD + "Name color for " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " changed to " + color + color.name() + ChatColor.GOLD + ".");
-                                    if(sender instanceof Player) {
-                                        target.sendMessage(ChatColor.GOLD + "Name color changed to " + color + color.name() + ChatColor.GOLD + " by " + ChatColor.AQUA + ((Player) sender).getDisplayName() + ChatColor.GOLD + ".");
-                                    } else target.sendMessage(ChatColor.GOLD + "Name color changed to " + color + color.name() + ChatColor.GOLD + " by " + ChatColor.AQUA + sender.getName() + ChatColor.GOLD + ".");
+                                    sender.sendMessage(CommandMessages.COLORNICK_OTHERS(target, color.name()));
+                                    target.sendMessage(CommandMessages.COLORNICK_OTHERS_MESSAGE(sender, color.name()));
                                 }
                             }
                         }

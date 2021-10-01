@@ -1,5 +1,6 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.utils.FileConfig;
 import org.bukkit.Bukkit;
@@ -37,8 +38,8 @@ public class DelHomeCommand implements CommandExecutor, TabCompleter {
                             homeconfig.set(playerName + ".home_list", homeList);
                             homeconfig.set(playerName + "." + args[0].toLowerCase(), null);
                             homeconfig.saveConfig();
-                            sender.sendMessage(ChatColor.GOLD + "Home " + ChatColor.AQUA + args[0] + ChatColor.GOLD + " deleted.");
-                        } else sender.sendMessage(Errors.WARNING() + "You do not have a home called " + ChatColor.AQUA + args[0] + ChatColor.GRAY + ".");
+                            sender.sendMessage(CommandMessages.HOME_DELETED(args[0].toString()));
+                        } else sender.sendMessage(Errors.WARNING()  + " " + CommandMessages.NO_HOME(args[0].toString()));
                     } else sender.sendMessage(Errors.NOT_A_PLAYER());
                 }
             } else sender.sendMessage(Errors.NO_PERMISSION());
@@ -69,8 +70,8 @@ public class DelHomeCommand implements CommandExecutor, TabCompleter {
                         homeconfig.set(targetName + ".home_list", homeList);
                         homeconfig.set(targetName + "." + args[1].toLowerCase(), null);
                         homeconfig.saveConfig();
-                        sender.sendMessage(ChatColor.GOLD + "Deleted the home " + ChatColor.AQUA + args[1] + ChatColor.GOLD + " of player " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + ".");
-                    } else sender.sendMessage(ChatColor.GOLD + "Player " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " does not have a home called " + ChatColor.AQUA + args[1] + ChatColor.GOLD + ".");
+                        sender.sendMessage(CommandMessages.HOME_OTHERS_DELETED(target, args[1].toString()));
+                    } else sender.sendMessage(CommandMessages.NO_HOME_OTHERS(target, args[1].toString()));
                 } else sender.sendMessage(Errors.NO_PERMISSION());
             }
             if(args.length >= 3) {

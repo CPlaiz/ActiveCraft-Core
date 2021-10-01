@@ -1,5 +1,6 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.utils.FileConfig;
 import org.bukkit.Bukkit;
@@ -24,13 +25,13 @@ public class GodCommand implements CommandExecutor {
 
                     if (!playerdataConfig.getBoolean("godmode")) {
                         player.setInvulnerable(true);
-                        sender.sendMessage(ChatColor.GOLD + "God mode activated.");
+                        sender.sendMessage(CommandMessages.ENABLE_GOD());
 
                         playerdataConfig.set("godmode", true);
                         playerdataConfig.saveConfig();
                     } else if (playerdataConfig.getBoolean("godmode")) {
                         player.setInvulnerable(false);
-                        sender.sendMessage(ChatColor.GOLD + "God mode deactivated.");
+                        sender.sendMessage(CommandMessages.DISABLE_GOD());
 
                         playerdataConfig.set("godmode", false);
                         playerdataConfig.saveConfig();
@@ -55,19 +56,14 @@ public class GodCommand implements CommandExecutor {
 
                 if (!targetdataConfig.getBoolean("godmode")) {
                     target.setInvulnerable(true);
-                    sender.sendMessage(ChatColor.GOLD + "God mode activated for " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + ".");
-                    if (sender instanceof Player) {
-                        target.sendMessage(ChatColor.GOLD + "God mode activated by " + ChatColor.AQUA + ((Player)sender).getDisplayName() + ChatColor.GOLD + ".");
-                    } else  target.sendMessage(ChatColor.GOLD + "God mode activated by " + ChatColor.AQUA + sender.getName() + ChatColor.GOLD + ".");
-
+                    sender.sendMessage(CommandMessages.ENABLE_GOD_OTHERS(target));
+                    target.sendMessage(CommandMessages.ENABLE_GOD_OTHERS_MESSAGE(sender));
                     targetdataConfig.set("godmode", true);
                     targetdataConfig.saveConfig();
                 } else if (targetdataConfig.getBoolean("godmode")) {
                     target.setInvulnerable(false);
-                    sender.sendMessage(ChatColor.GOLD + "God mode deactivated for " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + ".");
-                    if (sender instanceof Player) {
-                        target.sendMessage(ChatColor.GOLD + "God mode deactivated by " + ChatColor.AQUA + ((Player)sender).getDisplayName() + ChatColor.GOLD + ".");
-                    } else  target.sendMessage(ChatColor.GOLD + "God mode deactivated by " + ChatColor.AQUA + sender.getName() + ChatColor.GOLD + ".");
+                    sender.sendMessage(CommandMessages.DISABLE_GOD_OTHERS(target));
+                    target.sendMessage(CommandMessages.DISABLE_GOD_OTHERS_MESSAGE(sender));
 
                     targetdataConfig.set("godmode", false);
                     targetdataConfig.saveConfig();

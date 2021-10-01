@@ -1,5 +1,6 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -24,6 +25,7 @@ public class BreakCommand implements CommandExecutor {
                     var block = player.getTargetBlock(null, 9999);
                     player.playSound(player.getLocation(), Sound.BLOCK_STONE_BREAK, 1f, 1f);
                     block.setType(Material.AIR);
+                    sender.sendMessage(CommandMessages.BREAK_SELF());
 
                 } else sender.sendMessage(Errors.NO_PERMISSION());
             } else sender.sendMessage(Errors.NOT_A_PLAYER());
@@ -42,7 +44,7 @@ public class BreakCommand implements CommandExecutor {
                     }
                 var block = target.getTargetBlock(null, 9999);
                 target.playSound(target.getLocation(), Sound.BLOCK_STONE_BREAK, 1f, 1f);
-                sender.sendMessage(ChatColor.GOLD + "Broke block infront of " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + ".");
+                sender.sendMessage(CommandMessages.BREAK_OTHERS(target, sender));
                 block.setType(Material.AIR);
             }
         }

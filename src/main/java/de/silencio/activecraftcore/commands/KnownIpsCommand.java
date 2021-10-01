@@ -1,5 +1,6 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.utils.FileConfig;
 import org.bukkit.Bukkit;
@@ -34,7 +35,7 @@ public class KnownIpsCommand implements CommandExecutor {
                         stringBuilder.append(",");
                     }
                 }
-                sender.sendMessage(ChatColor.GOLD + "-- Known IPs for " + target.getName() + "\n"
+                sender.sendMessage(CommandMessages.KNOWNIPS_HEADER(target) + "\n"
                                 + ChatColor.WHITE + stringBuilder.toString()
                         );
             } else sender.sendMessage(Errors.INVALID_ARGUMENTS());

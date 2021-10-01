@@ -1,5 +1,6 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -73,7 +74,7 @@ public class EnchantCommand implements CommandExecutor, TabCompleter {
                             ItemStack eitem = player.getInventory().getItemInMainHand();
                             eitem.addUnsafeEnchantment(Objects.requireNonNull(Objects.requireNonNull(Enchantment.getByKey(NamespacedKey.minecraft(args[0])))), maxlevel);
 
-                            player.sendMessage(ChatColor.GOLD + "Applied enchantment " + ChatColor.AQUA + args[0].replace("_", " ") + " " + maxlevel + ChatColor.GOLD + " to your item.");
+                            player.sendMessage(CommandMessages.APPLIED_ENCHANTMENT(args[0].toString(), maxlevel + "").replace("_", " "));
                             player.playSound(player.getLocation(), Sound.BLOCK_ENCHANTMENT_TABLE_USE, 1f, 1f);
                         }
 
@@ -88,15 +89,15 @@ public class EnchantCommand implements CommandExecutor, TabCompleter {
                                     eitem.getType().equals(Material.ELYTRA) || eitem.getType().equals(Material.CARVED_PUMPKIN) || eitem.getType().equals(Material.DRAGON_HEAD) || eitem.getType().equals(Material.CREEPER_HEAD) ||
                                     eitem.getType().equals(Material.SKELETON_SKULL) || eitem.getType().equals(Material.WITHER_SKELETON_SKULL) || eitem.getType().equals(Material.PLAYER_HEAD) || eitem.getType().equals(Material.ZOMBIE_HEAD)) {
                                 eitem.addUnsafeEnchantment(Enchantment.BINDING_CURSE, 1);
-                                player.sendMessage(ChatColor.GOLD + "Applied enchantment " + ChatColor.AQUA + args[0].replace("_", " ") + ChatColor.GOLD + " to your item.");
+                                player.sendMessage(CommandMessages.APPLIED_ENCHANTMENT(args[0].toString(), 1 + ""));
                                 player.playSound(player.getLocation(), Sound.BLOCK_ENCHANTMENT_TABLE_USE, 1f, 1f);
-                            } else sender.sendMessage(Errors.WARNING() + "This enchantment cannot be applied to this item!");
+                            } else sender.sendMessage(Errors.WARNING() + " " + CommandMessages.CANNOT_BE_APPLIED());
                         }
 
                         if (args[0].equalsIgnoreCase("curse_of_vanishing") && args.length == 1) {
                             ItemStack eitem = player.getInventory().getItemInMainHand();
                             eitem.addUnsafeEnchantment(Enchantment.VANISHING_CURSE, 1);
-                            player.sendMessage(ChatColor.GOLD + "Applied enchantment " + ChatColor.AQUA + args[0].replace("_", " ") + ChatColor.GOLD + " to your item.");
+                            player.sendMessage(CommandMessages.APPLIED_ENCHANTMENT(args[0].toString(), 1 + ""));
                             player.playSound(player.getLocation(), Sound.BLOCK_ENCHANTMENT_TABLE_USE, 1f, 1f);
                         }
 
@@ -108,11 +109,11 @@ public class EnchantCommand implements CommandExecutor, TabCompleter {
                                     for (Enchantment enchantment : Enchantment.values()) {
                                         if (player.getInventory().getItemInMainHand().containsEnchantment(enchantment)) {
                                             player.getInventory().getItemInMainHand().removeEnchantment(enchantment);
-                                            player.sendMessage(ChatColor.GOLD + "Cleared all enchantments from this item.");
+                                            player.sendMessage(CommandMessages.CLEARED_ALL_ENCHANTMENTS());
                                             player.playSound(player.getLocation(), Sound.BLOCK_ENCHANTMENT_TABLE_USE, 1f, 1f);
                                         }
                                     }
-                                } else sender.sendMessage(Errors.WARNING() + "Item is not enchanted!");
+                                } else sender.sendMessage(Errors.WARNING() + " " + CommandMessages.NOT_ENCHANTED());
                             } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
                         }
 
@@ -124,7 +125,7 @@ public class EnchantCommand implements CommandExecutor, TabCompleter {
                                 eitem.addUnsafeEnchantment(Enchantment.WATER_WORKER, 1);
                                 eitem.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 
-                                player.sendMessage(ChatColor.GOLD + "Added enchantment glint to your item.");
+                                player.sendMessage(CommandMessages.GLINT_TRUE());
                                 player.playSound(player.getLocation(), Sound.BLOCK_ENCHANTMENT_TABLE_USE, 1f, 1f);
 
                             } else if (args[1].equalsIgnoreCase("false")) {
@@ -134,9 +135,9 @@ public class EnchantCommand implements CommandExecutor, TabCompleter {
                                 eitem.removeEnchantment(Enchantment.WATER_WORKER);
                                 eitem.removeItemFlags(ItemFlag.HIDE_ENCHANTS);
 
-                                player.sendMessage(ChatColor.GOLD + "Removed enchantment glint to your item.");
+                                player.sendMessage(CommandMessages.GLINT_FALSE());
                                 player.playSound(player.getLocation(), Sound.BLOCK_ENCHANTMENT_TABLE_USE, 1f, 1f);
-                            } else sender.sendMessage(Errors.WARNING() + "Please use true / false!");
+                            } else sender.sendMessage(Errors.NOT_TRUE_FALSE());
                         }
 
                         if (args.length == 2 && !args[0].equalsIgnoreCase("glint") && !args[0].equalsIgnoreCase("curse_of_binding") && !args[0].equalsIgnoreCase("curse_of_vanishing")) {
@@ -194,7 +195,7 @@ public class EnchantCommand implements CommandExecutor, TabCompleter {
                                 ItemStack eitem = player.getInventory().getItemInMainHand();
                                 eitem.addUnsafeEnchantment(Objects.requireNonNull(Objects.requireNonNull(Enchantment.getByKey(NamespacedKey.minecraft(args[0])))), level);
 
-                                player.sendMessage(ChatColor.GOLD + "Applied enchantment " + ChatColor.AQUA + args[0].replace("_", " ") + " " + level + ChatColor.GOLD + " to your item.");
+                                player.sendMessage(CommandMessages.APPLIED_ENCHANTMENT_LEVEL(args[0].toString(), level + ""));
                                 player.playSound(player.getLocation(), Sound.BLOCK_ENCHANTMENT_TABLE_USE, 1f, 1f);
                             } else sender.sendMessage(Errors.NOT_HOLDING_ITEM());
                         } else if (args.length > 2) {

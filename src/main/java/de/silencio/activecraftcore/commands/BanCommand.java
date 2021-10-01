@@ -166,17 +166,17 @@ public class BanCommand implements CommandExecutor, Listener, TabCompleter {
                         this.dialogueManager = new DialogueManager((Player) sender);
                         this.dialogueManager.setHeader(CommandMessages.IPBAN_HEADER(target, sender).replace("%ip%", target.getAddress().getAddress().toString().replace("/", "")));
                         this.dialogueManager.setCompletedMessage(CommandMessages.BAN_COMPLETED_MESSAGE(target, sender).replace("%ip%", target.getAddress().getAddress().toString().replace("/", "")));
-                        this.dialogueManager.setCancelledMessage(CommandMessages.IPBAN_CANCELLED_MESSAGE(target, sender));
-                        this.dialogueManager.add(CommandMessages.IPBAN_ENTER_REASON(target, sender));
-                        this.dialogueManager.add(CommandMessages.IPBAN_ENTER_TIME(target, sender));
+                        this.dialogueManager.setCancelledMessage(CommandMessages.IPBAN_CANCELLED_MESSAGE(target,null));
+                        this.dialogueManager.add(CommandMessages.IPBAN_ENTER_REASON(null,null));
+                        this.dialogueManager.add(CommandMessages.IPBAN_ENTER_TIME(null,null));
                         this.dialogueManager.initialize();
 
                         Date date = new Date();
-                    } else sender.sendMessage(CommandMessages.IP_ALREADY_BANNED(target, sender));
-                } else sender.sendMessage(CommandMessages.INVALID_IP(target, sender));
+                    } else sender.sendMessage(CommandMessages.IP_ALREADY_BANNED(null,null));
+                } else sender.sendMessage( Errors.WARNING() + " " + CommandMessages.INVALID_IP(null, null));
             } else if (label.equalsIgnoreCase("unban-ip")) {
                 ipBanManager.unban(args[0]);
-                sender.sendMessage(CommandMessages.UNBANNED_IP(target, sender));
+                sender.sendMessage(CommandMessages.UNBANNED_IP(target, sender).replace("%ip%", ChatColor.AQUA + args[0] + ChatColor.GOLD));
             }
         } else sender.sendMessage(Errors.NO_PERMISSION());
         return true;

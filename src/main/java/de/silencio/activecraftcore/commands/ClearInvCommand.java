@@ -1,5 +1,6 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -18,7 +19,7 @@ public class ClearInvCommand implements CommandExecutor {
             if (sender.hasPermission("activecraft.clearinv.self")) {
                 if (sender instanceof Player) {
                     Player player = (Player) sender;
-                    player.sendMessage(ChatColor.GOLD + "Cleared your inventory.");
+                    player.sendMessage(CommandMessages.CLEARED_SELF());
                     player.getInventory().clear();
                 } else sender.sendMessage(Errors.NOT_A_PLAYER());
             } else sender.sendMessage(Errors.NO_PERMISSION());
@@ -35,11 +36,8 @@ public class ClearInvCommand implements CommandExecutor {
                         return false;
                     }
                 }
-                sender.sendMessage(ChatColor.GOLD + "Cleared " + ChatColor.AQUA + target.getDisplayName() + "'s" + ChatColor.GOLD + " inventory.");
-                if (sender instanceof Player) {
-                    target.sendMessage(ChatColor.GOLD + "Your inventory was cleared by " + ChatColor.AQUA + ((Player) sender).getDisplayName());
-                } else
-                    target.sendMessage(ChatColor.GOLD + "Your inventory was cleared by " + ChatColor.AQUA + sender.getName());
+                sender.sendMessage(CommandMessages.CLEARED_OTHERS(target));
+                target.sendMessage(CommandMessages.CLEARED_OTHERS_MESSAGE(sender));
                 target.getInventory().clear();
             } else sender.sendMessage(Errors.NO_PERMISSION());
         }

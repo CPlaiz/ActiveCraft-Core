@@ -1,5 +1,6 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -28,11 +29,11 @@ public class KnockbackStickCommand implements CommandExecutor {
                     ItemMeta stickmeta = stick.getItemMeta();
                     stickmeta.setDisplayName(ChatColor.GOLD + "Knockback Stick");
                     stickmeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-                    stickmeta.setLore(Collections.singletonList(ChatColor.AQUA + "Dont keep your enemies closer than your friends, banish them from your land!"));
+                    stickmeta.setLore(Collections.singletonList(CommandMessages.KNOCKBACKSTICK_LORE()));
                     stick.setItemMeta(stickmeta);
                     stick.addUnsafeEnchantment(Enchantment.KNOCKBACK, 255);
                     player.getInventory().addItem(stick);
-                    player.sendMessage(ChatColor.GOLD + "You were chosen to harness the power of the stick!");
+                    player.sendMessage(CommandMessages.KNOCKBACKSTICK());
 
                 } else sender.sendMessage(Errors.NO_PERMISSION());
             } else sender.sendMessage(Errors.NOT_A_PLAYER());
@@ -53,12 +54,12 @@ public class KnockbackStickCommand implements CommandExecutor {
                 ItemMeta stickmeta = stick.getItemMeta();
                 stickmeta.setDisplayName(ChatColor.GOLD + "Knockback Stick");
                 stickmeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-                stickmeta.setLore(Collections.singletonList(ChatColor.AQUA + "Dont keep your enemies closer than your friends, banish them from your land!"));
+                stickmeta.setLore(Collections.singletonList(CommandMessages.KNOCKBACKSTICK_LORE()));
                 stick.setItemMeta(stickmeta);
                 stick.addUnsafeEnchantment(Enchantment.KNOCKBACK, 255);
                 target.getInventory().addItem(stick);
-                target.sendMessage(ChatColor.GOLD + "You were chosen to harness the power of the stick by " + ChatColor.AQUA + sender.getName() + ChatColor.GOLD + ".");
-                sender.sendMessage(ChatColor.GOLD + "You chose " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " to harness the power of the stick.");
+                target.sendMessage(CommandMessages.KNOCKBACKSTICK_OTHERS_MESSAGE(sender));
+                sender.sendMessage(CommandMessages.KNOCKBACKSTICK_OTHERS(target));
 
             } else sender.sendMessage(Errors.NO_PERMISSION());
         } else sender.sendMessage(Errors.TOO_MANY_ARGUMENTS());

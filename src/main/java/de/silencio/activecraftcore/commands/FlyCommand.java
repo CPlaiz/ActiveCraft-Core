@@ -1,5 +1,6 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.utils.FileConfig;
 import org.bukkit.Bukkit;
@@ -25,12 +26,12 @@ public class FlyCommand implements CommandExecutor {
 
                         if (fileConfig.getBoolean("fly")) {
                             player.setAllowFlight(false);
-                            player.sendMessage(ChatColor.GOLD + "Flight mode deactivated.");
+                            player.sendMessage(CommandMessages.DISABLE_FLY());
                             fileConfig.set("fly", false);
                             fileConfig.saveConfig();
                         } else if (!fileConfig.getBoolean("fly")) {
                             player.setAllowFlight(true);
-                            player.sendMessage(ChatColor.GOLD + "Flight mode activated.");
+                            player.sendMessage(CommandMessages.ENABLE_FLY());
                             fileConfig.set("fly", true);
                             fileConfig.saveConfig();
                         }
@@ -43,7 +44,7 @@ public class FlyCommand implements CommandExecutor {
                         return false;
                     }
                     Player target = Bukkit.getPlayer(args[0]);
-                    if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
+                    if (sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
                         if (!sender.hasPermission("activecraft.fly.self")) {
                             sender.sendMessage(Errors.CANNOT_TARGET_SELF());
                             return false;
@@ -53,18 +54,14 @@ public class FlyCommand implements CommandExecutor {
 
                     if (fileConfig.getBoolean("fly")) {
                         target.setAllowFlight(false);
-                        if (sender instanceof Player) {
-                            target.sendMessage(ChatColor.GOLD + "Flight mode deactivated by " + ChatColor.AQUA + ((Player) sender).getDisplayName() + ChatColor.GOLD + ".");
-                        } else target.sendMessage(ChatColor.GOLD + "Flight mode deactivated by " + ChatColor.AQUA + sender.getName() + ChatColor.GOLD + ".");
-                        sender.sendMessage(ChatColor.GOLD + "Flight mode deactivated for " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + ".");
+                        target.sendMessage(CommandMessages.DISABLED_FLY_OTHERS_MESSAGE(sender));
+                        sender.sendMessage(CommandMessages.DISABLE_FLY_OTHERS(target));
                         fileConfig.set("fly", false);
                         fileConfig.saveConfig();
                     } else if (!fileConfig.getBoolean("fly")) {
                         target.setAllowFlight(true);
-                        if (sender instanceof Player) {
-                            target.sendMessage(ChatColor.GOLD + "Flight mode activated by " + ChatColor.AQUA + ((Player) sender).getDisplayName() + ChatColor.GOLD + ".");
-                        } else target.sendMessage(ChatColor.GOLD + "Flight mode activated by " + ChatColor.AQUA + sender.getName() + ChatColor.GOLD + ".");
-                        sender.sendMessage(ChatColor.GOLD + "Flight mode activated for " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + ".");
+                        target.sendMessage(CommandMessages.ENABLE_FLY_OTHERS_MESSAGE(sender));
+                        sender.sendMessage(CommandMessages.ENABLE_FLY_OTHERS(target));
                         fileConfig.set("fly", true);
                         fileConfig.saveConfig();
                     }
@@ -86,7 +83,7 @@ public class FlyCommand implements CommandExecutor {
                             FileConfig fileConfig = new FileConfig("playerdata" + File.separator + player.getName().toLowerCase() + ".yml");
                             if (Integer.parseInt(args[0]) <= 10) {
                                 player.setFlySpeed((float) Integer.parseInt(args[0]) / 10);
-                                player.sendMessage(ChatColor.GOLD + "Fly speed set to " + ChatColor.AQUA + args[0] + ChatColor.GOLD + ".");
+                                player.sendMessage(CommandMessages.FLYSPEED_SET(args[0].toString()));
                                 fileConfig.set("flyspeed", Integer.parseInt(args[0]));
                                 fileConfig.saveConfig();
                             } else sender.sendMessage(Errors.NUMBER_TOO_LARGE());
@@ -110,11 +107,8 @@ public class FlyCommand implements CommandExecutor {
                         FileConfig fileConfig = new FileConfig("playerdata" + File.separator + target.getName().toLowerCase() + ".yml");
                         if (Integer.parseInt(args[1]) <= 10) {
                             target.setFlySpeed((float) Integer.parseInt(args[1]) / 10);
-                            if (sender instanceof Player) {
-                                Player player = (Player) sender;
-                                target.sendMessage(ChatColor.GOLD + "Fly speed set to " + ChatColor.AQUA + args[1] + ChatColor.GOLD + " by " + ChatColor.AQUA + player.getDisplayName() + ChatColor.GOLD + ".");
-                            } else target.sendMessage(ChatColor.GOLD + "Fly speed set to " + ChatColor.AQUA + args[1] + ChatColor.GOLD + " by " + ChatColor.AQUA + sender.getName() + ChatColor.GOLD + ".");
-                            sender.sendMessage(ChatColor.GOLD + "Fly speed set to " + ChatColor.AQUA + args[1] + ChatColor.GOLD + " for " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + ".");
+                            target.sendMessage(CommandMessages.FLYSPEED_SET_OTHERS_MESSAGE(sender, args[1].toString()));
+                            sender.sendMessage(CommandMessages.FLYSPEED_SET_OTHERS(target, args[1].toString()));
                             fileConfig.set("flyspeed", Integer.parseInt(args[1]));
                             fileConfig.saveConfig();
                         } else sender.sendMessage(Errors.NUMBER_TOO_LARGE());

@@ -1,5 +1,6 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.utils.MessageUtils;
 import org.bukkit.Bukkit;
@@ -16,6 +17,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class ItemCommand implements CommandExecutor, TabCompleter {
     @Override
@@ -35,12 +37,12 @@ public class ItemCommand implements CommandExecutor, TabCompleter {
                         Material material = Material.getMaterial(args[1].toUpperCase());
                         ItemStack itemStack = new ItemStack(material);
                         player.getInventory().addItem(itemStack);
-                        sender.sendMessage(ChatColor.GOLD + "Gave you " + ChatColor.AQUA + itemStack.getType().name().toLowerCase());
+                        sender.sendMessage(CommandMessages.QUICKGIVE_GIVE(itemStack.getType().name().toLowerCase()));
                         player.playSound(player.getLocation(), Sound.valueOf("BLOCK_AMETHYST_BLOCK_BREAK"), 1f, 1f);
                     }
                     if (args.length == 3) {
                         if (Material.getMaterial(args[1]) == null) {
-                            sender.sendMessage(Errors.WARNING() + "You need to hold an item in your hand!");
+                            sender.sendMessage(Errors.WARNING() + " " + Errors.NOT_HOLDING_ITEM());
                             return false;
                         }
                         Material material = Material.getMaterial(args[1].toUpperCase());
@@ -56,7 +58,7 @@ public class ItemCommand implements CommandExecutor, TabCompleter {
                         }
                         itemStack.setAmount(Integer.parseInt(args[2]));
                         player.getInventory().addItem(itemStack);
-                        sender.sendMessage(ChatColor.GOLD + "Gave you " + ChatColor.AQUA + args[2] + ChatColor.GOLD + "x " + ChatColor.AQUA + itemStack.getType().name().toLowerCase());
+                        sender.sendMessage(CommandMessages.QUICKGIVE_AMOUNT(num + "", itemStack.getType().name().toLowerCase()));
                         player.playSound(player.getLocation(), Sound.valueOf("BLOCK_AMETHYST_BLOCK_BREAK"), 1f, 1f);
                     }
 
@@ -65,7 +67,7 @@ public class ItemCommand implements CommandExecutor, TabCompleter {
                 if (player.hasPermission("activecraft.item.name")) {
                     if (args.length > 1) {
                         if (player.getInventory().getItemInMainHand().getType() == Material.AIR) {
-                            sender.sendMessage(Errors.WARNING() + "You need to hold an item in your hand!");
+                            sender.sendMessage(Errors.WARNING() + " " + Errors.NOT_HOLDING_ITEM());
                             return false;
                         }
 
@@ -84,14 +86,14 @@ public class ItemCommand implements CommandExecutor, TabCompleter {
                         meta.setDisplayName(MessageUtils.replaceFormat(MessageUtils.replaceColor(stringBuilder.toString())));
                         stack.setItemMeta(meta);
 
-                        sender.sendMessage(ChatColor.GOLD + "Item renamed");
+                        sender.sendMessage(CommandMessages.ITEM_RENAMED());
                     } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
                 } else sender.sendMessage(Errors.NO_PERMISSION());
             } else if (args[0].equalsIgnoreCase("lore")) {
                 if (player.hasPermission("activecraft.item.lore")) {
                     if (args.length > 1) {
                         if (player.getInventory().getItemInMainHand().getType() == Material.AIR) {
-                            sender.sendMessage(Errors.WARNING() + "You need to hold an item in your hand!");
+                            sender.sendMessage(Errors.WARNING() + " " + Errors.NOT_HOLDING_ITEM());
                             return false;
                         }
                         ItemStack stack = player.getInventory().getItemInMainHand();
@@ -109,12 +111,12 @@ public class ItemCommand implements CommandExecutor, TabCompleter {
                             stringList.add(MessageUtils.replaceFormat(MessageUtils.replaceColor(stringBuilder.toString())));
                             meta.setLore(stringList);
                             stack.setItemMeta(meta);
-                            sender.sendMessage(ChatColor.GOLD + "Added to Lore");
+                            sender.sendMessage(CommandMessages.ITEM_LORE_ADD());
                         } else if (args[1].equalsIgnoreCase("clear")) {
                             stringList.clear();
                             meta.setLore(stringList);
                             stack.setItemMeta(meta);
-                            sender.sendMessage(ChatColor.GOLD + "Cleared Lore");
+                            sender.sendMessage(CommandMessages.ITEM_LORE_CLEAR());
                         } else if (args[1].equalsIgnoreCase("set")) {
                             StringBuilder stringBuilder = new StringBuilder();
                             for (int i = 2; i < args.length; i++) {
@@ -126,35 +128,12 @@ public class ItemCommand implements CommandExecutor, TabCompleter {
                             meta.setLore(stringList);
                             stack.setItemMeta(meta);
 
-                            sender.sendMessage(ChatColor.GOLD + "Set Lore");
-                        }
-
-
-                    } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
-                } else sender.sendMessage(Errors.NO_PERMISSION());
-            } else if (args[0].equalsIgnoreCase("tag")) {
-                if (player.hasPermission("activecraft.item.tag")) {
-                    if (args.length > 1) {
-                        StringBuilder stringBuilder = new StringBuilder();
-                        for (int i = 1; i < args.length; i++) {
-                            stringBuilder.append(args[i]);
-                            stringBuilder.append(" ");
-                        }
-
-                        ItemStack stack = player.getInventory().getItemInMainHand();
-
-                        ItemMeta meta = stack.getItemMeta();
-                        MessageUtils messageUtils = new MessageUtils();
-
-                        stack.setItemMeta(meta);
-
-                        sender.sendMessage(ChatColor.GOLD + "Item renamed");
+                            sender.sendMessage(CommandMessages.ITEM_LORE_SET());
+                        } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
                     } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
                 } else sender.sendMessage(Errors.NO_PERMISSION());
             } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
-
         } else sender.sendMessage(Errors.NOT_A_PLAYER());
-
         return false;
     }
 
@@ -165,13 +144,12 @@ public class ItemCommand implements CommandExecutor, TabCompleter {
         if (args.length == 1) {
             list.add("name");
             list.add("lore");
-            //list.add("tag");
             list.add("give");
         }
         if (args[0].equalsIgnoreCase("give")) {
             if (args.length == 2) {
                 for (Material material : Material.values()) {
-                    list.add(material.name());
+                    list.add(material.name().toLowerCase().replace("_", " "));
                 }
             }
         } else if (args[0].equalsIgnoreCase("lore")) {

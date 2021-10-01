@@ -1,5 +1,6 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -26,7 +27,7 @@ public class EnderchestCommand implements CommandExecutor {
                 if (sender.hasPermission("activecraft.enderchest.self")) {
                     player.openInventory(player.getEnderChest());
                     player.playSound(player.getLocation(), Sound.BLOCK_ENDER_CHEST_OPEN, 1f, 1f);
-                    player.sendMessage(ChatColor.GOLD + "Opened Enderchest.");
+                    player.sendMessage(CommandMessages.ENDERCHEST_OPEN());
                 } else sender.sendMessage(Errors.NO_PERMISSION());
 
             } else if (sender.hasPermission("activecraft.enderchest.others")) {
@@ -46,10 +47,9 @@ public class EnderchestCommand implements CommandExecutor {
 
                     player.openInventory(target.getEnderChest());
                     player.playSound(player.getLocation(), Sound.BLOCK_ENDER_CHEST_OPEN, 1f, 1f);
-                    player.sendMessage(ChatColor.GOLD + "Opened Enderchest of " + ChatColor.AQUA + target.getDisplayName());
+                    player.sendMessage(CommandMessages.ENDERCHEST_OPEN_OTHERS(target));
                 } else sender.sendMessage(Errors.TOO_MANY_ARGUMENTS());
             } else sender.sendMessage(Errors.NO_PERMISSION());
-
         } else sender.sendMessage(Errors.NOT_A_PLAYER());
         return true;
     }

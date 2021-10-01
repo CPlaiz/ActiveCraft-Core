@@ -1,22 +1,13 @@
 package de.silencio.activecraftcore.messages;
 
-import com.sun.jna.platform.unix.solaris.LibKstat;
 import de.silencio.activecraftcore.Main;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.junit.Assert;
 
-@SuppressWarnings("ALL")
 public class CommandMessages {
 
     static ActiveCraftMessage acm = Main.getPlugin().getActiveCraftMessage();
-
-    private boolean isNull(Player target) {
-        if (target == null) {
-            return true;
-        } else return false;
-    }
 
     // BAN
     public static String BAN_HEADER(Player target, CommandSender sender) {
@@ -288,17 +279,40 @@ public class CommandMessages {
         return msg;
     }
 
+    // BACK
+    public static String TELEPORTED_BACK() {
+
+        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.BACK, "teleported-back");
+        return msg;
+    }
+
+    public static String NO_RETURN_LOCATION() {
+
+        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.BACK, "no-return-location");
+        return msg;
+    }
+
+    public static String TELEPORTED_BACK_OTHERS(Player target) {
+
+        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.BACK, "teleported-back")
+                .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
+                .replace("%t_displayname%", ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD);
+        return msg;
+    }
+
+    public static String NO_RETURN_LOCATION_OTHERS(Player target) {
+
+        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.BACK, "no-return-location")
+                .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
+                .replace("%t_displayname%", ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD);
+        return msg;
+    }
+
     // BOOK
-    public static String CHANGE_TITLE(Player target, CommandSender sender) {
+    public static String CHANGED_TITLE(String title) {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.BOOK, "changed-title")
-                .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
-                        .replace("%t_displayname%", ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD)
-                                .replace("%s_playername%", ChatColor.AQUA + sender.getName()) + ChatColor.GOLD;
-
-        if(sender instanceof Player) {
-            msg = msg.replace("s_displayname", ChatColor.AQUA + ((Player) sender).getDisplayName()) + ChatColor.GOLD;
-        } else msg = msg.replace("s_displayname", ChatColor.AQUA + sender.getName()) + ChatColor.GOLD;
+                .replace("%title%", ChatColor.AQUA + title + ChatColor.GOLD);
         return msg;
     }
     public static String CHANGED_AUTHOR(Player target, CommandSender sender) {
@@ -437,16 +451,9 @@ public class CommandMessages {
     }
 
     // BROADCAST
-    public static String BROADCAST_PREFIX(Player target, CommandSender sender) {
+    public static String BROADCAST_PREFIX() {
 
-        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.BROADCAST, "broadcast-prefix")
-                .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
-                        .replace("%t_displayname%", ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD)
-                                .replace("%s_playername%", ChatColor.AQUA + sender.getName()) + ChatColor.GOLD;
-
-        if(sender instanceof Player) {
-            msg = msg.replace("s_displayname", ChatColor.AQUA + ((Player) sender).getDisplayName()) + ChatColor.GOLD;
-        } else msg = msg.replace("s_displayname", ChatColor.AQUA + sender.getName()) + ChatColor.GOLD;
+        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.BROADCAST, "broadcast-prefix");
         return msg;
     }
     public static String INCLUDE_MESSAGE(Player target, CommandSender sender) {
@@ -489,16 +496,9 @@ public class CommandMessages {
     }
 
     // CLEARINVENTORY
-    public static String CLEARED_SELF(Player target, CommandSender sender) {
+    public static String CLEARED_SELF() {
 
-        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.CLEARINVENTORY, "cleared-self")
-                .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
-                        .replace("%t_displayname%", ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD)
-                                .replace("%s_playername%", ChatColor.AQUA + sender.getName()) + ChatColor.GOLD;
-
-        if(sender instanceof Player) {
-            msg = msg.replace("s_displayname", ChatColor.AQUA + ((Player) sender).getDisplayName()) + ChatColor.GOLD;
-        } else msg = msg.replace("s_displayname", ChatColor.AQUA + sender.getName()) + ChatColor.GOLD;
+        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.CLEARINVENTORY, "cleared-self");
         return msg;
     }
     public static String CLEARED_OTHERS(Player target, CommandSender sender) {
@@ -565,7 +565,7 @@ public class CommandMessages {
     }
 
     // HOME
-    public static String TELEPORT_HOME_COMPLETE(Player target, CommandSender sender) {
+    public static String TELEPORT_HOME_COMPLETE(String home) {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.HOME, "teleport-home-complete")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
@@ -640,8 +640,20 @@ public class CommandMessages {
         return msg;
     }
 
+    public static String MAX_HOMES() {
+
+        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.SETHOME, "max-homes");
+        return msg;
+    }
+
+    public static String MAX_HOMES_OTHERS() {
+
+        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.SETHOME, "max-homes-others");
+        return msg;
+    }
+
     // DELETEHOME
-    public static String HOME_DELETED(Player target, CommandSender sender) {
+    public static String HOME_DELETED(String home) {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.DELETEHOME, "home-deleted")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
@@ -678,8 +690,17 @@ public class CommandMessages {
         return msg;
     }
 
+    public static String NO_HOME_OTHERS(Player target, String home) {
+
+        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.DELETEHOME, "no-home-others")
+                .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
+                .replace("%t_displayname%", ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD)
+                .replace("%home%", ChatColor.AQUA + home + ChatColor.GOLD);
+        return msg;
+    }
+
     // EDITSIGN
-    public static String ENABLED(Player target, CommandSender sender) {
+    public static String ENABLED() {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.EDITSIGN, "enabled")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
@@ -753,7 +774,7 @@ public class CommandMessages {
     }
 
     // ENCHANT
-    public static String APPLIED_ENCHANTMENT(Player target, CommandSender sender) {
+    public static String APPLIED_ENCHANTMENT(String enchantment, String maxlevel) {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.ENCHANT, "applied-enchantment")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
@@ -839,7 +860,7 @@ public class CommandMessages {
     }
 
     // ENDERCHEST
-    public static String ENDERCHEST_OPEN(Player target, CommandSender sender) {
+    public static String ENDERCHEST_OPEN() {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.ENDERCHEST, "enderchest-open")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
@@ -865,7 +886,7 @@ public class CommandMessages {
     }
 
     // FEED
-    public static String FEED(Player target, CommandSender sender) {
+    public static String FEED() {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.FEED, "feed")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
@@ -903,7 +924,7 @@ public class CommandMessages {
     }
 
     // FLY
-    public static String ENABLE_FLY(Player target, CommandSender sender) {
+    public static String ENABLE_FLY() {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.FLY, "enable-fly")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
@@ -977,7 +998,7 @@ public class CommandMessages {
     }
 
     // FLYSPEED
-    public static String FLYSPEED_SET(Player target, CommandSender sender) {
+    public static String FLYSPEED_SET(String amount) {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.FLYSPEED, "flyspeed-set")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
@@ -1015,7 +1036,7 @@ public class CommandMessages {
     }
 
     // GOD
-    public static String ENABLE_GOD(Player target, CommandSender sender) {
+    public static String ENABLE_GOD() {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.GOD, "enable-god")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
@@ -1088,8 +1109,8 @@ public class CommandMessages {
         return msg;
     }
 
-    // HOT
-    public static String HAT_SUCCESS(Player target, CommandSender sender) {
+    // HAT
+    public static String HAT_SUCCESS() {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.HAT, "hat-success")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
@@ -1103,7 +1124,7 @@ public class CommandMessages {
     }
 
     // HEAL
-    public static String HEAL(Player target, CommandSender sender) {
+    public static String HEAL() {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.HEAL, "heal")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
@@ -1141,7 +1162,7 @@ public class CommandMessages {
     }
 
     // ITEM
-    public static String ITEM_RENAMED(Player target, CommandSender sender) {
+    public static String ITEM_RENAMED() {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.ITEM, "item-renamed")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
@@ -1154,8 +1175,26 @@ public class CommandMessages {
         return msg;
     }
 
+    public static String ITEM_LORE_ADD() {
+
+        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.ITEM, "item-lore-add");
+        return msg;
+    }
+
+    public static String ITEM_LORE_CLEAR() {
+
+        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.ITEM, "item-lore-clear");
+        return msg;
+    }
+
+    public static String ITEM_LORE_SET() {
+
+        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.ITEM, "item-lore-set");
+        return msg;
+    }
+
     // KICKALL
-    public static String DEFAULT_KICKALL(Player target, CommandSender sender) {
+    public static String DEFAULT_KICKALL() {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.KICKALL, "default-kickall")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
@@ -1205,7 +1244,7 @@ public class CommandMessages {
     }
 
     // KICK
-    public static String DEFAULT_KICK(Player target, CommandSender sender) {
+    public static String DEFAULT_KICK(Player target) {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.KICK, "default-kick")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
@@ -1255,7 +1294,7 @@ public class CommandMessages {
     }
 
     // KNOCKBACKSTICK
-    public static String KNOCKBACKSTICK(Player target, CommandSender sender) {
+    public static String KNOCKBACKSTICK() {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.KNOCKBACKSTICK, "knockbackstick")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
@@ -1305,7 +1344,7 @@ public class CommandMessages {
     }
 
     // KNOWNIPS
-    public static String KNOWNIPS_HEADER(Player target, CommandSender sender) {
+    public static String KNOWNIPS_HEADER(Player target) {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.KNOWNIPS, "knownips-header")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
@@ -1319,7 +1358,7 @@ public class CommandMessages {
     }
 
     // LASTCOORDS
-    public static String NEVER_ENTERED_WORLD(Player target, CommandSender sender) {
+    public static String NEVER_ENTERED_WORLD() {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.LASTCOORDS, "never-entered-world")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
@@ -1357,7 +1396,7 @@ public class CommandMessages {
     }
 
     // LASTONLINE
-    public static String LASTONLINE_ONLINE(Player target, CommandSender sender) {
+    public static String LASTONLINE_ONLINE(Player target, String lastonline) {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.LASTONLINE, "lastonline-online")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
@@ -1383,7 +1422,7 @@ public class CommandMessages {
     }
 
     // LEATHERCOLOR
-    public static String NO_LEATHER_ITEM(Player target, CommandSender sender) {
+    public static String NO_LEATHER_ITEM() {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.LEATHERCOLOR, "no-leather-item")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
@@ -1397,7 +1436,7 @@ public class CommandMessages {
     }
 
     // LOCKDOWN
-    public static String LOCKDOWN_ENABLED(Player target, CommandSender sender) {
+    public static String LOCKDOWN_ENABLED() {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.LOCKDOWN, "lockdown-enabled")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
@@ -1519,7 +1558,7 @@ public class CommandMessages {
     }
 
     // LOG
-    public static String LOG_PREFIX(Player target, CommandSender sender) {
+    public static String LOG_PREFIX(Player target, String command) {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.LOG, "log-prefix")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
@@ -1557,7 +1596,7 @@ public class CommandMessages {
     }
 
     // MORE
-    public static String CANNOT_STACK(Player target, CommandSender sender) {
+    public static String CANNOT_STACK() {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.MORE, "cannot-stack")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
@@ -1571,7 +1610,7 @@ public class CommandMessages {
     }
 
     // MSG
-    public static String MSG_PREFIX_TO(Player target, CommandSender sender) {
+    public static String MSG_PREFIX_TO(Player target, String message) {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.MSG, "msg-prefix-to")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
@@ -1598,6 +1637,7 @@ public class CommandMessages {
     public static String SOCIALSPY_PREFIX_TO(Player target, CommandSender sender) {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.MSG, "socialspy-prefix-to")
+                .replace("%message%", ChatColor.AQUA + message + ChatColor.GOLD)
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
                         .replace("%t_displayname%", ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD)
                                 .replace("%s_playername%", ChatColor.AQUA + sender.getName()) + ChatColor.GOLD;
@@ -1610,6 +1650,7 @@ public class CommandMessages {
     public static String SOCIALSPY_PREFIX_FROM(Player target, CommandSender sender) {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.MSG, "socialspy-prefix-from")
+                .replace("%message%", ChatColor.AQUA + message + ChatColor.GOLD)
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
                         .replace("%t_displayname%", ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD)
                                 .replace("%s_playername%", ChatColor.AQUA + sender.getName()) + ChatColor.GOLD;
@@ -1657,7 +1698,7 @@ public class CommandMessages {
     }
 
     // MUTE
-    public static String MUTE(Player target, CommandSender sender) {
+    public static String MUTE(Player target) {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.MUTE, "mute")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
@@ -1695,7 +1736,7 @@ public class CommandMessages {
     }
 
     // UNMUTE
-    public static String UNMUTE(Player target, CommandSender sender) {
+    public static String UNMUTE(Player target) {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.UNMUTE, "unmute")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
@@ -1733,7 +1774,7 @@ public class CommandMessages {
     }
 
     // NICK
-    public static String NICK_SET(Player target, CommandSender sender) {
+    public static String NICK_SET(String nickname) {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.NICK, "nick-set")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
@@ -1771,7 +1812,7 @@ public class CommandMessages {
     }
 
     // PING
-    public static String PING_PLAYER(Player target, CommandSender sender) {
+    public static String PING_PLAYER(String ping) {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.PING, "ping-player")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
@@ -1797,7 +1838,7 @@ public class CommandMessages {
     }
 
     // PLAYERLIST
-    public static String PLAYERLIST_HEADER(Player target, CommandSender sender) {
+    public static String PLAYERLIST_HEADER() {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.PLAYERLIST, "playerlist-header")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
@@ -1811,7 +1852,7 @@ public class CommandMessages {
     }
 
     // PLAYTIME
-    public static String PLAYTIME(Player target, CommandSender sender) {
+    public static String PLAYTIME(String hours, String minutes) {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.PLAYTIME, "playtime")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
@@ -1837,7 +1878,7 @@ public class CommandMessages {
     }
 
     // PORTAL
-    public static String PORTAL_CREATED(Player target, CommandSender sender) {
+    public static String PORTAL_CREATED() {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.PORTAL, "portal-created")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
@@ -1887,7 +1928,7 @@ public class CommandMessages {
     }
 
     // QUICKGIVE
-    public static String QUICKGIVE_GIVE(Player target, CommandSender sender) {
+    public static String QUICKGIVE_GIVE(String blockname) {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.QUICKGIVE, "quickgive-give")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
@@ -1913,7 +1954,7 @@ public class CommandMessages {
     }
 
     // RAM
-    public static String RAM(Player target, CommandSender sender) {
+    public static String RAM(String freememory, String usedmemory, String maxmemory) {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.RAM, "ram")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
@@ -1927,7 +1968,7 @@ public class CommandMessages {
     }
 
     // REALNAME
-    public static String REALNAME_HEADER(Player target, CommandSender sender) {
+    public static String REALNAME_HEADER(Player players, String nickname) {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.REALNAME, "realname-header")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
@@ -1941,7 +1982,7 @@ public class CommandMessages {
     }
 
     // REPAIR
-    public static String REPAIR_SUCCESS(Player target, CommandSender sender) {
+    public static String REPAIR_SUCCESS(String itemdisplayname) {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.REPAIR, "repair-success")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
@@ -1967,7 +2008,7 @@ public class CommandMessages {
     }
 
     // RESTARTSERVER
-    public static String RESTART_MESSAGE(Player target, CommandSender sender) {
+    public static String RESTART_MESSAGE() {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.RESTARTSERVER, "restart-message")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
@@ -1993,7 +2034,7 @@ public class CommandMessages {
     }
 
     // SKULL
-    public static String GIVE_SKULL(Player target, CommandSender sender) {
+    public static String GIVE_SKULL() {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.SKULL, "give-skull")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
@@ -2031,7 +2072,7 @@ public class CommandMessages {
     }
 
     // SPAWN
-    public static String SPAWN_TELEPORT(Player target, CommandSender sender) {
+    public static String SPAWN_TELEPORT() {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.SPAWN, "spawn-teleport")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
@@ -2068,8 +2109,49 @@ public class CommandMessages {
         return msg;
     }
 
+    public static String NO_SPAWN_SET() {
+
+        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.SPAWN, "no-spawn-set");
+        return msg;
+    }
+
+    // SPAWNER
+    public static String SPAWNER_DISPLAYNAME(String spawner) {
+
+        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.SPAWN, "spawner-displayname")
+                .replace("%spawner%", ChatColor.AQUA + spawner + ChatColor.GOLD);
+        return msg;
+    }
+
+    public static String SPAWNER_GIVE(String spawner) {
+
+        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.SPAWN, "spawner-give")
+                .replace("%spawner%", ChatColor.AQUA + spawner + ChatColor.GOLD);
+        return msg;
+    }
+
+    public static String SPAWNER_GIVE_OTHERS(Player target, String spawner) {
+
+        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.SPAWN, "spawner-give-others")
+                .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
+                .replace("%t_displayname%", ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD)
+                .replace("%spawner%", ChatColor.AQUA + spawner + ChatColor.GOLD);
+        return msg;
+    }
+
+    public static String SPAWNER_GIVE_OTHERS_MESSAGE(CommandSender sender, String spawner) {
+
+        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.SPAWN, "spawner-give-others-message")
+                .replace("%spawner%", ChatColor.AQUA + spawner + ChatColor.GOLD);
+
+        if (sender instanceof Player) {
+            msg = msg.replace("s_displayname", ChatColor.AQUA + ((Player) sender).getDisplayName()) + ChatColor.GOLD;
+        } else msg = msg.replace("s_displayname", ChatColor.AQUA + sender.getName()) + ChatColor.GOLD;
+        return msg;
+    }
+
     // SUMMON
-    public static String SUMMON(Player target, CommandSender sender) {
+    public static String SUMMON(String mob) {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.SUMMON, "summon")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
@@ -2107,7 +2189,7 @@ public class CommandMessages {
     }
 
     // STAFFCHAT
-    public static String STAFFCHAT_PREFIX(Player target, CommandSender sender) {
+    public static String STAFFCHAT_PREFIX(CommandSender sender, String message) {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.STAFFCHAT, "staffchat-prefix")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
@@ -2133,7 +2215,7 @@ public class CommandMessages {
     }
 
     // STRIKE
-    public static String STRIKE(Player target, CommandSender sender) {
+    public static String STRIKE() {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.STRIKE, "strike")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
@@ -2159,7 +2241,7 @@ public class CommandMessages {
     }
 
     // SUICIDE
-    public static String SUICIDE(Player target, CommandSender sender) {
+    public static String SUICIDE() {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.SUICIDE, "suicide")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
@@ -2197,7 +2279,7 @@ public class CommandMessages {
     }
 
     // TOP
-    public static String TOP_TELEPORT(Player target, CommandSender sender) {
+    public static String TOP_TELEPORT() {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.TOP, "top-teleport")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
@@ -2235,7 +2317,7 @@ public class CommandMessages {
     }
 
     // TPA
-    public static String TPA_REQUEST_TO(Player target, CommandSender sender) {
+    public static String TPA_REQUEST_TO(Player target) {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.TPA, "tpa-request-to")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
@@ -2309,7 +2391,7 @@ public class CommandMessages {
     }
 
     // TPACCEPT
-    public static String TPACCEPT_ACTIONBAR(Player target, CommandSender sender) {
+    public static String TPACCEPT_ACTIONBAR() {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.TPACCEPT, "tpaccept-actionbar")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
@@ -2359,7 +2441,7 @@ public class CommandMessages {
     }
 
     // TPADENY
-    public static String TPADENY_RECIEVER_MESSAGE(Player target, CommandSender sender) {
+    public static String TPADENY_RECIEVER_MESSAGE(CommandSender sender) {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.TPADENY, "tpadeny-reciever-message")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
@@ -2397,7 +2479,7 @@ public class CommandMessages {
     }
 
     //TPALL
-    public static String TPALL(Player target, CommandSender sender) {
+    public static String TPALL() {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.TPALL, "tpall")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
@@ -2435,7 +2517,7 @@ public class CommandMessages {
     }
 
     // TELEPORT
-    public static String CANNOT_TP_TO_SELF_TELEPORT(Player target, CommandSender sender) {
+    public static String CANNOT_TP_TO_SELF_TELEPORT() {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.TELEPORT, "cannot-tp-to-self-teleport")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
@@ -2509,7 +2591,7 @@ public class CommandMessages {
     }
 
     // TPHERE
-    public static String CANNOT_TP_TO_SELF_TPHERE(Player target, CommandSender sender) {
+    public static String CANNOT_TP_TO_SELF_TPHERE() {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.TPHERE, "cannot-tp-to-self-tphere")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
@@ -2535,7 +2617,7 @@ public class CommandMessages {
     }
 
     // VANISH
-    public static String NOW_VISIBLE(Player target, CommandSender sender) {
+    public static String NOW_VISIBLE() {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.VANISH, "now-visible")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
@@ -2585,7 +2667,7 @@ public class CommandMessages {
     }
 
     // VERIFY
-    public static String DEFAULT_MUTE_REMOVE(Player target, CommandSender sender) {
+    public static String DEFAULT_MUTE_REMOVE() {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.VERIFY, "default-mute-remove")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
@@ -2623,7 +2705,7 @@ public class CommandMessages {
     }
 
     // WALKSPEED
-    public static String WALKSPEED_SET(Player target, CommandSender sender) {
+    public static String WALKSPEED_SET(String amount) {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.WALKSPEED, "walkspeed-set")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
@@ -2661,7 +2743,7 @@ public class CommandMessages {
     }
 
     // WARN
-    public static String DEFAULT_WARN_REASON(Player target, CommandSender sender) {
+    public static String DEFAULT_WARN_REASON() {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.WARN, "default-warn-reason")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
@@ -2759,7 +2841,7 @@ public class CommandMessages {
     }
 
     //WARP
-    public static String WARP_DOESNT_EXIST(Player target, CommandSender sender) {
+    public static String WARP_DOESNT_EXIST() {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.WARP, "warp-doesnt-exist")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
@@ -2809,7 +2891,7 @@ public class CommandMessages {
     }
 
     // SETWARP
-    public static String ALREADY_EXISTS(Player target, CommandSender sender) {
+    public static String WARP_ALREADY_EXISTS() {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.SETWARP, "already-exists")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
@@ -2835,7 +2917,7 @@ public class CommandMessages {
     }
 
     // DELETEWARP
-    public static String DOESNT_EXIST(Player target, CommandSender sender) {
+    public static String DOESNT_EXIST() {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.DELETEWARP, "doesnt-exist")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
@@ -2861,16 +2943,9 @@ public class CommandMessages {
     }
 
     // WARPS
-    public static String WARPS_HEADER(Player target, CommandSender sender) {
+    public static String WARPS_HEADER() {
 
-        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.WARPS, "warps-header")
-                .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
-                        .replace("%t_displayname%", ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD)
-                                .replace("%s_playername%", ChatColor.AQUA + sender.getName()) + ChatColor.GOLD;
-
-        if(sender instanceof Player) {
-            msg = msg.replace("s_displayname", ChatColor.AQUA + ((Player) sender).getDisplayName()) + ChatColor.GOLD;
-        } else msg = msg.replace("s_displayname", ChatColor.AQUA + sender.getName()) + ChatColor.GOLD;
+        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.WARPS, "warps-header");
         return msg;
     }
     public static String NO_WARPS(Player target, CommandSender sender) {
@@ -2887,7 +2962,7 @@ public class CommandMessages {
     }
 
     // WEATHER
-    public static String TO_THUNDER(Player target, CommandSender sender) {
+    public static String TO_THUNDER(String world) {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.WEATHER, "to-thunder")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
@@ -2925,7 +3000,7 @@ public class CommandMessages {
     }
 
     // WHEREAMI
-    public static String WHEREAMI(Player target, CommandSender sender) {
+    public static String WHEREAMI(String coords, String world) {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.WHEREAMI, "whereami")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
@@ -2951,7 +3026,7 @@ public class CommandMessages {
     }
 
     // WHOIS
-    public static String NAME(Player target, CommandSender sender) {
+    public static String NAME(String name) {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.WHOIS, "name")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
@@ -3157,7 +3232,7 @@ public class CommandMessages {
     }
 
     // XP
-    public static String XP_LEVELS(Player target, CommandSender sender) {
+    public static String XP_LEVELS(String amount) {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.XP, "xp-levels")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
@@ -3209,20 +3284,15 @@ public class CommandMessages {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.XP, "xp-xp-others")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
-                        .replace("%t_displayname%", ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD)
-                                .replace("%s_playername%", ChatColor.AQUA + sender.getName()) + ChatColor.GOLD;
-
-        if(sender instanceof Player) {
-            msg = msg.replace("s_displayname", ChatColor.AQUA + ((Player) sender).getDisplayName()) + ChatColor.GOLD;
-        } else msg = msg.replace("s_displayname", ChatColor.AQUA + sender.getName()) + ChatColor.GOLD;
+                .replace("%t_displayname%", ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD)
+                .replace("%amount%", ChatColor.AQUA + amount + ChatColor.GOLD);
         return msg;
     }
-    public static String XP_XP_OTHERS_MESSAGE(Player target, CommandSender sender) {
+
+    public static String XP_XP_OTHERS_MESSAGE(CommandSender sender, String amount) {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.XP, "xp-xp-others-message")
-                .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
-                        .replace("%t_displayname%", ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD)
-                                .replace("%s_playername%", ChatColor.AQUA + sender.getName()) + ChatColor.GOLD;
+                .replace("%amount%", ChatColor.AQUA + amount + ChatColor.GOLD);
 
         if(sender instanceof Player) {
             msg = msg.replace("s_displayname", ChatColor.AQUA + ((Player) sender).getDisplayName()) + ChatColor.GOLD;

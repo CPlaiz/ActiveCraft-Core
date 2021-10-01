@@ -1,5 +1,6 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -20,7 +21,7 @@ public class HealCommand implements CommandExecutor {
                         if(sender.hasPermission("activecraft.heal.self")) {
                             player.setHealth(20);
                             player.setFoodLevel(20);
-                            player.sendMessage(ChatColor.GOLD + "You were healed.");
+                            player.sendMessage(CommandMessages.HEAL());
                             player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 0.4f, 1f);
                         } else sender.sendMessage(Errors.NO_PERMISSION());
                     } else sender.sendMessage(Errors.NOT_A_PLAYER());
@@ -41,10 +42,8 @@ public class HealCommand implements CommandExecutor {
                             }
                             target.setHealth(20);
                             target.setFoodLevel(20);
-                            sender.sendMessage(ChatColor.GOLD + "You healed " + ChatColor.AQUA + target.getDisplayName());
-                            if (sender instanceof Player) {
-                                target.sendMessage(ChatColor.GOLD + "You were healed by " + ChatColor.AQUA + ((Player) sender).getDisplayName() + ChatColor.GOLD + ".");
-                            } else target.sendMessage(ChatColor.GOLD + "You were healed by " + ChatColor.AQUA + sender.getName() + ChatColor.GOLD + ".");
+                            sender.sendMessage(CommandMessages.HEAL_OTHERS(target));
+                            target.sendMessage(CommandMessages.HEAL_OTHERS_MESSAGE(sender));
                             target.playSound(target.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 0.4f, 1f);
                         } else sender.sendMessage(Errors.NO_PERMISSION());
                     } else sender.sendMessage(Errors.INVALID_PLAYER());
