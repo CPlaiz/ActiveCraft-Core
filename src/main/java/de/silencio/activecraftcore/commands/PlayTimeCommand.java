@@ -12,6 +12,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,17 +33,22 @@ public class PlayTimeCommand implements CommandExecutor, TabCompleter {
             } else sender.sendMessage(Errors.NO_PERMISSION());
         } else if (args.length == 1) {
             if (sender.hasPermission("activecraft.playtime.others")) {
-                if (Bukkit.getPlayer(args[0]) != null) {
+                FileConfig playerList = new FileConfig("playerlist.yml");
+                if (!playerList.getStringList("players").contains(args[0])) {
                     sender.sendMessage(Errors.INVALID_PLAYER());
                     return false;
                 }
-                if(sender.getName().toLowerCase().equals(Bukkit.getPlayer(args[0]).getName().toLowerCase())) {
+
+                if(sender.getName().toLowerCase().equals(args[0].toLowerCase())) {
                     if (!sender.hasPermission("activecraft.playtime.self")) {
                         sender.sendMessage(Errors.CANNOT_TARGET_SELF());
                         return false;
                     }
                 }
-                FileConfig playerList = new FileConfig("playerlist.yml");
+
+                FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + args[0].toLowerCase() + ".yml");
+                System.out.println(playerdataConfig);
+
                 if (playerList.getStringList("players").contains(args[0])) {
                     int hours = fileConfig.getInt(args[0] + ".hours");
                     int minutes = fileConfig.getInt(args[0] + ".minutes");

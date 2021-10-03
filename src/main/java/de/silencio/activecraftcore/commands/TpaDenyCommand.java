@@ -9,10 +9,15 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class TpaDenyCommand extends TpaCommand implements CommandExecutor {
+import javax.naming.ldap.HasControls;
+import java.util.HashMap;
+
+public class TpaDenyCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+
+        HashMap<Player, Player> tpaList = Main.getPlugin().getTpaList();
 
         if(sender instanceof Player) {
             if(args.length == 0) {
@@ -25,7 +30,7 @@ public class TpaDenyCommand extends TpaCommand implements CommandExecutor {
                         player.sendMessage(CommandMessages.TPADENY_RECIEVER_MESSAGE(sender));
                         target.sendMessage(CommandMessages.TPADENY_SENDER_MESSAGE(target));
 
-                        tpaList.remove(sender);
+                        Main.getPlugin().removeFromTpaList((Player) sender);
 
                     } else sender.sendMessage(Errors.WARNING() + CommandMessages.NO_REQUESTS_DENY());
                 } else sender.sendMessage(Errors.NO_PERMISSION());

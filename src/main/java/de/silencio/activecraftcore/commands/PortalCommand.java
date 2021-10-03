@@ -54,7 +54,7 @@ public class PortalCommand implements CommandExecutor, TabCompleter {
                     endGateway.update();
                     sender.sendMessage(CommandMessages.PORTAL_CREATED());
 
-                }
+                } else sender.sendMessage(Errors.TOO_MANY_ARGUMENTS());
 
             } else sender.sendMessage(Errors.NO_PERMISSION());
         } else if (args[0].equalsIgnoreCase("destroy")) {
@@ -139,8 +139,6 @@ public class PortalCommand implements CommandExecutor, TabCompleter {
                 if (p.getTargetBlock(5) != null) {
                     list.add(p.getTargetBlock(5).getZ() + "");
                 } else list.add("~");
-            } else if (args.length == 9) {
-                list.add(p.getLocation().getWorld().getName());
             }
         } else if (args[0].equals("destroy")) {
             if (args.length == 2) {

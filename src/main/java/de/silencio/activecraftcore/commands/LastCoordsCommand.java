@@ -46,14 +46,13 @@ public class LastCoordsCommand implements CommandExecutor, TabCompleter {
                         sender.sendMessage(Errors.WARNING() + CommandMessages.NEVER_ENTERED_WORLD());
                         return false;
                     }
-                    sender.sendMessage(CommandMessages.LASTCOORDS_MESSAGE(Bukkit.getPlayer(playerdataConfig.getString("name").toString()),
-                            ChatColor.GOLD + "last coords in " + ChatColor.AQUA + world.getName() + ChatColor.GOLD
-                                    + ": \nX: " + ChatColor.AQUA + lastLocation.getBlockX() + ChatColor.GOLD
+                    sender.sendMessage(CommandMessages.LASTCOORDS_MESSAGE(playerdataConfig.getString("name"), playerdataConfig.getString("nickname"),
+                                    ChatColor.GOLD + "X: " + ChatColor.AQUA + lastLocation.getBlockX() + ChatColor.GOLD
                                     + ", Y: " + ChatColor.AQUA + lastLocation.getBlockY() + ChatColor.GOLD
                                     + ", Z: " + ChatColor.AQUA + lastLocation.getBlockZ() + ChatColor.GOLD
                                     + ", Yaw: " + ChatColor.AQUA + (int) lastLocation.getYaw() + ChatColor.GOLD
-                                    + ", Pitch: " + ChatColor.AQUA + (int) lastLocation.getPitch()
-                    ));
+                                    + ", Pitch: " + ChatColor.AQUA + (int) lastLocation.getPitch(),
+                            world.getName()));
                 } else sender.sendMessage(Errors.NO_PERMISSION());
             } else sender.sendMessage(Errors.INVALID_PLAYER());
 
@@ -74,14 +73,13 @@ public class LastCoordsCommand implements CommandExecutor, TabCompleter {
                         return false;
                     }
                     World world = lastLocation.getWorld();
-                    sender.sendMessage(CommandMessages.LASTCOORDS_MESSAGE(Bukkit.getPlayer(playerdataConfig.getString("name").toString()),
-                            ChatColor.GOLD + "last coords in " + ChatColor.AQUA + world.getName() + ChatColor.GOLD
-                            + ": \nX: " + ChatColor.AQUA + lastLocation.getBlockX() + ChatColor.GOLD
-                            + ", Y: " + ChatColor.AQUA + lastLocation.getBlockY() + ChatColor.GOLD
-                            + ", Z: " + ChatColor.AQUA + lastLocation.getBlockZ() + ChatColor.GOLD
-                            + ", Yaw: " + ChatColor.AQUA + (int) lastLocation.getYaw() + ChatColor.GOLD
-                            + ", Pitch: " + ChatColor.AQUA + (int) lastLocation.getPitch()
-                    ));
+                    sender.sendMessage(CommandMessages.LASTCOORDS_MESSAGE(playerdataConfig.getString("name"), playerdataConfig.getString("nickname"),
+                             ChatColor.GOLD + "X: " + ChatColor.AQUA + lastLocation.getBlockX() + ChatColor.GOLD
+                                    + ", Y: " + ChatColor.AQUA + lastLocation.getBlockY() + ChatColor.GOLD
+                                    + ", Z: " + ChatColor.AQUA + lastLocation.getBlockZ() + ChatColor.GOLD
+                                    + ", Yaw: " + ChatColor.AQUA + (int) lastLocation.getYaw() + ChatColor.GOLD
+                                    + ", Pitch: " + ChatColor.AQUA + (int) lastLocation.getPitch(),
+                            world.getName()));
                 } else sender.sendMessage(Errors.NO_PERMISSION());
             } else sender.sendMessage(Errors.INVALID_PLAYER());
         } else sender.sendMessage(Errors.INVALID_ARGUMENTS());

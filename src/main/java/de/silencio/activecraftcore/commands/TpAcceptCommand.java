@@ -13,11 +13,14 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class TpAcceptCommand extends TpaCommand implements CommandExecutor {
+import java.util.HashMap;
+
+public class TpAcceptCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         FileConfig fileConfig = new FileConfig("config.yml");
+        HashMap<Player, Player> tpaList = Main.getPlugin().getTpaList();
         if(args.length == 0) {
             if (sender instanceof Player) {
                 if (sender.hasPermission("activecraft.tpaccept")) {
@@ -44,7 +47,7 @@ public class TpAcceptCommand extends TpaCommand implements CommandExecutor {
                                         target.playSound(target.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
                                         sender.sendMessage(CommandMessages.TPACCEPT_SENDER_MESSAGE(target));
                                         cancel();
-                                        tpaList.remove(sender);
+                                        Main.getPlugin().removeFromTpaList((Player) sender);
                                         return;
                                     }
 

@@ -9,6 +9,7 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.InventoryView;
+import org.bukkit.inventory.ItemStack;
 
 public class GuiCreateEvent extends Event {
 
@@ -22,11 +23,11 @@ public class GuiCreateEvent extends Event {
     private GuiBackItem backItem;
     private GuiCloseItem closeItem;
     private boolean backgroundFilled;
-    private GuiItem[] itemInSlot;
+    private ItemStack[] itemInSlot;
 
     public GuiCreateEvent(GuiCreator guiCreator, InventoryHolder holder, int rows, String title,
                           GuiPlayerHead playerHead, GuiBackItem backItem, GuiCloseItem closeItem,
-                          boolean backgroundFilled, GuiItem[] itemInSlot) {
+                          boolean backgroundFilled, ItemStack[] itemInSlot) {
         this.holder = holder;
         this.rows = rows;
         this.title = title;
@@ -102,11 +103,11 @@ public class GuiCreateEvent extends Event {
         this.backgroundFilled = backgroundFilled;
     }
 
-    public GuiItem[] getItemInSlot() {
+    public ItemStack[] getItemInSlot() {
         return itemInSlot;
     }
 
-    public void setItemInSlot(GuiItem[] itemInSlot) {
+    public void setItemInSlot(ItemStack[] itemInSlot) {
         this.itemInSlot = itemInSlot;
     }
 

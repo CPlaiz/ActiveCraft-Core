@@ -1,6 +1,8 @@
 package de.silencio.activecraftcore.gui;
 
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -14,6 +16,15 @@ public class GuiItem extends ItemStack {
 
     public GuiItem(Material material) {
         super(material);
+    }
+
+    public GuiItem(ItemStack itemStack) {
+        super(itemStack.getType());
+        this.setItemMeta(itemStack.getItemMeta());
+        this.setAmount(itemStack.getAmount());
+        for (ItemFlag itemFlag : itemStack.getItemFlags()) {
+            this.addItemFlags(itemFlag);
+        }
     }
 
     public GuiItem setDisplayName(String displayName) {

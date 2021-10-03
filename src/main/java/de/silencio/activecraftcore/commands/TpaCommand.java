@@ -16,8 +16,6 @@ import java.util.HashMap;
 
 public class TpaCommand implements CommandExecutor {
 
-    public static HashMap<Player, Player> tpaList = new HashMap<Player, Player>();
-
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
@@ -45,8 +43,9 @@ public class TpaCommand implements CommandExecutor {
                     target.sendMessage(CommandMessages.TPA_REQUEST_FROM(sender));
                     target.spigot().sendMessage(accept, deny);
                     target.sendMessage(" ");
-
+                    HashMap<Player, Player> tpaList = Main.getPlugin().getTpaList();
                     tpaList.put(target, player);
+                    Main.getPlugin().setTpaList(tpaList);
 
                 } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
             } else sender.sendMessage(Errors.NO_PERMISSION());

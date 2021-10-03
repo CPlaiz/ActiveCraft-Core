@@ -20,7 +20,7 @@ public class ActiveCraftMessage {
     public String getMessage(MessageType type, CommandType cmdType , String input) {
         return fileConfig.getString(Main.getPlugin().getLanguage().name().toLowerCase()
                 + "." + type.name().toLowerCase()
-                + "." + cmdType.name().toLowerCase()
+                + "." + cmdType.name().toLowerCase().replace("_", "-")
                 + "." + input);
     }
 }

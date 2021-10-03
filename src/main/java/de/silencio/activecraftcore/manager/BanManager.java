@@ -36,7 +36,7 @@ public class BanManager {
                 }
             });
         } else if (banListType == BanList.Type.IP) {
-            if (StringUtils.isValidInet4Address(target)) {
+            if (!StringUtils.isValidInet4Address(target)) {
                 return;
             }
             PlayerIpBanEvent event = new PlayerIpBanEvent(target, reason, expires, source);
@@ -61,7 +61,7 @@ public class BanManager {
             Bukkit.getPluginManager().callEvent(event);
             if (event.isCancelled()) return;
         } else if (banListType == BanList.Type.IP) {
-            if (StringUtils.isValidInet4Address(target)) {
+            if (!StringUtils.isValidInet4Address(target)) {
                 return;
             }
             PlayerIpUnbanEvent event = new PlayerIpUnbanEvent(target);

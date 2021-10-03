@@ -10,6 +10,8 @@ import de.silencio.activecraftcore.listener.inventory.ProfileListener;
 import de.silencio.activecraftcore.messages.ActiveCraftMessage;
 import de.silencio.activecraftcore.dialogue.DialogueManagerList;
 import de.silencio.activecraftcore.messages.Language;
+import de.silencio.activecraftcore.profilemenu.MainProfileListener;
+import de.silencio.activecraftcore.profilemenu.ProfileMenu2;
 import de.silencio.activecraftcore.utils.FileConfig;
 import de.silencio.activecraftcore.manager.VanishManager;
 import org.bukkit.Bukkit;
@@ -43,6 +45,10 @@ public final class Main extends JavaPlugin {
     private FileConfig homeconfig;
     private FileConfig warpsConfig;
 
+    private HashMap<Player, ProfileMenu2> profileMenuList;
+
+    private HashMap<Player, Player> tpaList;
+
     private GuiData guiData;
     private GuiHistoryMap guiHistoryMap;
     private HashMap<Integer, Gui> guiList;
@@ -63,6 +69,10 @@ public final class Main extends JavaPlugin {
         this.dialogueManagerList = new DialogueManagerList();
         this.dialogueList = new ArrayList<Player>();
         this.vanishManager = new VanishManager(this);
+
+        profileMenuList = new HashMap<>();
+
+        tpaList = new HashMap<>();
 
         //gui creator stuff
         guiData = new GuiData();
@@ -131,6 +141,7 @@ public final class Main extends JavaPlugin {
         pluginManager.registerEvents(new DeathListener(), this);
         pluginManager.registerEvents(new LoginListener(), this);
         pluginManager.registerEvents(new TableMenuListener(), this);
+        pluginManager.registerEvents(new MainProfileListener(), this);
 
         //gui
         pluginManager.registerEvents(new GuiListener(), this);
@@ -168,6 +179,7 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginCommand("enderchest").setExecutor(new EnderchestCommand());
         Bukkit.getPluginCommand("tpa").setExecutor(new TpaCommand());
         Bukkit.getPluginCommand("tpaccept").setExecutor(new TpAcceptCommand());
+        Bukkit.getPluginCommand("tpadeny").setExecutor(new TpaDenyCommand());
         Bukkit.getPluginCommand("warp").setExecutor(new WarpCommand());
         Bukkit.getPluginCommand("home").setExecutor(new HomeCommand());
         Bukkit.getPluginCommand("sethome").setExecutor(new SetHomeCommand());
@@ -183,7 +195,6 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginCommand("portal").setExecutor(new PortalCommand());
         Bukkit.getPluginCommand("lastonline").setExecutor(new LastOnlineCommand());
         Bukkit.getPluginCommand("whois").setExecutor(new WhoIsCommand());
-        Bukkit.getPluginCommand("i").setExecutor(new QuickGiveCommand());
         Bukkit.getPluginCommand("butcher").setExecutor(new ButcherCommand());
         Bukkit.getPluginCommand("item").setExecutor(new ItemCommand());
         Bukkit.getPluginCommand("ban").setExecutor(new BanCommand());
@@ -289,6 +300,9 @@ public final class Main extends JavaPlugin {
     }
 
     public void setLanguage(Language language) {
+        FileConfig mainConfig = new FileConfig("config.yml");
+        mainConfig.set("language", language.getCode().toLowerCase());
+        mainConfig.saveConfig();
         this.language = language;
     }
 
@@ -360,4 +374,39 @@ public final class Main extends JavaPlugin {
         this.dialogueList.remove(player);
     }
 
+    public HashMap<Player, Player> getTpaList() {
+        return tpaList;
+    }
+
+    public void setTpaList(HashMap<Player, Player> tpaList) {
+        this.tpaList = tpaList;
+    }
+
+    public void addToTpaList(Player p1, Player p2) {
+        this.tpaList.put(p1, p2);
+    }
+
+    public void removeFromTpaList(Player player) {
+        this.tpaList.remove(player);
+    }
+
+    public HashMap<Player, ProfileMenu2> getProfileMenuList() {
+        return profileMenuList;
+    }
+
+    public void setProfileMenuList(HashMap<Player, ProfileMenu2> profileMenuList) {
+        this.profileMenuList = profileMenuList;
+    }
+
+    public void addToProfileMenuList(Player player, ProfileMenu2 profileMenu) {
+        this.profileMenuList.put(player, profileMenu);
+    }
+
+    public void removeFromProfileMenuList(Player player) {
+        this.profileMenuList.remove(player);
+    }
+
+    public ProfileMenu2 getFromProfileMenuList(Player player) {
+        return this.profileMenuList.get(player);
+    }
 }

@@ -1,5 +1,6 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -25,12 +26,12 @@ public class TphereCommand implements CommandExecutor {
                     Player player = (Player) sender;
 
                     if(target == player) {
-                        player.sendMessage(Errors.WARNING() + "You can't teleport to yourself!");
+                        player.sendMessage(CommandMessages.CANNOT_TP_TO_SELF_TPHERE());
                         return false;
                     }
 
                     target.teleport(player.getLocation());
-                    sender.sendMessage(ChatColor.GOLD + "Teleported " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " to you.");
+                    sender.sendMessage(CommandMessages.TELEPORT_PLAYER_TO_YOU(target));
 
                 } else sender.sendMessage(Errors.NO_PERMISSION());
             } else sender.sendMessage(Errors.INVALID_ARGUMENTS());

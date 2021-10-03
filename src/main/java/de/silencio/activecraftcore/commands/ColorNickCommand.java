@@ -47,19 +47,23 @@ public class ColorNickCommand implements CommandExecutor, TabCompleter {
                                     player.sendMessage(ChatColor.GOLD + "Name color changed to " + randomColor + randomColor.name());
                             }
 
+                            boolean valid = false;
+
                             for (ChatColor color : ChatColor.values()) {
                                 if (args[0].toLowerCase().equals(color.name().toLowerCase())) {
                                     if (!args[0].equalsIgnoreCase("BOLD") && !args[0].equalsIgnoreCase("MAGIC") && !args[0].equalsIgnoreCase("STRIKETHROUGH") &&
                                             !args[0].equalsIgnoreCase("ITALIC") && !args[0].equalsIgnoreCase("UNDERLINE") && !args[0].equalsIgnoreCase("RESET")) {
 
+                                        valid = true;
                                         player.setPlayerListName(color + playerdataConfig.getString("nickname"));
                                         player.setDisplayName(color + playerdataConfig.getString("nickname"));
                                         playerdataConfig.set("colornick", color.name());
                                         playerdataConfig.saveConfig();
-                                        player.sendMessage(CommandMessages.COLORNICK_SELF(color.name()));
+                                        player.sendMessage(CommandMessages.COLORNICK_SELF(color + color.name()));
                                     }
                                 }
                             }
+                            if (!valid) sender.sendMessage(Errors.INVALID_COLOR());
                         } else sender.sendMessage(Errors.NO_PERMISSION());
                 } else sender.sendMessage(Errors.NOT_A_PLAYER());
             }
@@ -96,24 +100,28 @@ public class ColorNickCommand implements CommandExecutor, TabCompleter {
                             targetdataConfig.set("colornick", randomColor.name());
                             targetdataConfig.saveConfig();
 
-                            sender.sendMessage(CommandMessages.COLORNICK_OTHERS(target, randomColor.name()));
-                            target.sendMessage(CommandMessages.COLORNICK_OTHERS_MESSAGE(sender, randomColor.name()));
+                            sender.sendMessage(CommandMessages.COLORNICK_OTHERS(target, randomColor + randomColor.name()));
+                            target.sendMessage(CommandMessages.COLORNICK_OTHERS_MESSAGE(sender, randomColor + randomColor.name()));
                         }
+
+                        boolean valid = false;
 
                         for (ChatColor color : ChatColor.values()) {
                             if (args[1].toLowerCase().equals(color.name().toLowerCase())) {
                                 if (!args[1].equalsIgnoreCase("BOLD") && !args[1].equalsIgnoreCase("MAGIC") && !args[1].equalsIgnoreCase("STRIKETHROUGH") &&
                                         !args[1].equalsIgnoreCase("ITALIC") && !args[1].equalsIgnoreCase("UNDERLINE") && !args[1].equalsIgnoreCase("RESET")) {
 
+                                    valid = true;
                                     target.setPlayerListName(color + targetdataConfig.getString("nickname"));
                                     target.setDisplayName(color + targetdataConfig.getString("nickname"));
                                     targetdataConfig.set("colornick", color.name());
                                     targetdataConfig.saveConfig();
-                                    sender.sendMessage(CommandMessages.COLORNICK_OTHERS(target, color.name()));
-                                    target.sendMessage(CommandMessages.COLORNICK_OTHERS_MESSAGE(sender, color.name()));
+                                    sender.sendMessage(CommandMessages.COLORNICK_OTHERS(target, color + color.name()));
+                                    target.sendMessage(CommandMessages.COLORNICK_OTHERS_MESSAGE(sender, color + color.name()));
                                 }
                             }
                         }
+                        if (!valid) sender.sendMessage(Errors.INVALID_COLOR());
                     } else sender.sendMessage(Errors.NO_PERMISSION());
                 } else sender.sendMessage(Errors.INVALID_PLAYER());
             }

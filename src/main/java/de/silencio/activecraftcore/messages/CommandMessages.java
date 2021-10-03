@@ -918,11 +918,12 @@ public class CommandMessages {
         return msg;
     }
 
-    public static String LASTCOORDS_MESSAGE(Player target, String coords) {
+    public static String LASTCOORDS_MESSAGE(String playername, String displayname, String coords, String world) {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.LASTCOORDS, "lastcoords-message")
-                .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
-                .replace("%t_displayname%", ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD)
+                .replace("%t_playername%", ChatColor.AQUA + playername + ChatColor.GOLD)
+                .replace("%t_displayname%", ChatColor.AQUA + displayname + ChatColor.GOLD)
+                .replace("%world%", ChatColor.AQUA + world + ChatColor.GOLD)
                 .replace("%coords%", ChatColor.AQUA + coords + ChatColor.GOLD);
         return msg;
     }
@@ -948,7 +949,7 @@ public class CommandMessages {
     // LEATHERCOLOR
     public static String NO_LEATHER_ITEM() {
 
-        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.LEATHERCOLOR, "no-leather-item");
+        String msg = ChatColor.GRAY + acm.getMessage(MessageType.COMMAND, CommandType.LEATHERCOLOR, "no-leather-item");
         return msg;
     }
 
@@ -961,7 +962,7 @@ public class CommandMessages {
 
     public static String LOCKDOWN_ALREADY_ENABLED() {
 
-        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.LOCKDOWN, "lockdown-already-enabled");
+        String msg = ChatColor.GRAY + acm.getMessage(MessageType.COMMAND, CommandType.LOCKDOWN, "lockdown-already-enabled");
         return msg;
     }
 
@@ -973,7 +974,7 @@ public class CommandMessages {
 
     public static String LOCKDOWN_NOT_ENABLED() {
 
-        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.LOCKDOWN, "lockdown-not-enabled");
+        String msg = ChatColor.GRAY + acm.getMessage(MessageType.COMMAND, CommandType.LOCKDOWN, "lockdown-not-enabled");
         return msg;
     }
 
@@ -1046,7 +1047,7 @@ public class CommandMessages {
     // MORE
     public static String CANNOT_STACK() {
 
-        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.MORE, "cannot-stack");
+        String msg = ChatColor.GRAY + acm.getMessage(MessageType.COMMAND, CommandType.MORE, "cannot-stack");
         return msg;
     }
 
@@ -1093,13 +1094,13 @@ public class CommandMessages {
 
     public static String CANNOT_MESSAGE_SELF() {
 
-        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.MSG, "cannot-message-self");
+        String msg = ChatColor.GRAY + acm.getMessage(MessageType.COMMAND, CommandType.MSG, "cannot-message-self");
         return msg;
     }
 
     public static String INCLUDE_PLAYER() {
 
-        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.MSG, "include-player");
+        String msg = ChatColor.GRAY + acm.getMessage(MessageType.COMMAND, CommandType.MSG, "include-player");
         return msg;
     }
 
@@ -1120,7 +1121,7 @@ public class CommandMessages {
 
     public static String ALREADY_MUTED() {
 
-        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.MUTE, "already-muted");
+        String msg = ChatColor.GRAY + acm.getMessage(MessageType.COMMAND, CommandType.MUTE, "already-muted");
         return msg;
     }
 
@@ -1141,7 +1142,7 @@ public class CommandMessages {
 
     public static String NOT_MUTED() {
 
-        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.UNMUTE, "not-muted");
+        String msg = ChatColor.GRAY + acm.getMessage(MessageType.COMMAND, CommandType.UNMUTE, "not-muted");
         return msg;
     }
 
@@ -1203,11 +1204,11 @@ public class CommandMessages {
         return msg;
     }
 
-    public static String PLAYTIME_OTHERS(Player target, String hours, String minutes) {
+    public static String PLAYTIME_OTHERS(String playername, String displayname, String hours, String minutes) {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.PLAYTIME, "playtime-others")
-                .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
-                .replace("%t_displayname%", ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD)
+                .replace("%t_playername%", ChatColor.AQUA + playername + ChatColor.GOLD)
+                .replace("%t_displayname%", ChatColor.AQUA + displayname + ChatColor.GOLD)
                 .replace("%hours%", ChatColor.AQUA + hours + ChatColor.GOLD)
                 .replace("%minutes%", ChatColor.AQUA + minutes + ChatColor.GOLD);
         return msg;
@@ -1242,7 +1243,7 @@ public class CommandMessages {
 
     public static String PORTAL_NO_LIST() {
 
-        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.PORTAL, "portal-no-list");
+        String msg = ChatColor.GRAY + acm.getMessage(MessageType.COMMAND, CommandType.PORTAL, "portal-no-list");
         return msg;
     }
 
@@ -1275,7 +1276,7 @@ public class CommandMessages {
 
     public static String CANNOT_BE_REPAIRED() {
 
-        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.REPAIR, "cannot-be-repaired");
+        String msg = ChatColor.GRAY + acm.getMessage(MessageType.COMMAND, CommandType.REPAIR, "cannot-be-repaired");
         return msg;
     }
 
@@ -1351,7 +1352,7 @@ public class CommandMessages {
 
     public static String NO_SPAWN_SET() {
 
-        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.SPAWN, "no-spawn-set");
+        String msg = ChatColor.GRAY + acm.getMessage(MessageType.COMMAND, CommandType.SPAWN, "no-spawn-set");
         return msg;
     }
 
@@ -1491,7 +1492,7 @@ public class CommandMessages {
 
     public static String TOP_NOT_SAFE() {
 
-        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.TOP, "top-not-safe");
+        String msg = ChatColor.GRAY + acm.getMessage(MessageType.COMMAND, CommandType.TOP, "top-not-safe");
         return msg;
     }
 
@@ -1583,7 +1584,7 @@ public class CommandMessages {
 
     public static String NO_REQUESTS_ACCEPT() {
 
-        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.TPACCEPT, "no-requests-accept");
+        String msg = ChatColor.GRAY + acm.getMessage(MessageType.COMMAND, CommandType.TPACCEPT, "no-requests-accept");
         return msg;
     }
 
@@ -1608,7 +1609,7 @@ public class CommandMessages {
 
     public static String NO_REQUESTS_DENY() {
 
-        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.TPADENY, "no-requests-deny");
+        String msg = ChatColor.GRAY + acm.getMessage(MessageType.COMMAND, CommandType.TPADENY, "no-requests-deny");
         return msg;
     }
 
@@ -1689,7 +1690,7 @@ public class CommandMessages {
     // TPHERE
     public static String CANNOT_TP_TO_SELF_TPHERE() {
 
-        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.TPHERE, "cannot-tp-to-self-tphere");
+        String msg = ChatColor.GRAY + acm.getMessage(MessageType.COMMAND, CommandType.TPHERE, "cannot-tp-to-self-tphere");
         return msg;
     }
 
@@ -1747,7 +1748,7 @@ public class CommandMessages {
 
     public static String NOT_DEFAULT_MUTED() {
 
-        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.VERIFY, "not-default-muted");
+        String msg = ChatColor.GRAY + acm.getMessage(MessageType.COMMAND, CommandType.VERIFY, "not-default-muted");
         return msg;
     }
 
@@ -1851,7 +1852,7 @@ public class CommandMessages {
     //WARP
     public static String WARP_DOESNT_EXIST() {
 
-        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.WARP, "warp-doesnt-exist");
+        String msg = ChatColor.GRAY + acm.getMessage(MessageType.COMMAND, CommandType.WARP, "warp-doesnt-exist");
         return msg;
     }
 
@@ -1885,7 +1886,7 @@ public class CommandMessages {
     // SETWARP
     public static String WARP_ALREADY_EXISTS() {
 
-        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.SETWARP, "already-exists");
+        String msg = ChatColor.GRAY + acm.getMessage(MessageType.COMMAND, CommandType.SETWARP, "warp-already-exists");
         return msg;
     }
 
@@ -1899,7 +1900,7 @@ public class CommandMessages {
     // DELETEWARP
     public static String DOESNT_EXIST() {
 
-        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.DELETEWARP, "doesnt-exist");
+        String msg = ChatColor.GRAY + acm.getMessage(MessageType.COMMAND, CommandType.DELETEWARP, "doesnt-exist");
         return msg;
     }
 
@@ -1919,7 +1920,7 @@ public class CommandMessages {
 
     public static String NO_WARPS() {
 
-        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.WARPS, "no-warps");
+        String msg = ChatColor.GRAY + acm.getMessage(MessageType.COMMAND, CommandType.WARPS, "no-warps");
         return msg;
     }
 

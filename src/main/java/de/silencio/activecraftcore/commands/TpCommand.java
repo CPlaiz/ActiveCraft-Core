@@ -1,6 +1,7 @@
 package de.silencio.activecraftcore.commands;
 
 import de.silencio.activecraftcore.Main;
+import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import org.bukkit.*;
 import org.bukkit.command.Command;
@@ -27,10 +28,10 @@ public class TpCommand implements CommandExecutor, TabCompleter {
                         if (target != player) {
 
                             player.teleport(target.getLocation());
-                            player.sendMessage(ChatColor.GOLD + "Teleported to " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + ".");
+                            player.sendMessage(CommandMessages.TELEPORT_TO_PLAYER(target));
                             player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
 
-                        } else sender.sendMessage(Errors.WARNING() + "You can't teleport to yourself!");
+                        } else sender.sendMessage(Errors.WARNING() + CommandMessages.CANNOT_TP_TO_SELF_TELEPORT());
                     } else sender.sendMessage(Errors.INVALID_PLAYER());
                 } else sender.sendMessage(Errors.NO_PERMISSION());
             } else sender.sendMessage(Errors.NOT_A_PLAYER());
@@ -130,7 +131,7 @@ public class TpCommand implements CommandExecutor, TabCompleter {
                     }
 
                     player.teleport(new Location(player.getWorld(), finalNumX, finalNumY, finalNumZ));
-                    player.sendMessage(ChatColor.GOLD + "Teleported to " + ChatColor.AQUA + args[0] + " " + args[1] + " " + args[2] + ChatColor.GOLD + ".");
+                    player.sendMessage(CommandMessages.TELEPORT_TO_COORDS(args[0] + ", " + args[1] + ", " + args[2]));
                     player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
 
                 } else sender.sendMessage(Errors.NO_PERMISSION());
@@ -153,9 +154,9 @@ public class TpCommand implements CommandExecutor, TabCompleter {
 
                 if (target1 != target2) {
                     target1.teleport(target2.getLocation());
-                    sender.sendMessage(ChatColor.GOLD + "Teleported " + ChatColor.AQUA + target1.getDisplayName() + ChatColor.GOLD + " to " + ChatColor.AQUA + target2.getDisplayName() + ChatColor.GOLD + ".");
+                    sender.sendMessage(CommandMessages.TELEPORT_PLAYER_TO_PLAYER(target1, target2));
                     target1.playSound(target1.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
-                } else sender.sendMessage(Errors.WARNING() + "Cannot teleport the player to themself!");
+                } else sender.sendMessage(Errors.WARNING() + CommandMessages.CANNOT_TP_OTHERS_TO_THEMSELF());
             } else sender.sendMessage(Errors.NO_PERMISSION());
         }
         if (args.length == 4) {

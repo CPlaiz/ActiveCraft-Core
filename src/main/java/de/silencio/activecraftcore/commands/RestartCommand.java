@@ -53,6 +53,7 @@ public class RestartCommand implements CommandExecutor, TabCompleter {
                         for (Player target : Bukkit.getOnlinePlayers()) {
 
                             if (time == 1) {
+                                target.kickPlayer(CommandMessages.RESTART_MESSAGE());
                                 Bukkit.shutdown();
                                 return;
                             }
@@ -60,8 +61,6 @@ public class RestartCommand implements CommandExecutor, TabCompleter {
                             if(time == 0) {
                                 cancel();
                             }
-
-                            time--;
 
                             target.playSound(target.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 1f, 0.5f);
                             try {
@@ -71,6 +70,7 @@ public class RestartCommand implements CommandExecutor, TabCompleter {
                             }
                             target.playSound(target.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 1f, 0.5f);
                         }
+                        time--;
                     }
                 };
                 runnable.runTaskTimer(Main.getPlugin(), 0, 20);

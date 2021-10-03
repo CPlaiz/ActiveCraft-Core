@@ -2,9 +2,8 @@ package de.silencio.activecraftcore.commands;
 
 import de.silencio.activecraftcore.Main;
 import de.silencio.activecraftcore.messages.Errors;
-import de.silencio.activecraftcore.utils.*;
-import org.apache.commons.lang.WordUtils;
-import org.bukkit.BanList;
+import de.silencio.activecraftcore.profilemenu.MainProfile;
+import de.silencio.activecraftcore.profilemenu.ProfileMenu2;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -25,14 +24,12 @@ public class ProfileCommand implements CommandExecutor, Listener {
                         return false;
                     }
                     Player target = Bukkit.getPlayer(args[0]);
-                    ProfileMenu profileMenu;
-                    ProfileList profileList = new ProfileList();
-                    if (!profileList.getProfileList().containsKey(player)) {
-                        profileMenu = new ProfileMenu(player, target);
-                        profileList.add(player, profileMenu);
-                        Bukkit.getPluginManager().registerEvents(profileMenu, Main.getPlugin());
-                    } else profileMenu = profileList.getProfileList().get(player);
-                    profileMenu.openProfile();
+                    ProfileMenu2 profileMenu;
+                    if (!Main.getPlugin().getProfileMenuList().containsKey(player)) {
+                        profileMenu = new ProfileMenu2(player, target);
+                        Main.getPlugin().addToProfileMenuList(player, profileMenu);
+                    } else profileMenu = Main.getPlugin().getFromProfileMenuList(player);
+                    player.openInventory(new MainProfile(profileMenu).getGuiCreator().build().getInventory());
                 } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
             } else sender.sendMessage(Errors.NO_PERMISSION());
         } else sender.sendMessage(Errors.NOT_A_PLAYER());

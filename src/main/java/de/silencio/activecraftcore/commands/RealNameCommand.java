@@ -26,7 +26,11 @@ public class RealNameCommand implements CommandExecutor, TabCompleter {
 
         List<String> associatedPlayerList = new ArrayList<>();
 
-        if (args.length == 1) {
+        if (args.length >= 1) {
+            StringBuilder stringBuilder = new StringBuilder();
+            for (String arg : args) {
+                stringBuilder.append(arg + " ");
+            }
             if (sender instanceof Player) {
                 Player player = (Player) sender;
 
@@ -36,7 +40,7 @@ public class RealNameCommand implements CommandExecutor, TabCompleter {
 
                   for (String playername : playerlistConfig.getStringList("players")) {
                       FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + playername.toLowerCase() + ".yml");
-                      if (args[0].equalsIgnoreCase(MessageUtils.removeColorAndFormat(playerdataConfig.getString("nickname")))) {
+                      if (stringBuilder.toString().trim().equalsIgnoreCase(MessageUtils.removeColorAndFormat(playerdataConfig.getString("nickname")))) {
                             associatedPlayerList.add(playername);
                       }
                   }

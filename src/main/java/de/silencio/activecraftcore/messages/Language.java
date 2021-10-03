@@ -2,8 +2,24 @@ package de.silencio.activecraftcore.messages;
 
 public enum Language {
 
-    EN,
-    DE;
+    EN("English"),
+    DE("German");
+
+    private final String name;
+    private final String code;
+
+    Language(String name) {
+        this.name = name;
+        this.code = name();
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public String getCode() {
+        return this.code;
+    }
 
     Language fromString(String text) {
         for (Language lang : Language.values()) {

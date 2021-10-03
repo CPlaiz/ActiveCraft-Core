@@ -173,6 +173,8 @@ en:
       heal-others: 'You healed %t_displayname%.'
       heal-others-message: 'You were healed by %s_displayname%.'
     item:
+      item-give: 'Gave you %item%'
+      item-give-multiple: 'Gave you %amount%x %item%.'
       item-renamed: 'Item renamed.'
       item-lore-add: 'Added to lore.'
       item-lore-clear: 'Cleared lore.'

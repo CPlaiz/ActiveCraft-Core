@@ -190,6 +190,9 @@ public class ExplodeCommand implements CommandExecutor, TabCompleter {
 
         if (args.length == 0) return list;
         if (args.length == 1) {
+            for (Player player : Bukkit.getOnlinePlayers()) {
+                list.add(player.getName());
+            }
         }
         if (Bukkit.getPlayer(args[0]) != null) {
         if (args.length == 2) {
