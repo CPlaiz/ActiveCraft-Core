@@ -1,5 +1,6 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -23,7 +24,7 @@ public class SkullCommand implements CommandExecutor {
                 if (sender.hasPermission("activecraft.skull.self")) {
 
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "give @p minecraft:player_head{SkullOwner:\"" + player.getName() + "\"}");
-                    sender.sendMessage(ChatColor.GOLD + "Gave yourself your head.");
+                    sender.sendMessage(CommandMessages.GIVE_SKULL());
 
                 } else sender.sendMessage(Errors.NO_PERMISSION());
             }
@@ -38,7 +39,7 @@ public class SkullCommand implements CommandExecutor {
                         }
                     }
                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "give @p minecraft:player_head{SkullOwner:\"" + args[0] + "\"}");
-                    sender.sendMessage(ChatColor.GOLD + "Gave yourself " + ChatColor.AQUA + args[0] + ChatColor.GOLD + "'s head.");
+                    sender.sendMessage(CommandMessages.GIVE_SKULL_OTHERS(args[0]));
 
                 } else sender.sendMessage(Errors.NO_PERMISSION());
             }
@@ -64,15 +65,13 @@ public class SkullCommand implements CommandExecutor {
                     for (int i = Integer.parseInt(args[1]); i > 0; i--) {
                         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "give @p minecraft:player_head{SkullOwner:\"" + args[0] + "\"}");
                     }
-                    sender.sendMessage(ChatColor.GOLD + "Gave yourself " + ChatColor.AQUA + args[1] + ChatColor.GOLD + "x " + ChatColor.AQUA + args[0] + ChatColor.GOLD + "'s head.");
+                    sender.sendMessage(CommandMessages.GIVE_SKULL_OTHERS_MULTIPLE(args[0], num + ""));
                 } else sender.sendMessage(Errors.NO_PERMISSION());
             }
-
 
             if(args.length >= 3) {
                 sender.sendMessage(Errors.TOO_MANY_ARGUMENTS());
             }
-
         } else sender.sendMessage(Errors.NOT_A_PLAYER());
         return true;
     }

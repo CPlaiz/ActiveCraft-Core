@@ -29,9 +29,8 @@ public class LanguageCommand implements CommandExecutor {
             } //error
         }
         if(args.length >= 2) {
-            //error
+            sender.sendMessage(Errors.TOO_MANY_ARGUMENTS());
         }
-
         return true;
     }
 }

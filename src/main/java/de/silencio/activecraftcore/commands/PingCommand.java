@@ -1,5 +1,6 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -16,9 +17,9 @@ public class PingCommand implements CommandExecutor {
             Player player = (Player) sender;
 
             if (sender.hasPermission("activecraft.ping")) {
-                sender.sendMessage(ChatColor.GOLD + "Pong! " + ChatColor.AQUA + player.getPing() + ChatColor.GOLD + "ms.");
+                sender.sendMessage(CommandMessages.PING_PLAYER(player.getPing() + ""));
             } else sender.sendMessage(Errors.NO_PERMISSION());
-        } else sender.sendMessage(ChatColor.GOLD + "Pong!");
+        } else sender.sendMessage(CommandMessages.PING_CONSOLE());
         return true;
     }
 }

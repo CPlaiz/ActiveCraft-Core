@@ -62,20 +62,20 @@ public class BanCommand implements CommandExecutor, Listener, TabCompleter {
                     this.commandSender = sender;
 
                     this.dialogueManager = new DialogueManager((Player) sender);
-                    this.dialogueManager.setHeader(CommandMessages.BAN_HEADER(target, sender));
-                    this.dialogueManager.setCompletedMessage(CommandMessages.BAN_COMPLETED_MESSAGE(target, sender));
-                    this.dialogueManager.setCancelledMessage(CommandMessages.BAN_CANCELLED_MESSAGE(target, sender));
-                    this.dialogueManager.add(CommandMessages.BAN_ENTER_REASON(target, sender));
-                    this.dialogueManager.add(CommandMessages.BAN_ENTER_TIME(target, sender));
+                    this.dialogueManager.setHeader(CommandMessages.BAN_HEADER(target));
+                    this.dialogueManager.setCompletedMessage(CommandMessages.BAN_COMPLETED_MESSAGE(target));
+                    this.dialogueManager.setCancelledMessage(CommandMessages.BAN_CANCELLED_MESSAGE(target));
+                    this.dialogueManager.add(CommandMessages.BAN_ENTER_REASON());
+                    this.dialogueManager.add(CommandMessages.BAN_ENTER_TIME());
                     this.dialogueManager.initialize();
 
                     Date date = new Date();
-                } else sender.sendMessage(CommandMessages.ALREAEDY_BANNED(target, sender));
+                } else sender.sendMessage(CommandMessages.ALREAEDY_BANNED());
             } else if (label.equalsIgnoreCase("unban")) {
                 if (nameBanManager.isBanned(args[0])) {
                     nameBanManager.unban(args[0]);
-                    sender.sendMessage(CommandMessages.UNBANNED_PLAYER(target, sender));
-                } else sender.sendMessage(CommandMessages.NOT_BANNED(target, sender));
+                    sender.sendMessage(CommandMessages.UNBANNED_PLAYER(args[0]));
+                } else sender.sendMessage(CommandMessages.NOT_BANNED());
             } else if (label.equalsIgnoreCase("banlist")) {
                 if (sender.hasPermission("activecraft.banlist")) {
 
@@ -99,7 +99,7 @@ public class BanCommand implements CommandExecutor, Listener, TabCompleter {
                         for (String s : tempBanListName) {
                             TextComponent textComponent = new TextComponent();
                             Player target = Bukkit.getPlayer(s);
-                            textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, TextComponent.fromLegacyText(CommandMessages.BAN_ON_HOVER(target, sender))));
+                            textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, TextComponent.fromLegacyText(CommandMessages.UNBAN_ON_HOVER(s))));
                             textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/unban " + s));
                             textComponent.setText(s + ", ");
                             //textComponentList.add(textComponent);
@@ -107,7 +107,7 @@ public class BanCommand implements CommandExecutor, Listener, TabCompleter {
                         }
                         for (String s : tempBanListIP) {
                             TextComponent textComponent = new TextComponent();
-                            textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, TextComponent.fromLegacyText(CommandMessages.IP_BAN_ON_HOVER(target, sender).replace("%ip%", s.toString()))));
+                            textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, TextComponent.fromLegacyText(CommandMessages.UNBAN_IP_ON_HOVER(s.toString()))));
                             textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/unban-ip " + s));
                             FileConfig playerlist = new FileConfig("playerlist.yml");
                             StringBuilder stringBuilder = new StringBuilder();
@@ -131,14 +131,19 @@ public class BanCommand implements CommandExecutor, Listener, TabCompleter {
                             componentBuilder.append(textComponent);
                         }
 
-                        sender.sendMessage(CommandMessages.BANLIST_HEADER(target, sender));
+                        sender.sendMessage(CommandMessages.BANLIST_HEADER());
                         sender.sendMessage(componentBuilder.create());
-                    } else sender.sendMessage(CommandMessages.NO_BANS(target, sender));
+                    } else sender.sendMessage(CommandMessages.NO_BANS());
                 }
             } else if (label.equalsIgnoreCase("ban-ip")) {
 
 
                 value = BanList.Type.IP;
+
+                if (args.length == 0) {
+                    sender.sendMessage(Errors.INVALID_ARGUMENTS());
+                    return false;
+                }
 
                 this.target = Bukkit.getPlayer(args[0]);
                 if (target != null) {
@@ -147,15 +152,15 @@ public class BanCommand implements CommandExecutor, Listener, TabCompleter {
                         this.commandSender = sender;
 
                         this.dialogueManager = new DialogueManager((Player) sender);
-                        this.dialogueManager.setHeader(CommandMessages.IPBAN_HEADER(target, sender).replace("%ip%", target.getAddress().getAddress().toString().replace("/", "")));
-                        this.dialogueManager.setCompletedMessage(CommandMessages.BAN_COMPLETED_MESSAGE(target, sender).replace("%ip%", target.getAddress().getAddress().toString().replace("/", "")));
-                        this.dialogueManager.setCancelledMessage(CommandMessages.IPBAN_CANCELLED_MESSAGE(target, sender));
-                        this.dialogueManager.add(CommandMessages.IPBAN_ENTER_REASON(target, sender));
-                        this.dialogueManager.add(CommandMessages.IPBAN_ENTER_TIME(target, sender));
+                        this.dialogueManager.setHeader(CommandMessages.IPBAN_HEADER(target, target.getAddress().getAddress().toString().replace("/", "")));
+                        this.dialogueManager.setCompletedMessage(CommandMessages.IPBAN_COMPLETED_MESSAGE(target, target.getAddress().getAddress().toString().replace("/", "")));
+                        this.dialogueManager.setCancelledMessage(CommandMessages.IPBAN_CANCELLED_MESSAGE(target, target.getAddress().getAddress().toString().replace("/", "")));
+                        this.dialogueManager.add(CommandMessages.IPBAN_ENTER_REASON());
+                        this.dialogueManager.add(CommandMessages.IPBAN_ENTER_TIME());
                         this.dialogueManager.initialize();
 
                         Date date = new Date();
-                    } else sender.sendMessage(CommandMessages.IP_ALREADY_BANNED(target, sender));
+                    } else sender.sendMessage(CommandMessages.IP_ALREADY_BANNED());
                 } else if (stringUtils.isValidInet4Address(args[0])) {
                     if (!ipBanManager.isBanned(args[0])) {
 
@@ -164,19 +169,28 @@ public class BanCommand implements CommandExecutor, Listener, TabCompleter {
                         this.commandSender = sender;
 
                         this.dialogueManager = new DialogueManager((Player) sender);
-                        this.dialogueManager.setHeader(CommandMessages.IPBAN_HEADER(target, sender).replace("%ip%", target.getAddress().getAddress().toString().replace("/", "")));
-                        this.dialogueManager.setCompletedMessage(CommandMessages.BAN_COMPLETED_MESSAGE(target, sender).replace("%ip%", target.getAddress().getAddress().toString().replace("/", "")));
-                        this.dialogueManager.setCancelledMessage(CommandMessages.IPBAN_CANCELLED_MESSAGE(target,null));
-                        this.dialogueManager.add(CommandMessages.IPBAN_ENTER_REASON(null,null));
-                        this.dialogueManager.add(CommandMessages.IPBAN_ENTER_TIME(null,null));
+                        this.dialogueManager.setHeader(CommandMessages.IPBAN_HEADER(target, target.getAddress().getAddress().getHostAddress().replace("/", "")));
+                        this.dialogueManager.setCompletedMessage(CommandMessages.IPBAN_COMPLETED_MESSAGE(target, target.getAddress().getAddress().toString().replace("/", "")));
+                        this.dialogueManager.setCancelledMessage(CommandMessages.IPBAN_CANCELLED_MESSAGE(target, target.getAddress().getAddress().toString().replace("/", "")));
+                        this.dialogueManager.add(CommandMessages.IPBAN_ENTER_REASON());
+                        this.dialogueManager.add(CommandMessages.IPBAN_ENTER_TIME());
                         this.dialogueManager.initialize();
 
                         Date date = new Date();
-                    } else sender.sendMessage(CommandMessages.IP_ALREADY_BANNED(null,null));
-                } else sender.sendMessage( Errors.WARNING() + " " + CommandMessages.INVALID_IP(null, null));
+                    } else sender.sendMessage(CommandMessages.IP_ALREADY_BANNED());
+                } else sender.sendMessage(Errors.WARNING() + CommandMessages.INVALID_IP());
             } else if (label.equalsIgnoreCase("unban-ip")) {
-                ipBanManager.unban(args[0]);
-                sender.sendMessage(CommandMessages.UNBANNED_IP(target, sender).replace("%ip%", ChatColor.AQUA + args[0] + ChatColor.GOLD));
+                boolean valid = false;
+                for (BanEntry banEntry : ipBanManager.getBans()) {
+                    if (banEntry.getTarget().equals(args[0])) {
+                        valid = true;
+                        System.out.println(args[0]);
+                        ipBanManager.unban(args[0]);
+                        sender.sendMessage(CommandMessages.UNBANNED_IP(args[0]));
+                        break;
+                    }
+                }
+                if (!valid) sender.sendMessage(Errors.WARNING() + CommandMessages.IP_NOT_BANNED());
             }
         } else sender.sendMessage(Errors.NO_PERMISSION());
         return true;

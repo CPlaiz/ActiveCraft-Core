@@ -1,5 +1,6 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.utils.FileConfig;
 import org.bukkit.*;
@@ -51,7 +52,7 @@ public class PortalCommand implements CommandExecutor, TabCompleter {
                     endGateway.setExitLocation(loc);
                     endGateway.setAge(-999999999);
                     endGateway.update();
-                    sender.sendMessage(ChatColor.GOLD + "Created portal.");
+                    sender.sendMessage(CommandMessages.PORTAL_CREATED());
 
                 }
 
@@ -73,10 +74,9 @@ public class PortalCommand implements CommandExecutor, TabCompleter {
                     portalsConfig.set("portallist", portalList);
                     portalsConfig.saveConfig();
 
-                    sender.sendMessage(ChatColor.GOLD + "Portal destroyed at " + ChatColor.GREEN + portalworld.getName() + ChatColor.GRAY + "; " + ChatColor.GREEN + portalx + ChatColor.GRAY
-                                    + ", " + ChatColor.GREEN + portaly + ChatColor.GRAY + ", " + ChatColor.GREEN + portalz + ChatColor.GOLD + ".");
+                    sender.sendMessage(CommandMessages.PORTAL_DESTROYED(args[1], portalx + portaly + portalz + ""));
 
-                } else sender.sendMessage(ChatColor.RED + "Warning!" + ChatColor.GRAY + "This portal doesn't exist!");
+                } else sender.sendMessage(Errors.WARNING() + CommandMessages.PORTAL_DOESNT_EXIST());
             } else sender.sendMessage(Errors.NO_PERMISSION());
         } else if (args[0].equalsIgnoreCase("list")) {
             if (sender.hasPermission("portals.list")) {
@@ -84,7 +84,7 @@ public class PortalCommand implements CommandExecutor, TabCompleter {
                 List<String> portalList = portalsConfig.getStringList("portallist");
 
                 if (!portalList.isEmpty()) {
-                    sender.sendMessage(ChatColor.GOLD + "Portals:");
+                    sender.sendMessage(CommandMessages.PORTAL_LIST());
                     for (String s : portalList) {
                         int x = portalsConfig.getInt(s + ".portal.x");
                         int y = portalsConfig.getInt(s + ".portal.y");
@@ -92,7 +92,7 @@ public class PortalCommand implements CommandExecutor, TabCompleter {
                         String worldname = portalsConfig.getString(s + ".portal.world");
                         sender.sendMessage(ChatColor.BOLD + "" + ChatColor.GOLD + s + ": " + ChatColor.GRAY + worldname + "; " + x + ", " + y + ", " + z);
                     }
-                } else sender.sendMessage(ChatColor.RED + "Warning! " + ChatColor.GRAY + "There are no portals to be listed!");
+                } else sender.sendMessage(Errors.WARNING() + CommandMessages.PORTAL_NO_LIST());
             } else sender.sendMessage(Errors.NO_PERMISSION());
         } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
 

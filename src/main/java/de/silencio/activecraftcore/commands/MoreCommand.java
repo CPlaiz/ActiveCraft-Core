@@ -1,5 +1,6 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -23,21 +24,19 @@ public class MoreCommand implements CommandExecutor {
                     ItemStack is = player.getInventory().getItemInMainHand();
                     if (is.getType() != Material.AIR) {
                         is.setAmount(is.getMaxStackSize());
-                    } else sender.sendMessage(Errors.WARNING() + "No Item in hand.");
+                    } else sender.sendMessage(Errors.NOT_HOLDING_ITEM());
                 }
                 if(args.length == 1) {
                     if(Integer.parseInt(args[0]) < 128) {
                         ItemStack is = player.getInventory().getItemInMainHand();
                         if (is.getType() != Material.AIR) {
                             is.setAmount(Integer.parseInt(args[0]));
-                        } else sender.sendMessage(Errors.WARNING() + "No Item in hand.");
-                    } else sender.sendMessage(Errors.WARNING() + "Cannot stack to this amount!");
+                        } else sender.sendMessage(Errors.NOT_HOLDING_ITEM());
+                    } else sender.sendMessage(Errors.WARNING() + CommandMessages.CANNOT_STACK());
                 } if(args.length > 1) {
                     sender.sendMessage(Errors.TOO_MANY_ARGUMENTS());
                 }
-
             } else sender.sendMessage(Errors.NO_PERMISSION());
-
         } else sender.sendMessage(Errors.NOT_A_PLAYER());
         return true;
     }

@@ -1,5 +1,6 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -20,10 +21,14 @@ public class TpAllCommand implements CommandExecutor {
                     for (Player target : Bukkit.getOnlinePlayers()) {
                         if (!target.hasPermission("activecraft.tpall.exept")) {
                             target.teleport(player.getLocation());
-                            target.sendMessage(ChatColor.GOLD + "You were teleported to " + ChatColor.AQUA + sender.getName() + ChatColor.GOLD + ".");
-                        } else sender.sendMessage( ChatColor.AQUA + sender.getName() + ChatColor.GOLD + " executed a tpall, but you were not teleported.");
+                            target.sendMessage(CommandMessages.TPALL_MESSAGE(sender));
+                        } else {
+                            if(target != sender) {
+                                target.sendMessage(CommandMessages.TPALL_EXEPT(sender));
+                            }
+                        }
                     }
-                    sender.sendMessage(ChatColor.GOLD + "Teleported all players to you.");
+                    sender.sendMessage(CommandMessages.TPALL());
                 } else sender.sendMessage(Errors.NO_PERMISSION());
             } else sender.sendMessage(Errors.NOT_A_PLAYER());
         return true;

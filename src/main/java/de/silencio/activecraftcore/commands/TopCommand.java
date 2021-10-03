@@ -1,5 +1,6 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import org.bukkit.*;
 import org.bukkit.command.Command;
@@ -25,9 +26,9 @@ public class TopCommand implements CommandExecutor {
                 if (loc.getBlock().getType() != Material.LAVA) {
                     loc.setY(loc.getBlockY() + 1);
                     player.teleport(loc);
-                    player.sendMessage(ChatColor.GOLD + "Teleported to the top.");
+                    player.sendMessage(CommandMessages.TOP_TELEPORT());
                     player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
-                } else sender.sendMessage(Errors.WARNING() + "Teleport is not safe!");
+                } else sender.sendMessage(Errors.WARNING() + CommandMessages.TOP_NOT_SAFE());
             } else sender.sendMessage(Errors.NO_PERMISSION());
         } else if (args.length == 1) {
             if (sender.hasPermission("activecraft.top.others")) {
@@ -52,10 +53,10 @@ public class TopCommand implements CommandExecutor {
                 if (loc.getBlock().getType() != Material.LAVA) {
                     loc.setY(loc.getBlockY() + 1);
                     target.teleport(loc);
-                    target.sendMessage(ChatColor.GOLD + "Teleported to the top.");
-                    sender.sendMessage(ChatColor.GOLD + "Teleported " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " to the top.");
+                    target.sendMessage(CommandMessages.TOP_TELEPORT_OTHERS_MESSAGE(sender));
+                    sender.sendMessage(CommandMessages.TOP_TELEPORT_OTHERS(target));
                     target.playSound(target.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
-                } else sender.sendMessage(Errors.WARNING() + "Teleport is not safe!");
+                } else sender.sendMessage(Errors.WARNING() + CommandMessages.TOP_NOT_SAFE());
             } else sender.sendMessage(Errors.NO_PERMISSION());
         }
         return true;

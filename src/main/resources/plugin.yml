@@ -215,14 +215,11 @@ commands:
     description: Gets additional infomation on a player.
     permission: activecraft.whois
     permission-message: "§cWarnig! §7You don't have the permission to do that!"
-  i:
-    description: Gives the selected Item to the player.
-    permission: activecraft.quickgive
-    permission-message: "§cWarnig! §7You don't have the permission to do that!"
   item:
     description: Multiple item operations.
-    permission: activecraft.item.name
+    permission: activecraft.item
     permission-message: "§cWarnig! §7You don't have the permission to do that!"
+    aliases: ["i"]
   butcher:
     description: Kills all mobs.
     permission: activecraft.butcher
@@ -397,6 +394,10 @@ commands:
   tablemenu:
     description: A menu for all workstations.
     permission: activecraft.tablemenu
+    permission-message: "§cWarnig! §7You don't have the permission to do that!"
+  language:
+    description: Command to see and change the current language
+    permission: activecraft.language
     permission-message: "§cWarnig! §7You don't have the permission to do that!"
 
 permissions:
@@ -734,9 +735,6 @@ permissions:
     default: op
     children:
       activecraft.whois: true
-  activecraft.quickgive:
-    description: Gives the selected Item to the player.
-    default: op
   activecraft.butcher:
     description: Kills all mobs.
     default: op
@@ -746,15 +744,18 @@ permissions:
   activecraft.item.give:
     description: Permission to give items to players.
     default: op
+    children:
+      activecraft.item: true
   activecraft.item.name:
     description: Permission to rename items.
     default: op
+    children:
+      activecraft.item: true
   activecraft.item.lore:
     description: Permission to change the lore of an item.
     default: op
-  activecraft.item.tag:
-    description: Permission to change the tag of an item.
-    default: op
+    children:
+      activecraft.item: true
   activecraft.whereami.self:
     description: Locates the player.
     default: op
@@ -1036,3 +1037,13 @@ permissions:
   activecraft.tablemenu:
     description: A menu for all workstations.
     default: op
+  activecraft.language.see:
+    description: Permission to see the current language.
+    default: op
+    children:
+      activecraft.language: true
+  activecraft.language.change:
+    description: Permission to change the current language.
+    default: op
+    children:
+      activecraft.language: true

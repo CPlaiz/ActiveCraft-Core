@@ -1,6 +1,7 @@
 package de.silencio.activecraftcore.commands;
 
 import de.silencio.activecraftcore.manager.MuteManager;
+import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.utils.FileConfig;
 import org.bukkit.Bukkit;
@@ -30,18 +31,18 @@ public class MuteCommand implements CommandExecutor {
                     FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + target.getName().toLowerCase() + ".yml");
                     if (!playerdataConfig.getBoolean("muted")) {
                         MuteManager.mutePlayer(target);
-                        sender.sendMessage(ChatColor.GOLD + "Muted " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + ".");
-                        target.sendMessage(ChatColor.GOLD + "You have been muted.");
-                    } else sender.sendMessage(Errors.WARNING() + "This player is already muted.");
+                        sender.sendMessage(CommandMessages.MUTE(target));
+                        target.sendMessage(CommandMessages.MUTE_MESSAGE());
+                    } else sender.sendMessage(Errors.WARNING() + CommandMessages.ALREADY_MUTED());
                 }
 
                 if (label.equalsIgnoreCase("unmute")) {
                     FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + target.getName().toLowerCase() + ".yml");
                     if (playerdataConfig.getBoolean("muted")) {
                         MuteManager.unmutePlayer(target);
-                        sender.sendMessage(ChatColor.GOLD + "Unmuted " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + ".");
-                        target.sendMessage(ChatColor.GOLD + "You have been unmuted.");
-                    } else sender.sendMessage(Errors.WARNING() + "This player is not muted.");
+                        sender.sendMessage(CommandMessages.UNMUTE(target));
+                        target.sendMessage(CommandMessages.UNMUTE_MESSAGE());
+                    } else sender.sendMessage(Errors.WARNING() + CommandMessages.NOT_MUTED());
                 }
             } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
         } else sender.sendMessage(Errors.NO_PERMISSION());

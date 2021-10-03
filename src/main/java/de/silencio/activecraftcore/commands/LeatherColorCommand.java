@@ -1,5 +1,6 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.utils.ColorUtils;
 import org.bukkit.Color;
@@ -33,7 +34,7 @@ public class LeatherColorCommand implements CommandExecutor, TabCompleter {
                             if (sender.hasPermission("activecraft.leathercolor.vanilla")) {
                                 color = ColorUtils.bukkitColorFromString(args[0]);
                                 if (color == null) {
-                                    sender.sendMessage(Errors.WARNING() + "This is not a valid color!");
+                                    sender.sendMessage(Errors.INVALID_COLOR());
                                     return false;
                                 }
                             } else sender.sendMessage(Errors.NO_PERMISSION());
@@ -57,7 +58,7 @@ public class LeatherColorCommand implements CommandExecutor, TabCompleter {
                         mainhanditem.setItemMeta(itemmeta);
                         player.getInventory().setItemInMainHand(mainhanditem);
 
-                    } else sender.sendMessage(Errors.WARNING() + "No leather item in main hand!");
+                    } else sender.sendMessage(Errors.WARNING() + CommandMessages.NO_LEATHER_ITEM());
                 } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
             } else sender.sendMessage(Errors.NO_PERMISSION());
         } else sender.sendMessage(Errors.NOT_A_PLAYER());

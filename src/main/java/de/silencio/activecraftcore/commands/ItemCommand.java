@@ -42,7 +42,7 @@ public class ItemCommand implements CommandExecutor, TabCompleter {
                     }
                     if (args.length == 3) {
                         if (Material.getMaterial(args[1]) == null) {
-                            sender.sendMessage(Errors.WARNING() + " " + Errors.NOT_HOLDING_ITEM());
+                            sender.sendMessage(Errors.WARNING() + Errors.NOT_HOLDING_ITEM());
                             return false;
                         }
                         Material material = Material.getMaterial(args[1].toUpperCase());
@@ -67,7 +67,7 @@ public class ItemCommand implements CommandExecutor, TabCompleter {
                 if (player.hasPermission("activecraft.item.name")) {
                     if (args.length > 1) {
                         if (player.getInventory().getItemInMainHand().getType() == Material.AIR) {
-                            sender.sendMessage(Errors.WARNING() + " " + Errors.NOT_HOLDING_ITEM());
+                            sender.sendMessage(Errors.WARNING() + Errors.NOT_HOLDING_ITEM());
                             return false;
                         }
 
@@ -93,7 +93,7 @@ public class ItemCommand implements CommandExecutor, TabCompleter {
                 if (player.hasPermission("activecraft.item.lore")) {
                     if (args.length > 1) {
                         if (player.getInventory().getItemInMainHand().getType() == Material.AIR) {
-                            sender.sendMessage(Errors.WARNING() + " " + Errors.NOT_HOLDING_ITEM());
+                            sender.sendMessage(Errors.WARNING() + Errors.NOT_HOLDING_ITEM());
                             return false;
                         }
                         ItemStack stack = player.getInventory().getItemInMainHand();

@@ -1,5 +1,6 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -19,8 +20,8 @@ public class SuicideCommand implements CommandExecutor {
 
                         Player player = ((Player) sender);
                         player.setHealth(0);
-                        player.sendMessage(ChatColor.GOLD + "You killed yourself.");
-                        Bukkit.broadcastMessage(ChatColor.AQUA + player.getDisplayName() + ChatColor.GOLD + " committed suicide.");
+                        player.sendMessage(CommandMessages. SUICIDE());
+                        Bukkit.broadcastMessage(CommandMessages.BROADCAST_SUICIDE(player));
 
                     } else sender.sendMessage(Errors.NO_PERMISSION());
                 } else sender.sendMessage(Errors.NOT_A_PLAYER());
@@ -40,8 +41,8 @@ public class SuicideCommand implements CommandExecutor {
                     }
 
                     target.setHealth(0);
-                    sender.sendMessage(ChatColor.GOLD + "Made " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " commit suicide.");
-                    Bukkit.broadcastMessage(ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " committed suicide.");
+                    sender.sendMessage(CommandMessages.SUICIDE_OTHERS(target));
+                    Bukkit.broadcastMessage(CommandMessages.BROADCAST_SUICIDE(target));
 
                 } else sender.sendMessage(Errors.NO_PERMISSION());
             } else sender.sendMessage(Errors.INVALID_ARGUMENTS());

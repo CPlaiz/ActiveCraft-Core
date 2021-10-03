@@ -39,7 +39,7 @@ public class DelHomeCommand implements CommandExecutor, TabCompleter {
                             homeconfig.set(playerName + "." + args[0].toLowerCase(), null);
                             homeconfig.saveConfig();
                             sender.sendMessage(CommandMessages.HOME_DELETED(args[0].toString()));
-                        } else sender.sendMessage(Errors.WARNING()  + " " + CommandMessages.NO_HOME(args[0].toString()));
+                        } else sender.sendMessage(Errors.WARNING()  + CommandMessages.NO_HOME(args[0].toString()));
                     } else sender.sendMessage(Errors.NOT_A_PLAYER());
                 }
             } else sender.sendMessage(Errors.NO_PERMISSION());
@@ -71,7 +71,7 @@ public class DelHomeCommand implements CommandExecutor, TabCompleter {
                         homeconfig.set(targetName + "." + args[1].toLowerCase(), null);
                         homeconfig.saveConfig();
                         sender.sendMessage(CommandMessages.HOME_OTHERS_DELETED(target, args[1].toString()));
-                    } else sender.sendMessage(CommandMessages.NO_HOME_OTHERS(target, args[1].toString()));
+                    } else sender.sendMessage(Errors.WARNING() + CommandMessages.NO_HOME_OTHERS(target, args[1].toString()));
                 } else sender.sendMessage(Errors.NO_PERMISSION());
             }
             if(args.length >= 3) {

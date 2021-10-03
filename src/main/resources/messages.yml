@@ -43,7 +43,15 @@ en:
     default-mute-remove: 'Your default mute has been removed. You are now able to talk.'
     file-not-found: 'File config %filename% does not exist. Creating a new one...'
     same-ip: '%t1_displayname% shares the IP %ip% with %t2_displayname%.'
+  profile:
+    //Profile shit hier
   command:
+    banscreen:
+      ban-title: 'You are banned from this server!'
+      ban-ip-title: 'Your IP is banned from this server!'
+      ban-expiration: 'You can join the server in %time%'
+      ban-expiration-permanent: 'You are permanently banned from this server.'
+      ban-reason: 'Reason: %reason%'
     ban:
       ban-header: '-- Ban Dialogue for %t_playername% --'
       ban-completed-message: 'Banned %t_playername%.'
@@ -56,8 +64,8 @@ en:
       unbanned-player: 'Unbanned %t_playername%.'
     banlist:
       banlist-header: '-- Ban List --'
-      ban-on-hover: 'Unban %t_playername%.'
-      ip-ban-on-hover: 'Unban %ip%'
+      unban-on-hover: 'Unban %t_playername%.'
+      unban-ip-on-hover: 'Unban %ip%'
       no-bans: 'There are no bans to be listed here!'
     ipban:
       ipban-header: '-- IP Ban Dialogue for %t_playername% (%ip%) --'
@@ -105,17 +113,17 @@ en:
       colornick-others-message: 'Name color changed to %color% by %s_displayname%.'
     home:
       teleport-home-complete: 'Teleported to %home%.'
-      home-not-set: 'This home is not set!'
+      home-not-set: 'You do not have a home called %home%!'
       teleport-home-others-complete: "Teleported to %t_displayname%'s home %home%."
       home-others-not-set: 'Player %t_displayname% does not have a home called %home%.'
     sethome:
-      home-set: 'Home %home% set!'
+      home-set: 'Home %home% set.'
       home-others-set: 'Set home %home% for player %t_displayname%.'
       max-homes: 'You cannot create more homes!'
       max-homes-others: 'This player cannot create more homes!'
     deletehome:
       home-deleted: 'Home %home% deleted.'
-      no-home: 'You do not have a home called %home%.'
+      no-home: 'You do not have a home called %home%!'
       home-others-deleted: 'Deleted the home %home% of player %t_displayname%.'
       no-home-others: 'Player %t_displayname% does not have a home called %home%!'
     editsign:
@@ -123,7 +131,7 @@ en:
       disabled: 'Disabled sign edit mode.'
       enabled-others: 'Enabled sign edit mode for %t_displayname%.'
       enabled-others-message: 'Sign edit mode enabled by %s_displayname%.'
-      disabled-others: 'Disabled sign edit mode for %t_displayname%'
+      disabled-others: 'Disabled sign edit mode for %t_displayname%.'
       disabled-others-message: 'Sign edit mode disabled by %s_displayname%.'
     enchant:
       applied-enchantment: 'Applied enchantment %enchantment% %maxlevel% to your item.'
@@ -172,12 +180,12 @@ en:
     kickall:
       default-kickall: 'Kicked all players.'
       default-kickall-message: 'You were kicked.'
-      custom-kickall: 'Kicked all players. \nReason: %reason%.'
+      custom-kickall: 'Kicked all players. \n Reason: %reason%.'
       custom-kickall-message: '%reason%'
     kick:
       default-kick: 'Kicked %t_displayname%.'
       default-kick-message: 'You were kicked.'
-      custom-kick: 'Kicked %t_displayname%. \nReason: %reason%'
+      custom-kick: 'Kicked %t_displayname%. \n Reason: %reason%'
       custom-kick-message: '%reason%'
     knockbackstick:
       knockbackstick: 'You were chosen to harness the power of the stick!'
@@ -189,7 +197,7 @@ en:
     lastcoords:
       never-entered-world: 'Player has never entered this world.'
       never-quit-server: 'Player has never left this server.'
-      lastcoords-message: "%t_displayname%'s last coords in %world%: \n%coords%"
+      lastcoords-message: "%t_displayname%'s last coords in %world%: \n %coords%"
     lastonline:
       lastonline-online: '%t_displayname% is %lastonline%.'
       lastonline-offline: '%t_displayname% was last online: %lastonline%.'
@@ -216,7 +224,6 @@ en:
       msg-prefix-to: '[me -> %t_displayname%] %message%'
       msg-prefix-from: '[%s_displayname% -> me] %message%'
       socialspy-prefix-to: '[%s_displayname% -> %t_displayname%] %message%'
-      socialspy-prefix-from: '[%_displayname% -> %s_displayname%] %message%'
       console-msg-prefix: '[Console -> me] %message%'
       cannot-message-self: "You can't message yourself."
       include-player: 'Please include a player.'
@@ -227,7 +234,7 @@ en:
     unmute:
       unmute: 'Unmuted %t_displayname%.'
       unmute-message: 'You have been unmuted.'
-      not-muted: 'This player is already muted.'
+      not-muted: 'This player is not muted.'
     nick:
       nick-set: 'Nick set to %nickname%.'
       nick-set-others: 'Set nickname of %t_displayname% to %nickname%.'
@@ -242,16 +249,14 @@ en:
       playtime-others: 'Playtime of %t_displayname%: %hours% hours and %minutes% minutes.'
     portal:
       portal-created: 'Created portal.'
+      portal-doesnt-exist: "This portal doesn't exist!"
       portal-destroyed: 'Destroyed portal %name% at %coords%.'
       portal-list: 'Portals:'
       portal-no-list: 'There are no portals to be listed.'
-    quickgive:
-      quickgive-give: 'Gave you %blockname%.'
-      quickgive-amount: 'Gave you %amount%x %blockname%.'
     ram:
-      ram: '%freememory% MB free \n%usedmemory% MB used \n%maxmemory% MB max'
+      ram: '%freememory% MB free \n %usedmemory% MB used \n %maxmemory% MB max'
     realname:
-      realname-header: 'Players with the nickname %nickname%: \n%players%'
+      realname-header: 'Players with the nickname %nickname%: \n %players%'
     repair:
       repair-success: 'Fixed your %item-displayname%.'
       cannot-be-repaired: "Item can't be repaired."
@@ -263,6 +268,7 @@ en:
       give-skull-others: "Gave yourself %t_displayname%'s head."
       give-skull-others-multiple: "Gave yourself %amount%x %t_displayname%'s head."
     spawn:
+      spawn-set: 'Set spawn to current location.'
       spawn-teleport: 'Teleported to spawn.'
       spawn-teleport-others: 'Teleported %t_displayname% to spawn.'
       spawn-teleport-others-message: 'You were teleported to spawn by %s_displayname%.'
@@ -291,6 +297,7 @@ en:
       top-teleport: 'Teleported to the top.'
       top-not-safe: 'Teleport is not safe!'
       top-teleport-others: 'Teleported %t_displayname% to the highest block above them.'
+      top-teleport-others-message: 'You were teleported to the top by %s_displayname%.'
     tpa:
       tpa-request-to: 'Tpa request sent to %t_displayname%.'
       tpa-request-from: 'Tpa request from %s_displayname%.'
@@ -309,7 +316,7 @@ en:
       no-requests-deny: "You don't have any pending TPA requests!"
     tpall:
       tpall: 'Teleported all players to you.'
-      tpall-message: 'You were teleported to %displayname%.'
+      tpall-message: 'You were teleported to %s_displayname%.'
       tpall-exept: '%s_displayname% executed a tpall, but you were not teleported.'
     teleport:
       cannot-tp-to-self-teleport: "You can't teleport to yourself!"
@@ -320,28 +327,28 @@ en:
       teleport-player-to-coords: 'Teleported %t_displayname% to %coords%.'
     tphere:
       cannot-tp-to-self-tphere: "You can't teleport to yourself!"
-      teleport-player-to-you: 'Teleported %displayname% to you.'
+      teleport-player-to-you: 'Teleported %t_displayname% to you.'
     vanish:
       now-visible: 'You are now visible.'
       now-invisible: 'You are now invisible.'
       now-visible-others: '%t_displayname% is now visible.'
       now-invisible-others: '%t_displayname% is now invisible.'
     verify:
-      default-mute-remove-message: 'Verified %displayname%.'
-      default-mute-remove: 'Your default mute has been removed. You are now able to talk.'
-      not-default-muted: 'Player is not default muted!'
+      default-mute-remove-message: 'Verified %t_displayname%.'
+      default-mute-remove: 'You have been verified. You are now able to talk.'
+      not-default-muted: 'Player already is verified!'
     walkspeed:
       walkspeed-set: 'Walk speed set to %amount%.'
       walkspeed-set-others: 'Walk speed set to %amount% for %t_displayname%.'
       walkspeed-set-others-message: 'Walk speed set to %amount% by %s_displayname%.'
     warn:
       default-warn-reason: 'Warned by a moderator.'
-      warn-add: 'Warned %t_displayname%. \nReason: %reason%.'
+      warn-add: 'Warned %t_displayname%. \n Reason: %reason%.'
       warn-remove: 'Removed warn %reason% from %t_displayname%.'
       warn-get-header: "-- %t_displayname%'s Warn Entry --"
-      warn-get: 'Reason: %reason% \nCreated: %date-created% \nSource: %s_displayname% \nID: %warn-id%'
+      warn-get: 'Reason: %reason% \n Created: %date-created% \n Source: %s_displayname% \n ID: %warn-id%'
       warned-header: 'You have been warned!'
-      warned: 'Reason: %reason% \nWarned by: %s_displayname%.'
+      warned: 'Reason: %reason% \n Warned by: %s_displayname%.'
       warned-remove: 'Your warn %reason% has been removed.'
     warp:
       warp-doesnt-exist: 'This warp does not exist!'
@@ -388,7 +395,10 @@ en:
       xp-levels-others: 'Gave %t_displayname% %amount% levels.'
       xp-levels-others-message: 'You were given %amount% levels by %s_displayname%.'
       xp-xp-others: 'Gave %t_displayname% %amount% xp.'
-      xp-xp-others-message: 'You were given %amount% xp by %t_displayname%.'
+      xp-xp-others-message: 'You were given %amount% xp by %s_displayname%.'
+    language:
+      current-language: 'The plugin language currently is %language% (%code%).'
+      language-set: 'The plugin language was set to %language% (%code%).'
 
 
 de:
@@ -408,7 +418,7 @@ de:
     not-a-player: 'Du bist kein Spieler!'
     not-true-false: 'Bitte benutze true / false!'
     not-holding-item: 'Du hältst kein Item in der Hand!'
-  reasons:
+  reason:
     hacking: 'Hacking'
     botting: 'Botting'
     unauthorized-alt-account: 'Unauthorisierter Zweitaccount'
@@ -425,7 +435,15 @@ de:
     default-mute-remove: 'Deine standartmäßige Stummschaltung wurde aufgehoben. Du kannst nun sprechen.'
     file-not-found: 'Die Datei %filename% existiert nicht. Erstelle eine neue...'
     same-ip: '%t1-displayname% teilt dieselbe IP %ip% mit %t2-displayname%.'
+  profile:
+    //Profile shit hier
   commands:
+    banscreen:
+      ban-title: 'Du bist von diesem Server gebannt!'
+      ban-ip-title: 'Deine IP ist von diesem Server gebannt!'
+      ban-expiration: 'Du kannst in %time% dem server wieder betreten.'
+      ban-expiration-permanent: 'Du bist dauerhaft von diesem Server gebannt.'
+      ban-reason: 'Grund: %reason%'
     ban:
       ban-header: '-- Ban Dialog für %t_playername% --'
       ban-completed-message: '%t_playername% wurde gebannt.'
@@ -493,10 +511,13 @@ de:
     sethome:
       home-set: 'Das Home %home% wurde erstellt!'
       home-others-set: 'Das Home %home% wurde für den Spieler %t_displayname% erstellt.'
+      max-homes: 'Du kannst keine Homes mehr erstellen!'
+      max-homes-others: 'Dieser Spieler kann keine Homes mehr erstellen!'
     deletehome:
       home-deleted: 'Das Home %home% wurde gelöscht.'
       no-home: 'Du hast kein Home mit dem Namen %home%.'
       home-others-deleted: 'Du hast das Home %home% von Spieler %t_displayname% gelöscht.'
+      no-home-others: 'Spieler %t_displayname% hat keinen home mit dem Namen %home%!'
     editsign:
       enabled: 'Aktiviere Schildbearbeitungsmodus.'
       disabled: 'Deaktiviere Schildbearbeitungsmodus.'
@@ -544,16 +565,21 @@ de:
       heal-others: 'Du hast %t_displayname% geheilt.'
       heal-others-message: 'Du wurdest von %s_displayname% geheilt.'
     item:
+      item-give: 'Du hast dir ein %item% gegeben'
+      item-give-multiple: 'Du hast dir %amount%x %item% gegeben.'
       item-renamed: 'Item umbenannt.'
+      item-lore-add: 'Wurde zur Lore hinzugefügt.'
+      item-lore-clear: 'Lore entfernt.'
+      item-lore-set: 'Lore gesetzt'
     kickall:
       default-kickall: 'Alle spieler wurden gekickt.'
       default-kickall-message: 'Du wurdest gekickt.'
-      custom-kickall: 'Alle spieler wurden gekickt. \nGrund: %reason%.'
+      custom-kickall: 'Alle spieler wurden gekickt. \n Grund: %reason%.'
       custom-kickall-message: '%reason%'
     kick:
       default-kick: '%t_displayname% wurde gekickt.'
       default-kick-message: 'Du wurdest gekickt.'
-      custom-kick: '%t_displayname% wurde gekickt. \nGrund: %reason%'
+      custom-kick: '%t_displayname% wurde gekickt. \n Grund: %reason%'
       custom-kick-message: '%reason%'
     knockbackstick:
       knockbackstick: 'Du wurdest auserwählt um die Macht des Stockes zu nutzen'
@@ -565,7 +591,7 @@ de:
     lastcoords:
       never-entered-world: 'Dieser spieler hat die welt noch nie betreten.'
       never-quit-server: 'Dieser spieler hat den Server noch nie verlassen'
-      lastcoords-message: 'letzte Koordinaten von %t_displayname% in %world%: \n%coords%'
+      lastcoords-message: 'letzte Koordinaten von %t_displayname% in %world%: \n %coords%'
     lastonline:
       lastonline-online: '%t_displayname% ist %lastonline%.'
       lastonline-offline: '%t_displayname% war zuletzt online: %lastonline%.'
@@ -618,20 +644,18 @@ de:
       playtime-others: 'Spielzeit von %t_displayname%: %hours% Stunden und %minutes% Minuten.'
     portal:
       portal-created: 'Portal wurde erstellt.'
+      portal-doesnt-exist: "Dieses Portal existiert nicht!"
       portal-destroyed: 'Portal %name% bei %coords% wurde zerstört.'
       portal-list: 'Portale:'
       portal-no-list: 'Es gibt keine Portale die gelistet werden können.'
-    quickgive:
-      quickgive-give: 'Dir wurde %blockname% gegeben.'
-      quickgive-amount: 'Dir wurden %amount%x %blockname% gegeben.'
     ram:
-      ram: '%freememory% MB Frei \n%usedmemory% MB Benutzt \n%maxmemory% MB Maximal'
+      ram: '%freememory% MB Frei \n %usedmemory% MB Benutzt \n %maxmemory% MB Maximal'
     realname:
-      realname-header: 'Spieler mit dem Spitznamen %nickname%: \n%players%'
+      realname-header: 'Spieler mit dem Spitznamen %nickname%: \n %players%'
     repair:
       repair-sucess: 'Dein %item-displayname% wurde repariert.'
       cannot-be-repaired: 'Dieses Item kann nicht repariert werden.'
-    restart-server:
+    restartserver:
       restart-message: 'Der server startet neu.'
       restart-title: 'Der server startet in %time% neu'
     skull:
@@ -667,6 +691,7 @@ de:
       top-teleport: 'Teleporte zum höchsten Block.'
       top-not-safe: 'Höchster Block ist nicht sicher!'
       top-teleport-others: 'Du hast %t_displayname% zum höchsten Block über ihm teleportiert.'
+      top-teleport-others-message: 'Du wurdest von %s_displayname%. zu dem höchsten Block über dir teleportiert.'
     tpa:
       tpa-request-to: 'Teleportierungsanfrage zu %t_displayname% gesendet.'
       tpa-request-from: 'Teleportierungsanfrage von %s_displayname%.'
@@ -679,7 +704,7 @@ de:
       tpaccept-reciever-message: 'Du wurdest zu %s_displayname% teleportiert.'
       tpaccept-sender-message: '%t_displayname% hat sich zu dir teleportiert.'
       no-requests: 'Du hast keine ausstehenden Teleportierungsanfragen!'
-    deny:
+    tpadeny:
       tpadeny-reciever-message: 'Du hast die Teleportierungsanfrage von %s_displayname% abgelehnt.'
       tpadeny-sender-message: '%t_displayname% hat deine Teleportierungsanfrage abgelehnt.'
       no-requests: 'Du hast keine ausstehenden Teleportierungsanfragen!'
@@ -704,20 +729,20 @@ de:
       now-invisible-others: '%t_displayname% ist nun unstichtbar.'
     verify:
       default-mute-remove: 'Du hast %t_displayname% verifiziert.'
-      default-mute-remove-message: 'Deine Standardstummschaltung wurde entfernt. Du kannst nun im Chat schreiben.'
-      not-default-muted: 'Dieser spieler ist nicht standardmäßig stummgeschaltet!'
+      default-mute-remove-message: 'Du wurdest verifiziert. Du kannst nun im Chat schreiben.'
+      not-default-muted: 'Dieser spieler ist nicht verifiziert!'
     walkspeed:
       walkspeed-set: 'Gehgeschwindigkeit zu %amount% gesetzt.'
       walkspeed-set-others: 'Gehgeschwindigkeit zu %amount% für %t_displayname% gesetzt.'
       walkspeed-set-others-message: 'Gehgeschwindigkeit zu %amount% durch %s_displayname% gesetzt.'
     warn:
       default-warn-reason: 'Durch einen Moderator gewarnt.'
-      warn-add: 'Du hast %t_displayname% gewarnt. \nGrund: %reason%.'
+      warn-add: 'Du hast %t_displayname% gewarnt. \n Grund: %reason%.'
       warn-remove: 'Du hast die Warnung %reason% von %t_displayname% entfernt.'
       warn-get-header: '-- Warnungen von %t_displayname% --'
-      warn-get: 'Grund: %reason% \nErstelldatum: %date-created% \nWarner: %s_displayname% \nID: %warn-id%'
+      warn-get: 'Grund: %reason% \n Erstelldatum: %date-created% \n Warner: %s_displayname% \n ID: %warn-id%'
       warned-header: 'Du wurdest gewarnt!'
-      warned: 'Grund: %reason% \nGewarnt von: %s_displayname%.'
+      warned: 'Grund: %reason% \n Gewarnt von: %s_displayname%.'
       warned-remove: 'Deine Warnung %reason% wurde entfernt.'
     warp:
       warp-doesnt-exist: 'Dieser Warp existiert nicht'
@@ -765,3 +790,6 @@ de:
       xp-levels-others-message: 'Dir wurden %amount% Level von %s_displayname% gegeben.'
       xp-xp-others: 'Du hast %t_displayname% %amount% Erfahrungspunkte gegeben.'
       xp-xp-others-message: 'Dir wurden %amount% Erfahrungspunkte von %s_displayname% gegeben.'
+    language:
+      current-language: 'Die Pluginsprache ist %language% (%code%).'
+      language-set: 'Die Pluginsprache wurde zu %language% (%code%) geändert.'

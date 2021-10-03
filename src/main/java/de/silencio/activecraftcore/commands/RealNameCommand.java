@@ -1,5 +1,6 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.utils.FileConfig;
 import de.silencio.activecraftcore.utils.MessageUtils;
@@ -47,7 +48,7 @@ public class RealNameCommand implements CommandExecutor, TabCompleter {
                       } else isFirst = false;
                       associatedPlayers.append(s);
                   }
-                  sender.sendMessage(ChatColor.GOLD + "Players with the nickname " + ChatColor.AQUA + args[0] + ChatColor.GOLD + ": \n" + ChatColor.AQUA + associatedPlayers);
+                  sender.sendMessage(CommandMessages.REALNAME_HEADER(Bukkit.getPlayer(associatedPlayers.toString()), stringBuilder.toString().trim()));
                 } else sender.sendMessage(Errors.NO_PERMISSION());
             } else sender.sendMessage(Errors.NOT_A_PLAYER());
         } else sender.sendMessage(Errors.INVALID_ARGUMENTS());

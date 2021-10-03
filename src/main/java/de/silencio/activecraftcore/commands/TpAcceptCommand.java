@@ -1,6 +1,7 @@
 package de.silencio.activecraftcore.commands;
 
 import de.silencio.activecraftcore.Main;
+import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.utils.FileConfig;
 import org.bukkit.ChatColor;
@@ -26,7 +27,7 @@ public class TpAcceptCommand extends TpaCommand implements CommandExecutor {
                         Player target = tpaList.get(sender);
                         Location loc = player.getLocation();
                         if (!fileConfig.getBoolean("use-timer-on-tpa")) {
-                            tpaList.get(sender).sendActionBar(ChatColor.GOLD + "Teleporting...");
+                            tpaList.get(sender).sendActionBar(CommandMessages.TPACCEPT_ACTIONBAR());
                             tpaList.get(sender).teleport(loc);
                             tpaList.remove(sender);
                         } else {
@@ -37,11 +38,11 @@ public class TpAcceptCommand extends TpaCommand implements CommandExecutor {
                                 public void run() {
 
                                     if (time == 0) {
-                                        tpaList.get(sender).sendActionBar(ChatColor.GOLD + "Teleporting...");
+                                        tpaList.get(sender).sendActionBar(CommandMessages.TPACCEPT_ACTIONBAR());
                                         tpaList.get(sender).teleport(loc);
-                                        target.sendMessage(ChatColor.GOLD + "Teleported to " + ChatColor.AQUA + player.getDisplayName() + ChatColor.GOLD + ".");
+                                        target.sendMessage(CommandMessages.TPACCEPT_RECIEVER_MESSAGE(sender));
                                         target.playSound(target.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
-                                        sender.sendMessage(ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " teleported to you.");
+                                        sender.sendMessage(CommandMessages.TPACCEPT_SENDER_MESSAGE(target));
                                         cancel();
                                         tpaList.remove(sender);
                                         return;
@@ -56,7 +57,7 @@ public class TpAcceptCommand extends TpaCommand implements CommandExecutor {
                         }
 
 
-                    } else sender.sendMessage(Errors.WARNING() + "You don't have any pending TPA requests!");
+                    } else sender.sendMessage(Errors.WARNING() + CommandMessages.NO_REQUESTS_ACCEPT());
                 } else sender.sendMessage(Errors.NO_PERMISSION());
             } else sender.sendMessage(Errors.NOT_A_PLAYER());
         } else sender.sendMessage(Errors.INVALID_ARGUMENTS());

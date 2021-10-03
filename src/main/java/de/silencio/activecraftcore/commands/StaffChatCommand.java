@@ -1,6 +1,7 @@
 package de.silencio.activecraftcore.commands;
 
 import de.silencio.activecraftcore.events.StaffChatMessageEvent;
+import de.silencio.activecraftcore.messages.CommandMessages;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -29,8 +30,8 @@ public class StaffChatCommand implements CommandExecutor, TabCompleter {
         if (event.isCancelled()) return false;
 
         if (sender instanceof Player) {
-            Bukkit.broadcast(ChatColor.GOLD + "[StaffChat] " + ChatColor.AQUA + ((Player) sender).getDisplayName() + ChatColor.RESET + ": " + event.getMessage(), "activecraft.staffchat");
-        } else Bukkit.broadcast(ChatColor.GOLD + "[StaffChat] " + ChatColor.AQUA + sender.getName() + ChatColor.RESET + ": " + event.getMessage(), "activecraft.staffchat");
+            Bukkit.broadcast(CommandMessages.STAFFCHAT_PREFIX(sender, message), "activecraft.staffchat");
+        } else Bukkit.broadcast(CommandMessages.STAFFCHAT_FROM_CONSOLE_PREFIX(message), "activecraft.staffchat");
 
         message = "";
         return true;

@@ -256,7 +256,7 @@ public class TpCommand implements CommandExecutor, TabCompleter {
                 }
 
                 target.teleport(new Location(target.getWorld(), finalNumX, finalNumY, finalNumZ));
-                sender.sendMessage(ChatColor.GOLD + "Teleported " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " to " + ChatColor.AQUA + args[1] + " " + args[2] + " " + args[3] + ChatColor.GOLD + ".");
+                sender.sendMessage(CommandMessages.TELEPORT_PLAYER_TO_COORDS(target, finalNumX + finalNumY + finalNumZ + ""));
                 target.playSound(target.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
 
             } else sender.sendMessage(Errors.NO_PERMISSION());

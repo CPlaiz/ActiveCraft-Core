@@ -1,5 +1,6 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -23,8 +24,8 @@ public class StrikeCommand implements CommandExecutor {
 
                     if(target != null) {
                         target.getWorld().strikeLightning(target.getLocation());
-                        target.sendMessage(ChatColor.GOLD + "Thor has struck lightning upon you!");
-                        sender.sendMessage(ChatColor.GOLD + "Struck " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " with lightning.");
+                        target.sendMessage(CommandMessages.STRIKE());
+                        sender.sendMessage(CommandMessages.STRIKE_OTHERS(target));
                     } else sender.sendMessage(Errors.INVALID_PLAYER());
                 } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
             } else sender.sendMessage(Errors.NO_PERMISSION());

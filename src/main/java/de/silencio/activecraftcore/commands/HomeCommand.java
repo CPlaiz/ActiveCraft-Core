@@ -39,7 +39,7 @@ public class HomeCommand implements CommandExecutor, TabCompleter {
                         sender.sendMessage(CommandMessages.TELEPORT_HOME_COMPLETE(args[0].toString()));
                         player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
 
-                    } else sender.sendMessage(Errors.WARNING() + CommandMessages.HOME_NOT_SET());
+                    } else sender.sendMessage(Errors.WARNING() + CommandMessages.HOME_NOT_SET(args[0]));
                 } else sender.sendMessage(Errors.NO_PERMISSION());
             }
 
@@ -71,7 +71,7 @@ public class HomeCommand implements CommandExecutor, TabCompleter {
                         player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
 
                     } else
-                        sender.sendMessage(CommandMessages.HOME_OTHERS_NOT_SET(target, args[1].toString()));
+                        sender.sendMessage(Errors.WARNING() + CommandMessages.HOME_OTHERS_NOT_SET(target, args[1].toString()));
                 } else sender.sendMessage(Errors.NO_PERMISSION());
             }
             if (args.length >= 3) {

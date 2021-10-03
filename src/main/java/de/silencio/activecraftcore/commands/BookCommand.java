@@ -129,7 +129,7 @@ public class BookCommand implements CommandExecutor, TabCompleter {
                             } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
                         } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
                     } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
-                } else sender.sendMessage( Errors.WARNING() + " " + CommandMessages.NOT_HOLDING_BOOK());
+                } else sender.sendMessage( Errors.WARNING() + CommandMessages.NOT_HOLDING_BOOK());
             } else sender.sendMessage(Errors.NO_PERMISSION());
         } else sender.sendMessage(Errors.NOT_A_PLAYER());
         return true;

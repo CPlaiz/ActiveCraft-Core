@@ -214,8 +214,6 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginCommand("summon").setExecutor(new SpawnMobCommand());
         Bukkit.getPluginCommand("spawner").setExecutor(new SpawnerCommand());
         Bukkit.getPluginCommand("edit-sign").setExecutor(new EditSignCommand());
-        Bukkit.getPluginCommand("summon").setExecutor(new SpawnMobCommand());
-        Bukkit.getPluginCommand("edit-sign").setExecutor(new EditSignCommand());
         Bukkit.getPluginCommand("randomtp").setExecutor(new RandomTPCommand());
         Bukkit.getPluginCommand("walkspeed").setExecutor(new WalkspeedCommand());
         Bukkit.getPluginCommand("leathercolor").setExecutor(new LeatherColorCommand());
@@ -227,6 +225,7 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginCommand("commandstick").setExecutor(new CommandStickCommand());
         Bukkit.getPluginCommand("back").setExecutor(new BackCommand());
         Bukkit.getPluginCommand("tablemenu").setExecutor(new TableMenuCommand());
+        Bukkit.getPluginCommand("language").setExecutor(new LanguageCommand());
     }
 
     public static Main getPlugin() {

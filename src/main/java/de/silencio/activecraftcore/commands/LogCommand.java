@@ -1,5 +1,6 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.utils.FileConfig;
 import org.bukkit.Bukkit;
@@ -34,14 +35,14 @@ public class LogCommand implements CommandExecutor, Listener, TabCompleter{
 
             if(args.length == 1) {
                 if (args[0].equalsIgnoreCase("on")) {
-                    player.sendMessage(ChatColor.GOLD + "Log activated.");
+                    player.sendMessage(CommandMessages.ENABLE_LOG());
 
                     playerdataConfig.set("log-enabled", true);
                     playerdataConfig.saveConfig();
                 }
 
                 if (args[0].equalsIgnoreCase("off")) {
-                    player.sendMessage(ChatColor.GOLD + "Log deactivated.");
+                    player.sendMessage(CommandMessages.DISABLE_LOG());
 
                     playerdataConfig.set("log-enabled", false);
                     playerdataConfig.saveConfig();
@@ -61,7 +62,7 @@ public class LogCommand implements CommandExecutor, Listener, TabCompleter{
             FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + player.getName().toLowerCase() + ".yml");
             if (playerdataConfig.getBoolean("log-enabled")) {
                 if (player.hasPermission("activecraft.log")) {
-                    player.sendMessage(ChatColor.GOLD + "[Log] " + ChatColor.AQUA + executingPlayer.getName() + ChatColor.GOLD + " executed command " + ChatColor.AQUA + eventMessage);
+                    player.sendMessage(CommandMessages.LOG_PREFIX(Bukkit.getPlayer(executingPlayer.getName()), eventMessage));
                 }
             }
         }

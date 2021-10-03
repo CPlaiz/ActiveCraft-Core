@@ -1,6 +1,7 @@
 package de.silencio.activecraftcore.commands;
 
 import de.silencio.activecraftcore.events.MsgEvent;
+import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.utils.FileConfig;
 import org.bukkit.Bukkit;
@@ -34,22 +35,20 @@ public class ReplyCommand extends MsgCommand implements CommandExecutor {
                         Bukkit.getPluginManager().callEvent(event);
                         if (event.isCancelled()) return false;
 
-                        player.sendMessage("§6[me -> " + answerTarget.getDisplayName() + "§6]§r " + message);
-                        answerTarget.sendMessage("§6[" + player.getDisplayName() + "§6 -> me]§r " + message);
+                        player.sendMessage(CommandMessages.MSG_PREFIX_TO(answerTarget, message));
+                        answerTarget.sendMessage(CommandMessages.MSG_PREFIX_FROM(player, message));
                         answerTarget.playSound(answerTarget.getLocation(), Sound.ENTITY_ARROW_HIT_PLAYER, 1f, 1f);
 
                         //socialspy
                         for(Player onlinePlayer : Bukkit.getOnlinePlayers()) {
                             if (onlinePlayer.hasPermission("activecraft.msg.spy")) {
                                 if(onlinePlayer != player && onlinePlayer != answerTarget) {
-                                    onlinePlayer.sendMessage(ChatColor.GOLD + "[" + player.getDisplayName() + ChatColor.GOLD
-                                            + " -> " + answerTarget.getDisplayName() + ChatColor.GOLD + "] " + ChatColor.RESET + message);
+                                    onlinePlayer.sendMessage(CommandMessages.SOCIALSPY_PREFIX_TO(player, answerTarget, message));
                                 }
                             }
                         }
                         if (mainConfig.getBoolean("socialspy-to-console")) {
-                            Bukkit.getConsoleSender().sendMessage(ChatColor.GOLD + "[" + player.getDisplayName() + ChatColor.GOLD
-                                    + " -> " + answerTarget.getDisplayName() + ChatColor.GOLD + "] " + ChatColor.RESET + message);
+                            Bukkit.getConsoleSender().sendMessage(CommandMessages.CONSOLE_MSG_PREFIX(message));
                         }
                         message = "";
                     } else sender.sendMessage(Errors.INVALID_ARGUMENTS());

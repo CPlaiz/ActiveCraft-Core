@@ -1,11 +1,10 @@
 package de.silencio.activecraftcore.commands;
 
-import de.silencio.activecraftcore.Main;
 import de.silencio.activecraftcore.events.MsgEvent;
+import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.utils.FileConfig;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -45,8 +44,8 @@ public class MsgCommand implements CommandExecutor {
                                 Bukkit.getPluginManager().callEvent(event);
                                 if (event.isCancelled()) return false;
 
-                                player.sendMessage("§6[me -> " + target.getDisplayName() + "§6]§r " + event.getMessage());
-                                target.sendMessage("§6[" + player.getDisplayName() + "§6 -> me]§r " + event.getMessage());
+                                player.sendMessage(CommandMessages.MSG_PREFIX_TO(target, event.getMessage()));
+                                target.sendMessage(CommandMessages.MSG_PREFIX_FROM(player, event.getMessage()));
                                 target.playSound(target.getLocation(), Sound.ENTITY_ARROW_HIT_PLAYER, 1f, 1f);
 
                                 FileConfig mainConfig = new FileConfig("config.yml");
@@ -57,21 +56,19 @@ public class MsgCommand implements CommandExecutor {
                                 for(Player onlinePlayer : Bukkit.getOnlinePlayers()) {
                                     if (onlinePlayer.hasPermission("activecraft.msg.spy")) {
                                         if(onlinePlayer != player && onlinePlayer != target) {
-                                            onlinePlayer.sendMessage(ChatColor.GOLD + "[" + player.getDisplayName() + ChatColor.GOLD
-                                                    + " -> " + target.getDisplayName() + ChatColor.GOLD + "] " + ChatColor.RESET + event.getMessage());
+                                            onlinePlayer.sendMessage(CommandMessages.SOCIALSPY_PREFIX_TO(target, player, event.getMessage()));
                                         }
                                     }
                                 }
                                 if (mainConfig.getBoolean("socialspy-to-console")) {
-                                    Bukkit.getConsoleSender().sendMessage(ChatColor.GOLD + "[" + player.getDisplayName() + ChatColor.GOLD
-                                            + " -> " + target.getDisplayName() + ChatColor.GOLD + "] " + ChatColor.RESET + event.getMessage());
+                                    Bukkit.getConsoleSender().sendMessage(CommandMessages.SOCIALSPY_PREFIX_TO(target, player, event.getMessage()));
                                 }
                                 message = "";
 
                             } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
-                        } else sender.sendMessage(Errors.WARNING() + "You can't message yourself!");
+                        } else sender.sendMessage(Errors.WARNING() + CommandMessages.CANNOT_MESSAGE_SELF());
                     } else player.sendMessage(Errors.INVALID_PLAYER());
-                } else player.sendMessage(Errors.WARNING() + "Please include a player.");
+                } else player.sendMessage(Errors.WARNING() + CommandMessages.INCLUDE_PLAYER());
             } else sender.sendMessage(Errors.NO_PERMISSION());
         } else if (args.length >= 1) {
             Player target = Bukkit.getPlayer(args[0]);
@@ -86,7 +83,7 @@ public class MsgCommand implements CommandExecutor {
                     Bukkit.getPluginManager().callEvent(event);
                     if (event.isCancelled()) return false;
 
-                    target.sendMessage(ChatColor.GOLD + "[Console -> me] " + ChatColor.RESET + event.getMessage());
+                    target.sendMessage(CommandMessages.CONSOLE_MSG_PREFIX(event.getMessage()));
                     target.playSound(target.getLocation(), Sound.ENTITY_ARROW_HIT_PLAYER, 1f, 1f);
                     message = "";
                 } else sender.sendMessage(Errors.INVALID_ARGUMENTS());

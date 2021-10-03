@@ -1,7 +1,6 @@
 package de.silencio.activecraftcore.gui;
 
 import de.silencio.activecraftcore.Main;
-import de.silencio.activecraftcore.events.GuiCreateEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
@@ -103,20 +102,6 @@ public class GuiCreator {
     }
 
     public Gui build() {
-
-        GuiCreateEvent event = new GuiCreateEvent(this, holder, rows, title,
-                playerHead, backItem, closeItem, backgroundFilled, itemInSlot);
-        Bukkit.getPluginManager().callEvent(event);
-
-        this.holder = event.getHolder();
-        this.rows = event.getRows();
-        this.title = event.getTitle();
-        this.playerHead = event.getPlayerHead();
-        this.backItem = event.getBackItem();
-        this.closeItem = event.getCloseItem();
-        this.backgroundFilled = event.isBackgroundFilled();
-        this.itemInSlot = event.getItemInSlot();
-
         if (rows == 0) rows = 1;
         if (rows >= 6) rows = 6;
         inventory = Bukkit.createInventory(holder, 9 * rows, title);
@@ -130,7 +115,7 @@ public class GuiCreator {
 
         if (backgroundFilled) {
             for (int i = 0; i < itemInSlot.length; i++) {
-                if (itemInSlot[i] == null) setItemInSlot(new GuiItem(Material.GRAY_STAINED_GLASS_PANE).setDisplayName(" "), i);
+                if (itemInSlot[i] == null) setItemInSlot(new GuiItem(Material.GRAY_STAINED_GLASS_PANE).setDisplayName(""), i);
             }
         }
 

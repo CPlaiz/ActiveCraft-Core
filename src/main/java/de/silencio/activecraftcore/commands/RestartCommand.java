@@ -2,6 +2,7 @@ package de.silencio.activecraftcore.commands;
 
 import com.destroystokyo.paper.Title;
 import de.silencio.activecraftcore.Main;
+import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -56,10 +57,6 @@ public class RestartCommand implements CommandExecutor, TabCompleter {
                                 return;
                             }
 
-                            if(time == 1) {
-                                target.kickPlayer("The server is restarting.");
-                            }
-
                             if(time == 0) {
                                 cancel();
                             }
@@ -84,7 +81,7 @@ public class RestartCommand implements CommandExecutor, TabCompleter {
                     public void run() {
 
                         for (Player target : Bukkit.getOnlinePlayers()) {
-                            Title title = new Title(ChatColor.RED + "Server Restart in " + time);
+                            Title title = new Title(CommandMessages.RESTART_TITLE(time + ""));
                             target.sendTitle(title);
                         }
                     }

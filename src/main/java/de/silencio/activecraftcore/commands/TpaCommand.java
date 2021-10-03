@@ -1,5 +1,7 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.Main;
+import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import net.md_5.bungee.api.chat.*;
 import org.bukkit.Bukkit;
@@ -30,17 +32,17 @@ public class TpaCommand implements CommandExecutor {
                     }
                     Player target = Bukkit.getPlayer(args[0]);
                     Player player = (Player) sender;
-                    TextComponent accept = new TextComponent(ChatColor.GREEN + "[ACCEPT]");
-                    accept.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(ChatColor.GREEN + "Click here to accept.").create()));
+                    TextComponent accept = new TextComponent(CommandMessages.TPA_ACCEPT() + " ");
+                    accept.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(CommandMessages.TPA_ACCEPT_HOVER()).create()));
                     accept.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tpaccept"));
 
-                    TextComponent deny = new TextComponent(ChatColor.RED + "[DENY]");
-                    deny.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(ChatColor.RED + "Click here to deny.").create()));
+                    TextComponent deny = new TextComponent(CommandMessages.TPA_DENY());
+                    deny.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(CommandMessages.TPA_DENY_HOVER()).create()));
                     deny.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/tpadeny"));
 
-                    player.sendMessage(ChatColor.GOLD + "Tpa request sent to " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + ".");
+                    player.sendMessage(CommandMessages.TPA_REQUEST_TO(target));
                     target.sendMessage(" ");
-                    target.sendMessage(ChatColor.GOLD + "Tpa request from " + ChatColor.AQUA + player.getDisplayName() + ChatColor.GOLD + ".");
+                    target.sendMessage(CommandMessages.TPA_REQUEST_FROM(sender));
                     target.spigot().sendMessage(accept, deny);
                     target.sendMessage(" ");
 

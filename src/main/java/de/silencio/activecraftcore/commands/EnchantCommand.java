@@ -89,15 +89,15 @@ public class EnchantCommand implements CommandExecutor, TabCompleter {
                                     eitem.getType().equals(Material.ELYTRA) || eitem.getType().equals(Material.CARVED_PUMPKIN) || eitem.getType().equals(Material.DRAGON_HEAD) || eitem.getType().equals(Material.CREEPER_HEAD) ||
                                     eitem.getType().equals(Material.SKELETON_SKULL) || eitem.getType().equals(Material.WITHER_SKELETON_SKULL) || eitem.getType().equals(Material.PLAYER_HEAD) || eitem.getType().equals(Material.ZOMBIE_HEAD)) {
                                 eitem.addUnsafeEnchantment(Enchantment.BINDING_CURSE, 1);
-                                player.sendMessage(CommandMessages.APPLIED_ENCHANTMENT(args[0].toString(), 1 + ""));
+                                player.sendMessage(CommandMessages.APPLIED_ENCHANTMENT(args[0].toString(), 1 + "").replace("_", " "));
                                 player.playSound(player.getLocation(), Sound.BLOCK_ENCHANTMENT_TABLE_USE, 1f, 1f);
-                            } else sender.sendMessage(Errors.WARNING() + " " + CommandMessages.CANNOT_BE_APPLIED());
+                            } else sender.sendMessage(Errors.WARNING() + CommandMessages.CANNOT_BE_APPLIED());
                         }
 
                         if (args[0].equalsIgnoreCase("curse_of_vanishing") && args.length == 1) {
                             ItemStack eitem = player.getInventory().getItemInMainHand();
                             eitem.addUnsafeEnchantment(Enchantment.VANISHING_CURSE, 1);
-                            player.sendMessage(CommandMessages.APPLIED_ENCHANTMENT(args[0].toString(), 1 + ""));
+                            player.sendMessage(CommandMessages.APPLIED_ENCHANTMENT(args[0].toString(), 1 + "").replace("_", " "));
                             player.playSound(player.getLocation(), Sound.BLOCK_ENCHANTMENT_TABLE_USE, 1f, 1f);
                         }
 
@@ -113,7 +113,7 @@ public class EnchantCommand implements CommandExecutor, TabCompleter {
                                             player.playSound(player.getLocation(), Sound.BLOCK_ENCHANTMENT_TABLE_USE, 1f, 1f);
                                         }
                                     }
-                                } else sender.sendMessage(Errors.WARNING() + " " + CommandMessages.NOT_ENCHANTED());
+                                } else sender.sendMessage(Errors.WARNING() + CommandMessages.NOT_ENCHANTED());
                             } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
                         }
 
@@ -195,7 +195,7 @@ public class EnchantCommand implements CommandExecutor, TabCompleter {
                                 ItemStack eitem = player.getInventory().getItemInMainHand();
                                 eitem.addUnsafeEnchantment(Objects.requireNonNull(Objects.requireNonNull(Enchantment.getByKey(NamespacedKey.minecraft(args[0])))), level);
 
-                                player.sendMessage(CommandMessages.APPLIED_ENCHANTMENT_LEVEL(args[0].toString(), level + ""));
+                                player.sendMessage(CommandMessages.APPLIED_ENCHANTMENT_LEVEL(args[0].toString(), level + "").replace("_", " "));
                                 player.playSound(player.getLocation(), Sound.BLOCK_ENCHANTMENT_TABLE_USE, 1f, 1f);
                             } else sender.sendMessage(Errors.NOT_HOLDING_ITEM());
                         } else if (args.length > 2) {
@@ -203,6 +203,9 @@ public class EnchantCommand implements CommandExecutor, TabCompleter {
                         }
                     } else sender.sendMessage(Errors.NOT_HOLDING_ITEM());
                 } else sender.sendMessage(Errors.NO_PERMISSION());
+            }
+            if(args.length == 0) {
+                sender.sendMessage(Errors.INVALID_ARGUMENTS());
             }
         } else sender.sendMessage(Errors.NOT_A_PLAYER());
         return true;

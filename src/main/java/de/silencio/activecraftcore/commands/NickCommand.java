@@ -1,5 +1,6 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.utils.FileConfig;
 import de.silencio.activecraftcore.utils.MessageUtils;
@@ -36,7 +37,7 @@ public class NickCommand implements CommandExecutor {
                         setDisplaynameFromConfig(player, playerdataConfig.getString("colornick"), nickname);
                         playerdataConfig.set("nickname", nickname);
                         playerdataConfig.saveConfig();
-                        player.sendMessage(ChatColor.GOLD + "Nick set to " + ChatColor.AQUA + nickname);
+                        player.sendMessage(CommandMessages.NICK_SET(nickname));
                     }
                 } else sender.sendMessage(Errors.NOT_A_PLAYER());
 
@@ -64,11 +65,8 @@ public class NickCommand implements CommandExecutor {
                         //setDisplaycolorFromConfig(target, playerdataConfig.getString("colornick"));
                         playerdataConfig.set("nickname", nickname);
                         playerdataConfig.saveConfig();
-                        sender.sendMessage(ChatColor.GOLD + "Set nickname of " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " to " + ChatColor.AQUA + nickname);
-                        if (sender instanceof Player) {
-                            target.sendMessage(ChatColor.GOLD + "Nickname set to " + ChatColor.AQUA + nickname + ChatColor.GOLD + " by " + ChatColor.AQUA + ((Player) sender).getDisplayName());
-                        } else
-                            target.sendMessage(ChatColor.GOLD + "Nickname set to " + ChatColor.AQUA + nickname + ChatColor.GOLD + " by " + ChatColor.AQUA + sender.getName());
+                        sender.sendMessage(CommandMessages.NICK_SET_OTHERS(target, nickname));
+                        target.sendMessage(CommandMessages.NICK_SET_OTHERS_MESSAGE(sender, nickname));
                         setDisplaynameFromConfig(target, playerdataConfig.getString("colornick"), nickname);
                     } else sender.sendMessage(Errors.NO_PERMISSION());
                 } else {
@@ -88,7 +86,7 @@ public class NickCommand implements CommandExecutor {
                             setDisplaynameFromConfig(player, playerdataConfig.getString("colornick"), nickname);
                             playerdataConfig.set("nickname", nickname);
                             playerdataConfig.saveConfig();
-                            player.sendMessage(ChatColor.GOLD + "Nick set to " + ChatColor.AQUA + nickname);
+                            player.sendMessage(CommandMessages.NICK_SET(nickname));
                         }
                     } else sender.sendMessage(Errors.NOT_A_PLAYER());
                 }

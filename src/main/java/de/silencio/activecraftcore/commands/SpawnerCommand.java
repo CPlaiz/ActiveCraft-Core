@@ -1,5 +1,6 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -16,6 +17,7 @@ import org.bukkit.inventory.meta.BlockStateMeta;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class SpawnerCommand implements CommandExecutor, TabCompleter {
 
@@ -38,16 +40,10 @@ public class SpawnerCommand implements CommandExecutor, TabCompleter {
                     ItemStack spawner = new ItemStack(Material.SPAWNER);
                     BlockStateMeta spawnermeta = (BlockStateMeta) spawner.getItemMeta();
                     CreatureSpawner spawnerblock = (CreatureSpawner) spawnermeta.getBlockState();
-
-                    //spawnerblock.setSpawnedType(EntityType.valueOf(mobName));
-                    //spawnerblock.setDelay(delay);
-                    //spawnerblock.setSpawnCount(spawncount);
-                    //spawnerblock.setMaxNearbyEntities(maxnearbyentities);
-                    //spawnerblock.setSpawnRange(range);
-                    player.sendMessage(ChatColor.GOLD + "Gave yourself a " + ChatColor.AQUA + mobName.toLowerCase() + ChatColor.GOLD + " spawner.");
+                    player.sendMessage(CommandMessages.SPAWNER_GIVE(mobName.toLowerCase()));
 
                     spawnerblock.setSpawnedType(EntityType.valueOf(mobName));
-                    spawnermeta.setDisplayName(ChatColor.AQUA + mobName.toLowerCase().replace("_", " ") + ChatColor.GOLD + " Spawner");
+                    spawnermeta.setDisplayName(CommandMessages.SPAWNER_DISPLAYNAME(mobName.toLowerCase().replace("_", " ")));
                     spawnermeta.setBlockState(spawnerblock);
                     spawner.setItemMeta(spawnermeta);
                     player.getInventory().addItem(spawner);
@@ -87,9 +83,9 @@ public class SpawnerCommand implements CommandExecutor, TabCompleter {
                     CreatureSpawner spawnerblock = (CreatureSpawner) spawnermeta.getBlockState();
 
                     spawnerblock.setSpawnedType(EntityType.valueOf(mobName));
-                    spawnermeta.setDisplayName(ChatColor.AQUA + mobName.toLowerCase().replace("_", " "));
-                    sender.sendMessage(ChatColor.GOLD + "Gave " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + " a " + ChatColor.AQUA + mobName.toLowerCase() + ChatColor.GOLD + " spawner.");
-                    target.sendMessage(ChatColor.AQUA + sender.getName() + ChatColor.GOLD + " gave you a " + ChatColor.AQUA + mobName.toLowerCase() + ChatColor.GOLD + " spawner.");
+                    spawnermeta.setDisplayName(CommandMessages.SPAWNER_DISPLAYNAME(mobName.toLowerCase().replace("_", " ")));
+                    sender.sendMessage(CommandMessages.SPAWNER_GIVE_OTHERS(target, mobName.toLowerCase()));
+                    target.sendMessage(CommandMessages.SPAWNER_GIVE_OTHERS_MESSAGE(sender, mobName.toLowerCase()));
 
                     spawnermeta.setBlockState(spawnerblock);
                     spawner.setItemMeta(spawnermeta);

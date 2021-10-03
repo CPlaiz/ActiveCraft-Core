@@ -3,6 +3,7 @@ package de.silencio.activecraftcore.commands;
 import de.silencio.activecraftcore.events.LockdownEvent;
 import de.silencio.activecraftcore.events.PlayerUnvanishEvent;
 import de.silencio.activecraftcore.manager.LockdownManager;
+import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.utils.FileConfig;
 import org.bukkit.Bukkit;
@@ -20,6 +21,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 public class LockdownCommand implements CommandExecutor, Listener, TabCompleter {
 
@@ -32,14 +34,14 @@ public class LockdownCommand implements CommandExecutor, Listener, TabCompleter 
                     FileConfig fileConfig = new FileConfig("config.yml");
                     if (!fileConfig.getBoolean("lockdown")) {
                         LockdownManager.lockdown(true);
-                        sender.sendMessage(ChatColor.GOLD + "Lockdown mode was enabled. Kicking all players.");
-                    } else sender.sendMessage(Errors.WARNING() + "Lockdown mode is already enabled.");
+                        sender.sendMessage(CommandMessages.LOCKDOWN_ENABLED());
+                    } else sender.sendMessage(Errors.WARNING() + CommandMessages.LOCKDOWN_ALREADY_ENABLED());
                 } else if (args.length == 1 && args[0].equalsIgnoreCase("disable")) {
                     FileConfig fileConfig = new FileConfig("config.yml");
                     if (fileConfig.getBoolean("lockdown")) {
                         LockdownManager.lockdown(false);
-                        sender.sendMessage(ChatColor.GOLD + "Lockdown mode was disabled. Players can now join the server again.");
-                    } else sender.sendMessage(Errors.WARNING() + "Lockdown mode is not enabled.");
+                        sender.sendMessage(CommandMessages.LOCKDOWN_DISABLED());
+                    } else sender.sendMessage(Errors.WARNING() + CommandMessages.LOCKDOWN_NOT_ENABLED());
                 } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
 
             } else sender.sendMessage(Errors.NO_PERMISSION());
@@ -58,18 +60,18 @@ public class LockdownCommand implements CommandExecutor, Listener, TabCompleter 
                             if (!playerdataConfig.getBoolean("lockdown-bypass")) {
                                 playerdataConfig.set("lockdown-bypass", true);
                                 playerdataConfig.saveConfig();
-                                sender.sendMessage(ChatColor.GOLD + "Allowed player " + ChatColor.AQUA + args[0] + ChatColor.GOLD + " to join during lockdown.");
-                                sender.sendMessage(ChatColor.GOLD + "They will not be able to join again if they leave and do not have the permission " + ChatColor.AQUA + "activecraft.lockdown.bypass" + ChatColor.GOLD + ".");
+                                sender.sendMessage(CommandMessages.ALLOW_PLAYER(playerdataConfig.getString("name")));
+                                sender.sendMessage(CommandMessages.ALLOW_PLAYER_EXTRA());
                             } else
-                                sender.sendMessage(Errors.WARNING() + "Lockdown bypass is already enabled for " + playerdataConfig.getString("name"));
+                                sender.sendMessage(Errors.WARNING() + CommandMessages.ALLOW_PLAYER_ALREADY_ENABLED(playerdataConfig.getString("name")));
                         } else if (args[1].equalsIgnoreCase("false")) {
                             if (playerdataConfig.getBoolean("lockdown-bypass")) {
                                 playerdataConfig.set("lockdown-bypass", false);
                                 playerdataConfig.saveConfig();
-                                sender.sendMessage(ChatColor.GOLD + "Player " + ChatColor.AQUA + args[0] + ChatColor.GOLD + " will not be able to join during lockdown.");
-                                sender.sendMessage(ChatColor.GOLD + "If they have the permission " + ChatColor.AQUA + "activecraft.lockdown.bypass" + ChatColor.GOLD + " they will be able to join during lockdown once they join and leave the server again.");
+                                sender.sendMessage(CommandMessages.DISALLOW_PLAYER(playerdataConfig.getString("name")));
+                                sender.sendMessage(CommandMessages.DISALLOW_PLAYER_EXTRA());
                             } else
-                                sender.sendMessage(Errors.WARNING() + "Lockdown bypass is not enabled for " + playerdataConfig.getString("name"));
+                                sender.sendMessage(Errors.WARNING() + CommandMessages.DISALLOW_PLAYER_ALREADY_DISABLED(playerdataConfig.getString("name")));
                         } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
                     } else sender.sendMessage(Errors.INVALID_PLAYER());
                 } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
@@ -117,11 +119,11 @@ public class LockdownCommand implements CommandExecutor, Listener, TabCompleter 
         if (fileConfig.getBoolean("lockdown")) {
             fileConfig.set("old-modt", event.getMotd());
             fileConfig.saveConfig();
-            event.setMotd(fileConfig.getString("lockdown-modt"));
+            event.setMotd(Objects.requireNonNull(fileConfig.getString("lockdown-modt")));
         }
 
         if (!fileConfig.getBoolean("lockdown") && fileConfig.get("lockdown") != null) {
-            event.setMotd(fileConfig.getString("old-modt"));
+            event.setMotd(Objects.requireNonNull(fileConfig.getString("old-modt")));
         }
     }
 }

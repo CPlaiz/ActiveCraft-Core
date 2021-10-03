@@ -4,6 +4,7 @@ import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.utils.MessageUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -29,7 +30,7 @@ public class BroadCastCommand implements CommandExecutor, TabCompleter {
                     msg = MessageUtils.replaceColor(msg);
                     msg = MessageUtils.replaceFormat(msg);
 
-                    Bukkit.broadcastMessage(CommandMessages.BROADCAST_PREFIX() + msg);
+                    Bukkit.broadcastMessage(CommandMessages.BROADCAST_PREFIX() + ChatColor.RESET + " " + msg);
 
                 } else sender.sendMessage(Errors.WARNING() + CommandMessages.INCLUDE_MESSAGE());
             }
@@ -47,7 +48,7 @@ public class BroadCastCommand implements CommandExecutor, TabCompleter {
                         for (Player player : Bukkit.getOnlinePlayers()) {
                             Player senderplayer = (Player) sender;
                             if (player.getWorld() == senderplayer.getWorld()) {
-                                player.sendMessage(CommandMessages.BROADCAST_PREFIX() + msg);
+                                player.sendMessage(CommandMessages.BROADCAST_PREFIX() + ChatColor.RESET + " " + msg);
                             }
                         }
                     } else sender.sendMessage(Errors.WARNING() + CommandMessages.INCLUDE_MESSAGE());

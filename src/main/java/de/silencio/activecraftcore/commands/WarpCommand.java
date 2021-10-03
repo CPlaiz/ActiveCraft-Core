@@ -55,7 +55,7 @@ public class WarpCommand implements CommandExecutor, TabCompleter {
                             }
                             WarpManager.warp(target, args[1]);
                             player.sendMessage(CommandMessages.WARP_TELEPORT_OTHERS(target, args[1]));
-                            target.sendMessage(CommandMessages.WARP_TELEPORT_OTHERS_MESSAGE(target, args[1]));
+                            target.sendMessage(CommandMessages.WARP_TELEPORT_OTHERS_MESSAGE(sender, args[1]));
                             target.playSound(target.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
                         } else sender.sendMessage(Errors.WARNING() + CommandMessages.WARP_DOESNT_EXIST());
                     } else sender.sendMessage(Errors.NO_PERMISSION());
@@ -75,7 +75,7 @@ public class WarpCommand implements CommandExecutor, TabCompleter {
                         if (WarpManager.getWarp(args[0]) != null) {
                             WarpManager.deleteWarp(args[0]);
                             player.sendMessage(CommandMessages.WARP_DELETED(args[0]));
-                        } else sender.sendMessage(Errors.WARNING() + CommandMessages.WARP_DOESNT_EXIST());
+                        } else sender.sendMessage(Errors.WARNING() + CommandMessages.DOESNT_EXIST());
                     } else sender.sendMessage(Errors.NO_PERMISSION());
                 }
             }
@@ -90,7 +90,7 @@ public class WarpCommand implements CommandExecutor, TabCompleter {
                             Location loc = warpsConfig.getLocation(s);
                             sender.sendMessage(ChatColor.GOLD + s + ": " + ChatColor.GRAY + loc.getWorld().getName() + "; " + loc.getBlockX() + "," + loc.getBlockY() + ", " + loc.getBlockZ());
                         }
-                    } else sender.sendMessage(CommandMessages.NO_WARPS());
+                    } else sender.sendMessage(Errors.WARNING() + CommandMessages.NO_WARPS());
                 } else sender.sendMessage(Errors.NO_PERMISSION());
             }
 

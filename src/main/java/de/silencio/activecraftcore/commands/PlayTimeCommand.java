@@ -1,5 +1,6 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.utils.FileConfig;
 import org.bukkit.Bukkit;
@@ -26,7 +27,7 @@ public class PlayTimeCommand implements CommandExecutor, TabCompleter {
                 if (sender instanceof Player) {
                     int hours = fileConfig.getInt(sender.getName() + ".hours");
                     int minutes = fileConfig.getInt(sender.getName() + ".minutes");
-                    sender.sendMessage(ChatColor.GOLD + "Playtime: " + ChatColor.AQUA + hours + ChatColor.GOLD + " Hours and " + ChatColor.AQUA + minutes + ChatColor.GOLD + " Minutes");
+                    sender.sendMessage(CommandMessages.PLAYTIME(hours + "", minutes + ""));
                 } else sender.sendMessage(Errors.NOT_A_PLAYER());
             } else sender.sendMessage(Errors.NO_PERMISSION());
         } else if (args.length == 1) {
@@ -45,7 +46,7 @@ public class PlayTimeCommand implements CommandExecutor, TabCompleter {
                 if (playerList.getStringList("players").contains(args[0])) {
                     int hours = fileConfig.getInt(args[0] + ".hours");
                     int minutes = fileConfig.getInt(args[0] + ".minutes");
-                    sender.sendMessage(ChatColor.GOLD + "Playtime of " + ChatColor.AQUA + args[0] + ChatColor.GOLD + ": " + ChatColor.AQUA + hours + ChatColor.GOLD + " Hours and " + ChatColor.AQUA + minutes + ChatColor.GOLD + " Minutes");
+                    sender.sendMessage(CommandMessages.PLAYTIME_OTHERS(args[0], playerdataConfig.getString("nickname"), hours + "", minutes + ""));
                 }
             } else sender.sendMessage(Errors.NO_PERMISSION());
         } else sender.sendMessage(Errors.INVALID_ARGUMENTS());

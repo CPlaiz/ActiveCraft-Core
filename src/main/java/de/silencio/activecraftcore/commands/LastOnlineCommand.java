@@ -1,6 +1,7 @@
 package de.silencio.activecraftcore.commands;
 
 import de.silencio.activecraftcore.Main;
+import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.utils.FileConfig;
 import org.bukkit.Bukkit;
@@ -11,6 +12,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -33,14 +35,14 @@ public class LastOnlineCommand implements CommandExecutor, TabCompleter {
                         FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + args[0].toLowerCase() + ".yml");
 
                         String lastonline = playerdataConfig.getString("last-online");
+                        Player target = Bukkit.getPlayer(playerdataConfig.getString("name"));
                         if (lastonline.equalsIgnoreCase("online")) {
-                            sender.sendMessage(ChatColor.AQUA + playerdataConfig.getString("name") + ChatColor.GOLD + " is " + ChatColor.GREEN + lastonline);
+                            sender.sendMessage(CommandMessages.LASTONLINE_ONLINE(target, lastonline));
                         } else
-                            sender.sendMessage(ChatColor.AQUA + playerdataConfig.getString("name") + ChatColor.GOLD + " was last online: " + ChatColor.GREEN + lastonline);
+                            sender.sendMessage(CommandMessages.LASTONLINE_OFFLINE(playerdataConfig.getString("name"), lastonline).replace("%t_displayname%", ChatColor.AQUA + playerdataConfig.getString("nickname") + ChatColor.GOLD));
                     } else sender.sendMessage(Errors.INVALID_PLAYER());
                 } else sender.sendMessage(Errors.NO_PERMISSION());
         } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
-
         return true;
     }
 

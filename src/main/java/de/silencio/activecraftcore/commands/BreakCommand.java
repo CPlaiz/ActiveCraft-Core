@@ -44,7 +44,7 @@ public class BreakCommand implements CommandExecutor {
                     }
                 var block = target.getTargetBlock(null, 9999);
                 target.playSound(target.getLocation(), Sound.BLOCK_STONE_BREAK, 1f, 1f);
-                sender.sendMessage(CommandMessages.BREAK_OTHERS(target, sender));
+                sender.sendMessage(CommandMessages.BREAK_OTHERS(target));
                 block.setType(Material.AIR);
             }
         }

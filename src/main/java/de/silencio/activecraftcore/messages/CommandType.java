@@ -2,6 +2,7 @@ package de.silencio.activecraftcore.messages;
 
 public enum CommandType {
 
+    BANSCREEN,
     BAN,
     UNBAN,
     BANLIST,
@@ -75,6 +76,7 @@ public enum CommandType {
     WEATHER,
     WHEREAMI,
     WHOIS,
-    XP;
+    XP,
+    LANGUAGE;
 
 }

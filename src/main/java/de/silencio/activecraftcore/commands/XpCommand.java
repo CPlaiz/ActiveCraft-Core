@@ -52,7 +52,7 @@ public class XpCommand implements CommandExecutor {
                 }
                 Integer num = null;
                 try {
-                    num = Integer.valueOf(args[0].replace("l", ""));;
+                    num = Integer.valueOf(args[1].replace("l", ""));;
                 } catch (NumberFormatException ignored) {
                 }
                 if (num == null) {
@@ -64,16 +64,12 @@ public class XpCommand implements CommandExecutor {
                         target.giveExpLevels(Integer.parseInt(args[1].replace("l", "")));
                         target.playSound(target.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f);
                         sender.sendMessage(CommandMessages.XP_LEVELS_OTHERS(target, args[1].replace("l", "")));
-                        if (sender instanceof Player) {
-                            target.sendMessage(CommandMessages.XP_LEVELS_OTHERS_MESSAGE(sender, args[1]));
-                        } else  target.sendMessage(CommandMessages.XP_LEVELS_OTHERS_MESSAGE(sender, args[1]));
+                        target.sendMessage(CommandMessages.XP_LEVELS_OTHERS_MESSAGE(sender, args[1].replace("l", "")));
                     } else {
                         target.giveExp(Integer.parseInt(args[1]));
                         target.playSound(target.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f);
                         sender.sendMessage(CommandMessages.XP_XP_OTHERS(target, args[1].replace("l", "")));
-                        if (sender instanceof Player) {
-                            target.sendMessage(CommandMessages.XP_XP_OTHERS_MESSAGE(sender, args[1].replace("l", "")));
-                        } else  target.sendMessage(CommandMessages.XP_XP_OTHERS_MESSAGE(sender, args[1].replace("l", "")));
+                        target.sendMessage(CommandMessages.XP_XP_OTHERS_MESSAGE(sender, args[1].replace("l", "")));
                     }
                 } else sender.sendMessage(Errors.INVALID_PLAYER());
             } else sender.sendMessage(Errors.NO_PERMISSION());

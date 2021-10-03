@@ -43,7 +43,7 @@ public class LastCoordsCommand implements CommandExecutor, TabCompleter {
 
                     Location lastLocation = playerdataConfig.getLocation("last-location." + args[1]);
                     if (lastLocation == null) {
-                        sender.sendMessage(Errors.WARNING() + " " + CommandMessages.NEVER_ENTERED_WORLD());
+                        sender.sendMessage(Errors.WARNING() + CommandMessages.NEVER_ENTERED_WORLD());
                         return false;
                     }
                     sender.sendMessage(CommandMessages.LASTCOORDS_MESSAGE(Bukkit.getPlayer(playerdataConfig.getString("name").toString()),
@@ -70,7 +70,7 @@ public class LastCoordsCommand implements CommandExecutor, TabCompleter {
                     
                     Location lastLocation = playerdataConfig.getLocation("last-location.BEFORE_QUIT");
                     if (lastLocation == null) {
-                        sender.sendMessage(Errors.WARNING() + " " + CommandMessages.NEVER_QUIT_SERVER());
+                        sender.sendMessage(Errors.WARNING() + CommandMessages.NEVER_QUIT_SERVER());
                         return false;
                     }
                     World world = lastLocation.getWorld();

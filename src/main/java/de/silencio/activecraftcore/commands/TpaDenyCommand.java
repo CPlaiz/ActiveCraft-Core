@@ -1,5 +1,7 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.Main;
+import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -20,12 +22,12 @@ public class TpaDenyCommand extends TpaCommand implements CommandExecutor {
                         Player player = (Player) sender;
                         Player target = tpaList.get(sender);
 
-                        player.sendMessage(ChatColor.GOLD + "Denied the TPA request from " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + ".");
-                        target.sendMessage(ChatColor.AQUA + player.getDisplayName() + ChatColor.GOLD + "Denied your TPA request.");
+                        player.sendMessage(CommandMessages.TPADENY_RECIEVER_MESSAGE(sender));
+                        target.sendMessage(CommandMessages.TPADENY_SENDER_MESSAGE(target));
 
                         tpaList.remove(sender);
 
-                    } else sender.sendMessage(Errors.WARNING() + " You don't have any pending TPA requests!");
+                    } else sender.sendMessage(Errors.WARNING() + CommandMessages.NO_REQUESTS_DENY());
                 } else sender.sendMessage(Errors.NO_PERMISSION());
             } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
         } else sender.sendMessage(Errors.NOT_A_PLAYER());

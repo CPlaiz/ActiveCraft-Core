@@ -1,5 +1,6 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -33,7 +34,7 @@ public class SpawnMobCommand implements CommandExecutor, TabCompleter {
                     if (value != null) {
                         world.spawnEntity(player.getLocation(), EntityType.valueOf(args[0]));
 
-                        player.sendMessage(ChatColor.GOLD + "Summoned " + ChatColor.AQUA + args[0] + ChatColor.GOLD + ".");
+                        player.sendMessage(CommandMessages.SUMMON(args[0]));
                     } else sender.sendMessage(Errors.INVALID_ENTITY());
                 } else sender.sendMessage(Errors.NO_PERMISSION());
             } else sender.sendMessage(Errors.NO_PERMISSION());
@@ -59,7 +60,7 @@ public class SpawnMobCommand implements CommandExecutor, TabCompleter {
                         } catch (IllegalArgumentException ignored) {
                         }
                         if (value != null) {
-                            player.sendMessage(ChatColor.GOLD + "Summoned " + ChatColor.AQUA + num + ChatColor.GOLD + "x " + ChatColor.AQUA + args[0] + ChatColor.GOLD + ".");
+                            player.sendMessage(CommandMessages.SUMMON_MULTIPLE(num + "", args[0]));
                             for (int i = 0; i < Integer.parseInt(args[1]); i++) {
                                 world.spawnEntity(player.getLocation(), value);
                             }
@@ -85,7 +86,7 @@ public class SpawnMobCommand implements CommandExecutor, TabCompleter {
                     }
                     if (value != null) {
                         world.spawnEntity(target.getLocation(), value);
-                        sender.sendMessage(ChatColor.GOLD + "Summoned " + ChatColor.AQUA + args[0] + ChatColor.GOLD + " at " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + "'s position.");
+                        sender.sendMessage(CommandMessages.SUMMON_OTHERS(target, args[0]));
                     } else sender.sendMessage(Errors.INVALID_ENTITY());
                 }
             }
@@ -116,7 +117,7 @@ public class SpawnMobCommand implements CommandExecutor, TabCompleter {
                     } catch (IllegalArgumentException ignored) {
                     }
                     if (value != null) {
-                        sender.sendMessage(ChatColor.GOLD + "Summoned " + ChatColor.AQUA + num + ChatColor.GOLD + "x " + ChatColor.AQUA + args[1] + ChatColor.GOLD + " at " + ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD + "'s location.");
+                        sender.sendMessage(CommandMessages.SUMMON_OTHERS_MULTIPLE(target, num + "", value.name()));
                         for (int i = 0; i < Integer.parseInt(args[2]); i++) {
                             target.getWorld().spawnEntity(target.getLocation(), value);
                         }

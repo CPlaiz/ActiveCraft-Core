@@ -1,5 +1,6 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.utils.FileConfig;
 import org.bukkit.Bukkit;
@@ -37,7 +38,7 @@ public class PlayerlistCommand implements CommandExecutor {
                     stringBuilder.append(player.getDisplayName());
                 }
             }
-            sender.sendMessage(ChatColor.GOLD + "Online players:");
+            sender.sendMessage(CommandMessages.PLAYERLIST_HEADER());
             sender.sendMessage(stringBuilder.toString());
         } else sender.sendMessage(Errors.NO_PERMISSION());
         return true;

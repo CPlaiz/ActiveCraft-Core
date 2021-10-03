@@ -18,9 +18,9 @@ public class WhereAmICommand implements CommandExecutor {
             if (sender instanceof Player) {
                 Player player = (Player) sender;
                 if (sender.hasPermission("activecraft.whereami.self")) {
-                    sender.sendMessage(CommandMessages.WHEREAMI(player.getWorld().getName(), player.getLocation().getBlockX() + "" + ChatColor.GOLD
+                    sender.sendMessage(CommandMessages.WHEREAMI(  ChatColor.GOLD + "x" + ChatColor.AQUA + player.getLocation().getBlockX() + ChatColor.GOLD
                             + " y" + ChatColor.AQUA + player.getLocation().getBlockY() + ChatColor.GOLD +
-                            " z" + ChatColor.AQUA + player.getLocation().getBlockZ()));
+                            " z" + ChatColor.AQUA + player.getLocation().getBlockZ(), player.getWorld().getName()));
                 } else sender.sendMessage(Errors.NO_PERMISSION());
             } else sender.sendMessage(Errors.NOT_A_PLAYER());
         } else if (args.length == 1) {
@@ -38,10 +38,10 @@ public class WhereAmICommand implements CommandExecutor {
                         }
                     }
 
-                    sender.sendMessage(CommandMessages.WHEREAMI_OTHERS(target, target.getWorld().getName(),
-                            target.getLocation().getBlockX() + "" + ChatColor.GOLD
+                    sender.sendMessage(CommandMessages.WHEREAMI_OTHERS(target,
+                              ChatColor.GOLD + "x" + ChatColor.AQUA + target.getLocation().getBlockX() + ChatColor.GOLD
                                     + " y" + ChatColor.AQUA + target.getLocation().getBlockY() + ChatColor.GOLD +
-                                    " z" + ChatColor.AQUA + target.getLocation().getBlockZ()));
+                                    " z" + ChatColor.AQUA + target.getLocation().getBlockZ(), target.getWorld().getName()));
                 } else sender.sendMessage(Errors.NO_PERMISSION());
             }
         } else sender.sendMessage(Errors.INVALID_ARGUMENTS());

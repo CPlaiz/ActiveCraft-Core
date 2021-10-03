@@ -1,5 +1,6 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -20,11 +21,7 @@ public class RamCommand implements CommandExecutor, TabCompleter {
                 Runtime runtime = Runtime.getRuntime();
 
                 int durch = 1024*1024;
-
-                sender.sendMessage( ChatColor.AQUA.toString() + runtime.freeMemory()/durch + ChatColor.GOLD + " MB free");
-                sender.sendMessage( ChatColor.AQUA.toString() + (runtime.totalMemory()/durch - runtime.freeMemory()/durch) + ChatColor.GOLD + " MB used");
-                sender.sendMessage( ChatColor.AQUA.toString() + runtime.maxMemory()/durch + ChatColor.GOLD + " MB max");
-
+                sender.sendMessage(CommandMessages.RAM(runtime.freeMemory()/durch + "", runtime.totalMemory()/durch - runtime.freeMemory()/durch + "", runtime.maxMemory()/durch + ""));
             } else sender.sendMessage(Errors.NO_PERMISSION());
         return true;
     }
