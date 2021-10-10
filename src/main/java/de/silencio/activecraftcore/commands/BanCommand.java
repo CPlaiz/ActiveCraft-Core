@@ -184,7 +184,6 @@ public class BanCommand implements CommandExecutor, Listener, TabCompleter {
                 for (BanEntry banEntry : ipBanManager.getBans()) {
                     if (banEntry.getTarget().equals(args[0])) {
                         valid = true;
-                        System.out.println(args[0]);
                         ipBanManager.unban(args[0]);
                         sender.sendMessage(CommandMessages.UNBANNED_IP(args[0]));
                         break;
@@ -216,7 +215,6 @@ public class BanCommand implements CommandExecutor, Listener, TabCompleter {
                 FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + target.getName().toLowerCase() + ".yml");
                 playerdataConfig.set("violations.ip-bans", playerdataConfig.getInt("violations.ip-bans") + 1);
                 playerdataConfig.saveConfig();
-                System.out.println(target.getAddress().getAddress().toString().replace("/", ""));
                 Bukkit.getScheduler().runTask(Main.getPlugin(), new Runnable() {
                     @Override
                     public void run() {

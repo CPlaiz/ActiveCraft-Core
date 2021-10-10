@@ -21,23 +21,18 @@ public class TableMenuCommand implements CommandExecutor {
             Player player = (Player) sender;
             if(sender.hasPermission("activecraft.tablemenu")) {
 
-                GuiCreator guiCreator = new GuiCreator(6);
+                GuiCreator guiCreator = new GuiCreator("table_menu", 6, "Table Menu");
                 GuiCloseItem guiCloseItem = new GuiCloseItem(49);
 
-                ItemStack crafting = new ItemBuilder(Material.CRAFTING_TABLE).displayname(ChatColor.GOLD + "Crafting Table").build();
-
-
-                ItemStack crafting = new ItemBuilder(Material.CARTOGRAPHY_TABLE).displayname(ChatColor.GOLD + "Cartography Table").setMovable(false).setClickSound(true), 20);
-                ItemStack crafting = new ItemBuilder(Material.STONECUTTER).displayname(ChatColor.GOLD + "Stonecutter").setMovable(false).setClickSound(true), 21);
-                ItemStack crafting = new ItemBuilder(Material.ANVIL).displayname(ChatColor.GOLD + "Anvil").setMovable(false).setClickSound(true), 22);
-                ItemStack crafting = new ItemBuilder(Material.GRINDSTONE).displayname(ChatColor.GOLD + "Grindstone").setMovable(false).setClickSound(true), 23);
-                ItemStack crafting = new ItemBuilder(Material.LOOM).displayname(ChatColor.GOLD + "Loom").setMovable(false).setClickSound(true), 24);
-                ItemStack crafting = new ItemBuilder(Material.SMITHING_TABLE).displayname(ChatColor.GOLD + "Smithing Table").setMovable(false).setClickSound(true), 31);
-
-                guiCreator.setItemInSlot(crafting, 13);
+                guiCreator.setItemInSlot(new GuiItem(Material.CRAFTING_TABLE).setDisplayName(ChatColor.GOLD + "Crafting Table").setMovable(false).setClickSound(true), 13);
+                guiCreator.setItemInSlot(new GuiItem(Material.CARTOGRAPHY_TABLE).setDisplayName(ChatColor.GOLD + "Cartography Table").setMovable(false).setClickSound(true), 20);
+                guiCreator.setItemInSlot(new GuiItem(Material.STONECUTTER).setDisplayName(ChatColor.GOLD + "Stonecutter").setMovable(false).setClickSound(true), 21);
+                guiCreator.setItemInSlot(new GuiItem(Material.ANVIL).setDisplayName(ChatColor.GOLD + "Anvil").setMovable(false).setClickSound(true), 22);
+                guiCreator.setItemInSlot(new GuiItem(Material.GRINDSTONE).setDisplayName(ChatColor.GOLD + "Grindstone").setMovable(false).setClickSound(true), 23);
+                guiCreator.setItemInSlot(new GuiItem(Material.LOOM).setDisplayName(ChatColor.GOLD + "Loom").setMovable(false).setClickSound(true), 24);
+                guiCreator.setItemInSlot(new GuiItem(Material.SMITHING_TABLE).setDisplayName(ChatColor.GOLD + "Smithing Table").setMovable(false).setClickSound(true), 31);
                 guiCloseItem.setClickSound(true);
                 guiCloseItem.setMovable(false);
-                guiCreator.setTitle("Table Menu");
                 guiCreator.fillBackground(true);
                 guiCreator.setCloseItem(guiCloseItem);
                 player.openInventory(guiCreator.build().getInventory());

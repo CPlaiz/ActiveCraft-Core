@@ -1,7 +1,5 @@
 package de.silencio.activecraftcore.gui;
 
-import it.unimi.dsi.fastutil.Hash;
-import org.bukkit.entity.Item;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -9,32 +7,33 @@ import java.util.HashMap;
 
 public class GuiData {
 
-    private HashMap<Inventory, GuiItem[]> guiList = new HashMap<>();
+    private GuiItem[] guiList;
 
-    private HashMap<ItemStack, GuiItem> correspondingGuiItem = new HashMap<>();
+    private HashMap<ItemStack, GuiItem> correspondingGuiItem;
 
-    public HashMap<Inventory, GuiItem[]> getGuiList() {
+    public GuiData() {
+        correspondingGuiItem = new HashMap<>();
+        guiList = new GuiItem[53];
+    }
+
+    public GuiItem[] getGuiList() {
         return guiList;
     }
 
-    public void setGuiList(HashMap<Inventory, GuiItem[]> guiList) {
+    public void setGuiList(GuiItem[] guiList) {
         this.guiList = guiList;
     }
 
-    public void addToGuiList(Inventory guiCreator, GuiItem[] items) {
-        this.guiList.put(guiCreator, items);
+    public void addToGuiList(GuiItem guiItem, int slot) {
+        this.guiList[slot] = guiItem;
     }
 
-    public void removeFromGuiList(Inventory guiCreator) {
-        this.guiList.remove(guiCreator);
+    public void removeFromGuiList(GuiItem guiItem, int slot) {
+        this.guiList[slot] = null;
     }
 
-    public GuiItem[] getFromGuiList(Inventory inventory) {
-        return this.guiList.get(inventory);
-    }
-
-    public GuiItem getFromGuiList(Inventory inventory, int slot) {
-        return this.guiList.get(inventory)[slot];
+    public GuiItem getFromGuiList(int slot) {
+        return this.guiList[slot];
     }
 
     public HashMap<ItemStack, GuiItem> getCorrespondingGuiItem() {

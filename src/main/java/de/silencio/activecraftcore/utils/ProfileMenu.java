@@ -149,7 +149,6 @@ public class ProfileMenu implements Listener {
         ABUSIVE_LANGUAGE,
         SCAMMING_STEALING,
         GRIEFING_STEALING;
-
     }
 
     public ProfileMenu(Player player, Player target) {

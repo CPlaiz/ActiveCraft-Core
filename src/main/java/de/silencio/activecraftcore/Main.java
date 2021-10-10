@@ -1,16 +1,15 @@
 package de.silencio.activecraftcore;
 
 import de.silencio.activecraftcore.commands.*;
-import de.silencio.activecraftcore.gui.Gui;
-import de.silencio.activecraftcore.gui.GuiData;
-import de.silencio.activecraftcore.gui.GuiHistoryMap;
-import de.silencio.activecraftcore.gui.GuiListener;
+import de.silencio.activecraftcore.gui.*;
 import de.silencio.activecraftcore.listener.*;
 import de.silencio.activecraftcore.listener.inventory.ProfileListener;
 import de.silencio.activecraftcore.messages.ActiveCraftMessage;
 import de.silencio.activecraftcore.dialogue.DialogueManagerList;
 import de.silencio.activecraftcore.messages.Language;
-import de.silencio.activecraftcore.profilemenu.MainProfileListener;
+import de.silencio.activecraftcore.profilemenu.listeners.ActionProfileListener;
+import de.silencio.activecraftcore.profilemenu.listeners.HomeListProfileListener;
+import de.silencio.activecraftcore.profilemenu.listeners.MainProfileListener;
 import de.silencio.activecraftcore.profilemenu.ProfileMenu2;
 import de.silencio.activecraftcore.utils.FileConfig;
 import de.silencio.activecraftcore.manager.VanishManager;
@@ -49,7 +48,7 @@ public final class Main extends JavaPlugin {
 
     private HashMap<Player, Player> tpaList;
 
-    private GuiData guiData;
+    private HashMap<GuiCreator, GuiData> guiDataMap;
     private GuiHistoryMap guiHistoryMap;
     private HashMap<Integer, Gui> guiList;
 
@@ -75,7 +74,7 @@ public final class Main extends JavaPlugin {
         tpaList = new HashMap<>();
 
         //gui creator stuff
-        guiData = new GuiData();
+        guiDataMap = new HashMap<>();
         guiList = new HashMap<>();
         guiHistoryMap = new GuiHistoryMap();
 
@@ -141,7 +140,11 @@ public final class Main extends JavaPlugin {
         pluginManager.registerEvents(new DeathListener(), this);
         pluginManager.registerEvents(new LoginListener(), this);
         pluginManager.registerEvents(new TableMenuListener(), this);
+
+        //profile menu
         pluginManager.registerEvents(new MainProfileListener(), this);
+        pluginManager.registerEvents(new ActionProfileListener(), this);
+        pluginManager.registerEvents(new HomeListProfileListener(), this);
 
         //gui
         pluginManager.registerEvents(new GuiListener(), this);
@@ -330,12 +333,20 @@ public final class Main extends JavaPlugin {
         return lastLocMap;
     }
 
-    public GuiData getGuiData() {
-        return guiData;
+    public HashMap<GuiCreator, GuiData> getGuiDataMap() {
+        return guiDataMap;
     }
 
-    public void setGuiData(GuiData guiData) {
-        this.guiData = guiData;
+    public void addToGuiDataMap(GuiCreator guiCreator, GuiData guiData) {
+        guiDataMap.put(guiCreator, guiData);
+    }
+
+    public void removeFromGuiDataMap(GuiCreator guiCreator) {
+        guiDataMap.remove(guiCreator);
+    }
+
+    public GuiData getFromGuiDataMap(GuiCreator guiCreator) {
+        return guiDataMap.get(guiCreator);
     }
 
     public HashMap<Integer, Gui> getGuiList() {

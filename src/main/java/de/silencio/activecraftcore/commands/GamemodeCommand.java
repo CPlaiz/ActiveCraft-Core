@@ -12,8 +12,6 @@ public class GamemodeCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        Player player = (Player) sender;
-
 
         if (args.length == 1) {
             if (Bukkit.getPlayer(args[0]) == null) {
@@ -52,6 +50,7 @@ public class GamemodeCommand implements CommandExecutor {
                 } else sender.sendMessage(Errors.NO_PERMISSION());
             }
         } else if (sender instanceof Player){
+            Player player = (Player) sender;
             if (label.equalsIgnoreCase("su") || label.equalsIgnoreCase("survival")) {
                 if (sender.hasPermission("activecraft.gamemode.survival.self")) {
                     player.setGameMode(GameMode.SURVIVAL);

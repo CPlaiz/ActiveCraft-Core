@@ -47,7 +47,6 @@ public class PlayTimeCommand implements CommandExecutor, TabCompleter {
                 }
 
                 FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + args[0].toLowerCase() + ".yml");
-                System.out.println(playerdataConfig);
 
                 if (playerList.getStringList("players").contains(args[0])) {
                     int hours = fileConfig.getInt(args[0] + ".hours");

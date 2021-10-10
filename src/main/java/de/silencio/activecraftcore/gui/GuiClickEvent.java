@@ -1,5 +1,6 @@
 package de.silencio.activecraftcore.gui;
 
+import de.silencio.activecraftcore.Main;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -50,6 +51,16 @@ public class GuiClickEvent extends Event {
     public void setCancelled(boolean cancel) {
         cancelled = cancel;
         invClickEvent.setCancelled(cancel);
+    }
+
+    public Gui getGui() {
+        for (int id : Main.getPlugin().getGuiList().keySet()) {
+            Gui gui = Main.getPlugin().getGuiById(id);
+            if (clickedInventory == gui.getInventory()) {
+                return gui;
+            }
+        }
+        return null;
     }
 
     public HandlerList getHandlers() {

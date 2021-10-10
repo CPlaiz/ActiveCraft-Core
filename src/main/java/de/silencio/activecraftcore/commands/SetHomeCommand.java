@@ -42,7 +42,7 @@ public class SetHomeCommand implements CommandExecutor {
                             maxHomes = Integer.parseInt(permParts[2]);
                         }
                     }
-                    if (!(homeList.size() < maxHomes)) {
+                    if (!(homeList.size() < maxHomes || player.isOp())) {
                         player.sendMessage(Errors.WARNING() + CommandMessages.MAX_HOMES());
                         return false;
                     }

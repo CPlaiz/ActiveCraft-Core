@@ -10,6 +10,9 @@ public class TableMenuListener implements Listener {
     @EventHandler
     public void onTableMenuClick(GuiClickEvent event) {
         Player player = (Player) event.getView().getPlayer();
+
+        if (!event.getGui().getAssociatedGuiCreator().getInternalName().equals("table_menu")) return;
+
         switch (event.getSlot()) {
             case 13:
                 player.performCommand("craftingtable");

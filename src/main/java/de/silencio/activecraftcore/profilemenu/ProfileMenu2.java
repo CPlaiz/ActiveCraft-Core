@@ -1,10 +1,9 @@
 package de.silencio.activecraftcore.profilemenu;
 
-import de.silencio.activecraftcore.gui.GuiCloseItem;
-import de.silencio.activecraftcore.gui.GuiCreator;
 import de.silencio.activecraftcore.gui.GuiPlayerHead;
 import de.silencio.activecraftcore.manager.BanManager;
 import de.silencio.activecraftcore.manager.WarnManager;
+import de.silencio.activecraftcore.profilemenu.inventories.*;
 import de.silencio.activecraftcore.utils.Profile;
 import org.bukkit.BanList;
 import org.bukkit.ChatColor;
@@ -21,13 +20,30 @@ public class ProfileMenu2 {
     private GuiPlayerHead playerHead;
     private MainProfile mainProfile;
     private ActionProfile actionProfile;
+    private ReasonsProfile reasonsProfile;
+    private ViolationsProfile violationsProfile;
+    private GamemodeSwitcherProfile gamemodeSwitcherProfile;
+    private HomeListProfile homeListProfile;
 
     public ProfileMenu2(Player player, Player target) {
         this.player = player;
         this.target = target;
+        profile = new Profile(target);
+        //playerhead
+        playerHead = new GuiPlayerHead(4);
+        playerHead.setOwner(target);
+        playerHead.setLore(ChatColor.GRAY + "aka " + profile.getNickname(), ChatColor.AQUA + profile.getUuid().toString());
+        playerHead.setDisplayName(ChatColor.GOLD + target.getName());
+
         nameBanManager = new BanManager(BanList.Type.NAME);
         ipBanManager = new BanManager(BanList.Type.IP);
         warnManager = new WarnManager(target);
+        mainProfile = new MainProfile(this);
+        actionProfile = new ActionProfile(this);
+        reasonsProfile = new ReasonsProfile(this);
+        violationsProfile = new ViolationsProfile(this);
+        gamemodeSwitcherProfile = new GamemodeSwitcherProfile(this);
+        homeListProfile = new HomeListProfile(this);
     }
 
 
@@ -101,5 +117,37 @@ public class ProfileMenu2 {
 
     public void setActionProfile(ActionProfile actionProfile) {
         this.actionProfile = actionProfile;
+    }
+
+    public ReasonsProfile getReasonsProfile() {
+        return reasonsProfile;
+    }
+
+    public void setReasonsProfile(ReasonsProfile reasonsProfile) {
+        this.reasonsProfile = reasonsProfile;
+    }
+
+    public ViolationsProfile getViolationsProfile() {
+        return violationsProfile;
+    }
+
+    public void setViolationsProfile(ViolationsProfile violationsProfile) {
+        this.violationsProfile = violationsProfile;
+    }
+
+    public GamemodeSwitcherProfile getGamemodeSwitcherProfile() {
+        return gamemodeSwitcherProfile;
+    }
+
+    public void setGamemodeSwitcherProfile(GamemodeSwitcherProfile gamemodeSwitcherProfile) {
+        this.gamemodeSwitcherProfile = gamemodeSwitcherProfile;
+    }
+
+    public HomeListProfile getHomeListProfile() {
+        return homeListProfile;
+    }
+
+    public void setHomeListProfile(HomeListProfile homeListProfile) {
+        this.homeListProfile = homeListProfile;
     }
 }

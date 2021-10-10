@@ -42,6 +42,14 @@ public class GuiItem extends ItemStack {
         return this;
     }
 
+    public String getDisplayName() {
+        return this.getItemMeta().getDisplayName();
+    }
+
+    public List<String> getLore() {
+        return this.getItemMeta().getLore();
+    }
+
     public boolean hasClickSound() {
         return clickSound;
     }
@@ -63,4 +71,6 @@ public class GuiItem extends ItemStack {
     public ItemStack toItemStack() {
         return this;
     }
+
+
 }

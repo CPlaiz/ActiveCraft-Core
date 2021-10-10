@@ -1,9 +1,11 @@
 package de.silencio.activecraftcore.utils;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
@@ -36,7 +38,8 @@ public class Profile {
         LOG_ENABLED,
         BYPASS_LOCKDOWN,
         EDIT_SIGN,
-        KNOWN_IPS;
+        KNOWN_IPS,
+        HOME_LIST;
 
         Value() {
 
@@ -46,6 +49,7 @@ public class Profile {
     private Player owner;
     private FileConfig playerdataConfig;
     private FileConfig playtimeConfig;
+    private FileConfig homeConfig;
     private String name;
     private String nickname;
     private String last_online;
@@ -72,18 +76,21 @@ public class Profile {
     private boolean bypass_lockdown;
     private boolean edit_sign;
     private List<String> known_ips;
+    private HashMap<String, Location> homeList;
 
     public Profile(Player player) {
         this.owner = player;
         this.playerdataConfig = new FileConfig("playerdata" + File.separator + player.getName().toLowerCase() + ".yml");
         this.playtimeConfig = new FileConfig("playtime.yml");
+        this.homeConfig = new FileConfig("homes.yml");
         loadFromConfig(playerdataConfig);
 
     }
 
-    public void reload() {
+    public void refresh() {
         this.playerdataConfig = new FileConfig("playerdata" + File.separator + owner.getName().toLowerCase() + ".yml");
         this.playtimeConfig = new FileConfig("playtime.yml");
+        this.homeConfig = new FileConfig("homes.yml");
         loadFromConfig(playerdataConfig);
     }
 
@@ -115,6 +122,11 @@ public class Profile {
 
         playtime_minutes = playtimeConfig.getInt(owner.getName() + ".minutes");
         playtime_hours = playtimeConfig.getInt(owner.getName() + ".hours");
+
+        homeList = new HashMap<>();
+        for (String homeName : homeConfig.getStringList(owner.getName() + ".home_list")) {
+            homeList.put(homeName, homeConfig.getLocation(owner.getName() + "." + homeName));
+        }
 
     }
 
@@ -222,6 +234,10 @@ public class Profile {
 
             case KNOWN_IPS:
                 playerdataConfig.set("known-ips", object);
+                break;
+
+            case HOME_LIST:
+                homeConfig.set(owner.getName() + ".", object);
                 break;
         }
         playerdataConfig.saveConfig();
@@ -334,5 +350,9 @@ public class Profile {
 
     public List<String> getKnownIps() {
         return known_ips;
+    }
+
+    public HashMap<String, Location> getHomeList() {
+        return homeList;
     }
 }
