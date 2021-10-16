@@ -54,7 +54,7 @@ public class GuiListener implements Listener {
 
         //call GuiConfirmEvent
         if (guiCreator.getInternalName().startsWith("confirmation_")) {
-            if (guiItem.getDisplayName().equals("Confirm") && guiItem.getType() == Material.LIME_CONCRETE) {
+            if (guiItem.getType() == Material.LIME_CONCRETE) {
                 GuiConfirmEvent guiConfirmEvent = new GuiConfirmEvent(event.getClickedInventory(), guiCreator.getInternalName().replace("confirmation_", ""), (Player) event.getView().getPlayer());
                 Bukkit.getPluginManager().callEvent(guiConfirmEvent);
                 if (guiConfirmEvent.isCancelled()) event.setCancelled(true);
@@ -64,7 +64,7 @@ public class GuiListener implements Listener {
                         event.getView().getPlayer().openInventory(Main.getPlugin().getGuiHistoryMap().getGuiStack((Player) event.getView().getPlayer()).pop());
                     }
                 }
-            } else if (guiItem.getDisplayName().equals("Cancel") && guiItem.getType() == Material.RED_CONCRETE  ) {
+            } else if (guiItem.getType() == Material.RED_CONCRETE  ) {
                 GuiCancelEvent guiConfirmEvent = new GuiCancelEvent(event.getClickedInventory(), guiCreator.getInternalName().replace("confirmation_", ""),
                         (Player) event.getView().getPlayer());
                 Bukkit.getPluginManager().callEvent(guiConfirmEvent);

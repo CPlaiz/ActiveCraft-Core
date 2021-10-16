@@ -65,13 +65,17 @@ public class ActionProfileListener implements Listener {
             if (!player.hasPermission("activecraft.kill")) return;
             Main.getPlugin().getGuiHistoryMap().add(player, event.getClickedInventory());
             player.openInventory(new GuiConfirmation("action_profile.kill").getGuiCreator().build().getInventory());
+        } else if (event.getCurrentItem() == profileMenu.getActionProfile().getStrikeItem()) {
+            if (!player.hasPermission("activecraft.strike.others")) return;
+           player.performCommand("strike " + profileMenu.getTarget().getName());
+        } else if (event.getCurrentItem() == profileMenu.getActionProfile().getExplodeItem()) {
+            if (!player.hasPermission("activecraft.explode.others")) return;
+            player.performCommand("explode " + profileMenu.getTarget().getName());
         }
     }
 
     @EventHandler
     public void onConfirm(GuiConfirmEvent event) {
-        System.out.println(Main.getPlugin().getProfileMenuList());
-        System.out.println(event.getPlayer());
         if (!Main.getPlugin().getProfileMenuList().containsKey(event.getPlayer())) return;
         Player player = event.getPlayer();
         ProfileMenu2 profileMenu = Main.getPlugin().getFromProfileMenuList(player);

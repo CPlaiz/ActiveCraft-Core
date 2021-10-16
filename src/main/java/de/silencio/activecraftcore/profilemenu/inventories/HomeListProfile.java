@@ -52,8 +52,22 @@ public class HomeListProfile {
         currentPage = 0;
         pages.clear();
         profile.refresh();
+        profileMenu.getProfile().refresh();
 
         HashMap<String, Location> homes = profile.getHomeList();
+
+        if (homes.size() == 0) {
+            GuiCreator guiCreator = new GuiCreator("home_list_profile", 6, "Homes");
+
+            guiCreator.fillBackground(true);
+            guiCreator.setCloseItem(new GuiCloseItem(49));
+            guiCreator.setPlayerHead(profileMenu.getPlayerHead());
+            guiCreator.setBackItem(new GuiBackItem(48));
+
+            guiCreator.setItemInSlot(new GuiItem(Material.BARRIER).setDisplayName(ProfileMessages.HOMELIST_NO_HOMES(target)), 22);
+
+            pages.add(guiCreator);
+        }
 
         while (homes.size() > 0) {
 
@@ -72,16 +86,25 @@ public class HomeListProfile {
                 World.Environment environment = loc.getWorld().getEnvironment();
                 switch (environment.getId()) {
                     case 0:
-                        guiCreator.setItemInSlot(new GuiItem(Material.GRASS_BLOCK).setDisplayName(homeName).setLore(loc.getWorld().getName() + ", "
-                                + loc.getBlockX() + ", " + loc.getBlockY() + ", " + loc.getBlockZ()), i);
+                        guiCreator.setItemInSlot(new GuiItem(Material.GRASS_BLOCK).setDisplayName(homeName).setLore(
+                                ChatColor.AQUA + loc.getWorld().getName() + ChatColor.GOLD
+                                + ", " + ChatColor.AQUA + loc.getBlockX() + ChatColor.GOLD
+                                + ", " + ChatColor.AQUA + loc.getBlockY() + ChatColor.GOLD
+                                + ", " + ChatColor.AQUA + loc.getBlockZ()), i);
                         break;
                     case 1:
-                        guiCreator.setItemInSlot(new GuiItem(Material.END_STONE).setDisplayName(homeName).setLore(loc.getWorld().getName() + ", "
-                                + loc.getBlockX() + ", " + loc.getBlockY() + ", " + loc.getBlockZ()), i);
+                        guiCreator.setItemInSlot(new GuiItem(Material.END_STONE).setDisplayName(homeName).setLore(
+                                ChatColor.AQUA + loc.getWorld().getName() + ChatColor.GOLD
+                                + ", " + ChatColor.AQUA + loc.getBlockX() + ChatColor.GOLD
+                                + ", " + ChatColor.AQUA + loc.getBlockY() + ChatColor.GOLD
+                                + ", " + ChatColor.AQUA + loc.getBlockZ()), i);
                         break;
                     case -1:
-                        guiCreator.setItemInSlot(new GuiItem(Material.NETHERRACK).setDisplayName(homeName).setLore(loc.getWorld().getName() + ", "
-                                + loc.getBlockX() + ", " + loc.getBlockY() + ", " + loc.getBlockZ()), i);
+                        guiCreator.setItemInSlot(new GuiItem(Material.NETHERRACK).setDisplayName(homeName).setLore(
+                                ChatColor.AQUA + loc.getWorld().getName() + ChatColor.GOLD
+                                + ", " + ChatColor.AQUA + loc.getBlockX() + ChatColor.GOLD
+                                + ", " + ChatColor.AQUA + loc.getBlockY() + ChatColor.GOLD
+                                + ", " + ChatColor.AQUA + loc.getBlockZ()), i);
                         break;
                 }
                 toBeRemoved.add(homeName);

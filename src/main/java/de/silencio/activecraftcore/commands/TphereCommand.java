@@ -26,7 +26,7 @@ public class TphereCommand implements CommandExecutor {
                     Player player = (Player) sender;
 
                     if(target == player) {
-                        player.sendMessage(CommandMessages.CANNOT_TP_TO_SELF_TPHERE());
+                        player.sendMessage(Errors.WARNING() + CommandMessages.CANNOT_TP_TO_SELF_TPHERE());
                         return false;
                     }
 

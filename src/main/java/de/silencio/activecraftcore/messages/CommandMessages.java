@@ -1,6 +1,7 @@
 package de.silencio.activecraftcore.messages;
 
 import de.silencio.activecraftcore.Main;
+import de.silencio.activecraftcore.utils.Profile;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -1071,14 +1072,14 @@ public class CommandMessages {
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.MSG, "msg-prefix-to")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
                 .replace("%t_displayname%", ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD)
-                .replace("%message%", ChatColor.AQUA + message + ChatColor.GOLD);
+                .replace("%message%", ChatColor.WHITE + message + ChatColor.GOLD);
         return msg;
     }
 
     public static String MSG_PREFIX_FROM(Player sender, String message) {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.MSG, "msg-prefix-from")
-                .replace("%message%", ChatColor.AQUA + message + ChatColor.GOLD);
+                .replace("%message%", ChatColor.WHITE + message + ChatColor.GOLD);
 
         if (sender instanceof Player) {
             msg = msg.replace("%s_displayname%", ChatColor.AQUA + ((Player) sender).getDisplayName() + ChatColor.GOLD);
@@ -1088,14 +1089,14 @@ public class CommandMessages {
 
     public static String SOCIALSPY_PREFIX_TO(Player target, Player sender, String message) {
 
-        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.MSG, "socialspy-prefix-to")
-                .replace("%message%", ChatColor.AQUA + message + ChatColor.GOLD)
-                .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
-                .replace("%t_displayname%", ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD);
+        String msg = ChatColor.GRAY + acm.getMessage(MessageType.COMMAND, CommandType.MSG, "socialspy-prefix-to")
+                .replace("%message%", ChatColor.WHITE + message + ChatColor.GRAY)
+                .replace("%t_playername%", ChatColor.DARK_AQUA + target.getName() + ChatColor.GRAY)
+                .replace("%t_displayname%", ChatColor.DARK_AQUA + target.getDisplayName() + ChatColor.GRAY);
 
         if (sender instanceof Player) {
-            msg = msg.replace("%s_displayname%", ChatColor.AQUA + ((Player) sender).getDisplayName() + ChatColor.GOLD);
-        } else msg = msg.replace("%s_displayname%", ChatColor.AQUA + sender.getName() + ChatColor.GOLD);
+            msg = msg.replace("%s_displayname%", ChatColor.DARK_AQUA + sender.getDisplayName() + ChatColor.GRAY);
+        } else msg = msg.replace("%s_displayname%", ChatColor.DARK_AQUA + sender.getName() + ChatColor.GRAY);
         return msg;
     }
 
@@ -2167,6 +2168,46 @@ public class CommandMessages {
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.LANGUAGE, "language-set")
                 .replace("%language%", ChatColor.AQUA + language + ChatColor.GOLD)
                 .replace("%code%", ChatColor.AQUA + code + ChatColor.GOLD);
+        return msg;
+    }
+
+    public static String AFK_TAG() {
+
+        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.AFK, "afk-tag");
+        return msg;
+    }
+
+    public static String NOW_AFK(Player target) {
+
+        Profile profile = new Profile(target);
+
+        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.AFK, "now-afk")
+                .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
+                .replace("%t_displayname%", ChatColor.AQUA + profile.getNickname() + ChatColor.GOLD);
+
+        return msg;
+    }
+
+    public static String NOT_AFK(Player target) {
+
+        Profile profile = new Profile(target);
+
+        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.AFK, "not-afk")
+                .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
+                .replace("%t_displayname%", ChatColor.AQUA + profile.getNickname() + ChatColor.GOLD);
+
+        return msg;
+    }
+
+    public static String NOW_AFK_TARGET() {
+
+        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.AFK, "now-afk-target");
+        return msg;
+    }
+
+    public static String NOT_AFK_TARGET() {
+
+        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.AFK, "not-afk-target");
         return msg;
     }
 }

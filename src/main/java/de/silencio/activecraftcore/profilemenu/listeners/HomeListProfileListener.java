@@ -5,6 +5,7 @@ import de.silencio.activecraftcore.gui.*;
 import de.silencio.activecraftcore.profilemenu.ProfileMenu2;
 import de.silencio.activecraftcore.utils.Profile;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -41,8 +42,10 @@ public class HomeListProfileListener implements Listener {
             if (event.getCurrentItem().getDisplayName().equals(homeName)) {
                 boolean shouldBreak = false;
                 for (String lore : event.getCurrentItem().getLore()) {
-                    if (lore.equals(loc.getWorld().getName() + ", "
-                    + loc.getBlockX() + ", " + loc.getBlockY() + ", " + loc.getBlockZ())) {
+                    if (lore.equals(ChatColor.AQUA + loc.getWorld().getName() + ChatColor.GOLD
+                            + ", " + ChatColor.AQUA + loc.getBlockX() + ChatColor.GOLD
+                            + ", " + ChatColor.AQUA + loc.getBlockY() + ChatColor.GOLD
+                            + ", " + ChatColor.AQUA + loc.getBlockZ())) {
                         player.performCommand("home " + profileMenu.getTarget().getName() + " " + homeName);
                         shouldBreak = true;
                         break;

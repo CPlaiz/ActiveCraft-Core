@@ -2,6 +2,7 @@ package de.silencio.activecraftcore.messages;
 
 public enum CommandType {
 
+    AFK,
     BANSCREEN,
     BAN,
     UNBAN,

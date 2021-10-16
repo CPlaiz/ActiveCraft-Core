@@ -60,7 +60,7 @@ public class ItemCommand implements CommandExecutor, TabCompleter {
             } else if (args[0].equalsIgnoreCase("give")) {
                 if (sender.hasPermission("activecraft.item.give")) {
                     if (args.length == 2) {
-                        if (Material.getMaterial(args[1]) == null) {
+                        if (Material.getMaterial(args[1].toUpperCase()) == null) {
                             sender.sendMessage(Errors.INVALID_ARGUMENTS());
                             return false;
                         }
@@ -91,46 +91,8 @@ public class ItemCommand implements CommandExecutor, TabCompleter {
                         sender.sendMessage(CommandMessages.ITEM_GIVE_MULTIPLE(itemStack.getType().name().toLowerCase(), num + ""));
                         player.playSound(player.getLocation(), Sound.valueOf("BLOCK_AMETHYST_BLOCK_BREAK"), 1f, 1f);
                     }
-
-                } else if (args[0].equalsIgnoreCase("i") ) {
-
-
-                if (args.length == 1) {
-                    if (Material.getMaterial(args[0]) == null) {
-                        sender.sendMessage(Errors.INVALID_ARGUMENTS());
-                        return false;
-                    }
-                    Material material = Material.getMaterial(args[0].toUpperCase());
-                    ItemStack itemStack = new ItemStack(material);
-                    player.getInventory().addItem(itemStack);
-                    sender.sendMessage(CommandMessages.ITEM_GIVE(itemStack.getType().name().toLowerCase()));
-                    player.playSound(player.getLocation(), Sound.valueOf("BLOCK_AMETHYST_BLOCK_BREAK"), 1f, 1f);
-                }
-                if (args.length == 2) {
-                    if (Material.getMaterial(args[0]) == null) {
-                        sender.sendMessage(Errors.WARNING() + Errors.NOT_HOLDING_ITEM());
-                        return false;
-                    }
-                    Material material = Material.getMaterial(args[1].toUpperCase());
-                    ItemStack itemStack = new ItemStack(material);
-                    Integer num = null;
-                    try {
-                        num = Integer.valueOf(args[1]);
-                    } catch (NumberFormatException ignored) {
-                    }
-                    if (num == null) {
-                        sender.sendMessage(Errors.INVALID_NUMBER());
-                        return false;
-                    }
-                    itemStack.setAmount(Integer.parseInt(args[1]));
-                    player.getInventory().addItem(itemStack);
-                    sender.sendMessage(CommandMessages.ITEM_GIVE_MULTIPLE(itemStack.getType().name().toLowerCase(), num + ""));
-                    player.playSound(player.getLocation(), Sound.valueOf("BLOCK_AMETHYST_BLOCK_BREAK"), 1f, 1f);
-                }
-
-            }
-    } else sender.sendMessage(Errors.NO_PERMISSION());
-    if (args[0].equalsIgnoreCase("name")) {
+                } else sender.sendMessage(Errors.NO_PERMISSION());
+            } else if (args[0].equalsIgnoreCase("name")) {
                 if (player.hasPermission("activecraft.item.name")) {
                     if (args.length > 1) {
                         if (player.getInventory().getItemInMainHand().getType() == Material.AIR) {
@@ -208,22 +170,30 @@ public class ItemCommand implements CommandExecutor, TabCompleter {
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         ArrayList<String> list = new ArrayList<>();
         if (args.length == 0) return list;
-        if (args.length == 1) {
-            list.add("name");
-            list.add("lore");
-            list.add("give");
-        }
-        if (args[0].equalsIgnoreCase("give")) {
-            if (args.length == 2) {
+        if (alias.equalsIgnoreCase("item")) {
+            if (args.length == 1) {
+                list.add("name");
+                list.add("lore");
+                list.add("give");
+            }
+            if (args[0].equalsIgnoreCase("give")) {
+                if (args.length == 2) {
+                    for (Material material : Material.values()) {
+                        list.add(material.name().toLowerCase());
+                    }
+                }
+            } else if (args[0].equalsIgnoreCase("lore")) {
+                if (args.length == 2) {
+                    list.add("set");
+                    list.add("add");
+                    list.add("clear");
+                }
+            }
+        } else if (alias.equalsIgnoreCase("i")) {
+            if (args.length == 1) {
                 for (Material material : Material.values()) {
                     list.add(material.name().toLowerCase());
                 }
-            }
-        } else if (args[0].equalsIgnoreCase("lore")) {
-            if (args.length == 2) {
-                list.add("set");
-                list.add("add");
-                list.add("clear");
             }
         }
 

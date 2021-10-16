@@ -48,7 +48,7 @@ public class SetHomeCommand implements CommandExecutor {
                     }
                     homeList.add(args[0]);
                     homeconfig.set(playerName + ".home_list", homeList);
-                    homeconfig.set(playerName + "." + args[0].toLowerCase(), loc);
+                    homeconfig.set(playerName + "." + args[0], loc);
                     homeconfig.saveConfig();
 
                     sender.sendMessage(CommandMessages.HOME_SET(args[0].toString()));
@@ -92,7 +92,7 @@ public class SetHomeCommand implements CommandExecutor {
                 }
                 homeList.add(args[1]);
                 homeconfig.set(targetName + ".home_list", homeList);
-                homeconfig.set(targetName + "." + args[1].toLowerCase(), loc);
+                homeconfig.set(targetName + "." + args[1], loc);
                 homeconfig.saveConfig();
                 sender.sendMessage(CommandMessages.HOME_OTHERS_SET(target, args[1].toString()));
             } else sender.sendMessage(Errors.NO_PERMISSION());

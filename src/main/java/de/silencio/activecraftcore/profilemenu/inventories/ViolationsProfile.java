@@ -46,48 +46,50 @@ public class ViolationsProfile {
 
     public void renew() {
 
+        profileMenu.getProfile().refresh();
+        profile = profileMenu.getProfile();
+
         guiCreator.setPlayerHead(profileMenu.getPlayerHead());
         guiCreator.setBackItem(new GuiBackItem(21));
         guiCreator.setCloseItem(new GuiCloseItem(22));
         guiCreator.fillBackground(true);
 
         {
-            banStack = new GuiItem(Material.GRASS_BLOCK)
-                    .setDisplayName(ChatColor.GOLD + "Ban " + target.getName());
+            banStack = new GuiItem(Material.CHAIN_COMMAND_BLOCK)
+                    .setDisplayName(ProfileMessages.VIOLATIONS_GUI_BAN(target));
             if (player.hasPermission("activecraft.ban")) {
                 guiCreator.setItemInSlot(banStack, 14);
             } else guiCreator.setItemInSlot(new GuiNoPermissionItem(), 14);
         }
         {
-            warnStack = new GuiItem(Material.GRASS_BLOCK)
-                    .setDisplayName(ChatColor.GOLD + "Warn " + target.getName());
+            warnStack = new GuiItem(Material.REDSTONE_BLOCK)
+                    .setDisplayName(ProfileMessages.VIOLATIONS_GUI_WARN(target));
             if (player.hasPermission("activecraft.warn.add")) {
                 guiCreator.setItemInSlot(warnStack, 11);
             } else guiCreator.setItemInSlot(new GuiNoPermissionItem(), 11);
         }
         if (!profile.isMuted()) {
-            muteStack = new GuiItem(Material.GRASS_BLOCK)
-                    .setDisplayName(ChatColor.GOLD + "Mute " + target.getName())
-                    .setLore(ChatColor.GRAY + target.getName() + " is not muted.");
+            muteStack = new GuiItem(Material.NETHERITE_BLOCK)
+                    .setDisplayName(ProfileMessages.VIOLATIONS_GUI_MUTE(target))
+                    .setLore(ProfileMessages.VIOLATIONS_GUI_MUTE_LORE(target));
         } else {
-            muteStack = new GuiItem(Material.GRASS_BLOCK)
-                    .setDisplayName(ChatColor.GOLD + "Unmute " + target.getName())
-                    .setLore(ChatColor.GRAY + target.getName() + " is muted.");
+            muteStack = new GuiItem(Material.NETHERITE_BLOCK)
+                    .setDisplayName(ProfileMessages.VIOLATIONS_GUI_UNMUTE(target))
+                    .setLore(ProfileMessages.VIOLATIONS_GUI_UNMUTE_LORE(target));
         }
         if (player.hasPermission("activecraft.mute")) {
             guiCreator.setItemInSlot(muteStack, 12);
         } else guiCreator.setItemInSlot(new GuiNoPermissionItem(), 12);
         {
-            ipBanStack = new GuiItem(Material.GRASS_BLOCK)
-                    .setDisplayName(ChatColor.GOLD + "Ban-IP " + ChatColor.AQUA + "(" +
-                            target.getAddress().getAddress().toString().replace("/", "") + ")");
+            ipBanStack = new GuiItem(Material.REPEATING_COMMAND_BLOCK)
+                    .setDisplayName(ProfileMessages.VIOLATIONS_GUI_BAN_IP(target, target.getAddress().getAddress().toString().replace("/", "")));
             if (player.hasPermission("activecraft.ban")) {
                 guiCreator.setItemInSlot(ipBanStack, 15);
             } else guiCreator.setItemInSlot(new GuiNoPermissionItem(), 15);
         }
         {
-            kickStack = new GuiItem(Material.GRASS_BLOCK)
-                    .setDisplayName(ChatColor.GOLD + "Kick " + target.getName());
+            kickStack = new GuiItem(Material.COMMAND_BLOCK)
+                    .setDisplayName(ProfileMessages.VIOLATIONS_GUI_KICK(target));
             if (player.hasPermission("activecraft.kick")) {
                 guiCreator.setItemInSlot(kickStack, 13);
             } else guiCreator.setItemInSlot(new GuiNoPermissionItem(), 13);

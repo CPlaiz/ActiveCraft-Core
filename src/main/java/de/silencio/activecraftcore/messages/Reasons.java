@@ -7,35 +7,31 @@ public class Reasons {
 
     static ActiveCraftMessage acm = Main.getPlugin().getActiveCraftMessage();
 
-    public static String WARNING() {
-        return acm.getMessage(MessageType.REASON, "general-warning");
-    }
-
     public static String HACKING() {
-        return acm.getMessage(MessageType.REASON, "no-permission");
+        return acm.getMessage(MessageType.REASON, "hacking");
     }
 
     public static String BOTTING() {
-        return acm.getMessage(MessageType.REASON, "invalid-player");
+        return acm.getMessage(MessageType.REASON, "botting");
     }
 
     public static String UNAUTHORIZED_ALTERNATE_ACCOUNT() {
-        return acm.getMessage(MessageType.REASON, "invalid-number");
+        return acm.getMessage(MessageType.REASON, "unauthorized-alt-account");
     }
 
     public static String SPAM() {
-        return acm.getMessage(MessageType.REASON, "invalid-arguments");
+        return acm.getMessage(MessageType.REASON, "spam");
     }
 
     public static String ABUSIVE_LANGUAGE() {
-        return acm.getMessage(MessageType.REASON, "too-many-arguments");
+        return acm.getMessage(MessageType.REASON, "abusive-language");
     }
 
     public static String STEALING() {
-        return acm.getMessage(MessageType.REASON, "cannot-target-self");
+        return acm.getMessage(MessageType.REASON, "stealing");
     }
 
     public static String GRIEFING() {
-        return acm.getMessage(MessageType.REASON, "invalid-color");
+        return acm.getMessage(MessageType.REASON, "griefing");
     }
 }

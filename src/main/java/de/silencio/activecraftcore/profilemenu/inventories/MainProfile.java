@@ -180,25 +180,19 @@ public class MainProfile {
             guiCreator.setItemInSlot(violationStack, 42);
 
         // Player Gamemode Switcher
-        if (player.hasPermission("activecraft.punishment.info")) {
             gamemodeSwitcherStack = new GuiItem(Material.GRASS_BLOCK)
                     .setDisplayName(ProfileMessages.MAINPROFILE_GAMEMODE_SWITCHER_GUI());
             guiCreator.setItemInSlot(gamemodeSwitcherStack, 32);
-        } else guiCreator.setItemInSlot(new GuiNoPermissionItem(), 32);
 
         // Player Storage Menu
-        if (player.hasPermission("activecraft.punishment.info")) {
             storageMenuStack = new GuiItem(Material.CHEST)
                     .setDisplayName(ProfileMessages.MAINPROFILE_STORAGE_GUI());
             guiCreator.setItemInSlot(storageMenuStack, 33);
-        } else guiCreator.setItemInSlot(new GuiNoPermissionItem(), 33);
 
         // Player Actions Menu
-        if (player.hasPermission("activecraft.punishment.info")) {
             actionMenuStack = new GuiItem(Material.LEVER)
                     .setDisplayName(ProfileMessages.MAINPROFILE_ACTION_GUI());
             guiCreator.setItemInSlot(actionMenuStack, 34);
-        } else guiCreator.setItemInSlot(new GuiNoPermissionItem(), 34);
     }
 
     public GuiCreator getGuiCreator() {

@@ -6,6 +6,9 @@ public enum MessageType {
     REASON,
     DIALOGUE,
     MISC,
+    PROFILE,
+    TABLEMENU,
+    GUI,
     COMMAND;
 
 }

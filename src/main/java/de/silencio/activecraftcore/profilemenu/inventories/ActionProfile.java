@@ -3,6 +3,7 @@ package de.silencio.activecraftcore.profilemenu.inventories;
 import de.silencio.activecraftcore.gui.*;
 import de.silencio.activecraftcore.manager.BanManager;
 import de.silencio.activecraftcore.manager.WarnManager;
+import de.silencio.activecraftcore.messages.ProfileMessages;
 import de.silencio.activecraftcore.profilemenu.ProfileMenu2;
 import de.silencio.activecraftcore.utils.Profile;
 import org.bukkit.ChatColor;
@@ -54,6 +55,9 @@ public class ActionProfile {
     }
 
     public void renew() {
+        profileMenu.getProfile().refresh();
+        profile = profileMenu.getProfile();
+
         guiCreator.fillBackground(true);
         guiCreator.setCloseItem(new GuiCloseItem(49));
         guiCreator.setBackItem(new GuiBackItem(48));
@@ -62,10 +66,10 @@ public class ActionProfile {
         {
             vanishItem = new GuiItem(Material.GLASS_BOTTLE);
             if (profile.isVanished()) {
-                vanishItem.setDisplayName(ChatColor.GOLD + "Unvanish " + ChatColor.AQUA + target.getName())
-                        .setLore(ChatColor.DARK_AQUA + target.getName() + ChatColor.GRAY + " is currently vanished.");
-            } else vanishItem.setDisplayName(ChatColor.GOLD + "Vanish " + ChatColor.AQUA + target.getName())
-                    .setLore(ChatColor.DARK_AQUA + target.getName() + ChatColor.GRAY + " is not vanished.");
+                vanishItem.setDisplayName(ProfileMessages.ACTION_GUI_VANISH_UNVANISH(target))
+                        .setLore(ProfileMessages.ACTION_GUI_VANISH_UNVANISH_LORE(target));
+            } else vanishItem.setDisplayName(ProfileMessages.ACTION_GUI_VANISH_VANISH(target))
+                    .setLore(ProfileMessages.ACTION_GUI_VANISH_VANISH_LORE(target));
 
             if (player.hasPermission("activecraft.vanish.others")) {
                 guiCreator.setItemInSlot(vanishItem, 28);
@@ -75,10 +79,10 @@ public class ActionProfile {
         {
             godModeItem = new GuiItem(Material.ENCHANTED_GOLDEN_APPLE);
             if (profile.isGodmode()) {
-                godModeItem.setDisplayName(ChatColor.GOLD + "Disable God Mode for " + ChatColor.AQUA + target.getName())
-                        .setLore(ChatColor.DARK_AQUA + target.getName() + ChatColor.GRAY + " is currently in God Mode.");
-            } else godModeItem.setDisplayName(ChatColor.GOLD + "Enable God Mode for " + ChatColor.AQUA + target.getName())
-                        .setLore(ChatColor.DARK_AQUA + target.getName() + ChatColor.GRAY + " is not in God Mode.");
+                godModeItem.setDisplayName(ProfileMessages.ACTION_GUI_GOD_DISABLE(target))
+                        .setLore(ProfileMessages.ACTION_GUI_GOD_DISABLE_LORE(target));
+            } else godModeItem.setDisplayName(ProfileMessages.ACTION_GUI_GOD_ENABLE(target))
+                        .setLore(ProfileMessages.ACTION_GUI_GOD_ENABLE_LORE(target));
 
             if (player.hasPermission("activecraft.god.others")) {
                 guiCreator.setItemInSlot(godModeItem, 10);
@@ -88,10 +92,10 @@ public class ActionProfile {
         {
             flyItem = new GuiItem(Material.FEATHER);
             if (profile.isFly()) {
-                flyItem.setDisplayName(ChatColor.GOLD + "Disable Flight for " + ChatColor.AQUA + target.getName())
-                        .setLore(ChatColor.DARK_AQUA + target.getName() + ChatColor.GRAY + " is currently in flight mode.");
-            } else flyItem.setDisplayName(ChatColor.GOLD + "Enable Flight for " + ChatColor.AQUA + target.getName())
-                    .setLore(ChatColor.DARK_AQUA + target.getName() + ChatColor.GRAY + " is not in flight mode.");
+                flyItem.setDisplayName(ProfileMessages.ACTION_GUI_FLY_DISABLE(target))
+                        .setLore(ProfileMessages.ACTION_GUI_FLY_DISABLE_LORE(target));
+            } else flyItem.setDisplayName(ProfileMessages.ACTION_GUI_FLY_ENABLE(target))
+                    .setLore(ProfileMessages.ACTION_GUI_FLY_ENABLE_LORE(target));
 
             if (player.hasPermission("activecraft.fly.others")) {
                 guiCreator.setItemInSlot(flyItem, 19);
@@ -100,7 +104,7 @@ public class ActionProfile {
 
         {
             clearInvItem = new GuiItem(Material.STRUCTURE_VOID)
-                    .setDisplayName(ChatColor.GOLD + "Clear " + ChatColor.AQUA + target.getName() + "'s " + ChatColor.GOLD + "inventory");
+                    .setDisplayName(ProfileMessages.ACTION_GUI_CLEAR(target));
             if (player.hasPermission("activecraft.clearinv")) {
                 guiCreator.setItemInSlot(clearInvItem, 30);
             } else guiCreator.setItemInSlot(new GuiNoPermissionItem(), 30);
@@ -108,60 +112,60 @@ public class ActionProfile {
 
         {
             tpToPlayerItem = new GuiItem(Material.ENDER_PEARL)
-                    .setDisplayName(ChatColor.GOLD + "Teleport to " + ChatColor.AQUA + target.getName());
+                    .setDisplayName(ProfileMessages.ACTION_GUI_TELEPORT_THERE(target));
             if (player.hasPermission("activecraft.tp")) {
                 guiCreator.setItemInSlot(tpToPlayerItem, 23);
             } else guiCreator.setItemInSlot(new GuiNoPermissionItem(), 23);
         }
         {
             tpherePlayerItem = new GuiItem(Material.ENDER_EYE)
-                    .setDisplayName(ChatColor.GOLD + "Teleport " + ChatColor.AQUA + target.getName() + ChatColor.GOLD + " to you");
+                    .setDisplayName(ProfileMessages.ACTION_GUI_TELEPORT_HERE(target));
             if (player.hasPermission("activecraft.tphere")) {
                 guiCreator.setItemInSlot(tpherePlayerItem, 32);
             } else guiCreator.setItemInSlot(new GuiNoPermissionItem(), 32);
         }
         {
             homeItem = new GuiItem(Material.RED_BED)
-                    .setDisplayName(ChatColor.GOLD + "Teleport to " + ChatColor.AQUA + target.getName() + "'s" + ChatColor.GOLD + " Home");
+                    .setDisplayName(ProfileMessages.ACTION_GUI_HOMES(target));
             if (player.hasPermission("activecraft.home.others")) {
                 guiCreator.setItemInSlot(homeItem, 14);
             } else guiCreator.setItemInSlot(new GuiNoPermissionItem(), 14);
         }
         {
             healItem = new GuiItem(Material.POTION)
-                    .setDisplayName(ChatColor.GOLD + "Heal " + ChatColor.AQUA + target.getName());
+                    .setDisplayName(ProfileMessages.ACTION_GUI_HEAL(target));
             PotionMeta potionMeta = (PotionMeta) healItem.getItemMeta();
             potionMeta.setColor(Color.FUCHSIA);
             potionMeta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
             healItem.setItemMeta(potionMeta);
-            if (player.hasPermission("activecraft.heal")) {
+            if (player.hasPermission("activecraft.heal.others")) {
                 guiCreator.setItemInSlot(healItem, 21);
             } else guiCreator.setItemInSlot(new GuiNoPermissionItem(), 21);
         }
         {
             feedItem = new GuiItem(Material.COOKED_BEEF)
-                    .setDisplayName(ChatColor.GOLD + "Feed " + ChatColor.AQUA + target.getName());
-            if (player.hasPermission("activecraft.feed")) {
+                    .setDisplayName(ProfileMessages.ACTION_GUI_FEED(target));
+            if (player.hasPermission("activecraft.feed.others")) {
                 guiCreator.setItemInSlot(feedItem, 12);
             } else guiCreator.setItemInSlot(new GuiNoPermissionItem(), 12);
         }
         {
             strikeItem = new GuiItem(Material.LIGHTNING_ROD)
-                    .setDisplayName(ChatColor.GOLD + "Strike " + ChatColor.AQUA + target.getName());
-            if (player.hasPermission("activecraft.strike")) {
+                    .setDisplayName(ProfileMessages.ACTION_GUI_STRIKE(target));
+            if (player.hasPermission("activecraft.strike.others")) {
                 guiCreator.setItemInSlot(strikeItem, 16);
             } else guiCreator.setItemInSlot(new GuiNoPermissionItem(), 16);
         }
         {
             explodeItem = new GuiItem(Material.TNT)
-                    .setDisplayName(ChatColor.GOLD + "Blow " + ChatColor.AQUA + target.getName() + ChatColor.GOLD + " up");
-            if (player.hasPermission("activecraft.explode")) {
+                    .setDisplayName(ProfileMessages.ACTION_GUI_EXPLODE(target));
+            if (player.hasPermission("activecraft.explode.others")) {
                 guiCreator.setItemInSlot(explodeItem, 25);
             } else guiCreator.setItemInSlot(new GuiNoPermissionItem(), 25);
         }
         {
             killItem = new GuiItem(Material.SKELETON_SKULL)
-                    .setDisplayName(ChatColor.GOLD + "Kill " + ChatColor.AQUA + target.getName());
+                    .setDisplayName(ProfileMessages.ACTION_GUI_KILL(target));
             if (player.hasPermission("activecraft.kill")) {
                 guiCreator.setItemInSlot(killItem, 34);
             } else guiCreator.setItemInSlot(new GuiNoPermissionItem(), 34);

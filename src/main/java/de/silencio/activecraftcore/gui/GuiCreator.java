@@ -17,6 +17,8 @@ public class GuiCreator {
     private GuiCloseItem closeItem;
     private GuiNoPermissionItem noPermissionItem;
     private boolean backgroundFilled;
+    private GuiItem backgroundItem;
+    private boolean bordered;
     private int rows;
     private GuiItem[] itemInSlot = new GuiItem[55];
     private InventoryHolder holder;
@@ -38,6 +40,7 @@ public class GuiCreator {
         this.rows = rows;
         this.holder = holder;
         this.internalName = internalName;
+        this.backgroundItem = new GuiItem(Material.GRAY_STAINED_GLASS_PANE).setDisplayName(" ");
         inventory = Bukkit.createInventory(holder, 9 * rows, title);
         Main.getPlugin().addToGuiDataMap(this, new GuiData());
     }
@@ -57,6 +60,20 @@ public class GuiCreator {
     public GuiCreator fillBackground(boolean backgroundFilled) {
         this.backgroundFilled = backgroundFilled;
         return this;
+    }
+
+    public GuiCreator fillBackground(boolean backgroundFilled, GuiItem backgroundItem) {
+        this.backgroundFilled = backgroundFilled;
+        this.backgroundItem = backgroundItem;
+        return this;
+    }
+
+    public GuiItem getBackgroundItem() {
+        return backgroundItem;
+    }
+
+    public void setBackgroundItem(GuiItem backgroundItem) {
+        this.backgroundItem = backgroundItem;
     }
 
     public GuiCloseItem getCloseItem() {
@@ -124,7 +141,7 @@ public class GuiCreator {
 
         if (backgroundFilled) {
             for (int i = 0; i < itemInSlot.length; i++) {
-                if (itemInSlot[i] == null) setItemInSlot(new GuiItem(Material.GRAY_STAINED_GLASS_PANE).setDisplayName(""), i);
+                if (itemInSlot[i] == null) setItemInSlot(backgroundItem, i);
             }
         }
 

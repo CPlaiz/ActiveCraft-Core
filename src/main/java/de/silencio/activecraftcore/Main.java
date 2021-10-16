@@ -37,7 +37,6 @@ public final class Main extends JavaPlugin {
     private ActiveCraftMessage activeCraftMessage;
 
     private FileConfig playtimeConfig;
-    private FileConfig locationsConfig;
     private FileConfig config;
     private FileConfig homeconfig;
     private FileConfig warpsConfig;
@@ -138,11 +137,17 @@ public final class Main extends JavaPlugin {
         pluginManager.registerEvents(new DeathListener(), this);
         pluginManager.registerEvents(new LoginListener(), this);
         pluginManager.registerEvents(new TableMenuListener(), this);
+        pluginManager.registerEvents(new BowCommand(), this);
+        pluginManager.registerEvents(new VanillaCommandListener(), this);
 
         //profile menu
         pluginManager.registerEvents(new MainProfileListener(), this);
         pluginManager.registerEvents(new ActionProfileListener(), this);
         pluginManager.registerEvents(new HomeListProfileListener(), this);
+        pluginManager.registerEvents(new GamemodeSwitcherProfileListener(), this);
+        pluginManager.registerEvents(new StorageProfileListener(), this);
+        pluginManager.registerEvents(new ViolationsProfileListener(), this);
+        pluginManager.registerEvents(new ReasonsProfileListener(), this);
 
         //gui
         pluginManager.registerEvents(new GuiListener(), this);

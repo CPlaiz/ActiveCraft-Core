@@ -34,8 +34,8 @@ public class HomeCommand implements CommandExecutor, TabCompleter {
                         sender.sendMessage(Errors.INVALID_ARGUMENTS());
                         return false;
                     }
-                    if (homeconfig.contains(playerName + "." + args[0].toLowerCase())) {
-                        player.teleport(homeconfig.getLocation(playerName + "." + args[0].toLowerCase()));
+                    if (homeconfig.contains(playerName + "." + args[0])) {
+                        player.teleport(homeconfig.getLocation(playerName + "." + args[0]));
                         sender.sendMessage(CommandMessages.TELEPORT_HOME_COMPLETE(args[0].toString()));
                         player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
 
@@ -66,7 +66,7 @@ public class HomeCommand implements CommandExecutor, TabCompleter {
 
                     if (homeconfig.contains(targetName + "." + args[1].toLowerCase())) {
 
-                        player.teleport(homeconfig.getLocation(targetName + "." + args[1].toLowerCase()));
+                        player.teleport(homeconfig.getLocation(targetName + "." + args[1]));
                         sender.sendMessage(CommandMessages.TELEPORT_HOME_OTHERS_COMPLETE(target, args[1].toString()));
                         player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
 

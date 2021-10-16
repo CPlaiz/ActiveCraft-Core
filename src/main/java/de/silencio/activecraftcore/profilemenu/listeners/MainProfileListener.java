@@ -31,6 +31,10 @@ public class MainProfileListener implements Listener {
             Main.getPlugin().getGuiHistoryMap().add(player, gui.getAssociatedGuiCreator().build().getInventory());
             profileMenu.getGamemodeSwitcherProfile().renew();
             player.openInventory(profileMenu.getGamemodeSwitcherProfile().getGuiCreator().build().getInventory());
+        } else if (event.getCurrentItem() == profileMenu.getMainProfile().getStorageMenuStack()) {
+            Main.getPlugin().getGuiHistoryMap().add(player, gui.getAssociatedGuiCreator().build().getInventory());
+            profileMenu.getStorageProfile().renew();
+            player.openInventory(profileMenu.getStorageProfile().getGuiCreator().build().getInventory());
         }
 
     }

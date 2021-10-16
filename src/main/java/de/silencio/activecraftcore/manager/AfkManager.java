@@ -1,12 +1,15 @@
 package de.silencio.activecraftcore.manager;
 
 import de.silencio.activecraftcore.events.PlayerAfkEvent;
+import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.utils.ConfigUtils;
 import de.silencio.activecraftcore.utils.FileConfig;
 import de.silencio.activecraftcore.utils.MessageUtils;
 import de.silencio.activecraftcore.utils.Profile;
+import net.minecraft.server.commands.CommandMe;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
 
 public class AfkManager {
@@ -21,15 +24,15 @@ public class AfkManager {
             if (event.isCancelled()) return;
 
             //set stuff
-            ConfigUtils.setDisplaynameFromConfig(player, profile.getColorNick().name(), profile.getNickname() + ChatColor.GRAY + " " + mainConfig.getString("afk-format"));
+            ConfigUtils.setDisplaynameFromConfig(player, profile.getColorNick().name(), profile.getNickname() + ChatColor.GRAY + " " + CommandMessages.AFK_TAG());
             profile.set(Profile.Value.AFK, event.isAfk());
 
             //send messages
-            player.sendMessage(ChatColor.GOLD + "You are now afk.");
+            player.sendMessage(CommandMessages.NOW_AFK_TARGET());
             if(mainConfig.getBoolean("announce-afk")) {
                 for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
                     if (onlinePlayer != player) {
-                        player.sendMessage(ChatColor.GRAY + "" + MessageUtils.removeColorAndFormat(mainConfig.getString("afk-format-yes").replace("%displayname%", player.getDisplayName())));
+                        onlinePlayer.sendMessage(ChatColor.GRAY + "" + MessageUtils.removeColorAndFormat(CommandMessages.NOW_AFK(player)));
                     }
                 }
             }
@@ -44,11 +47,11 @@ public class AfkManager {
             profile.set(Profile.Value.AFK, event.isAfk());
 
             //send messages
-            player.sendMessage(ChatColor.GOLD + "You are no longer afk.");
+            player.sendMessage(CommandMessages.NOT_AFK_TARGET());
             if (mainConfig.getBoolean("announce-afk")) {
                 for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
                     if (onlinePlayer != player) {
-                        player.sendMessage(ChatColor.GRAY + "" + MessageUtils.removeColorAndFormat(mainConfig.getString("afk-format-no").replace("%displayname%", player.getDisplayName())));
+                        onlinePlayer.sendMessage(ChatColor.GRAY + "" + MessageUtils.removeColorAndFormat(CommandMessages.NOT_AFK(player)));
                     }
                 }
             }

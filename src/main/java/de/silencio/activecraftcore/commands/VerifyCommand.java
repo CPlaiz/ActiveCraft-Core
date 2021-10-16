@@ -25,11 +25,6 @@ public class VerifyCommand implements CommandExecutor {
                 }
                 Player target = Bukkit.getPlayer(args[0]);
 
-                if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
-                    sender.sendMessage(Errors.CANNOT_TARGET_SELF());
-                    return false;
-                }
-
                 FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + target.getName().toLowerCase() + ".yml");
                 boolean defaultmute = playerdataConfig.getBoolean("default-mute");
 

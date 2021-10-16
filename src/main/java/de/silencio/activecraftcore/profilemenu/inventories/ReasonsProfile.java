@@ -29,6 +29,7 @@ public class ReasonsProfile {
     private Inventory reasonsTimeInventory;
     private Inventory reasonsInventory;
 
+    private Confirmable activeConfirmation;
     private Reason activeReason;
     private String violationReason;
     private int banTime;
@@ -49,6 +50,13 @@ public class ReasonsProfile {
     private GuiItem M1Stack;
     private GuiItem permanentStack;
     private GuiItem verificationStack;
+
+    public enum Confirmable {
+        BAN,
+        BAN_IP,
+        WARN,
+        KICK;
+    }
 
     public ReasonsProfile(ProfileMenu2 profileMenu) {
         this.profileMenu = profileMenu;
@@ -147,7 +155,69 @@ public class ReasonsProfile {
             guiCreator.setItemInSlot(verificationStack, 50);
 
         } else {
+            {
+                reasonStack_hacking = new GuiItem(Material.PAPER)
+                        .setDisplayName(ChatColor.GOLD + Reasons.HACKING())
+                        .setLore(ChatColor.GRAY + "Set the reason to " + ChatColor.DARK_AQUA + Reasons.HACKING());
 
+                activeReason = Reason.HACKING;
+
+                guiCreator.setItemInSlot(reasonStack_hacking, 10);
+            }
+            {
+                reasonStack_botting = new GuiItem(Material.PAPER)
+                        .setDisplayName(ChatColor.GOLD + Reasons.BOTTING())
+                        .setLore(ChatColor.GRAY + "Set the reason to " + ChatColor.DARK_AQUA + Reasons.BOTTING());
+
+                activeReason = Reason.BOTTING;
+
+                guiCreator.setItemInSlot(reasonStack_botting, 11);
+            }
+            {
+                reasonStack_abusive_lang = new GuiItem(Material.PAPER)
+                        .setDisplayName(ChatColor.GOLD + Reasons.ABUSIVE_LANGUAGE())
+                        .setLore(ChatColor.GRAY + "Set the reason to " + ChatColor.DARK_AQUA + Reasons.ABUSIVE_LANGUAGE());
+
+                activeReason = Reason.ABUSIVE_LANGUAGE;
+
+                guiCreator.setItemInSlot(reasonStack_abusive_lang, 12);
+            }
+            {
+                reasonStack_spam = new GuiItem(Material.PAPER)
+                        .setDisplayName(ChatColor.GOLD + Reasons.SPAM())
+                        .setLore(ChatColor.GRAY + "Set the reason to " + ChatColor.DARK_AQUA + Reasons.SPAM());
+
+                activeReason = Reason.CHATFILL_SPAM;
+
+                guiCreator.setItemInSlot(reasonStack_spam, 13);
+            }
+            {
+                reasonStack_griefing = new GuiItem(Material.PAPER)
+                        .setDisplayName(ChatColor.GOLD + Reasons.GRIEFING())
+                        .setLore(ChatColor.GRAY + "Set the reason to " + ChatColor.DARK_AQUA + Reasons.GRIEFING());
+
+                activeReason = Reason.GRIEFING_STEALING;
+
+                guiCreator.setItemInSlot(reasonStack_griefing, 14);
+            }
+            {
+                reasonStack_scamming = new GuiItem(Material.PAPER)
+                        .setDisplayName(ChatColor.GOLD + Reasons.STEALING())
+                        .setLore(ChatColor.GRAY + "Set the reason to " + ChatColor.DARK_AQUA + Reasons.STEALING());
+
+                activeReason = Reason.SCAMMING_STEALING;
+
+                guiCreator.setItemInSlot(reasonStack_scamming, 15);
+            }
+            {
+                reasonStack_unauthorized_alt_acc = new GuiItem(Material.PAPER)
+                        .setDisplayName(ChatColor.GOLD + Reasons.UNAUTHORIZED_ALTERNATE_ACCOUNT())
+                        .setLore(ChatColor.GRAY + "Set the reason to " + ChatColor.DARK_AQUA + Reasons.UNAUTHORIZED_ALTERNATE_ACCOUNT());
+
+                activeReason = Reason.UNAUTHORIZED_ALTERNATE_ACCOUNT;
+
+                guiCreator.setItemInSlot(reasonStack_unauthorized_alt_acc, 16);
+            }
             {
                 m15Stack = new GuiItem(Material.CLOCK)
                         .setDisplayName(ChatColor.GOLD + "15 Minutes")
@@ -174,7 +244,7 @@ public class ReasonsProfile {
                         .setDisplayName(ChatColor.GOLD + "1 Day")
                         .setLore(ChatColor.GRAY + "Set the time to " + ChatColor.DARK_AQUA + "1 Day");
 
-                guiCreator.setItemInSlot(d1Stack, 32);
+                guiCreator.setItemInSlot(d1Stack, 31);
             }
             {
                 d7Stack = new GuiItem(Material.CLOCK)
@@ -193,7 +263,7 @@ public class ReasonsProfile {
             {
                 permanentStack = new GuiItem(Material.CLOCK)
                         .setDisplayName(ChatColor.GOLD + "Permanent")
-                        .setLore(ChatColor.GRAY + "Set the time to " + ChatColor.DARK_AQUA + " permanent");
+                        .setLore(ChatColor.GRAY + "Set the time to " + ChatColor.DARK_AQUA + "permanent");
 
                 guiCreator.setItemInSlot(permanentStack, 34);
             }
@@ -210,8 +280,7 @@ public class ReasonsProfile {
         {
             for (int i = 19; i < 26; i++) {
                 guiCreator.setItemInSlot(not_selectedStack, i);
-                guiCreator.setItemInSlot(not_selectedStack, i + 18);
-                guiCreator.setItemInSlot(not_selectedStack, i);
+                if (useTime) guiCreator.setItemInSlot(not_selectedStack, i + 18);
             }
         }
     }
@@ -382,5 +451,21 @@ public class ReasonsProfile {
 
     public void setVerificationStack(GuiItem verificationStack) {
         this.verificationStack = verificationStack;
+    }
+
+    public GuiCreator getGuiCreator() {
+        return guiCreator;
+    }
+
+    public void setGuiCreator(GuiCreator guiCreator) {
+        this.guiCreator = guiCreator;
+    }
+
+    public void setActiveConfirmation(Confirmable activeConfirmation) {
+        this.activeConfirmation = activeConfirmation;
+    }
+
+    public Confirmable getActiveConfirmation() {
+        return activeConfirmation;
     }
 }
