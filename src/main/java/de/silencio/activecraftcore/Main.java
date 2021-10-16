@@ -7,10 +7,8 @@ import de.silencio.activecraftcore.listener.inventory.ProfileListener;
 import de.silencio.activecraftcore.messages.ActiveCraftMessage;
 import de.silencio.activecraftcore.dialogue.DialogueManagerList;
 import de.silencio.activecraftcore.messages.Language;
-import de.silencio.activecraftcore.profilemenu.listeners.ActionProfileListener;
-import de.silencio.activecraftcore.profilemenu.listeners.HomeListProfileListener;
-import de.silencio.activecraftcore.profilemenu.listeners.MainProfileListener;
 import de.silencio.activecraftcore.profilemenu.ProfileMenu2;
+import de.silencio.activecraftcore.profilemenu.listeners.*;
 import de.silencio.activecraftcore.utils.FileConfig;
 import de.silencio.activecraftcore.manager.VanishManager;
 import org.bukkit.Bukkit;
@@ -240,6 +238,8 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginCommand("back").setExecutor(new BackCommand());
         Bukkit.getPluginCommand("tablemenu").setExecutor(new TableMenuCommand());
         Bukkit.getPluginCommand("language").setExecutor(new LanguageCommand());
+        Bukkit.getPluginCommand("bow").setExecutor(new BowCommand());
+        Bukkit.getPluginCommand("sudo").setExecutor(new SudoCommand());
     }
 
     public static Main getPlugin() {

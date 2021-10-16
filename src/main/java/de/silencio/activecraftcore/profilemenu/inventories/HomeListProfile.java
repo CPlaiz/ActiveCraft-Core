@@ -3,6 +3,7 @@ package de.silencio.activecraftcore.profilemenu.inventories;
 import de.silencio.activecraftcore.gui.*;
 import de.silencio.activecraftcore.manager.BanManager;
 import de.silencio.activecraftcore.manager.WarnManager;
+import de.silencio.activecraftcore.messages.ProfileMessages;
 import de.silencio.activecraftcore.profilemenu.ProfileMenu2;
 import de.silencio.activecraftcore.utils.Profile;
 import org.bukkit.ChatColor;
@@ -58,7 +59,7 @@ public class HomeListProfile {
 
             List<String> toBeRemoved = new ArrayList<>();
 
-            GuiCreator guiCreator = new GuiCreator("home_list_profile", 6, "Homes");
+            GuiCreator guiCreator = new GuiCreator("home_list_profile", 6, ProfileMessages.HOMELIST_TITLE());
 
             guiCreator.fillBackground(true);
             guiCreator.setCloseItem(new GuiCloseItem(49));
@@ -95,9 +96,9 @@ public class HomeListProfile {
             pages.add(guiCreator);
         }
 
-        nextArrow = new GuiItem(Material.SPECTRAL_ARROW).setDisplayName(ChatColor.GOLD + "Go to next page");
+        nextArrow = new GuiItem(Material.SPECTRAL_ARROW).setDisplayName(ProfileMessages.HOMELIST_NEXT_PAGE());
 
-        lastArrow = new GuiItem(Material.SPECTRAL_ARROW).setDisplayName(ChatColor.GOLD + "Go to last page");
+        lastArrow = new GuiItem(Material.SPECTRAL_ARROW).setDisplayName(ProfileMessages.HOMELIST_PREVIOUS_PAGE());
 
         if (pages.size() == 2) {
             pages.get(0).setItemInSlot(nextArrow,53);

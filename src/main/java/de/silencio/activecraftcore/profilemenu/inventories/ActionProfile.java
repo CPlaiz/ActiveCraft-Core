@@ -47,7 +47,7 @@ public class ActionProfile {
         nameBanManager = profileMenu.getNameBanManager();
         ipBanManager = profileMenu.getIpBanManager();
         warnManager = profileMenu.getWarnManager();
-        guiCreator = new GuiCreator("action_profile", 6, "Profile");
+        guiCreator = new GuiCreator("action_profile", 6, ProfileMessages.ACTION_GUI_TITLE());
         profile = profileMenu.getProfile();
         renew();
         profileMenu.setActionProfile(this);

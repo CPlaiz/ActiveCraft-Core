@@ -1,6 +1,5 @@
 package de.silencio.activecraftcore.utils;
 
-import de.silencio.activecraftcore.commands.ProfileCommand;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;

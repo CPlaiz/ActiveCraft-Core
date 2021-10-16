@@ -3,6 +3,7 @@ package de.silencio.activecraftcore.profilemenu.inventories;
 import de.silencio.activecraftcore.gui.*;
 import de.silencio.activecraftcore.manager.BanManager;
 import de.silencio.activecraftcore.manager.WarnManager;
+import de.silencio.activecraftcore.messages.ProfileMessages;
 import de.silencio.activecraftcore.profilemenu.ProfileMenu2;
 import de.silencio.activecraftcore.utils.ItemBuilder;
 import de.silencio.activecraftcore.utils.Profile;
@@ -36,7 +37,7 @@ public class GamemodeSwitcherProfile {
         nameBanManager = profileMenu.getNameBanManager();
         ipBanManager = profileMenu.getIpBanManager();
         warnManager = profileMenu.getWarnManager();
-        guiCreator = new GuiCreator("gamemode_switcher_profile", 3, "Gamemode Switcher");
+        guiCreator = new GuiCreator("gamemode_switcher_profile", 3, ProfileMessages.GAMEMODE_SWITCHER_GUI_TITLE());
         profile = profileMenu.getProfile();
         renew();
         profileMenu.setGamemodeSwitcherProfile(this);
@@ -51,15 +52,15 @@ public class GamemodeSwitcherProfile {
 
         {
             creativeStack = new GuiItem(Material.GRASS_BLOCK)
-                    .setDisplayName(ChatColor.GOLD + "Set " + ChatColor.AQUA + target.getName() + "'s " + ChatColor.GOLD + "gamemode to " + ChatColor.AQUA + "Creative");
-            if (player.hasPermission("activecraft.gamemode.creative")) {
+                    .setDisplayName(ProfileMessages.GAMEMODE_SWITCHER_GUI_CREATIVE(target));
+            if (player.hasPermission("activecraft.gamemode.creative.others")) {
                 guiCreator.setItemInSlot(creativeStack, 11);
             } else guiCreator.setItemInSlot(new GuiNoPermissionItem(), 11);
         }
         {
             survivalStack = new GuiItem(Material.IRON_SWORD)
-                    .setDisplayName(ChatColor.GOLD + "Set " + ChatColor.AQUA + target.getName() + "'s " + ChatColor.GOLD + "gamemode to " + ChatColor.AQUA + "Survival");
-            if (player.hasPermission("activecraft.gamemode.survival")) {
+                    .setDisplayName(ProfileMessages.GAMEMODE_SWITCHER_GUI_SURVIVAL(target));
+            if (player.hasPermission("activecraft.gamemode.survival.others")) {
                 guiCreator.setItemInSlot(survivalStack, 12);
             } else guiCreator.setItemInSlot(new GuiNoPermissionItem(), 12);
         }
@@ -68,16 +69,16 @@ public class GamemodeSwitcherProfile {
 
             switch (target.getGameMode()) {
                 case CREATIVE:
-                    currentGamemodeStack.setDisplayName(ChatColor.GOLD + "Current Gamemode: " + ChatColor.AQUA + "Creative");
+                    currentGamemodeStack.setDisplayName(ProfileMessages.GAMEMODE_SWITCHER_GUI_CURRENT_GAMEMODE_CREATIVE());
                     break;
                 case SURVIVAL:
-                    currentGamemodeStack.setDisplayName(ChatColor.GOLD + "Current Gamemode: " + ChatColor.AQUA + "Survival");
+                    currentGamemodeStack.setDisplayName(ProfileMessages.GAMEMODE_SWITCHER_GUI_CURRENT_GAMEMODE_SURVIVAL());
                     break;
                 case SPECTATOR:
-                    currentGamemodeStack.setDisplayName(ChatColor.GOLD + "Current Gamemode: " + ChatColor.AQUA + "Spectator");
+                    currentGamemodeStack.setDisplayName(ProfileMessages.GAMEMODE_SWITCHER_GUI_CURRENT_GAMEMODE_SPECTATOR());
                     break;
                 case ADVENTURE:
-                    currentGamemodeStack.setDisplayName(ChatColor.GOLD + "Current Gamemode: " + ChatColor.AQUA + "Adventure");
+                    currentGamemodeStack.setDisplayName(ProfileMessages.GAMEMODE_SWITCHER_GUI_CURRENT_GAMEMODE_ADVENTURE());
                     break;
             }
 
@@ -85,15 +86,15 @@ public class GamemodeSwitcherProfile {
         }
         {
             spectatorStack = new GuiItem(Material.ENDER_EYE)
-                    .setDisplayName(ChatColor.GOLD + "Set " + ChatColor.AQUA + target.getName() + "'s " + ChatColor.GOLD + "gamemode to " + ChatColor.AQUA + "Spectator");
-            if (player.hasPermission("activecraft.gamemode.spectator")) {
+                    .setDisplayName(ProfileMessages.GAMEMODE_SWITCHER_GUI_SPECTATOR(target));
+            if (player.hasPermission("activecraft.gamemode.spectator.others")) {
                 guiCreator.setItemInSlot(spectatorStack, 15);
             } else guiCreator.setItemInSlot(new GuiNoPermissionItem(), 15);
         }
         {
             adventureStack = new GuiItem(Material.MAP)
-                    .setDisplayName(ChatColor.GOLD + "Set " + ChatColor.AQUA + target.getName() + "'s " + ChatColor.GOLD + "gamemode to " + ChatColor.AQUA + "Adventure");
-            if (player.hasPermission("activecraft.gamemode.adventure")) {
+                    .setDisplayName(ProfileMessages.GAMEMODE_SWITCHER_GUI_ADVENTURE(target));
+            if (player.hasPermission("activecraft.gamemode.adventure.others")) {
                 guiCreator.setItemInSlot(adventureStack, 14);
             } else guiCreator.setItemInSlot(new GuiNoPermissionItem(), 14);
         }

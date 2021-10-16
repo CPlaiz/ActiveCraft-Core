@@ -46,15 +46,15 @@ public class ClearTabCompleteListener implements Listener {
             e.getCommands().remove(s);
         }
 
-        if (!e.getPlayer().hasPermission("bukkit.command.plugins")) {
+        if (!e.getPlayer().hasPermission("activecraft.vanilla.plugins")) {
             e.getCommands().remove("pl");
             e.getCommands().remove("plugins");
         }
-        if (!e.getPlayer().hasPermission("bukkit.command.help")) {
+        if (!e.getPlayer().hasPermission("activecraft.vanilla.help")) {
             e.getCommands().remove("?");
             e.getCommands().remove("help");
         }
-        if (!e.getPlayer().hasPermission("bukkit.command.plugins")) {
+        if (!e.getPlayer().hasPermission("activecraft.vanilla.about")) {
             e.getCommands().remove("icanhasbukkit");
             e.getCommands().remove("about");
         }

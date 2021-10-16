@@ -3,7 +3,8 @@ package de.silencio.activecraftcore.messages;
 public enum Language {
 
     EN("English"),
-    DE("German");
+    DE("German"),
+    SV("Swedish");
 
     private final String name;
     private final String code;

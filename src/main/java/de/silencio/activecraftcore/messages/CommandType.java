@@ -20,6 +20,7 @@ public enum CommandType {
     DELETEHOME,
     EDITSIGN,
     ENCHANT,
+    INVSEE,
     ENDERCHEST,
     FEED,
     FLY,

@@ -3,6 +3,7 @@ package de.silencio.activecraftcore.profilemenu.inventories;
 import de.silencio.activecraftcore.gui.*;
 import de.silencio.activecraftcore.manager.BanManager;
 import de.silencio.activecraftcore.manager.WarnManager;
+import de.silencio.activecraftcore.messages.ProfileMessages;
 import de.silencio.activecraftcore.profilemenu.ProfileMenu2;
 import de.silencio.activecraftcore.utils.ItemBuilder;
 import de.silencio.activecraftcore.utils.Profile;
@@ -37,7 +38,7 @@ public class ViolationsProfile {
         nameBanManager = profileMenu.getNameBanManager();
         ipBanManager = profileMenu.getIpBanManager();
         warnManager = profileMenu.getWarnManager();
-        guiCreator = new GuiCreator("violations_profile", 3, "Violation Manager");
+        guiCreator = new GuiCreator("violations_profile", 3, ProfileMessages.VIOLATIONS_GUI_TITLE());
         profile = profileMenu.getProfile();
         renew();
         profileMenu.setViolationsProfile(this);

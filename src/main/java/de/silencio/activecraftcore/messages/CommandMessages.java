@@ -358,7 +358,7 @@ public class CommandMessages {
     // COLORNICK
     public static String COLORNICK_SELF(String color) {
 
-        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.COLORNICK, "colornick-self")
+        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.COLORNICK, "colornick-complete")
                 .replace("%color%", color + ChatColor.GOLD);
         return msg;
     }
@@ -571,6 +571,15 @@ public class CommandMessages {
     public static String GLINT_FALSE() {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.ENCHANT, "glint-false");
+        return msg;
+    }
+
+    // INVSEE
+    public static String INVSEE(Player target) {
+
+        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.INVSEE, "invsee")
+                .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
+                .replace("%t_displayname%", ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD);
         return msg;
     }
 
@@ -842,7 +851,9 @@ public class CommandMessages {
     // KICK
     public static String DEFAULT_KICK(Player target) {
 
-        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.KICK, "default-kick");
+        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.KICK, "default-kick")
+                .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
+                .replace("%t_displayname%", ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD);
         return msg;
     }
 
@@ -855,13 +866,16 @@ public class CommandMessages {
     public static String CUSTOM_KICK(Player target, String reason) {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.KICK, "custom-kick")
+                .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
+                .replace("%t_displayname%", ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD)
                 .replace("%reason%", ChatColor.AQUA + reason + ChatColor.GOLD);
         return msg;
     }
 
     public static String CUSTOM_KICK_MESSAGE(String reason) {
 
-        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.KICK, "custom-kick-message");
+        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.KICK, "custom-kick-message")
+                .replace("%reason%", ChatColor.AQUA + reason + ChatColor.GOLD);
         return msg;
     }
 
@@ -1783,7 +1797,7 @@ public class CommandMessages {
     // WARN
     public static String DEFAULT_WARN_REASON() {
 
-        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.WARN, "default-warn-reason");
+        String msg = acm.getMessage(MessageType.COMMAND, CommandType.WARN, "default-warn-reason");
         return msg;
     }
 
