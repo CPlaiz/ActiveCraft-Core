@@ -1364,6 +1364,7 @@ sv:
       lockdown-disabled: 'Lockdown läge blev inaktiverat. Spelare kan nu gå med i servern.'
       lockdown-not-enabled: 'Lockdown läge är inte aktiverat.'
       allow-player: 'Tillät %t_displayname% gå med medans det är lockdown.'
+      allow-player-extra: 'Dom kommer inte kunna gå med igen om dom inte har tillåtelsen "activecraft.lockdown.bypass".'
       allow-player-already-enabled: 'Lockdown bypass är redan aktiverat för %t_displayname%.'
       disallow-player: '%t_displayname% kommer inte att kunna gå med under lockdown.'
       disallow-player-extra: 'Om dom har tillstånd "activecraft.lockdown.bypass" kommer att kunna gå med under lockdown när de går med och lämnar servern igen.'
@@ -1396,7 +1397,7 @@ sv:
     ping:
       ping-player: 'Pong! %ping%ms.'
       ping-console: 'Pong!'
-      playerlist:
+    playerlist:
       playerlist-header: 'Uppkopplade spelare:'
     playtime:
       playtime: 'Speltid: %hours% timmar och %minutes% minuter.'
