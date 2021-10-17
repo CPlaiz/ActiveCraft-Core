@@ -19,9 +19,7 @@ public class FileConfig extends YamlConfiguration {
         try {
             load(this.path);
         } catch (InvalidConfigurationException | IOException ex) {
-            if (ex instanceof FileNotFoundException) {
-                Main.getPlugin().getLogger().log(Level.INFO, "File config " + filename + " doesn't exist. Creating a new one.");
-            } else ex.printStackTrace();
+            if (!(ex instanceof FileNotFoundException)) ex.printStackTrace();
         }
     }
 

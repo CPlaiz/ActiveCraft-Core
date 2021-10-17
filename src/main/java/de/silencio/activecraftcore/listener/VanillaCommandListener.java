@@ -11,7 +11,6 @@ public class VanillaCommandListener implements Listener {
     public void onPlayerExecuteCommand(PlayerCommandPreprocessEvent event) {
         
         String message = event.getMessage().replace("/", "");
-        System.out.println(message);
 
         String[] args;
 
@@ -21,8 +20,6 @@ public class VanillaCommandListener implements Listener {
             args = new String[1];
             args[0] = message;
         }
-
-        System.out.println(args[0]);
 
         if (args[0].equalsIgnoreCase("pl")  || args[0].equalsIgnoreCase("plugins") ||
                 args[0].equalsIgnoreCase("bukkit:pl") || args[0].equalsIgnoreCase("bukkit:plugins")) {
