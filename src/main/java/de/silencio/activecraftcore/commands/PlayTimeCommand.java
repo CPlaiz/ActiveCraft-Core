@@ -1,11 +1,10 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.ActiveCraftCore;
 import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.utils.FileConfig;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.World;
+import de.silencio.activecraftcore.utils.Profile;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -33,26 +32,20 @@ public class PlayTimeCommand implements CommandExecutor, TabCompleter {
             } else sender.sendMessage(Errors.NO_PERMISSION());
         } else if (args.length == 1) {
             if (sender.hasPermission("activecraft.playtime.others")) {
-                FileConfig playerList = new FileConfig("playerlist.yml");
-                if (!playerList.getStringList("players").contains(args[0])) {
+                if (!ActiveCraftCore.getPlugin().getPlayerlist().containsKey(args[0].toLowerCase())) {
                     sender.sendMessage(Errors.INVALID_PLAYER());
                     return false;
                 }
-
-                if(sender.getName().toLowerCase().equals(args[0].toLowerCase())) {
+                if (sender.getName().toLowerCase().equals(args[0].toLowerCase())) {
                     if (!sender.hasPermission("activecraft.playtime.self")) {
                         sender.sendMessage(Errors.CANNOT_TARGET_SELF());
                         return false;
                     }
                 }
-
                 FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + args[0].toLowerCase() + ".yml");
-
-                if (playerList.getStringList("players").contains(args[0])) {
-                    int hours = fileConfig.getInt(args[0] + ".hours");
-                    int minutes = fileConfig.getInt(args[0] + ".minutes");
-                    sender.sendMessage(CommandMessages.PLAYTIME_OTHERS(args[0], playerdataConfig.getString("nickname"), hours + "", minutes + ""));
-                }
+                int hours = fileConfig.getInt(args[0] + ".hours");
+                int minutes = fileConfig.getInt(args[0] + ".minutes");
+                sender.sendMessage(CommandMessages.PLAYTIME_OTHERS(args[0], playerdataConfig.getString("nickname"), hours + "", minutes + ""));
             } else sender.sendMessage(Errors.NO_PERMISSION());
         } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
         return true;
@@ -63,14 +56,15 @@ public class PlayTimeCommand implements CommandExecutor, TabCompleter {
         ArrayList<String> list = new ArrayList<>();
         if (args.length == 0) return list;
         if (args.length == 1) {
-            FileConfig playerList = new FileConfig("playerlist.yml");
-            list.addAll(playerList.getStringList("players"));
+            for (String playername : ActiveCraftCore.getPlugin().getPlayerlist().keySet()) {
+                list.add(new Profile(playername).getName());
+            }
         }
         ArrayList<String> completerList = new ArrayList<>();
-        String currentarg = args[args.length-1].toLowerCase();
+        String currentarg = args[args.length - 1].toLowerCase();
         for (String s : list) {
             String s1 = s.toLowerCase();
-            if (s1.startsWith(currentarg)){
+            if (s1.startsWith(currentarg)) {
                 completerList.add(s);
             }
         }

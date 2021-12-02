@@ -4,20 +4,16 @@ import de.silencio.activecraftcore.gui.*;
 import de.silencio.activecraftcore.manager.BanManager;
 import de.silencio.activecraftcore.manager.WarnManager;
 import de.silencio.activecraftcore.messages.Reasons;
-import de.silencio.activecraftcore.profilemenu.ProfileMenu2;
-import de.silencio.activecraftcore.utils.ItemBuilder;
+import de.silencio.activecraftcore.profilemenu.ProfileMenu;
 import de.silencio.activecraftcore.utils.Profile;
-import de.silencio.activecraftcore.utils.ProfileMenu;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 
 public class ReasonsProfile {
 
-    private ProfileMenu2 profileMenu;
+    private ProfileMenu profileMenu;
     private Player player;
     private Player target;
     private Profile profile;
@@ -58,7 +54,7 @@ public class ReasonsProfile {
         KICK;
     }
 
-    public ReasonsProfile(ProfileMenu2 profileMenu) {
+    public ReasonsProfile(ProfileMenu profileMenu) {
         this.profileMenu = profileMenu;
         this.player = profileMenu.getPlayer();
         this.target = profileMenu.getTarget();
@@ -67,8 +63,10 @@ public class ReasonsProfile {
         warnManager = profileMenu.getWarnManager();
         guiCreator = new GuiCreator("reasons_profile", 6, "Choose a reason");
         profile = profileMenu.getProfile();
+        activeReason = Reason.MODERATOR;
     }
     public enum Reason {
+        MODERATOR,
         HACKING,
         BOTTING,
         UNAUTHORIZED_ALTERNATE_ACCOUNT,
@@ -91,16 +89,12 @@ public class ReasonsProfile {
                         .setDisplayName(ChatColor.GOLD + Reasons.HACKING())
                         .setLore(ChatColor.GRAY + "Set the reason to " + ChatColor.DARK_AQUA + Reasons.HACKING());
 
-                activeReason = Reason.HACKING;
-
                 guiCreator.setItemInSlot(reasonStack_hacking, 10);
             }
             {
                 reasonStack_botting = new GuiItem(Material.PAPER)
                         .setDisplayName(ChatColor.GOLD + Reasons.BOTTING())
                         .setLore(ChatColor.GRAY + "Set the reason to " + ChatColor.DARK_AQUA + Reasons.BOTTING());
-
-                activeReason = Reason.BOTTING;
 
                 guiCreator.setItemInSlot(reasonStack_botting, 11);
             }
@@ -109,16 +103,12 @@ public class ReasonsProfile {
                         .setDisplayName(ChatColor.GOLD + Reasons.ABUSIVE_LANGUAGE())
                         .setLore(ChatColor.GRAY + "Set the reason to " + ChatColor.DARK_AQUA + Reasons.ABUSIVE_LANGUAGE());
 
-                activeReason = Reason.ABUSIVE_LANGUAGE;
-
                 guiCreator.setItemInSlot(reasonStack_abusive_lang, 12);
             }
             {
                 reasonStack_spam = new GuiItem(Material.PAPER)
                         .setDisplayName(ChatColor.GOLD + Reasons.SPAM())
                         .setLore(ChatColor.GRAY + "Set the reason to " + ChatColor.DARK_AQUA + Reasons.SPAM());
-
-                activeReason = Reason.CHATFILL_SPAM;
 
                 guiCreator.setItemInSlot(reasonStack_spam, 13);
             }
@@ -127,8 +117,6 @@ public class ReasonsProfile {
                         .setDisplayName(ChatColor.GOLD + Reasons.GRIEFING())
                         .setLore(ChatColor.GRAY + "Set the reason to " + ChatColor.DARK_AQUA + Reasons.GRIEFING());
 
-                activeReason = Reason.GRIEFING_STEALING;
-
                 guiCreator.setItemInSlot(reasonStack_griefing, 14);
             }
             {
@@ -136,16 +124,12 @@ public class ReasonsProfile {
                         .setDisplayName(ChatColor.GOLD + Reasons.STEALING())
                         .setLore(ChatColor.GRAY + "Set the reason to " + ChatColor.DARK_AQUA + Reasons.STEALING());
 
-                activeReason = Reason.SCAMMING_STEALING;
-
                 guiCreator.setItemInSlot(reasonStack_scamming, 15);
             }
             {
                 reasonStack_unauthorized_alt_acc = new GuiItem(Material.PAPER)
                         .setDisplayName(ChatColor.GOLD + Reasons.UNAUTHORIZED_ALTERNATE_ACCOUNT())
                         .setLore(ChatColor.GRAY + "Set the reason to " + ChatColor.DARK_AQUA + Reasons.UNAUTHORIZED_ALTERNATE_ACCOUNT());
-
-                activeReason = Reason.UNAUTHORIZED_ALTERNATE_ACCOUNT;
 
                 guiCreator.setItemInSlot(reasonStack_unauthorized_alt_acc, 16);
             }
@@ -160,16 +144,12 @@ public class ReasonsProfile {
                         .setDisplayName(ChatColor.GOLD + Reasons.HACKING())
                         .setLore(ChatColor.GRAY + "Set the reason to " + ChatColor.DARK_AQUA + Reasons.HACKING());
 
-                activeReason = Reason.HACKING;
-
                 guiCreator.setItemInSlot(reasonStack_hacking, 10);
             }
             {
                 reasonStack_botting = new GuiItem(Material.PAPER)
                         .setDisplayName(ChatColor.GOLD + Reasons.BOTTING())
                         .setLore(ChatColor.GRAY + "Set the reason to " + ChatColor.DARK_AQUA + Reasons.BOTTING());
-
-                activeReason = Reason.BOTTING;
 
                 guiCreator.setItemInSlot(reasonStack_botting, 11);
             }
@@ -178,16 +158,12 @@ public class ReasonsProfile {
                         .setDisplayName(ChatColor.GOLD + Reasons.ABUSIVE_LANGUAGE())
                         .setLore(ChatColor.GRAY + "Set the reason to " + ChatColor.DARK_AQUA + Reasons.ABUSIVE_LANGUAGE());
 
-                activeReason = Reason.ABUSIVE_LANGUAGE;
-
                 guiCreator.setItemInSlot(reasonStack_abusive_lang, 12);
             }
             {
                 reasonStack_spam = new GuiItem(Material.PAPER)
                         .setDisplayName(ChatColor.GOLD + Reasons.SPAM())
                         .setLore(ChatColor.GRAY + "Set the reason to " + ChatColor.DARK_AQUA + Reasons.SPAM());
-
-                activeReason = Reason.CHATFILL_SPAM;
 
                 guiCreator.setItemInSlot(reasonStack_spam, 13);
             }
@@ -196,8 +172,6 @@ public class ReasonsProfile {
                         .setDisplayName(ChatColor.GOLD + Reasons.GRIEFING())
                         .setLore(ChatColor.GRAY + "Set the reason to " + ChatColor.DARK_AQUA + Reasons.GRIEFING());
 
-                activeReason = Reason.GRIEFING_STEALING;
-
                 guiCreator.setItemInSlot(reasonStack_griefing, 14);
             }
             {
@@ -205,16 +179,12 @@ public class ReasonsProfile {
                         .setDisplayName(ChatColor.GOLD + Reasons.STEALING())
                         .setLore(ChatColor.GRAY + "Set the reason to " + ChatColor.DARK_AQUA + Reasons.STEALING());
 
-                activeReason = Reason.SCAMMING_STEALING;
-
                 guiCreator.setItemInSlot(reasonStack_scamming, 15);
             }
             {
                 reasonStack_unauthorized_alt_acc = new GuiItem(Material.PAPER)
                         .setDisplayName(ChatColor.GOLD + Reasons.UNAUTHORIZED_ALTERNATE_ACCOUNT())
                         .setLore(ChatColor.GRAY + "Set the reason to " + ChatColor.DARK_AQUA + Reasons.UNAUTHORIZED_ALTERNATE_ACCOUNT());
-
-                activeReason = Reason.UNAUTHORIZED_ALTERNATE_ACCOUNT;
 
                 guiCreator.setItemInSlot(reasonStack_unauthorized_alt_acc, 16);
             }

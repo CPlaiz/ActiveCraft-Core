@@ -69,12 +69,16 @@ public class EnchantCommand implements CommandExecutor, TabCompleter {
                             args[0].replace("thorns", "Enchantment.THORNS");
                             args[0].replace("unbreaking", "Enchantment.DURABILITY");
 
-                            int maxlevel = Objects.requireNonNull(Enchantment.getByKey(NamespacedKey.minecraft(args[0]))).getMaxLevel();
+                            if (Enchantment.getByKey(NamespacedKey.minecraft(args[0])) == null) {
+                                sender.sendMessage(Errors.WARNING() + ChatColor.GRAY + "Invalid enchantment!");
+                                return false;
+                            }
+                            int maxlevel = Enchantment.getByKey(NamespacedKey.minecraft(args[0])).getMaxLevel();
 
                             ItemStack eitem = player.getInventory().getItemInMainHand();
-                            eitem.addUnsafeEnchantment(Objects.requireNonNull(Objects.requireNonNull(Enchantment.getByKey(NamespacedKey.minecraft(args[0])))), maxlevel);
+                            eitem.addUnsafeEnchantment(Enchantment.getByKey(NamespacedKey.minecraft(args[0])), maxlevel);
 
-                            player.sendMessage(CommandMessages.APPLIED_ENCHANTMENT(args[0].toString(), maxlevel + "").replace("_", " "));
+                            player.sendMessage(CommandMessages.APPLIED_ENCHANTMENT(args[0], maxlevel + "").replace("_", " "));
                             player.playSound(player.getLocation(), Sound.BLOCK_ENCHANTMENT_TABLE_USE, 1f, 1f);
                         }
 
@@ -109,10 +113,10 @@ public class EnchantCommand implements CommandExecutor, TabCompleter {
                                     for (Enchantment enchantment : Enchantment.values()) {
                                         if (player.getInventory().getItemInMainHand().containsEnchantment(enchantment)) {
                                             player.getInventory().getItemInMainHand().removeEnchantment(enchantment);
-                                            player.sendMessage(CommandMessages.CLEARED_ALL_ENCHANTMENTS());
-                                            player.playSound(player.getLocation(), Sound.BLOCK_ENCHANTMENT_TABLE_USE, 1f, 1f);
                                         }
                                     }
+                                    player.sendMessage(CommandMessages.CLEARED_ALL_ENCHANTMENTS());
+                                    player.playSound(player.getLocation(), Sound.BLOCK_ENCHANTMENT_TABLE_USE, 1f, 1f);
                                 } else sender.sendMessage(Errors.WARNING() + CommandMessages.NOT_ENCHANTED());
                             } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
                         }

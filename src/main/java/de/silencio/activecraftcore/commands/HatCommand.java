@@ -38,7 +38,7 @@ public class HatCommand implements CommandExecutor {
                     player.getInventory().setHelmet(handitem);
                     player.getInventory().setItemInMainHand(setEmptyHand);
                     player.sendMessage(CommandMessages.HAT_SUCCESS());
-                } else sender.sendMessage(Errors.WARNING() + Errors.NOT_HOLDING_ITEM());
+                } else sender.sendMessage(Errors.NOT_HOLDING_ITEM());
             } else sender.sendMessage(Errors.NO_PERMISSION());
         } else sender.sendMessage(Errors.NOT_A_PLAYER());
         return true;

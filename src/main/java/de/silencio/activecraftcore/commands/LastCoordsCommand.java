@@ -1,9 +1,10 @@
 package de.silencio.activecraftcore.commands;
 
-import de.silencio.activecraftcore.Main;
+import de.silencio.activecraftcore.ActiveCraftCore;
 import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.utils.FileConfig;
+import de.silencio.activecraftcore.utils.Profile;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -12,7 +13,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
-import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -25,12 +25,7 @@ public class LastCoordsCommand implements CommandExecutor, TabCompleter {
 
         if (args.length == 2) {
 
-            FileConfig playerList = new FileConfig("playerlist.yml");
-            List<String> lowercaseList = new ArrayList<>();
-            for (String s : playerList.getStringList("players")) {
-                lowercaseList.add(s.toLowerCase());
-            }
-            if (lowercaseList.contains(args[0].toLowerCase())) {
+            if (ActiveCraftCore.getPlugin().getPlayerlist().containsKey(args[0].toLowerCase())) {
 
                 if (sender.hasPermission("activecraft.lastcoords")) {
                     FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + args[0].toLowerCase() + ".yml");
@@ -57,12 +52,7 @@ public class LastCoordsCommand implements CommandExecutor, TabCompleter {
             } else sender.sendMessage(Errors.INVALID_PLAYER());
 
         } else if (args.length == 1) {
-            FileConfig playerList = new FileConfig("playerlist.yml");
-            List<String> lowercaseList = new ArrayList<>();
-            for (String s : playerList.getStringList("players")) {
-                lowercaseList.add(s.toLowerCase());
-            }
-            if (lowercaseList.contains(args[0].toLowerCase())) {
+            if (ActiveCraftCore.getPlugin().getPlayerlist().containsKey(args[0].toLowerCase())) {
 
                 if (sender.hasPermission("activecraft.lastcoords")) {
                     FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + args[0].toLowerCase() + ".yml");
@@ -92,8 +82,9 @@ public class LastCoordsCommand implements CommandExecutor, TabCompleter {
         ArrayList<String> list = new ArrayList<>();
         if (args.length == 0) return list;
         if (args.length == 1) {
-            FileConfig playerList = new FileConfig("playerlist.yml");
-            list.addAll(playerList.getStringList("players"));
+            for (String playername : ActiveCraftCore.getPlugin().getPlayerlist().keySet()) {
+                list.add(new Profile(playername).getName());
+            }
         } else if (args.length == 2) {
             for (World world : Bukkit.getWorlds()) {
                 list.add(world.getName());

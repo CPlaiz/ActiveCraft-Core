@@ -1,6 +1,6 @@
 package de.silencio.activecraftcore.commands;
 
-import de.silencio.activecraftcore.Main;
+import de.silencio.activecraftcore.ActiveCraftCore;
 import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import org.bukkit.*;
@@ -279,7 +279,7 @@ public class TpCommand implements CommandExecutor, TabCompleter {
                 int targetblockX = p.getTargetBlock(10).getLocation().getBlockX();
                 list.add(targetblockX + "");
             } else list.add("~");
-            for (Player player : Main.getPlugin().getServer().getOnlinePlayers()) {
+            for (Player player : ActiveCraftCore.getPlugin().getServer().getOnlinePlayers()) {
                 list.add(player.getName());
             }
         }

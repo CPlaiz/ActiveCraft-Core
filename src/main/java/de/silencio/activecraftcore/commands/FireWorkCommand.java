@@ -1,6 +1,6 @@
 package de.silencio.activecraftcore.commands;
 
-import de.silencio.activecraftcore.Main;
+import de.silencio.activecraftcore.ActiveCraftCore;
 import de.silencio.activecraftcore.messages.Errors;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
@@ -116,7 +116,7 @@ public class FireWorkCommand implements CommandExecutor {
                             }
                         }
                     };
-                    runnable.runTaskTimer(Main.getPlugin(), 0, Long.parseLong(args[1]));
+                    runnable.runTaskTimer(ActiveCraftCore.getPlugin(), 0, Long.parseLong(args[1]));
                 }
 
                 if (args.length == 0) {

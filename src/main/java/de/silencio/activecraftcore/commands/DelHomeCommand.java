@@ -32,14 +32,14 @@ public class DelHomeCommand implements CommandExecutor, TabCompleter {
                             return false;
                         }
 
-                        if (homeconfig.contains(playerName + "." + args[0].toLowerCase())) {
+                        if (homeconfig.contains(playerName + "." + args[0])) {
                             List<String> homeList = homeconfig.getStringList(playerName + ".home_list");
                             homeList.remove(args[0]);
                             homeconfig.set(playerName + ".home_list", homeList);
                             homeconfig.set(playerName + "." + args[0].toLowerCase(), null);
                             homeconfig.saveConfig();
-                            sender.sendMessage(CommandMessages.HOME_DELETED(args[0].toString()));
-                        } else sender.sendMessage(Errors.WARNING()  + CommandMessages.NO_HOME(args[0].toString()));
+                            sender.sendMessage(CommandMessages.HOME_DELETED(args[0]));
+                        } else sender.sendMessage(Errors.WARNING() + CommandMessages.NO_HOME(args[0]));
                     } else sender.sendMessage(Errors.NOT_A_PLAYER());
                 }
             } else sender.sendMessage(Errors.NO_PERMISSION());
@@ -64,7 +64,7 @@ public class DelHomeCommand implements CommandExecutor, TabCompleter {
                         return false;
                     }
 
-                    if(homeconfig.contains(targetName + "." + args[1].toLowerCase())) {
+                    if(homeconfig.contains(targetName + "." + args[1])) {
                         List<String> homeList = homeconfig.getStringList(targetName + ".home_list");
                         homeList.remove(args[1]);
                         homeconfig.set(targetName + ".home_list", homeList);

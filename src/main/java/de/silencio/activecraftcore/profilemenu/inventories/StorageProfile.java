@@ -4,11 +4,8 @@ import de.silencio.activecraftcore.gui.*;
 import de.silencio.activecraftcore.manager.BanManager;
 import de.silencio.activecraftcore.manager.WarnManager;
 import de.silencio.activecraftcore.messages.ProfileMessages;
-import de.silencio.activecraftcore.profilemenu.ProfileMenu2;
-import de.silencio.activecraftcore.utils.ItemBuilder;
+import de.silencio.activecraftcore.profilemenu.ProfileMenu;
 import de.silencio.activecraftcore.utils.Profile;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
@@ -27,9 +24,9 @@ public class StorageProfile {
     private GuiItem offInvStack;
     private GuiItem enderchestStack;
 
-    private ProfileMenu2 profileMenu;
+    private ProfileMenu profileMenu;
 
-    public StorageProfile(ProfileMenu2 profileMenu) {
+    public StorageProfile(ProfileMenu profileMenu) {
         this.profileMenu = profileMenu;
         this.player = profileMenu.getPlayer();
         this.target = profileMenu.getTarget();

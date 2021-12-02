@@ -23,7 +23,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-public class ProfileMenu implements Listener {
+public class OldProfileMenu implements Listener {
 
     private Player player;
     private Player target;
@@ -151,7 +151,7 @@ public class ProfileMenu implements Listener {
         GRIEFING_STEALING;
     }
 
-    public ProfileMenu(Player player, Player target) {
+    public OldProfileMenu(Player player, Player target) {
         this.player = player;
         this.target = target;
         nameBanManager = new BanManager(BanList.Type.NAME);

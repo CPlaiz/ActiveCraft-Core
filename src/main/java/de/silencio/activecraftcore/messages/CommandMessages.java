@@ -1,6 +1,6 @@
 package de.silencio.activecraftcore.messages;
 
-import de.silencio.activecraftcore.Main;
+import de.silencio.activecraftcore.ActiveCraftCore;
 import de.silencio.activecraftcore.utils.Profile;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 
 public class CommandMessages {
 
-    static ActiveCraftMessage acm = Main.getPlugin().getActiveCraftMessage();
+    static ActiveCraftMessage acm = ActiveCraftCore.getPlugin().getActiveCraftMessage();
 
     // BANSCREEN
     public static String BAN_TITLE() {
@@ -139,6 +139,15 @@ public class CommandMessages {
         return msg;
     }
 
+    public static String IPBAN_HEADER(String ip) {
+
+            String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.IPBAN, "ipban-header")
+                    .replace("%t_playername%", ChatColor.AQUA + ip + ChatColor.GOLD)
+                    .replace("%t_displayname%", ChatColor.AQUA + ip + ChatColor.GOLD)
+                    .replace("%ip%", ChatColor.AQUA + ip + ChatColor.GOLD);
+        return msg;
+    }
+
     public static String IPBAN_COMPLETED_MESSAGE(Player target, String ip) {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.IPBAN, "ipban-completed-message")
@@ -148,11 +157,29 @@ public class CommandMessages {
         return msg;
     }
 
+    public static String IPBAN_COMPLETED_MESSAGE(String ip) {
+
+        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.IPBAN, "ipban-completed-message")
+                .replace("%t_playername%", ChatColor.AQUA + ip + ChatColor.GOLD)
+                .replace("%t_displayname%", ChatColor.AQUA + ip + ChatColor.GOLD)
+                .replace("%ip%", ChatColor.AQUA + ip + ChatColor.GOLD);
+        return msg;
+    }
+
     public static String IPBAN_CANCELLED_MESSAGE(Player target, String ip) {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.IPBAN, "ipban-cancelled-message")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
                 .replace("%t_displayname%", ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD)
+                .replace("%ip%", ChatColor.AQUA + ip + ChatColor.GOLD);
+        return msg;
+    }
+
+    public static String IPBAN_CANCELLED_MESSAGE(String ip) {
+
+        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.IPBAN, "ipban-cancelled-message")
+                .replace("%t_playername%", ChatColor.AQUA + ip + ChatColor.GOLD)
+                .replace("%t_displayname%", ChatColor.AQUA + ip + ChatColor.GOLD)
                 .replace("%ip%", ChatColor.AQUA + ip + ChatColor.GOLD);
         return msg;
     }
@@ -359,7 +386,7 @@ public class CommandMessages {
     // COLORNICK
     public static String COLORNICK_SELF(String color) {
 
-        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.COLORNICK, "colornick-complete")
+        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.COLORNICK, "colornick-self")
                 .replace("%color%", color + ChatColor.GOLD);
         return msg;
     }
@@ -1273,10 +1300,10 @@ public class CommandMessages {
     }
 
     // REALNAME
-    public static String REALNAME_HEADER(Player players, String nickname) {
+    public static String REALNAME_HEADER(String players, String nickname) {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.REALNAME, "realname-header")
-                .replace("%players%", ChatColor.AQUA + players.getName() + ChatColor.GOLD)
+                .replace("%players%", ChatColor.AQUA + players + ChatColor.GOLD)
                 .replace("%nickname%", ChatColor.AQUA + nickname + ChatColor.GOLD);
         return msg;
     }

@@ -1,18 +1,14 @@
 package de.silencio.activecraftcore.dialogue;
 
-import de.silencio.activecraftcore.Main;
+import de.silencio.activecraftcore.ActiveCraftCore;
 import de.silencio.activecraftcore.events.DialogueAnswerEvent;
 import de.silencio.activecraftcore.events.DialogueCancelEvent;
 import de.silencio.activecraftcore.events.DialogueCompleteEvent;
-import de.silencio.activecraftcore.events.PlayerBanEvent;
-import de.silencio.activecraftcore.listener.DialogueListener;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
-import org.bukkit.util.io.BukkitObjectInputStream;
 
-import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,11 +28,11 @@ public class DialogueManager implements Listener {
     private String tempAnswer;
 
     public DialogueManager(Player player) {
-        if (Main.getPlugin().getDialogueList().contains(player)) {
-            Main.getPlugin().addToDialogueList(player);
+        if (ActiveCraftCore.getPlugin().getDialogueList().contains(player)) {
+            ActiveCraftCore.getPlugin().addToDialogueList(player);
         }
-        dialogueManagerList = Main.getPlugin().getDialogueManagerList();
-        Main.getPlugin().addToDialogueList(player);
+        dialogueManagerList = ActiveCraftCore.getPlugin().getDialogueManagerList();
+        ActiveCraftCore.getPlugin().addToDialogueList(player);
         this.player = player;
         activeStep = 0;
         dialogueActive = false;
@@ -60,7 +56,7 @@ public class DialogueManager implements Listener {
 
                 //send to listener
                 DialogueManager dialogueManager = this;
-                Bukkit.getScheduler().runTask(Main.getPlugin(), new Runnable() {
+                Bukkit.getScheduler().runTask(ActiveCraftCore.getPlugin(), new Runnable() {
                     @Override
                     public void run() {
                         DialogueCancelEvent event = new DialogueCancelEvent(dialogueManager);
@@ -78,7 +74,7 @@ public class DialogueManager implements Listener {
 
             //send to listener
             DialogueManager dialogueManager = this;
-            Bukkit.getScheduler().runTask(Main.getPlugin(), new Runnable() {
+            Bukkit.getScheduler().runTask(ActiveCraftCore.getPlugin(), new Runnable() {
                 @Override
                 public void run() {
                     DialogueAnswerEvent event = new DialogueAnswerEvent(dialogueManager);
@@ -106,7 +102,7 @@ public class DialogueManager implements Listener {
             exit();
             //send to listener
             DialogueManager dialogueManager = this;
-            Bukkit.getScheduler().runTask(Main.getPlugin(), new Runnable() {
+            Bukkit.getScheduler().runTask(ActiveCraftCore.getPlugin(), new Runnable() {
                 @Override
                 public void run() {
                     DialogueCompleteEvent event = new DialogueCompleteEvent(dialogueManager);
@@ -150,7 +146,7 @@ public class DialogueManager implements Listener {
 
     public void exit() {
         dialogueActive = false;
-        Main.getPlugin().removeFromDialogueList(player);
+        ActiveCraftCore.getPlugin().removeFromDialogueList(player);
     }
 
     public void setHeader(String header) {

@@ -1,7 +1,5 @@
 package de.silencio.activecraftcore.manager;
 
-import de.silencio.activecraftcore.Main;
-import de.silencio.activecraftcore.events.PlayerAfkEvent;
 import de.silencio.activecraftcore.events.PlayerWarpEvent;
 import de.silencio.activecraftcore.events.WarpCreateEvent;
 import de.silencio.activecraftcore.events.WarpDeleteEvent;

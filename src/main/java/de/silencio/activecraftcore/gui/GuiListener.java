@@ -1,6 +1,6 @@
 package de.silencio.activecraftcore.gui;
 
-import de.silencio.activecraftcore.Main;
+import de.silencio.activecraftcore.ActiveCraftCore;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -17,7 +17,7 @@ public class GuiListener implements Listener {
     @EventHandler
     public void onInvClose(InventoryCloseEvent event) {
         GuiCreator guiCreator = null;
-        for (GuiCreator guiCreatorFromList : Main.getPlugin().getGuiDataMap().keySet()) {
+        for (GuiCreator guiCreatorFromList : ActiveCraftCore.getPlugin().getGuiDataMap().keySet()) {
             if (guiCreatorFromList.getInventory() == event.getInventory()) {
                 guiCreator = guiCreatorFromList;
             }
@@ -37,10 +37,10 @@ public class GuiListener implements Listener {
         ItemStack itemStack = event.getCurrentItem();
         GuiItem guiItem = null;
         GuiCreator guiCreator = null;
-        for (GuiCreator guiCreatorFromList : Main.getPlugin().getGuiDataMap().keySet()) {
+        for (GuiCreator guiCreatorFromList : ActiveCraftCore.getPlugin().getGuiDataMap().keySet()) {
             if (guiCreatorFromList.getInventory() == event.getClickedInventory()) {
                 guiCreator = guiCreatorFromList;
-                GuiData guiData = Main.getPlugin().getFromGuiDataMap(guiCreatorFromList);
+                GuiData guiData = ActiveCraftCore.getPlugin().getFromGuiDataMap(guiCreatorFromList);
                 guiItem = guiData.getFromCorrespondingGuiItem(itemStack);
             }
         }
@@ -59,9 +59,9 @@ public class GuiListener implements Listener {
                 Bukkit.getPluginManager().callEvent(guiConfirmEvent);
                 if (guiConfirmEvent.isCancelled()) event.setCancelled(true);
 
-                if (Main.getPlugin().getGuiHistoryMap().getGuiStack((Player) event.getView().getPlayer()) != null) {
-                    if (Main.getPlugin().getGuiHistoryMap().getGuiStack((Player) event.getView().getPlayer()).size() >= 1) {
-                        event.getView().getPlayer().openInventory(Main.getPlugin().getGuiHistoryMap().getGuiStack((Player) event.getView().getPlayer()).pop());
+                if (GuiNavigator.getGuiStack((Player) event.getView().getPlayer()) != null) {
+                    if (GuiNavigator.getGuiStack((Player) event.getView().getPlayer()).size() >= 1) {
+                        event.getView().getPlayer().openInventory(GuiNavigator.pop((Player) event.getView().getPlayer()));
                     }
                 }
             } else if (guiItem.getType() == Material.RED_CONCRETE  ) {
@@ -70,9 +70,9 @@ public class GuiListener implements Listener {
                 Bukkit.getPluginManager().callEvent(guiConfirmEvent);
                 if (guiConfirmEvent.isCancelled()) event.setCancelled(true);
 
-                if (Main.getPlugin().getGuiHistoryMap().getGuiStack((Player) event.getView().getPlayer()) != null) {
-                    if (Main.getPlugin().getGuiHistoryMap().getGuiStack((Player) event.getView().getPlayer()).size() >= 1) {
-                        event.getView().getPlayer().openInventory(Main.getPlugin().getGuiHistoryMap().getGuiStack((Player) event.getView().getPlayer()).pop());
+                if (GuiNavigator.getGuiStack((Player) event.getView().getPlayer()) != null) {
+                    if (GuiNavigator.getGuiStack((Player) event.getView().getPlayer()).size() >= 1) {
+                        event.getView().getPlayer().openInventory(GuiNavigator.pop((Player) event.getView().getPlayer()));
                     }
                 }
             }
@@ -90,10 +90,8 @@ public class GuiListener implements Listener {
         if (item instanceof GuiCloseItem) {
             view.close();
         } else if (item instanceof GuiBackItem) {
-            if (Main.getPlugin().getGuiHistoryMap().getGuiStack((Player) view.getPlayer()) != null) {
-                if (Main.getPlugin().getGuiHistoryMap().getGuiStack((Player) view.getPlayer()).size() >= 1) {
-                    view.getPlayer().openInventory(Main.getPlugin().getGuiHistoryMap().getGuiStack((Player) view.getPlayer()).pop());
-                }
+            if (GuiNavigator.getGuiStack((Player) view.getPlayer()) != null && GuiNavigator.getGuiStack((Player) view.getPlayer()).size() >= 1) {
+                view.getPlayer().openInventory(GuiNavigator.pop((Player) view.getPlayer()));
             }
         }
         event.setCancelled(!item.isMovable());

@@ -6,13 +6,13 @@ import java.util.HashMap;
 
 public class ProfileList {
 
-    public HashMap<Player, ProfileMenu> profileList = new HashMap<>();
+    public HashMap<Player, OldProfileMenu> profileList = new HashMap<>();
 
-    public void add(Player player, ProfileMenu profileMenu) {
+    public void add(Player player, OldProfileMenu profileMenu) {
         profileList.put(player, profileMenu);
     }
 
-    public HashMap<Player, ProfileMenu> getProfileList() {
+    public HashMap<Player, OldProfileMenu> getProfileList() {
         return profileList;
     }
 }

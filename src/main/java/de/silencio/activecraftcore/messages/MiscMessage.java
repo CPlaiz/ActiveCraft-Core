@@ -1,11 +1,10 @@
 package de.silencio.activecraftcore.messages;
 
-import de.silencio.activecraftcore.Main;
-import org.bukkit.ChatColor;
+import de.silencio.activecraftcore.ActiveCraftCore;
 
 public class MiscMessage {
 
-    static ActiveCraftMessage acm = Main.getPlugin().getActiveCraftMessage();
+    static ActiveCraftMessage acm = ActiveCraftCore.getPlugin().getActiveCraftMessage();
 
     public static String DEFAULT_MUTE_REMOVE() {
         return acm.getMessage(MessageType.MISC, "default-mute-remove");

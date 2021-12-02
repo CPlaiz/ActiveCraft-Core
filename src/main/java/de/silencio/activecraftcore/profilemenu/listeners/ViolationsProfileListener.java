@@ -1,9 +1,10 @@
 package de.silencio.activecraftcore.profilemenu.listeners;
 
-import de.silencio.activecraftcore.Main;
+import de.silencio.activecraftcore.ActiveCraftCore;
 import de.silencio.activecraftcore.gui.Gui;
 import de.silencio.activecraftcore.gui.GuiClickEvent;
-import de.silencio.activecraftcore.profilemenu.ProfileMenu2;
+import de.silencio.activecraftcore.gui.GuiNavigator;
+import de.silencio.activecraftcore.profilemenu.ProfileMenu;
 import de.silencio.activecraftcore.profilemenu.inventories.ReasonsProfile;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -13,9 +14,9 @@ public class ViolationsProfileListener implements Listener {
 
     @EventHandler
     public void onClick(GuiClickEvent event) {
-        if (!Main.getPlugin().getProfileMenuList().containsKey((Player) event.getView().getPlayer())) return;
+        if (!ActiveCraftCore.getPlugin().getProfileMenuList().containsKey((Player) event.getView().getPlayer())) return;
         Player player = (Player) event.getView().getPlayer();
-        ProfileMenu2 profileMenu = Main.getPlugin().getFromProfileMenuList(player);
+        ProfileMenu profileMenu = ActiveCraftCore.getPlugin().getFromProfileMenuList(player);
         Gui gui = event.getGui();
 
         if (!event.getGui().getAssociatedGuiCreator().getInternalName().equals("violations_profile")) return;
@@ -24,22 +25,22 @@ public class ViolationsProfileListener implements Listener {
             profileMenu.getReasonsProfile().renew(false);
             player.openInventory(profileMenu.getReasonsProfile().getGuiCreator().build().getInventory());
             profileMenu.getReasonsProfile().setActiveConfirmation(ReasonsProfile.Confirmable.WARN);
-            Main.getPlugin().getGuiHistoryMap().add(player, event.getClickedInventory());
+            GuiNavigator.push(player, event.getClickedInventory());
         } else if (event.getCurrentItem() == profileMenu.getViolationsProfile().getBanStack()) {
             profileMenu.getReasonsProfile().renew(true);
             player.openInventory(profileMenu.getReasonsProfile().getGuiCreator().build().getInventory());
             profileMenu.getReasonsProfile().setActiveConfirmation(ReasonsProfile.Confirmable.BAN);
-            Main.getPlugin().getGuiHistoryMap().add(player, event.getClickedInventory());
+            GuiNavigator.push(player, event.getClickedInventory());
         } else if (event.getCurrentItem() == profileMenu.getViolationsProfile().getIpBanStack()) {
             profileMenu.getReasonsProfile().renew(true);
             player.openInventory(profileMenu.getReasonsProfile().getGuiCreator().build().getInventory());
             profileMenu.getReasonsProfile().setActiveConfirmation(ReasonsProfile.Confirmable.BAN_IP);
-            Main.getPlugin().getGuiHistoryMap().add(player, event.getClickedInventory());
+            GuiNavigator.push(player, event.getClickedInventory());
         } else if (event.getCurrentItem() == profileMenu.getViolationsProfile().getKickStack()) {
             profileMenu.getReasonsProfile().renew(false);
             player.openInventory(profileMenu.getReasonsProfile().getGuiCreator().build().getInventory());
             profileMenu.getReasonsProfile().setActiveConfirmation(ReasonsProfile.Confirmable.KICK);
-            Main.getPlugin().getGuiHistoryMap().add(player, event.getClickedInventory());
+            GuiNavigator.push(player, event.getClickedInventory());
         }  else if (event.getCurrentItem() == profileMenu.getViolationsProfile().getMuteStack()) {
             if (profileMenu.getProfile().isMuted()) {
                 player.performCommand("unmute " + profileMenu.getTarget().getName());

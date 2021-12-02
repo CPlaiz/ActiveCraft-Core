@@ -1,6 +1,6 @@
 package de.silencio.activecraftcore.commands;
 
-import de.silencio.activecraftcore.Main;
+import de.silencio.activecraftcore.ActiveCraftCore;
 import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.utils.FileConfig;
 import org.bukkit.Bukkit;
@@ -95,7 +95,7 @@ public class FormatNickCommand implements CommandExecutor, TabCompleter {
         ArrayList<String> list = new ArrayList<>();
         if (args.length == 0) return list;
         if (args.length == 1) {
-            for (Player p : Main.getPlugin().getServer().getOnlinePlayers()) {
+            for (Player p : ActiveCraftCore.getPlugin().getServer().getOnlinePlayers()) {
                 list.add(p.getName());
             }
             for (ChatColor color : ChatColor.values()) {

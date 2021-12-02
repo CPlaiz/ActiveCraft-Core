@@ -1,11 +1,10 @@
 package de.silencio.activecraftcore.messages;
 
-import de.silencio.activecraftcore.Main;
-import org.bukkit.ChatColor;
+import de.silencio.activecraftcore.ActiveCraftCore;
 
 public class Reasons {
 
-    static ActiveCraftMessage acm = Main.getPlugin().getActiveCraftMessage();
+    static ActiveCraftMessage acm = ActiveCraftCore.getPlugin().getActiveCraftMessage();
 
     public static String HACKING() {
         return acm.getMessage(MessageType.REASON, "hacking");
@@ -33,5 +32,9 @@ public class Reasons {
 
     public static String GRIEFING() {
         return acm.getMessage(MessageType.REASON, "griefing");
+    }
+
+    public static String MODERATOR(String action) {
+        return acm.getMessage(MessageType.REASON, "moderator").replace("%action%", action);
     }
 }

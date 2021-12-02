@@ -2,6 +2,10 @@ package de.silencio.activecraftcore.utils;
 
 public class MessageUtils {
 
+    public static String replaceColorAndFormat(String message) {
+        return replaceColor(replaceFormat(message));
+    }
+
     public static String replaceColor(String message) {
         String editedMessage = message.replace("&0", "§0")
                 .replace("&1", "§1")

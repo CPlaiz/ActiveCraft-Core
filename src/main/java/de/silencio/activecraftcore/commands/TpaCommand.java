@@ -1,11 +1,10 @@
 package de.silencio.activecraftcore.commands;
 
-import de.silencio.activecraftcore.Main;
+import de.silencio.activecraftcore.ActiveCraftCore;
 import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import net.md_5.bungee.api.chat.*;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -43,9 +42,9 @@ public class TpaCommand implements CommandExecutor {
                     target.sendMessage(CommandMessages.TPA_REQUEST_FROM(sender));
                     target.spigot().sendMessage(accept, deny);
                     target.sendMessage(" ");
-                    HashMap<Player, Player> tpaList = Main.getPlugin().getTpaList();
+                    HashMap<Player, Player> tpaList = ActiveCraftCore.getPlugin().getTpaList();
                     tpaList.put(target, player);
-                    Main.getPlugin().setTpaList(tpaList);
+                    ActiveCraftCore.getPlugin().setTpaList(tpaList);
 
                 } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
             } else sender.sendMessage(Errors.NO_PERMISSION());

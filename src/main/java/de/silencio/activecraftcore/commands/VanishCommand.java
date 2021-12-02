@@ -1,6 +1,6 @@
 package de.silencio.activecraftcore.commands;
 
-import de.silencio.activecraftcore.Main;
+import de.silencio.activecraftcore.ActiveCraftCore;
 import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.utils.FileConfig;
@@ -19,7 +19,7 @@ public class VanishCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        VanishManager vanishManager = Main.getVanishManager();
+        VanishManager vanishManager = ActiveCraftCore.getVanishManager();
 
         FileConfig fileConfig = new FileConfig("config.yml");
         String joinFormat = fileConfig.getString("join-format");

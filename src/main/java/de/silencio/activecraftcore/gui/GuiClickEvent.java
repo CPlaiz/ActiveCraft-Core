@@ -1,6 +1,6 @@
 package de.silencio.activecraftcore.gui;
 
-import de.silencio.activecraftcore.Main;
+import de.silencio.activecraftcore.ActiveCraftCore;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -54,8 +54,8 @@ public class GuiClickEvent extends Event {
     }
 
     public Gui getGui() {
-        for (int id : Main.getPlugin().getGuiList().keySet()) {
-            Gui gui = Main.getPlugin().getGuiById(id);
+        for (int id : ActiveCraftCore.getPlugin().getGuiList().keySet()) {
+            Gui gui = ActiveCraftCore.getPlugin().getGuiById(id);
             if (clickedInventory == gui.getInventory()) {
                 return gui;
             }

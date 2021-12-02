@@ -1,12 +1,12 @@
 package de.silencio.activecraftcore.messages;
 
-import de.silencio.activecraftcore.Main;
+import de.silencio.activecraftcore.ActiveCraftCore;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 public class ProfileMessages {
 
-    static ActiveCraftMessage acm = Main.getPlugin().getActiveCraftMessage();
+    static ActiveCraftMessage acm = ActiveCraftCore.getPlugin().getActiveCraftMessage();
 
     public static String MAINPROFILE_TITLE() {
 
@@ -53,7 +53,7 @@ public class ProfileMessages {
         return msg;
     }
 
-    public static String MAINPROFILE_PLAYER_HEALTH(double health) {
+    public static String MAINPROFILE_PLAYER_HEALTH(String health) {
 
         String msg = ChatColor.DARK_AQUA + acm.getMessage(MessageType.PROFILE, "mainprofile.player.player-health")
                 .replace("%health%",ChatColor.GRAY + "" + health + ChatColor.DARK_AQUA);
@@ -70,7 +70,7 @@ public class ProfileMessages {
     public static String MAINPROFILE_PLAYER_EXP(float exp) {
 
         String msg = ChatColor.DARK_AQUA + acm.getMessage(MessageType.PROFILE, "mainprofile.player.player-exp")
-                .replace("%exp%", ChatColor.GRAY + "" + exp + ChatColor.DARK_AQUA);
+                .replace("%xp%", ChatColor.GRAY + "" + exp + ChatColor.DARK_AQUA);
         return msg;
     }
 

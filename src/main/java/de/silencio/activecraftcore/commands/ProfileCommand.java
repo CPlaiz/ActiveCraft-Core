@@ -1,8 +1,8 @@
 package de.silencio.activecraftcore.commands;
 
-import de.silencio.activecraftcore.Main;
+import de.silencio.activecraftcore.ActiveCraftCore;
 import de.silencio.activecraftcore.messages.Errors;
-import de.silencio.activecraftcore.profilemenu.ProfileMenu2;
+import de.silencio.activecraftcore.profilemenu.ProfileMenu;
 import de.silencio.activecraftcore.profilemenu.inventories.MainProfile;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
@@ -24,14 +24,12 @@ public class ProfileCommand implements CommandExecutor, Listener {
                         return false;
                     }
                     Player target = Bukkit.getPlayer(args[0]);
-                    ProfileMenu2 profileMenu = new ProfileMenu2(player, target);
-                    Main.getPlugin().addToProfileMenuList(player, profileMenu);
+                    ProfileMenu profileMenu = new ProfileMenu(player, target);
+                    ActiveCraftCore.getPlugin().addToProfileMenuList(player, profileMenu);
                     player.openInventory(new MainProfile(profileMenu).getGuiCreator().build().getInventory());
                 } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
             } else sender.sendMessage(Errors.NO_PERMISSION());
         } else sender.sendMessage(Errors.NOT_A_PLAYER());
         return true;
     }
-
-
 }

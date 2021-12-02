@@ -1,6 +1,6 @@
 package de.silencio.activecraftcore.gui;
 
-import de.silencio.activecraftcore.Main;
+import de.silencio.activecraftcore.ActiveCraftCore;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
@@ -42,7 +42,7 @@ public class GuiCreator {
         this.internalName = internalName;
         this.backgroundItem = new GuiItem(Material.GRAY_STAINED_GLASS_PANE).setDisplayName(" ");
         inventory = Bukkit.createInventory(holder, 9 * rows, title);
-        Main.getPlugin().addToGuiDataMap(this, new GuiData());
+        ActiveCraftCore.getPlugin().addToGuiDataMap(this, new GuiData());
     }
 
     public String getTitle() {
@@ -132,29 +132,32 @@ public class GuiCreator {
         if (rows == 0) rows = 1;
         if (rows >= 6) rows = 6;
 
+        GuiCreateEvent event = new GuiCreateEvent(this, inventory.getHolder(), rows, title, playerHead, backItem, closeItem, backgroundFilled, itemInSlot);
+        Bukkit.getPluginManager().callEvent(event);
+
         //set playerhead
-        if (playerHead != null) setItemInSlot(playerHead, playerHead.getPosition());
+        if (event.getPlayerHead() != null) setItemInSlot(event.getPlayerHead(), event.getPlayerHead().getPosition());
         //set backItem
-        if (backItem != null) setItemInSlot(backItem, backItem.getPosition());
+        if (event.getBackItem() != null) setItemInSlot(event.getBackItem(), event.getBackItem().getPosition());
 
-        if (closeItem != null) setItemInSlot(closeItem, closeItem.getPosition());
+        if (event.getCloseItem() != null) setItemInSlot(event.getCloseItem(), event.getCloseItem().getPosition());
 
-        if (backgroundFilled) {
-            for (int i = 0; i < itemInSlot.length; i++) {
-                if (itemInSlot[i] == null) setItemInSlot(backgroundItem, i);
+        if (event.isBackgroundFilled()) {
+            for (int i = 0; i < event.getItemInSlot().length; i++) {
+                if (event.getItemInSlot()[i] == null) setItemInSlot(backgroundItem, i);
             }
         }
 
-        for (int i = 0; i < itemInSlot.length; i++) {
+        for (int i = 0; i < event.getItemInSlot().length; i++) {
             if (i >= rows*9) break;
-            GuiItem item = itemInSlot[i];
+            GuiItem item = event.getItemInSlot()[i];
             inventory.setItem(i, item);
             if (item != null) {
-                Main.getPlugin().getFromGuiDataMap(this).addToCorrespondingGuiItem(inventory.getItem(i), item);
+                ActiveCraftCore.getPlugin().getFromGuiDataMap(this).addToCorrespondingGuiItem(inventory.getItem(i), item);
             }
         }
 
-        Main.getPlugin().getFromGuiDataMap(this).setGuiList(itemInSlot);
+        ActiveCraftCore.getPlugin().getFromGuiDataMap(this).setGuiList(event.getItemInSlot());
         return new Gui(inventory, this);
     }
 }

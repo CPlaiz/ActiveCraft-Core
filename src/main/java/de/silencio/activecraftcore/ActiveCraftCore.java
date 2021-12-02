@@ -7,7 +7,7 @@ import de.silencio.activecraftcore.listener.inventory.ProfileListener;
 import de.silencio.activecraftcore.messages.ActiveCraftMessage;
 import de.silencio.activecraftcore.dialogue.DialogueManagerList;
 import de.silencio.activecraftcore.messages.Language;
-import de.silencio.activecraftcore.profilemenu.ProfileMenu2;
+import de.silencio.activecraftcore.profilemenu.ProfileMenu;
 import de.silencio.activecraftcore.profilemenu.listeners.*;
 import de.silencio.activecraftcore.utils.FileConfig;
 import de.silencio.activecraftcore.manager.VanishManager;
@@ -21,16 +21,13 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-public final class Main extends JavaPlugin {
+public final class ActiveCraftCore extends JavaPlugin {
 
     public static String PREFIX = "§6[ActiveCraft-Core] ";
-    public static Main instance;
-    private static Main plugin;
+    public static ActiveCraftCore instance;
+    private static ActiveCraftCore plugin;
     private static VanishManager vanishManager;
 
     private Language language;
@@ -41,12 +38,11 @@ public final class Main extends JavaPlugin {
     private FileConfig homeconfig;
     private FileConfig warpsConfig;
 
-    private HashMap<Player, ProfileMenu2> profileMenuList;
+    private HashMap<Player, ProfileMenu> profileMenuList;
 
     private HashMap<Player, Player> tpaList;
 
     private HashMap<GuiCreator, GuiData> guiDataMap;
-    private GuiHistoryMap guiHistoryMap;
     private HashMap<Integer, Gui> guiList;
 
     private HashMap<Player, Location> lastLocMap = new HashMap<>();
@@ -54,7 +50,7 @@ public final class Main extends JavaPlugin {
     private DialogueManagerList dialogueManagerList;
     private List<Player> dialogueList;
 
-    public Main() {
+    public ActiveCraftCore() {
         instance = this;
         plugin = this;
     }
@@ -73,7 +69,6 @@ public final class Main extends JavaPlugin {
         //gui creator stuff
         guiDataMap = new HashMap<>();
         guiList = new HashMap<>();
-        guiHistoryMap = new GuiHistoryMap();
 
         int pluginId = 12627;
         Metrics metrics = new Metrics(this, pluginId);
@@ -125,7 +120,6 @@ public final class Main extends JavaPlugin {
         pluginManager.registerEvents(new ProfileListener(), this);
         pluginManager.registerEvents(new OffInvSeeCommand(), this);
         pluginManager.registerEvents(new MessageListener(), this);
-        pluginManager.registerEvents(new EnderPealCooldown(), this);
         pluginManager.registerEvents(new LogCommand(), this);
         pluginManager.registerEvents(new LockdownListener(), this);
         pluginManager.registerEvents(new LockdownCommand(), this);
@@ -179,7 +173,7 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginCommand("repair").setExecutor(new RepairCommand());
         Bukkit.getPluginCommand("colornick").setExecutor(new ColorNickCommand());
         Bukkit.getPluginCommand("fly").setExecutor(new FlyCommand());
-        Bukkit.getPluginCommand("offinvsee").setExecutor(new OffInvSeeCommand());
+        //Bukkit.getPluginCommand("offinvsee").setExecutor(new OffInvSeeCommand());
         Bukkit.getPluginCommand("nick").setExecutor(new NickCommand());
         Bukkit.getPluginCommand("god").setExecutor(new GodCommand());
         Bukkit.getPluginCommand("enderchest").setExecutor(new EnderchestCommand());
@@ -247,7 +241,7 @@ public final class Main extends JavaPlugin {
         Bukkit.getPluginCommand("sudo").setExecutor(new SudoCommand());
     }
 
-    public static Main getPlugin() {
+    public static ActiveCraftCore getPlugin() {
         return plugin;
     }
 
@@ -366,14 +360,6 @@ public final class Main extends JavaPlugin {
         return this.guiList.get(id);
     }
 
-    public GuiHistoryMap getGuiHistoryMap() {
-        return guiHistoryMap;
-    }
-
-    public void setGuiHistoryMap(GuiHistoryMap guiHistoryMap) {
-        this.guiHistoryMap = guiHistoryMap;
-    }
-
     public List<Player> getDialogueList() {
         return dialogueList;
     }
@@ -406,15 +392,15 @@ public final class Main extends JavaPlugin {
         this.tpaList.remove(player);
     }
 
-    public HashMap<Player, ProfileMenu2> getProfileMenuList() {
+    public HashMap<Player, ProfileMenu> getProfileMenuList() {
         return profileMenuList;
     }
 
-    public void setProfileMenuList(HashMap<Player, ProfileMenu2> profileMenuList) {
+    public void setProfileMenuList(HashMap<Player, ProfileMenu> profileMenuList) {
         this.profileMenuList = profileMenuList;
     }
 
-    public void addToProfileMenuList(Player player, ProfileMenu2 profileMenu) {
+    public void addToProfileMenuList(Player player, ProfileMenu profileMenu) {
         this.profileMenuList.put(player, profileMenu);
     }
 
@@ -422,7 +408,40 @@ public final class Main extends JavaPlugin {
         this.profileMenuList.remove(player);
     }
 
-    public ProfileMenu2 getFromProfileMenuList(Player player) {
+    public ProfileMenu getFromProfileMenuList(Player player) {
         return this.profileMenuList.get(player);
+    }
+
+    public HashMap<String, UUID> getPlayerlist() {
+        FileConfig playerlistConfig = new FileConfig("playerlist.yml");
+        HashMap<String, UUID> playerlist = new HashMap<>();
+        for (String combinedString : playerlistConfig.getStringList("players")) {
+            playerlist.put(combinedString.split(",")[0], UUID.fromString(combinedString.split(",")[1]));
+        }
+        return playerlist;
+    }
+
+    public String getPlayernameByUUID(String uuid) {
+        FileConfig playerlistConfig = new FileConfig("playerlist.yml");
+        for (String combinedString : playerlistConfig.getStringList("players")) {
+            if (combinedString.split(",")[1].equals(uuid)) {
+                return combinedString.split(",")[0];
+            }
+        }
+        return null;
+    }
+
+    public String getPlayernameByUUID(UUID uuid) {
+        return getPlayernameByUUID(uuid.toString());
+    }
+
+    public String getUUIDByPlayername(String playername) {
+        FileConfig playerlistConfig = new FileConfig("playerlist.yml");
+        for (String combinedString : playerlistConfig.getStringList("players")) {
+            if (combinedString.split(",")[0].equals(playername)) {
+                return combinedString.split(",")[1];
+            }
+        }
+        return null;
     }
 }

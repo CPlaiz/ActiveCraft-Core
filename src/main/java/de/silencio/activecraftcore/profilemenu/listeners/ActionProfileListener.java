@@ -1,13 +1,8 @@
 package de.silencio.activecraftcore.profilemenu.listeners;
 
-import de.silencio.activecraftcore.Main;
-import de.silencio.activecraftcore.gui.Gui;
-import de.silencio.activecraftcore.gui.GuiClickEvent;
-import de.silencio.activecraftcore.gui.GuiConfirmEvent;
-import de.silencio.activecraftcore.gui.GuiConfirmation;
-import de.silencio.activecraftcore.profilemenu.ProfileMenu2;
-import de.silencio.activecraftcore.profilemenu.inventories.HomeListProfile;
-import net.kyori.adventure.audience.Audience;
+import de.silencio.activecraftcore.ActiveCraftCore;
+import de.silencio.activecraftcore.gui.*;
+import de.silencio.activecraftcore.profilemenu.ProfileMenu;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -16,9 +11,9 @@ public class ActionProfileListener implements Listener {
 
     @EventHandler
     public void onGuiClick(GuiClickEvent event) {
-        if (!Main.getPlugin().getProfileMenuList().containsKey((Player) event.getView().getPlayer())) return;
+        if (!ActiveCraftCore.getPlugin().getProfileMenuList().containsKey((Player) event.getView().getPlayer())) return;
         Player player = (Player) event.getView().getPlayer();
-        ProfileMenu2 profileMenu = Main.getPlugin().getFromProfileMenuList(player);
+        ProfileMenu profileMenu = ActiveCraftCore.getPlugin().getFromProfileMenuList(player);
         Gui gui = event.getGui();
 
         if (!event.getGui().getAssociatedGuiCreator().getInternalName().equals("action_profile")) return;
@@ -46,24 +41,24 @@ public class ActionProfileListener implements Listener {
             player.performCommand("heal " + profileMenu.getTarget().getName());
         } else if (event.getCurrentItem() == profileMenu.getActionProfile().getClearInvItem()) {
             if (!player.hasPermission("activecraft.clearinv.others")) return;
-            Main.getPlugin().getGuiHistoryMap().add(player, event.getClickedInventory());
+            GuiNavigator.push(player, event.getClickedInventory());
             player.openInventory(new GuiConfirmation("action_profile.clearinv").getGuiCreator().build().getInventory());
         } else if (event.getCurrentItem() == profileMenu.getActionProfile().getHomeItem()) {
             if (!player.hasPermission("activecraft.home.others")) return;
-            Main.getPlugin().getGuiHistoryMap().add(player, event.getClickedInventory());
+            GuiNavigator.push(player, event.getClickedInventory());
             profileMenu.getHomeListProfile().renew();
             player.openInventory(profileMenu.getHomeListProfile().getPage(0).build().getInventory());
         } else if (event.getCurrentItem() == profileMenu.getActionProfile().getTpherePlayerItem()) {
             if (!player.hasPermission("activecraft.tphere")) return;
-            Main.getPlugin().getGuiHistoryMap().add(player, event.getClickedInventory());
+            GuiNavigator.push(player, event.getClickedInventory());
             player.openInventory(new GuiConfirmation("action_profile.tp_here").getGuiCreator().build().getInventory());
         } else if (event.getCurrentItem() == profileMenu.getActionProfile().getTpToPlayerItem()) {
             if (!player.hasPermission("activecraft.tp.self")) return;
-            Main.getPlugin().getGuiHistoryMap().add(player, event.getClickedInventory());
+            GuiNavigator.push(player, event.getClickedInventory());
             player.openInventory(new GuiConfirmation("action_profile.tp_to").getGuiCreator().build().getInventory());
         } else if (event.getCurrentItem() == profileMenu.getActionProfile().getKillItem()) {
             if (!player.hasPermission("activecraft.kill")) return;
-            Main.getPlugin().getGuiHistoryMap().add(player, event.getClickedInventory());
+            GuiNavigator.push(player, event.getClickedInventory());
             player.openInventory(new GuiConfirmation("action_profile.kill").getGuiCreator().build().getInventory());
         } else if (event.getCurrentItem() == profileMenu.getActionProfile().getStrikeItem()) {
             if (!player.hasPermission("activecraft.strike.others")) return;
@@ -76,9 +71,9 @@ public class ActionProfileListener implements Listener {
 
     @EventHandler
     public void onConfirm(GuiConfirmEvent event) {
-        if (!Main.getPlugin().getProfileMenuList().containsKey(event.getPlayer())) return;
+        if (!ActiveCraftCore.getPlugin().getProfileMenuList().containsKey(event.getPlayer())) return;
         Player player = event.getPlayer();
-        ProfileMenu2 profileMenu = Main.getPlugin().getFromProfileMenuList(player);
+        ProfileMenu profileMenu = ActiveCraftCore.getPlugin().getFromProfileMenuList(player);
         Gui gui = event.getGui();
 
         if (!event.getGui().getAssociatedGuiCreator().getInternalName().startsWith("confirmation_action_profile.")) return;

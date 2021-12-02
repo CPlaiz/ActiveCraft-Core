@@ -1,13 +1,12 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.ActiveCraftCore;
 import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.utils.FileConfig;
 import de.silencio.activecraftcore.utils.MessageUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -16,7 +15,6 @@ import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 public class RealNameCommand implements CommandExecutor, TabCompleter {
@@ -31,31 +29,28 @@ public class RealNameCommand implements CommandExecutor, TabCompleter {
             for (String arg : args) {
                 stringBuilder.append(arg + " ");
             }
-            if (sender instanceof Player) {
-                Player player = (Player) sender;
 
-                FileConfig playerlistConfig = new FileConfig("playerlist.yml");
+            if (sender.hasPermission("activecraft.realname")) {
 
-                if (sender.hasPermission("activecraft.realname")) {
-
-                  for (String playername : playerlistConfig.getStringList("players")) {
-                      FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + playername.toLowerCase() + ".yml");
-                      if (stringBuilder.toString().trim().equalsIgnoreCase(MessageUtils.removeColorAndFormat(playerdataConfig.getString("nickname")))) {
-                            associatedPlayerList.add(playername);
-                      }
-                  }
-                  StringBuilder associatedPlayers = new StringBuilder();
-                  boolean isFirst = true;
-                  for (String s : associatedPlayerList) {
-                      if (!isFirst) {
-                          associatedPlayers.append(ChatColor.GOLD + ", " + ChatColor.AQUA);
-                      } else isFirst = false;
-                      associatedPlayers.append(s);
-                  }
-                  sender.sendMessage(CommandMessages.REALNAME_HEADER(Bukkit.getPlayer(associatedPlayers.toString()), stringBuilder.toString().trim()));
-                } else sender.sendMessage(Errors.NO_PERMISSION());
-            } else sender.sendMessage(Errors.NOT_A_PLAYER());
-        } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
+                for (String playername : ActiveCraftCore.getPlugin().getPlayerlist().keySet()) {
+                    FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + playername.toLowerCase() + ".yml");
+                    if (stringBuilder.toString().trim().equalsIgnoreCase(MessageUtils.removeColorAndFormat(playerdataConfig.getString("nickname")))) {
+                        associatedPlayerList.add(playerdataConfig.getString("name"));
+                    }
+                }
+                StringBuilder associatedPlayers = new StringBuilder();
+                boolean isFirst = true;
+                for (String s : associatedPlayerList) {
+                    if (!isFirst) {
+                        associatedPlayers.append(ChatColor.GOLD + ", " + ChatColor.AQUA);
+                    } else isFirst = false;
+                    associatedPlayers.append(s);
+                    System.out.println(associatedPlayerList);
+                    System.out.println(associatedPlayers);
+                }
+                sender.sendMessage(CommandMessages.REALNAME_HEADER(associatedPlayers.toString(), stringBuilder.toString().trim()));
+            } else sender.sendMessage(Errors.NO_PERMISSION());
+        } else sender.sendMessage(Errors.NOT_A_PLAYER());
         return true;
     }
 
@@ -72,10 +67,10 @@ public class RealNameCommand implements CommandExecutor, TabCompleter {
 
 
         ArrayList<String> completerList = new ArrayList<>();
-        String currentarg = args[args.length-1].toLowerCase();
+        String currentarg = args[args.length - 1].toLowerCase();
         for (String s : list) {
             String s1 = s.toLowerCase();
-            if (s1.startsWith(currentarg)){
+            if (s1.startsWith(currentarg)) {
                 completerList.add(s);
             }
         }

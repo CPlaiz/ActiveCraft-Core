@@ -1,11 +1,11 @@
 package de.silencio.activecraftcore.messages;
 
-import de.silencio.activecraftcore.Main;
+import de.silencio.activecraftcore.ActiveCraftCore;
 import org.bukkit.ChatColor;
 
 public class TableMenuMessages {
 
-    static ActiveCraftMessage acm = Main.getPlugin().getActiveCraftMessage();
+    static ActiveCraftMessage acm = ActiveCraftCore.getPlugin().getActiveCraftMessage();
 
     public static String TABLEMENU_TITLE() {
 

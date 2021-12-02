@@ -4,7 +4,7 @@ import de.silencio.activecraftcore.gui.*;
 import de.silencio.activecraftcore.manager.BanManager;
 import de.silencio.activecraftcore.manager.WarnManager;
 import de.silencio.activecraftcore.messages.ProfileMessages;
-import de.silencio.activecraftcore.profilemenu.ProfileMenu2;
+import de.silencio.activecraftcore.profilemenu.ProfileMenu;
 import de.silencio.activecraftcore.utils.IntegerUtils;
 import de.silencio.activecraftcore.utils.ItemBuilder;
 import de.silencio.activecraftcore.utils.Profile;
@@ -14,6 +14,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionEffect;
+
+import java.text.NumberFormat;
+import java.util.Locale;
 
 public class MainProfile {
 
@@ -38,9 +41,9 @@ public class MainProfile {
     private GuiItem playerLocationStack;
     private GuiItem playtimeStack;
 
-    private ProfileMenu2 profileMenu;
+    private ProfileMenu profileMenu;
 
-    public MainProfile(ProfileMenu2 profileMenu) {
+    public MainProfile(ProfileMenu profileMenu) {
         this.profileMenu = profileMenu;
         this.player = profileMenu.getPlayer();
         this.target = profileMenu.getTarget();
@@ -100,33 +103,27 @@ public class MainProfile {
 
         //player Stats
         if (player.hasPermission("activecraft.stats.info")) {
+            NumberFormat formatter = NumberFormat.getInstance();
+            formatter.setMaximumFractionDigits(2);
             gameStats = new GuiItem(Material.GRASS_BLOCK)
                     .setDisplayName(ProfileMessages.MAINPROFILE_PLAYER_TITLE());
             switch (target.getGameMode()) {
-                case CREATIVE:
-                    gameStats.setLore(ProfileMessages.MAINPROFILE_PLAYER_HEALTH(target.getHealth()),
-                            ProfileMessages.MAINPROFILE_PLAYER_FOOD(target.getFoodLevel()),
-                            ProfileMessages.MAINPROFILE_PLAYER_EXP(target.getExp()),
-                            ProfileMessages.MAINPROFILE_GAMEMODE("Creative"));
-                    break;
-                case SURVIVAL:
-                    gameStats.setLore(ProfileMessages.MAINPROFILE_PLAYER_HEALTH(target.getHealth()),
-                            ProfileMessages.MAINPROFILE_PLAYER_FOOD(target.getFoodLevel()),
-                            ProfileMessages.MAINPROFILE_PLAYER_EXP(target.getExp()),
-                            ProfileMessages.MAINPROFILE_GAMEMODE("Survival"));
-                    break;
-                case SPECTATOR:
-                    gameStats.setLore(ProfileMessages.MAINPROFILE_PLAYER_HEALTH(target.getHealth()),
-                            ProfileMessages.MAINPROFILE_PLAYER_FOOD(target.getFoodLevel()),
-                            ProfileMessages.MAINPROFILE_PLAYER_EXP(target.getExp()),
-                            ProfileMessages.MAINPROFILE_GAMEMODE("Spectator"));
-                    break;
-                case ADVENTURE:
-                    gameStats.setLore(ProfileMessages.MAINPROFILE_PLAYER_HEALTH(target.getHealth()),
-                            ProfileMessages.MAINPROFILE_PLAYER_FOOD(target.getFoodLevel()),
-                            ProfileMessages.MAINPROFILE_PLAYER_EXP(target.getExp()),
-                            ProfileMessages.MAINPROFILE_GAMEMODE("Adventure"));
-                    break;
+                case CREATIVE -> gameStats.setLore(ProfileMessages.MAINPROFILE_PLAYER_HEALTH(formatter.format(target.getHealth())),
+                        ProfileMessages.MAINPROFILE_PLAYER_FOOD(target.getFoodLevel()),
+                        ProfileMessages.MAINPROFILE_PLAYER_EXP(target.getLevel()),
+                        ProfileMessages.MAINPROFILE_GAMEMODE("Creative"));
+                case SURVIVAL -> gameStats.setLore(ProfileMessages.MAINPROFILE_PLAYER_HEALTH(formatter.format(target.getHealth())),
+                        ProfileMessages.MAINPROFILE_PLAYER_FOOD(target.getFoodLevel()),
+                        ProfileMessages.MAINPROFILE_PLAYER_EXP(target.getLevel()),
+                        ProfileMessages.MAINPROFILE_GAMEMODE("Survival"));
+                case SPECTATOR -> gameStats.setLore(ProfileMessages.MAINPROFILE_PLAYER_HEALTH(formatter.format(target.getHealth())),
+                        ProfileMessages.MAINPROFILE_PLAYER_FOOD(target.getFoodLevel()),
+                        ProfileMessages.MAINPROFILE_PLAYER_EXP(target.getLevel()),
+                        ProfileMessages.MAINPROFILE_GAMEMODE("Spectator"));
+                case ADVENTURE -> gameStats.setLore(ProfileMessages.MAINPROFILE_PLAYER_HEALTH(formatter.format(target.getHealth())),
+                        ProfileMessages.MAINPROFILE_PLAYER_FOOD(target.getFoodLevel()),
+                        ProfileMessages.MAINPROFILE_PLAYER_EXP(target.getLevel()),
+                        ProfileMessages.MAINPROFILE_GAMEMODE("Adventure"));
             }
             guiCreator.setItemInSlot(gameStats, 12);
         } else guiCreator.setItemInSlot(new GuiNoPermissionItem(), 12);

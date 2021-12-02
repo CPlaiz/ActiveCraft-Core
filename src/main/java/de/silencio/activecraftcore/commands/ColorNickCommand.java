@@ -1,18 +1,16 @@
 package de.silencio.activecraftcore.commands;
 
-import de.silencio.activecraftcore.Main;
+import de.silencio.activecraftcore.ActiveCraftCore;
 import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.utils.FileConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Color;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -141,7 +139,7 @@ public class ColorNickCommand implements CommandExecutor, TabCompleter {
         if (args.length == 0) return list;
         if (args.length == 1) {
             list.add("random");
-            for (Player p : Main.getPlugin().getServer().getOnlinePlayers()) {
+            for (Player p : ActiveCraftCore.getPlugin().getServer().getOnlinePlayers()) {
                 list.add(p.getName());
             }
             for (ChatColor color : ChatColor.values()) {

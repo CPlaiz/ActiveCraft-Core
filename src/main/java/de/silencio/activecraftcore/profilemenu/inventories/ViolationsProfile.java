@@ -4,18 +4,14 @@ import de.silencio.activecraftcore.gui.*;
 import de.silencio.activecraftcore.manager.BanManager;
 import de.silencio.activecraftcore.manager.WarnManager;
 import de.silencio.activecraftcore.messages.ProfileMessages;
-import de.silencio.activecraftcore.profilemenu.ProfileMenu2;
-import de.silencio.activecraftcore.utils.ItemBuilder;
+import de.silencio.activecraftcore.profilemenu.ProfileMenu;
 import de.silencio.activecraftcore.utils.Profile;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 
 public class ViolationsProfile {
 
-    private ProfileMenu2 profileMenu;
+    private ProfileMenu profileMenu;
     private Player player;
     private Player target;
     private Profile profile;
@@ -31,7 +27,7 @@ public class ViolationsProfile {
     private GuiItem muteStack;
     private GuiItem kickStack;
 
-    public ViolationsProfile(ProfileMenu2 profileMenu) {
+    public ViolationsProfile(ProfileMenu profileMenu) {
         this.profileMenu = profileMenu;
         this.player = profileMenu.getPlayer();
         this.target = profileMenu.getTarget();

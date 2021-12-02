@@ -4,13 +4,11 @@ import de.silencio.activecraftcore.gui.*;
 import de.silencio.activecraftcore.manager.BanManager;
 import de.silencio.activecraftcore.manager.WarnManager;
 import de.silencio.activecraftcore.messages.ProfileMessages;
-import de.silencio.activecraftcore.profilemenu.ProfileMenu2;
+import de.silencio.activecraftcore.profilemenu.ProfileMenu;
 import de.silencio.activecraftcore.utils.Profile;
-import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.meta.PotionMeta;
 
@@ -39,9 +37,9 @@ public class ActionProfile {
     private GuiItem killItem;
     private GuiItem explodeItem;
 
-    private ProfileMenu2 profileMenu;
+    private ProfileMenu profileMenu;
 
-    public ActionProfile(ProfileMenu2 profileMenu) {
+    public ActionProfile(ProfileMenu profileMenu) {
         this.profileMenu = profileMenu;
         this.player = profileMenu.getPlayer();
         this.target = profileMenu.getTarget();

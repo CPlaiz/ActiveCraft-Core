@@ -4,14 +4,13 @@ import de.silencio.activecraftcore.gui.*;
 import de.silencio.activecraftcore.manager.BanManager;
 import de.silencio.activecraftcore.manager.WarnManager;
 import de.silencio.activecraftcore.messages.ProfileMessages;
-import de.silencio.activecraftcore.profilemenu.ProfileMenu2;
+import de.silencio.activecraftcore.profilemenu.ProfileMenu;
 import de.silencio.activecraftcore.utils.Profile;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,7 +18,7 @@ import java.util.List;
 
 public class HomeListProfile {
 
-    private ProfileMenu2 profileMenu;
+    private ProfileMenu profileMenu;
     private Player player;
     private Player target;
     private Profile profile;
@@ -34,7 +33,7 @@ public class HomeListProfile {
 
     private List<GuiCreator> pages;
 
-    public HomeListProfile(ProfileMenu2 profileMenu) {
+    public HomeListProfile(ProfileMenu profileMenu) {
         this.profileMenu = profileMenu;
         this.player = profileMenu.getPlayer();
         this.target = profileMenu.getTarget();

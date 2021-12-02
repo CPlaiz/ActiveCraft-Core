@@ -1,12 +1,12 @@
 package de.silencio.activecraftcore.commands;
 
-import de.silencio.activecraftcore.Main;
+import de.silencio.activecraftcore.ActiveCraftCore;
 import de.silencio.activecraftcore.events.DialogueCompleteEvent;
 import de.silencio.activecraftcore.dialogue.DialogueManager;
-import de.silencio.activecraftcore.messages.ActiveCraftMessage;
 import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.manager.BanManager;
+import de.silencio.activecraftcore.messages.Reasons;
 import de.silencio.activecraftcore.utils.FileConfig;
 import de.silencio.activecraftcore.utils.StringUtils;
 import de.silencio.activecraftcore.utils.TimeUtils;
@@ -17,7 +17,6 @@ import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.BanEntry;
 import org.bukkit.BanList;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -39,16 +38,26 @@ public class BanCommand implements CommandExecutor, Listener, TabCompleter {
     private BanManager nameBanManager = new BanManager(BanList.Type.NAME);
     private BanManager ipBanManager = new BanManager(BanList.Type.IP);
     private BanList.Type value;
-    private StringUtils stringUtils = new StringUtils();
+    private String targetIp;
 
     public BanCommand() {
-        Bukkit.getPluginManager().registerEvents(this, Main.getPlugin());
+        Bukkit.getPluginManager().registerEvents(this, ActiveCraftCore.getPlugin());
     }
 
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
         if (sender.hasPermission("activecraft.ban")) {
             if (label.equalsIgnoreCase("ban")) {
+
+                if (args.length < 1) {
+                    sender.sendMessage(Errors.INVALID_ARGUMENTS());
+                    return false;
+                }
+
+                if (args.length == 0) {
+                    sender.sendMessage(Errors.INVALID_ARGUMENTS());
+                    return false;
+                }
 
                 value = BanList.Type.NAME;
 
@@ -59,23 +68,42 @@ public class BanCommand implements CommandExecutor, Listener, TabCompleter {
                 this.target = Bukkit.getPlayer(args[0]);
                 if (!nameBanManager.isBanned(args[0])) {
 
-                    this.commandSender = sender;
+                    if (args.length > 1 && (
+                            args[1].equalsIgnoreCase("-i")
+                            || args[1].equalsIgnoreCase("-instant")
+                            || args[1].equalsIgnoreCase("instant") )) {
+                        nameBanManager.ban(target, Reasons.MODERATOR("Banned"), null, sender.getName());
+                        FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + target.getName().toLowerCase() + ".yml");
+                        playerdataConfig.set("violations.bans", playerdataConfig.getInt("violations.bans") + 1);
+                        playerdataConfig.saveConfig();
+                        Bukkit.getScheduler().runTask(ActiveCraftCore.getPlugin(), new Runnable() {
+                            @Override
+                            public void run() {
+                                target.kickPlayer(Reasons.MODERATOR("Kicked"));
+                            }
+                        });
+                    } else {
 
-                    this.dialogueManager = new DialogueManager((Player) sender);
-                    this.dialogueManager.setHeader(CommandMessages.BAN_HEADER(target));
-                    this.dialogueManager.setCompletedMessage(CommandMessages.BAN_COMPLETED_MESSAGE(target));
-                    this.dialogueManager.setCancelledMessage(CommandMessages.BAN_CANCELLED_MESSAGE(target));
-                    this.dialogueManager.add(CommandMessages.BAN_ENTER_REASON());
-                    this.dialogueManager.add(CommandMessages.BAN_ENTER_TIME());
-                    this.dialogueManager.initialize();
+                        this.commandSender = sender;
 
-                    Date date = new Date();
+                        this.dialogueManager = new DialogueManager((Player) sender);
+                        this.dialogueManager.setHeader(CommandMessages.BAN_HEADER(target));
+                        this.dialogueManager.setCompletedMessage(CommandMessages.BAN_COMPLETED_MESSAGE(target));
+                        this.dialogueManager.setCancelledMessage(CommandMessages.BAN_CANCELLED_MESSAGE(target));
+                        this.dialogueManager.add(CommandMessages.BAN_ENTER_REASON());
+                        this.dialogueManager.add(CommandMessages.BAN_ENTER_TIME());
+                        this.dialogueManager.initialize();
+                    }
                 } else sender.sendMessage(CommandMessages.ALREAEDY_BANNED());
             } else if (label.equalsIgnoreCase("unban")) {
+                if (args.length < 1) {
+                    sender.sendMessage(Errors.INVALID_ARGUMENTS());
+                    return false;
+                }
                 if (nameBanManager.isBanned(args[0])) {
                     nameBanManager.unban(args[0]);
                     sender.sendMessage(CommandMessages.UNBANNED_PLAYER(args[0]));
-                } else sender.sendMessage(CommandMessages.NOT_BANNED());
+                } else sender.sendMessage(Errors.WARNING() + CommandMessages.NOT_BANNED());
             } else if (label.equalsIgnoreCase("banlist")) {
                 if (sender.hasPermission("activecraft.banlist")) {
 
@@ -95,13 +123,18 @@ public class BanCommand implements CommandExecutor, Listener, TabCompleter {
                         }
                         Collections.sort(tempBanListName);
                         Collections.sort(tempBanListIP);
-
+                        boolean isFirst = true;
                         for (String s : tempBanListName) {
                             TextComponent textComponent = new TextComponent();
                             Player target = Bukkit.getPlayer(s);
                             textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, TextComponent.fromLegacyText(CommandMessages.UNBAN_ON_HOVER(s))));
                             textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/unban " + s));
-                            textComponent.setText(s + ", ");
+                            if (!isFirst) {
+                                textComponent.setText(", " + s);
+                            } else {
+                                textComponent.setText(s);
+                                isFirst = false;
+                            }
                             //textComponentList.add(textComponent);
                             componentBuilder.append(textComponent);
                         }
@@ -109,23 +142,33 @@ public class BanCommand implements CommandExecutor, Listener, TabCompleter {
                             TextComponent textComponent = new TextComponent();
                             textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, TextComponent.fromLegacyText(CommandMessages.UNBAN_IP_ON_HOVER(s.toString()))));
                             textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/unban-ip " + s));
-                            FileConfig playerlist = new FileConfig("playerlist.yml");
                             StringBuilder stringBuilder = new StringBuilder();
-                            boolean isFirst = true;
-                            for (String playername : playerlist.getStringList("players")) {
+                            for (String playername : ActiveCraftCore.getPlugin().getPlayerlist().keySet()) {
                                 FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + playername + ".yml");
+                                boolean isFirst1 = true;
                                 if (playerdataConfig.getStringList("known-ips").contains(s)) {
-                                    if (!isFirst) {
-                                        stringBuilder.append(", ");
-                                    } else isFirst = false;
-                                    stringBuilder.append(playerdataConfig.getString("name"));
-
+                                    if (!isFirst1) {
+                                        stringBuilder.append(", ").append(playerdataConfig.getString("name"));
+                                    } else {
+                                        stringBuilder.append(playerdataConfig.getString("name"));
+                                        isFirst1 = false;
+                                    }
                                 }
                             }
                             if (!stringBuilder.toString().equalsIgnoreCase("")) {
-                                textComponent.setText(s + " (" + stringBuilder.toString() + ")" + ", ");
+                                if (!isFirst) {
+                                    textComponent.setText(", " + s + " (" + stringBuilder.toString() + ")");
+                                } else {
+                                    textComponent.setText(s + " (" + stringBuilder.toString() + ")");
+                                    isFirst = false;
+                                }
                             } else {
-                                textComponent.setText(s + ", ");
+                                if (!isFirst) {
+                                    textComponent.setText(", " + s);
+                                } else {
+                                    textComponent.setText(s);
+                                    isFirst = false;
+                                }
                             }
                             //textComponentList.add(textComponent);
                             componentBuilder.append(textComponent);
@@ -137,41 +180,58 @@ public class BanCommand implements CommandExecutor, Listener, TabCompleter {
                 }
             } else if (label.equalsIgnoreCase("ban-ip")) {
 
-
                 value = BanList.Type.IP;
 
-                if (args.length == 0) {
+                if (args.length < 1) {
                     sender.sendMessage(Errors.INVALID_ARGUMENTS());
                     return false;
                 }
 
-                this.target = Bukkit.getPlayer(args[0]);
-                if (target != null) {
-                    if (!ipBanManager.isBanned(args[0])) {
+                if (Bukkit.getPlayer(args[0]) != null) {
+                    this.target = Bukkit.getPlayer(args[0]);
+                    if (!ipBanManager.isBanned(target.getAddress().getAddress().toString().replace("/", ""))) {
 
-                        this.commandSender = sender;
+                        if (args.length > 1 && (
+                                args[1].equalsIgnoreCase("-i")
+                                        || args[1].equalsIgnoreCase("-instant")
+                                        || args[1].equalsIgnoreCase("instant") )) {
+                            ipBanManager.ban(target.getAddress().getAddress().toString().replace("/", ""), Reasons.MODERATOR("Banned"), null, sender.getName());
+                            FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + target.getName().toLowerCase() + ".yml");
+                            playerdataConfig.set("violations.bans", playerdataConfig.getInt("violations.bans") + 1);
+                            playerdataConfig.saveConfig();
+                            Bukkit.getScheduler().runTask(ActiveCraftCore.getPlugin(), new Runnable() {
+                                @Override
+                                public void run() {
+                                    target.kickPlayer(Reasons.MODERATOR("Kicked"));
+                                }
+                            });
+                        } else {
 
-                        this.dialogueManager = new DialogueManager((Player) sender);
-                        this.dialogueManager.setHeader(CommandMessages.IPBAN_HEADER(target, target.getAddress().getAddress().toString().replace("/", "")));
-                        this.dialogueManager.setCompletedMessage(CommandMessages.IPBAN_COMPLETED_MESSAGE(target, target.getAddress().getAddress().toString().replace("/", "")));
-                        this.dialogueManager.setCancelledMessage(CommandMessages.IPBAN_CANCELLED_MESSAGE(target, target.getAddress().getAddress().toString().replace("/", "")));
-                        this.dialogueManager.add(CommandMessages.IPBAN_ENTER_REASON());
-                        this.dialogueManager.add(CommandMessages.IPBAN_ENTER_TIME());
-                        this.dialogueManager.initialize();
+                            this.commandSender = sender;
 
-                        Date date = new Date();
+                            this.targetIp = target.getAddress().getAddress().toString().replace("/", "");
+
+                            this.dialogueManager = new DialogueManager((Player) sender);
+                            this.dialogueManager.setHeader(CommandMessages.IPBAN_HEADER(target, target.getAddress().getAddress().toString().replace("/", "")));
+                            this.dialogueManager.setCompletedMessage(CommandMessages.IPBAN_COMPLETED_MESSAGE(target, target.getAddress().getAddress().toString().replace("/", "")));
+                            this.dialogueManager.setCancelledMessage(CommandMessages.IPBAN_CANCELLED_MESSAGE(target, target.getAddress().getAddress().toString().replace("/", "")));
+                            this.dialogueManager.add(CommandMessages.IPBAN_ENTER_REASON());
+                            this.dialogueManager.add(CommandMessages.IPBAN_ENTER_TIME());
+                            this.dialogueManager.initialize();
+
+                        }
                     } else sender.sendMessage(CommandMessages.IP_ALREADY_BANNED());
-                } else if (stringUtils.isValidInet4Address(args[0])) {
+                } else if (StringUtils.isValidInet4Address(args[0])) {
                     if (!ipBanManager.isBanned(args[0])) {
 
-                        String ip = args[0];
+                         targetIp = args[0];
 
                         this.commandSender = sender;
 
                         this.dialogueManager = new DialogueManager((Player) sender);
-                        this.dialogueManager.setHeader(CommandMessages.IPBAN_HEADER(target, target.getAddress().getAddress().getHostAddress().replace("/", "")));
-                        this.dialogueManager.setCompletedMessage(CommandMessages.IPBAN_COMPLETED_MESSAGE(target, target.getAddress().getAddress().toString().replace("/", "")));
-                        this.dialogueManager.setCancelledMessage(CommandMessages.IPBAN_CANCELLED_MESSAGE(target, target.getAddress().getAddress().toString().replace("/", "")));
+                        this.dialogueManager.setHeader(CommandMessages.IPBAN_HEADER(targetIp));
+                        this.dialogueManager.setCompletedMessage(CommandMessages.IPBAN_COMPLETED_MESSAGE(targetIp));
+                        this.dialogueManager.setCancelledMessage(CommandMessages.IPBAN_CANCELLED_MESSAGE(targetIp));
                         this.dialogueManager.add(CommandMessages.IPBAN_ENTER_REASON());
                         this.dialogueManager.add(CommandMessages.IPBAN_ENTER_TIME());
                         this.dialogueManager.initialize();
@@ -180,6 +240,10 @@ public class BanCommand implements CommandExecutor, Listener, TabCompleter {
                     } else sender.sendMessage(CommandMessages.IP_ALREADY_BANNED());
                 } else sender.sendMessage(Errors.WARNING() + CommandMessages.INVALID_IP());
             } else if (label.equalsIgnoreCase("unban-ip")) {
+                if (args.length < 1) {
+                    sender.sendMessage(Errors.INVALID_ARGUMENTS());
+                    return false;
+                }
                 boolean valid = false;
                 for (BanEntry banEntry : ipBanManager.getBans()) {
                     if (banEntry.getTarget().equals(args[0])) {
@@ -204,23 +268,25 @@ public class BanCommand implements CommandExecutor, Listener, TabCompleter {
                 FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + target.getName().toLowerCase() + ".yml");
                 playerdataConfig.set("violations.bans", playerdataConfig.getInt("violations.bans") + 1);
                 playerdataConfig.saveConfig();
-                Bukkit.getScheduler().runTask(Main.getPlugin(), new Runnable() {
+                Bukkit.getScheduler().runTask(ActiveCraftCore.getPlugin(), new Runnable() {
                     @Override
                     public void run() {
                         target.kickPlayer(dialogueManager.getAnswer(0));
                     }
                 });
             } else if (value == BanList.Type.IP) {
-                ipBanManager.ban(target.getAddress().getAddress().toString().replace("/", ""), this.dialogueManager.getAnswer(0), TimeUtils.addFromStringToDate(this.dialogueManager.getAnswer(1)), commandSender.getName());
-                FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + target.getName().toLowerCase() + ".yml");
-                playerdataConfig.set("violations.ip-bans", playerdataConfig.getInt("violations.ip-bans") + 1);
-                playerdataConfig.saveConfig();
-                Bukkit.getScheduler().runTask(Main.getPlugin(), new Runnable() {
-                    @Override
-                    public void run() {
-                        target.kickPlayer(event.getDialogueManager().getAnswer(0));
-                    }
-                });
+                ipBanManager.ban(targetIp, this.dialogueManager.getAnswer(0), TimeUtils.addFromStringToDate(this.dialogueManager.getAnswer(1)), commandSender.getName());
+                if (!StringUtils.isValidInet4Address(targetIp)) {
+                    FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + target.getName().toLowerCase() + ".yml");
+                    playerdataConfig.set("violations.ip-bans", playerdataConfig.getInt("violations.ip-bans") + 1);
+                    playerdataConfig.saveConfig();
+                    Bukkit.getScheduler().runTask(ActiveCraftCore.getPlugin(), new Runnable() {
+                        @Override
+                        public void run() {
+                            target.kickPlayer(event.getDialogueManager().getAnswer(0));
+                        }
+                    });
+                }
             }
         }
     }

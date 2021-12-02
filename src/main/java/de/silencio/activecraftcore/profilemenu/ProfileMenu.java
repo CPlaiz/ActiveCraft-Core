@@ -9,7 +9,7 @@ import org.bukkit.BanList;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
-public class ProfileMenu2 {
+public class ProfileMenu {
 
     private Player player;
     private Player target;
@@ -26,7 +26,7 @@ public class ProfileMenu2 {
     private HomeListProfile homeListProfile;
     private StorageProfile storageProfile;
 
-    public ProfileMenu2(Player player, Player target) {
+    public ProfileMenu(Player player, Player target) {
         this.player = player;
         this.target = target;
         profile = new Profile(target);

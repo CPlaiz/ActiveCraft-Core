@@ -1,6 +1,6 @@
 package de.silencio.activecraftcore.listener;
 
-import de.silencio.activecraftcore.Main;
+import de.silencio.activecraftcore.ActiveCraftCore;
 import de.silencio.activecraftcore.dialogue.DialogueManager;
 import de.silencio.activecraftcore.utils.FileConfig;
 import de.silencio.activecraftcore.utils.MessageUtils;
@@ -23,7 +23,7 @@ public class MessageListener implements Listener {
         message = MessageUtils.replaceFormat(message);
         Player player = event.getPlayer();
 
-        if (!Main.getPlugin().getDialogueList().contains(player)) {
+        if (!ActiveCraftCore.getPlugin().getDialogueList().contains(player)) {
 
             FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + player.getName().toLowerCase() + ".yml");
 
@@ -52,7 +52,7 @@ public class MessageListener implements Listener {
             }
         } else {
 
-            DialogueManager dialogueManager = Main.getPlugin().getDialogueManagerList().getDialogueManager(player);
+            DialogueManager dialogueManager = ActiveCraftCore.getPlugin().getDialogueManagerList().getDialogueManager(player);
             dialogueManager.answer(event.getMessage());
             event.setCancelled(true);
         }

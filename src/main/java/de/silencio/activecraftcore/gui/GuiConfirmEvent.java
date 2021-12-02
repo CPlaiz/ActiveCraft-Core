@@ -1,18 +1,11 @@
 package de.silencio.activecraftcore.gui;
 
-import de.silencio.activecraftcore.Main;
-import org.bukkit.entity.HumanEntity;
+import de.silencio.activecraftcore.ActiveCraftCore;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
-import org.bukkit.event.inventory.ClickType;
-import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.InventoryView;
-
-import java.util.List;
 
 public class GuiConfirmEvent extends Event {
 
@@ -41,8 +34,8 @@ public class GuiConfirmEvent extends Event {
     }
 
     public Gui getGui() {
-        for (int id : Main.getPlugin().getGuiList().keySet()) {
-            Gui gui = Main.getPlugin().getGuiById(id);
+        for (int id : ActiveCraftCore.getPlugin().getGuiList().keySet()) {
+            Gui gui = ActiveCraftCore.getPlugin().getGuiById(id);
             if (clickedInventory == gui.getInventory()) {
                 return gui;
             }

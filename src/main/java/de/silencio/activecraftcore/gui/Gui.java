@@ -1,6 +1,6 @@
 package de.silencio.activecraftcore.gui;
 
-import de.silencio.activecraftcore.Main;
+import de.silencio.activecraftcore.ActiveCraftCore;
 import org.bukkit.inventory.Inventory;
 
 import java.util.Random;
@@ -17,10 +17,10 @@ public class Gui {
         this.associatedGuiCreator = guiCreator;
         int randInt = newRandom(10000);
         while (true) {
-            if (Main.getPlugin().getGuiList().containsKey(randInt)) {
+            if (ActiveCraftCore.getPlugin().getGuiList().containsKey(randInt)) {
                 randInt = newRandom(10000);
             } else {
-                Main.getPlugin().getGuiList().put(randInt, this);
+                ActiveCraftCore.getPlugin().getGuiList().put(randInt, this);
                 break;
             }
         }
@@ -60,6 +60,10 @@ public class Gui {
         update();
     }
 
+    public Gui rebuild() {
+        return getAssociatedGuiCreator().build();
+    }
+
     public Inventory getInventory() {
         return inventory;
     }
@@ -70,7 +74,7 @@ public class Gui {
     }
 
     public void update() {
-        Main.getPlugin().getGuiList().put(id, this);
+        ActiveCraftCore.getPlugin().getGuiList().put(id, this);
     }
 
 }

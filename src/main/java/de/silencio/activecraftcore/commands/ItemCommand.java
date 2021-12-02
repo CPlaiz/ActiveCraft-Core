@@ -23,6 +23,11 @@ public class ItemCommand implements CommandExecutor, TabCompleter {
         if (sender instanceof Player) {
             Player player = (Player) sender;
 
+            if (args.length < 1) {
+                sender.sendMessage(Errors.INVALID_ARGUMENTS());
+                return false;
+            }
+
             if (label.equalsIgnoreCase("i")) {
 
                 if (args.length == 1) {
@@ -38,10 +43,10 @@ public class ItemCommand implements CommandExecutor, TabCompleter {
                 }
                 if (args.length == 2) {
                     if (Material.getMaterial(args[0].toUpperCase()) == null) {
-                        sender.sendMessage(Errors.WARNING() + Errors.NOT_HOLDING_ITEM());
+                        sender.sendMessage(Errors.NOT_HOLDING_ITEM());
                         return false;
                     }
-                    Material material = Material.getMaterial(args[1].toUpperCase());
+                    Material material = Material.getMaterial(args[0].toUpperCase());
                     ItemStack itemStack = new ItemStack(material);
                     Integer num = null;
                     try {
@@ -71,8 +76,8 @@ public class ItemCommand implements CommandExecutor, TabCompleter {
                         player.playSound(player.getLocation(), Sound.valueOf("BLOCK_AMETHYST_BLOCK_BREAK"), 1f, 1f);
                     }
                     if (args.length == 3) {
-                        if (Material.getMaterial(args[1]) == null) {
-                            sender.sendMessage(Errors.WARNING() + Errors.NOT_HOLDING_ITEM());
+                        if (Material.getMaterial(args[1].toUpperCase()) == null) {
+                            sender.sendMessage(Errors.INVALID_ARGUMENTS());
                             return false;
                         }
                         Material material = Material.getMaterial(args[1].toUpperCase());
@@ -96,7 +101,7 @@ public class ItemCommand implements CommandExecutor, TabCompleter {
                 if (player.hasPermission("activecraft.item.name")) {
                     if (args.length > 1) {
                         if (player.getInventory().getItemInMainHand().getType() == Material.AIR) {
-                            sender.sendMessage(Errors.WARNING() + Errors.NOT_HOLDING_ITEM());
+                            sender.sendMessage(Errors.NOT_HOLDING_ITEM());
                             return false;
                         }
 
@@ -122,7 +127,7 @@ public class ItemCommand implements CommandExecutor, TabCompleter {
                 if (player.hasPermission("activecraft.item.lore")) {
                     if (args.length > 1) {
                         if (player.getInventory().getItemInMainHand().getType() == Material.AIR) {
-                            sender.sendMessage(Errors.WARNING() + Errors.NOT_HOLDING_ITEM());
+                            sender.sendMessage(Errors.NOT_HOLDING_ITEM());
                             return false;
                         }
                         ItemStack stack = player.getInventory().getItemInMainHand();

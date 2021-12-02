@@ -1,14 +1,9 @@
-package de.silencio.activecraftcore.events;
+package de.silencio.activecraftcore.gui;
 
 import de.silencio.activecraftcore.gui.*;
-import de.silencio.activecraftcore.utils.Profile;
-import de.silencio.activecraftcore.utils.ProfileMenu;
-import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
-import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
 public class GuiCreateEvent extends Event {
@@ -23,11 +18,11 @@ public class GuiCreateEvent extends Event {
     private GuiBackItem backItem;
     private GuiCloseItem closeItem;
     private boolean backgroundFilled;
-    private ItemStack[] itemInSlot;
+    private GuiItem[] itemInSlot;
 
     public GuiCreateEvent(GuiCreator guiCreator, InventoryHolder holder, int rows, String title,
                           GuiPlayerHead playerHead, GuiBackItem backItem, GuiCloseItem closeItem,
-                          boolean backgroundFilled, ItemStack[] itemInSlot) {
+                          boolean backgroundFilled, GuiItem[] itemInSlot) {
         this.holder = holder;
         this.rows = rows;
         this.title = title;
@@ -103,11 +98,11 @@ public class GuiCreateEvent extends Event {
         this.backgroundFilled = backgroundFilled;
     }
 
-    public ItemStack[] getItemInSlot() {
+    public GuiItem[] getItemInSlot() {
         return itemInSlot;
     }
 
-    public void setItemInSlot(ItemStack[] itemInSlot) {
+    public void setItemInSlot(GuiItem[] itemInSlot) {
         this.itemInSlot = itemInSlot;
     }
 

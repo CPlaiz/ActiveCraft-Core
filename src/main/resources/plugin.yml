@@ -1,6 +1,6 @@
 name: ActiveCraft-Core
 version: ${project.version}
-main: de.silencio.activecraftcore.Main
+main: de.silencio.activecraftcore.ActiveCraftCore
 api-version: 1.17
 authors: [ CPlaiz, Silencio ]
 description: The heart of all ActiveCraft Plugins
@@ -253,6 +253,7 @@ commands:
     description: Mutes / unmutes a player.
     aliases:
       - "unmute"
+      - "forcemute"
     permission: activecraft.mute
     permission-message: "§cWarning! §7You don't have the permission to do that!"
   hat:

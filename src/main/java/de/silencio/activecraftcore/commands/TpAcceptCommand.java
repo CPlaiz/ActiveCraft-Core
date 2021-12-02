@@ -1,6 +1,6 @@
 package de.silencio.activecraftcore.commands;
 
-import de.silencio.activecraftcore.Main;
+import de.silencio.activecraftcore.ActiveCraftCore;
 import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.utils.FileConfig;
@@ -20,7 +20,7 @@ public class TpAcceptCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         FileConfig fileConfig = new FileConfig("config.yml");
-        HashMap<Player, Player> tpaList = Main.getPlugin().getTpaList();
+        HashMap<Player, Player> tpaList = ActiveCraftCore.getPlugin().getTpaList();
         if(args.length == 0) {
             if (sender instanceof Player) {
                 if (sender.hasPermission("activecraft.tpaccept")) {
@@ -47,7 +47,7 @@ public class TpAcceptCommand implements CommandExecutor {
                                         target.playSound(target.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
                                         sender.sendMessage(CommandMessages.TPACCEPT_SENDER_MESSAGE(target));
                                         cancel();
-                                        Main.getPlugin().removeFromTpaList((Player) sender);
+                                        ActiveCraftCore.getPlugin().removeFromTpaList((Player) sender);
                                         return;
                                     }
 
@@ -56,7 +56,7 @@ public class TpAcceptCommand implements CommandExecutor {
 
                                 }
                             };
-                            runnable.runTaskTimer(Main.getPlugin(), 0, 20);
+                            runnable.runTaskTimer(ActiveCraftCore.getPlugin(), 0, 20);
                         }
 
 

@@ -1,6 +1,6 @@
 package de.silencio.activecraftcore.listener;
 
-import de.silencio.activecraftcore.Main;
+import de.silencio.activecraftcore.ActiveCraftCore;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -13,7 +13,7 @@ public class TeleportListener implements Listener {
     public void onTeleport(PlayerTeleportEvent event) {
         Player player = event.getPlayer();
         if (event.getCause() == PlayerTeleportEvent.TeleportCause.PLUGIN || event.getCause() == PlayerTeleportEvent.TeleportCause.COMMAND){
-            Main.getPlugin().setLastLocationForPlayer(player, event.getFrom());
+            ActiveCraftCore.getPlugin().setLastLocationForPlayer(player, event.getFrom());
         }
 
     }

@@ -1,6 +1,6 @@
 package de.silencio.activecraftcore.manager;
 
-import de.silencio.activecraftcore.Main;
+import de.silencio.activecraftcore.ActiveCraftCore;
 import de.silencio.activecraftcore.events.*;
 import de.silencio.activecraftcore.utils.StringUtils;
 import org.bukkit.BanEntry;
@@ -27,7 +27,7 @@ public class BanManager {
     public void ban(String target, String reason, Date expires, String source) {
 
         if (banListType == BanList.Type.NAME) {
-            Bukkit.getScheduler().runTask(Main.getPlugin(), new Runnable() {
+            Bukkit.getScheduler().runTask(ActiveCraftCore.getPlugin(), new Runnable() {
                 @Override
                 public void run() {
                     PlayerBanEvent event = new PlayerBanEvent(target, reason, expires, source);

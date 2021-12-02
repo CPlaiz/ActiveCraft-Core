@@ -31,7 +31,7 @@ public class SpawnMobCommand implements CommandExecutor, TabCompleter {
                         value = EntityType.valueOf(args[0]);
                     } catch (IllegalArgumentException ignored) {
                     }
-                    if (value != null) {
+                    if (value != null && value != EntityType.LEASH_HITCH && value != EntityType.UNKNOWN) {
                         world.spawnEntity(player.getLocation(), EntityType.valueOf(args[0]));
 
                         player.sendMessage(CommandMessages.SUMMON(args[0]));
@@ -59,7 +59,7 @@ public class SpawnMobCommand implements CommandExecutor, TabCompleter {
                             value = EntityType.valueOf(args[0]);
                         } catch (IllegalArgumentException ignored) {
                         }
-                        if (value != null) {
+                        if (value != null && value != EntityType.LEASH_HITCH && value != EntityType.UNKNOWN) {
                             player.sendMessage(CommandMessages.SUMMON_MULTIPLE(num + "", args[0]));
                             for (int i = 0; i < Integer.parseInt(args[1]); i++) {
                                 world.spawnEntity(player.getLocation(), value);
@@ -84,7 +84,7 @@ public class SpawnMobCommand implements CommandExecutor, TabCompleter {
                         value = EntityType.valueOf(args[1]);
                     } catch (IllegalArgumentException ignored) {
                     }
-                    if (value != null) {
+                    if (value != null && value != EntityType.LEASH_HITCH && value != EntityType.UNKNOWN) {
                         world.spawnEntity(target.getLocation(), value);
                         sender.sendMessage(CommandMessages.SUMMON_OTHERS(target, args[0]));
                     } else sender.sendMessage(Errors.INVALID_ENTITY());
@@ -136,7 +136,9 @@ public class SpawnMobCommand implements CommandExecutor, TabCompleter {
         if (args.length == 0) return list;
         if (args.length == 1) {
             for (EntityType entityType : EntityType.values()) {
-                list.add(entityType.name());
+                if (!entityType.name().equals("UNKNOWN") && !entityType.name().equals("LEASH_HITCH")) {
+                    list.add(entityType.name());
+                }
             }
             for (Player player : Bukkit.getOnlinePlayers()) {
                 list.add(player.getName());
@@ -145,7 +147,7 @@ public class SpawnMobCommand implements CommandExecutor, TabCompleter {
         if (args.length == 2) {
             if (Bukkit.getPlayer(args[0]) != null) {
                 for (EntityType entityType : EntityType.values()) {
-                    if (!entityType.name().equals("UNKNOWN")) {
+                    if (!entityType.name().equals("UNKNOWN") && !entityType.name().equals("LEASH_HITCH")) {
                         list.add(entityType.name());
                     }
                 }

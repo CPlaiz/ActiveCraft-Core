@@ -34,19 +34,18 @@ public class Profile {
         MUTED,
         DEFAULTMUTED,
         VANISHED,
-        ON_DUTY,
         LOG_ENABLED,
         BYPASS_LOCKDOWN,
         EDIT_SIGN,
         KNOWN_IPS,
-        HOME_LIST;
+        HOME_LIST,
+        FORCE_MUTED;
 
         Value() {
-
         }
     }
 
-    private Player owner;
+    private String owner;
     private FileConfig playerdataConfig;
     private FileConfig playtimeConfig;
     private FileConfig homeConfig;
@@ -69,9 +68,9 @@ public class Profile {
     private boolean godmode;
     private boolean fly;
     private boolean muted;
+    private boolean forcemuted;
     private boolean defaultmuted;
     private boolean vanished;
-    private boolean on_duty;
     private boolean log_enabled;
     private boolean bypass_lockdown;
     private boolean edit_sign;
@@ -79,16 +78,23 @@ public class Profile {
     private HashMap<String, Location> homeList;
 
     public Profile(Player player) {
-        this.owner = player;
+        this.owner = player.getName();
         this.playerdataConfig = new FileConfig("playerdata" + File.separator + player.getName().toLowerCase() + ".yml");
         this.playtimeConfig = new FileConfig("playtime.yml");
         this.homeConfig = new FileConfig("homes.yml");
         loadFromConfig(playerdataConfig);
+    }
 
+    public Profile(String playername) {
+        this.owner = playername;
+        this.playerdataConfig = new FileConfig("playerdata" + File.separator + playername.toLowerCase() + ".yml");
+        this.playtimeConfig = new FileConfig("playtime.yml");
+        this.homeConfig = new FileConfig("homes.yml");
+        loadFromConfig(playerdataConfig);
     }
 
     public void refresh() {
-        this.playerdataConfig = new FileConfig("playerdata" + File.separator + owner.getName().toLowerCase() + ".yml");
+        this.playerdataConfig = new FileConfig("playerdata" + File.separator + owner.toLowerCase() + ".yml");
         this.playtimeConfig = new FileConfig("playtime.yml");
         this.homeConfig = new FileConfig("homes.yml");
         loadFromConfig(playerdataConfig);
@@ -112,20 +118,20 @@ public class Profile {
         godmode = fileConfig.getBoolean("godmode");
         fly = fileConfig.getBoolean("fly");
         muted = fileConfig.getBoolean("muted");
+        forcemuted = fileConfig.getBoolean("forcemuted");
         defaultmuted = fileConfig.getBoolean("default-mute");
         vanished = fileConfig.getBoolean("vanished");
-        on_duty = fileConfig.getBoolean("on-duty");
         log_enabled = fileConfig.getBoolean("log-enabled");
         bypass_lockdown = fileConfig.getBoolean("lockdown-bypass");
         edit_sign = fileConfig.getBoolean("edit-sign");
         known_ips = fileConfig.getStringList("known-ips");
 
-        playtime_minutes = playtimeConfig.getInt(owner.getName() + ".minutes");
-        playtime_hours = playtimeConfig.getInt(owner.getName() + ".hours");
+        playtime_minutes = playtimeConfig.getInt(owner + ".minutes");
+        playtime_hours = playtimeConfig.getInt(owner + ".hours");
 
         homeList = new HashMap<>();
-        for (String homeName : homeConfig.getStringList(owner.getName() + ".home_list")) {
-            homeList.put(homeName, homeConfig.getLocation(owner.getName() + "." + homeName));
+        for (String homeName : homeConfig.getStringList(owner + ".home_list")) {
+            homeList.put(homeName, homeConfig.getLocation(owner + "." + homeName));
         }
 
     }
@@ -177,11 +183,11 @@ public class Profile {
                 break;
 
             case PLAYTIME_MINUTES:
-                playtimeConfig.set(owner.getName() + ".minutes", object);
+                playtimeConfig.set(owner + ".minutes", object);
                 break;
 
             case PLAYTIME_HOURS:
-                playtimeConfig.set(owner.getName() + ".hours", object);
+                playtimeConfig.set(owner + ".hours", object);
                 break;
 
             case AFK:
@@ -216,10 +222,6 @@ public class Profile {
                 playerdataConfig.set("vanished", object);
                 break;
 
-            case ON_DUTY:
-                playerdataConfig.set("on-duty", object);
-                break;
-
             case LOG_ENABLED:
                 playerdataConfig.set("log-enabled", object);
                 break;
@@ -232,19 +234,26 @@ public class Profile {
                 playerdataConfig.set("edit-sign", object);
                 break;
 
+            case FORCE_MUTED:
+                playerdataConfig.set("forcemuted", object);
+                break;
+
             case KNOWN_IPS:
                 playerdataConfig.set("known-ips", object);
                 break;
 
             case HOME_LIST:
-                homeConfig.set(owner.getName() + ".", object);
+                homeConfig.set(owner + ".", object);
                 break;
         }
         playerdataConfig.saveConfig();
         playtimeConfig.saveConfig();
+        homeConfig.saveConfig();
+
+        refresh();
     }
 
-    public Player getProfileOwner() {
+    public String getProfileOwner() {
         return owner;
     }
 
@@ -332,10 +341,6 @@ public class Profile {
         return vanished;
     }
 
-    public boolean isOnDuty() {
-        return on_duty;
-    }
-
     public boolean hasLogEnabled() {
         return log_enabled;
     }
@@ -355,4 +360,9 @@ public class Profile {
     public HashMap<String, Location> getHomeList() {
         return homeList;
     }
+
+    public boolean isForcemuted() {
+        return forcemuted;
+    }
+
 }

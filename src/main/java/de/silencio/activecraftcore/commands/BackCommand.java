@@ -1,10 +1,9 @@
 package de.silencio.activecraftcore.commands;
 
-import de.silencio.activecraftcore.Main;
+import de.silencio.activecraftcore.ActiveCraftCore;
 import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -18,14 +17,14 @@ public class BackCommand implements CommandExecutor {
 
         if(sender instanceof Player) {
             Player player = (Player) sender;
-            Location lastLoc = Main.getPlugin().getLastLocationForPlayer(player);
+            Location lastLoc = ActiveCraftCore.getPlugin().getLastLocationForPlayer(player);
             if(args.length == 0) {
                 if (sender.hasPermission("activecraft.back.self")) {
 
                     if (lastLoc != null) {
                         player.teleport(lastLoc);
                         sender.sendMessage(CommandMessages.TELEPORTED_BACK());
-                    } else sender.sendMessage(CommandMessages.NO_RETURN_LOCATION());
+                    } else sender.sendMessage(Errors.WARNING() + CommandMessages.NO_RETURN_LOCATION());
 
                 } else sender.sendMessage(Errors.NO_PERMISSION());
             } else if(args.length >= 2) sender.sendMessage(Errors.TOO_MANY_ARGUMENTS());
@@ -37,8 +36,8 @@ public class BackCommand implements CommandExecutor {
                 return false;
             }
             Player target = Bukkit.getPlayer(args[0]);
-            Location lastLoc = Main.getPlugin().getLastLocationForPlayer(target);
-            if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
+            Location lastLoc = ActiveCraftCore.getPlugin().getLastLocationForPlayer(target);
+            if(sender.getName().equalsIgnoreCase(target.getName())) {
                 sender.sendMessage(Errors.CANNOT_TARGET_SELF());
                 return false;
             }
@@ -47,7 +46,7 @@ public class BackCommand implements CommandExecutor {
                 if (lastLoc != null) {
                     target.teleport(lastLoc);
                     sender.sendMessage(CommandMessages.TELEPORTED_BACK_OTHERS(target));
-                } else sender.sendMessage(CommandMessages.NO_RETURN_LOCATION_OTHERS(target));
+                } else sender.sendMessage(Errors.WARNING() + CommandMessages.NO_RETURN_LOCATION_OTHERS(target));
 
             } else sender.sendMessage(Errors.NO_PERMISSION());
         }

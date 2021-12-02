@@ -36,7 +36,7 @@ public class HomeCommand implements CommandExecutor, TabCompleter {
                     }
                     if (homeconfig.contains(playerName + "." + args[0])) {
                         player.teleport(homeconfig.getLocation(playerName + "." + args[0]));
-                        sender.sendMessage(CommandMessages.TELEPORT_HOME_COMPLETE(args[0].toString()));
+                        sender.sendMessage(CommandMessages.TELEPORT_HOME_COMPLETE(args[0]));
                         player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
 
                     } else sender.sendMessage(Errors.WARNING() + CommandMessages.HOME_NOT_SET(args[0]));
@@ -64,14 +64,14 @@ public class HomeCommand implements CommandExecutor, TabCompleter {
                         return false;
                     }
 
-                    if (homeconfig.contains(targetName + "." + args[1].toLowerCase())) {
+                    if (homeconfig.contains(targetName + "." + args[1])) {
 
                         player.teleport(homeconfig.getLocation(targetName + "." + args[1]));
-                        sender.sendMessage(CommandMessages.TELEPORT_HOME_OTHERS_COMPLETE(target, args[1].toString()));
+                        sender.sendMessage(CommandMessages.TELEPORT_HOME_OTHERS_COMPLETE(target, args[1]));
                         player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
 
                     } else
-                        sender.sendMessage(Errors.WARNING() + CommandMessages.HOME_OTHERS_NOT_SET(target, args[1].toString()));
+                        sender.sendMessage(Errors.WARNING() + CommandMessages.HOME_OTHERS_NOT_SET(target, args[1]));
                 } else sender.sendMessage(Errors.NO_PERMISSION());
             }
             if (args.length >= 3) {

@@ -1,24 +1,22 @@
 package de.silencio.activecraftcore.profilemenu.listeners;
 
-import de.silencio.activecraftcore.Main;
+import de.silencio.activecraftcore.ActiveCraftCore;
 import de.silencio.activecraftcore.gui.*;
-import de.silencio.activecraftcore.profilemenu.ProfileMenu2;
+import de.silencio.activecraftcore.profilemenu.ProfileMenu;
 import de.silencio.activecraftcore.utils.Profile;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryCloseEvent;
 
 public class HomeListProfileListener implements Listener {
 
     @EventHandler
     public void onHomeClick(GuiClickEvent event) {
-        if (!Main.getPlugin().getProfileMenuList().containsKey((Player) event.getView().getPlayer())) return;
+        if (!ActiveCraftCore.getPlugin().getProfileMenuList().containsKey((Player) event.getView().getPlayer())) return;
         Player player = (Player) event.getView().getPlayer();
-        ProfileMenu2 profileMenu = Main.getPlugin().getFromProfileMenuList(player);
+        ProfileMenu profileMenu = ActiveCraftCore.getPlugin().getFromProfileMenuList(player);
         Gui gui = event.getGui();
 
         if (event.getCurrentItem() instanceof GuiBackItem) {
@@ -46,7 +44,7 @@ public class HomeListProfileListener implements Listener {
                             + ", " + ChatColor.AQUA + loc.getBlockX() + ChatColor.GOLD
                             + ", " + ChatColor.AQUA + loc.getBlockY() + ChatColor.GOLD
                             + ", " + ChatColor.AQUA + loc.getBlockZ())) {
-                        player.performCommand("home " + profileMenu.getTarget().getName() + " " + homeName);
+                        player.performCommand("home " + homeName);
                         shouldBreak = true;
                         break;
                     }

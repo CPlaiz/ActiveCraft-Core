@@ -38,4 +38,33 @@ public class IntegerUtils {
         return string;
     }
 
+    public static String shortIntWithoutHours(int duration) {
+        {
+            String string = "";
+            int minutes = 0;
+            int seconds = 0;
+            if (duration / 60 / 60 / 24 >= 1) {
+                duration -= duration / 60 / 60 / 24 * 60 * 60 * 24;
+            }
+            if (duration / 60 >= 1) {
+                minutes = duration / 60;
+                duration -= duration / 60 * 60;
+            }
+            if (duration >= 1)
+                seconds = duration;
+
+            if (minutes <= 9) {
+                string = String.valueOf(string) + "0" + minutes + ":";
+            } else {
+                string = String.valueOf(string) + minutes + ":";
+            }
+            if (seconds <= 9) {
+                string = String.valueOf(string) + "0" + seconds;
+            } else {
+                string = String.valueOf(string) + seconds;
+            }
+            return string;
+        }
+    }
+
 }

@@ -249,7 +249,7 @@ en:
       glint-true: 'Added enchantment glint to your item.'
       glint-false: 'Removed enchantment glint to your item.'
     invsee:
-      invsee-others: 'Opened inventory of %t_displayname%.'
+      invsee: 'Opened inventory of %t_displayname%.'
     enderchest:
       enderchest-open: 'Opened Enderchest.'
       enderchest-open-others: 'Opened Enderchest of %t_displayname%.'
@@ -735,7 +735,7 @@ de:
       cleared-others: '%t_displayname%s Inventar geleert.'
       cleared-others-message: 'Dein Inventar wurde von %s_displayname% geleert.'
     colornick:
-      colornick-complete: 'Deine Namensfarbe wurde zu %color% geändert.'
+      colornick-self: 'Deine Namensfarbe wurde zu %color% geändert.'
       colornick-others: 'Namensfarbe für %t_displayname% zu %color% geändert.'
       colornick-others-message: 'Deine Namensfarbe wurde zu %color% von %s_displayname% geändert.'
     home:
@@ -893,7 +893,7 @@ de:
       ram: |
         %freememory% MB Frei
         %usedmemory% MB Benutzt
-        %maxmemory% MB Maximal'
+        %maxmemory% MB Maximal
     realname:
       realname-header: |
         Spieler mit dem Spitznamen %nickname%:
@@ -1412,7 +1412,7 @@ sv:
       ram: |
         %freememory% MB fritt
         %usedmemory% MB använt
-        %maxmemory% MB max'
+        %maxmemory% MB max
     realname:
       realname-header: |
         Spelare med smeknamnet %nickname%:

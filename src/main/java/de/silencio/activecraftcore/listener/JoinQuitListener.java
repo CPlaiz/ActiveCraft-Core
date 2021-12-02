@@ -1,6 +1,6 @@
 package de.silencio.activecraftcore.listener;
 
-import de.silencio.activecraftcore.Main;
+import de.silencio.activecraftcore.ActiveCraftCore;
 import de.silencio.activecraftcore.manager.VanishManager;
 import de.silencio.activecraftcore.utils.*;
 import org.bukkit.Bukkit;
@@ -43,27 +43,19 @@ public class JoinQuitListener implements Listener {
 
         FileConfig fileConfigPlayerlist = new FileConfig("playerlist.yml");
         FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + player.getName().toLowerCase() + ".yml");
-        FileConfig fileConfigUUIDName = new FileConfig("nameuuidlist.yml");
         FileConfig mainConfig = new FileConfig("config.yml");
 
-        VanishManager vanishManager = Main.getVanishManager();
+        VanishManager vanishManager = ActiveCraftCore.getVanishManager();
 
-        List<String> playerlistUUID = fileConfigPlayerlist.getStringList("uuids");
-        List<String> playerlistName = fileConfigPlayerlist.getStringList("players");
-        if (!playerlistUUID.contains(player.getUniqueId().toString())) {
-            playerlistUUID.add(player.getUniqueId().toString());
+        List<String> playerlist = fileConfigPlayerlist.getStringList("players");
+
+        if (!playerlist.contains(player.getName().toLowerCase() + "," + player.getUniqueId())) {
+            playerlist.add(player.getName().toLowerCase() + "," + player.getUniqueId());
         }
-        if (!playerlistName.contains(player.getName())) {
-            playerlistName.add(player.getName());
-        }
-        fileConfigPlayerlist.set("uuids", playerlistUUID);
-        fileConfigPlayerlist.set("players", playerlistName);
+        fileConfigPlayerlist.set("players", playerlist);
         fileConfigPlayerlist.saveConfig();
 
-        fileConfigUUIDName.set(player.getName().toLowerCase(), player.getUniqueId().toString());
-        fileConfigUUIDName.saveConfig();
-
-        File file = new File(Main.getPlugin().getDataFolder() + File.separator + "playerdata" + File.separator);
+        File file = new File(ActiveCraftCore.getPlugin().getDataFolder() + File.separator + "playerdata" + File.separator);
 
         FileConfig config;
 
@@ -188,7 +180,7 @@ public class JoinQuitListener implements Listener {
         if (!playerdataConfig.getBoolean("vanished")) {
             event.setQuitMessage(mainConfig.getString("quit-format").replace("%displayname%", player.getDisplayName()));
         } else {
-            VanishManager vanishManager = Main.getVanishManager();
+            VanishManager vanishManager = ActiveCraftCore.getVanishManager();
             List<Player> vanishedList = vanishManager.getVanished();
             vanishedList.remove(player);
             vanishManager.setVanishedList(vanishedList);

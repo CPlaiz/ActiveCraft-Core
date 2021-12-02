@@ -14,7 +14,7 @@
 
     <description>The heart of all ActiveCraft plugins.</description>
     <properties>
-        <java.version>16</java.version>
+        <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -52,45 +52,6 @@
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
     </repositories>
-
-    <licenses>
-        <license>
-            <name>MIT License</name>
-            <url>http://www.opensource.org/licenses/mit-license.php</url>
-        </license>
-    </licenses>
-
-    <distributionManagement>
-        <snapshotRepository>
-            <id>ossrh</id>
-            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
-        <repository>
-            <id>ossrh</id>
-            <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-        </repository>
-    </distributionManagement>
-
-    <developers>
-        <developer>
-            <name>CPlaiz</name>
-            <email>dev.cplaiz@gmail.com</email>
-            <organization>com.github.CPlaiz</organization>
-            <organizationUrl>https://github.com/CPlaiz</organizationUrl>
-        </developer>
-        <developer>
-            <name>Silencio</name>
-            <email>dev.silencio@gmail.com</email>
-            <organization>com.github.S1lencio</organization>
-            <organizationUrl>https://github.com/S1lencio</organizationUrl>
-        </developer>
-    </developers>
-
-    <scm>
-        <connection>scm:git:git://github.com/CPlaiz/ActiveCraft-Core.git</connection>
-        <developerConnection>scm:git:ssh://github.com:CPlaiz/ActiveCraft-Core.git</developerConnection>
-        <url>http://github.com/CPlaiz/ActiveCraft-Core</url>
-    </scm>
 
     <dependencies>
         <dependency>

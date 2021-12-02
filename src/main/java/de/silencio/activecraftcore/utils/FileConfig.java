@@ -1,6 +1,6 @@
 package de.silencio.activecraftcore.utils;
 
-import de.silencio.activecraftcore.Main;
+import de.silencio.activecraftcore.ActiveCraftCore;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
@@ -8,7 +8,6 @@ import org.bukkit.plugin.Plugin;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.logging.Level;
 
 public class FileConfig extends YamlConfiguration {
 
@@ -29,7 +28,7 @@ public class FileConfig extends YamlConfiguration {
     }
 
     public FileConfig(String filename) {
-        this(Main.getPlugin().getDataFolder().getName(), filename);
+        this(ActiveCraftCore.getPlugin().getDataFolder().getName(), filename);
     }
 
     public void saveConfig() {

@@ -1,12 +1,13 @@
 package de.silencio.activecraftcore.profilemenu.listeners;
 
-import de.silencio.activecraftcore.Main;
+import de.silencio.activecraftcore.ActiveCraftCore;
 import de.silencio.activecraftcore.gui.Gui;
 import de.silencio.activecraftcore.gui.GuiClickEvent;
 import de.silencio.activecraftcore.gui.GuiItem;
+import de.silencio.activecraftcore.gui.GuiNavigator;
 import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.messages.Reasons;
-import de.silencio.activecraftcore.profilemenu.ProfileMenu2;
+import de.silencio.activecraftcore.profilemenu.ProfileMenu;
 import de.silencio.activecraftcore.profilemenu.inventories.ReasonsProfile;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -18,9 +19,9 @@ public class ReasonsProfileListener implements Listener {
 
     @EventHandler
     public void onSelect(GuiClickEvent event) {
-        if (!Main.getPlugin().getProfileMenuList().containsKey((Player) event.getView().getPlayer())) return;
+        if (!ActiveCraftCore.getPlugin().getProfileMenuList().containsKey((Player) event.getView().getPlayer())) return;
         Player player = (Player) event.getView().getPlayer();
-        ProfileMenu2 profileMenu = Main.getPlugin().getFromProfileMenuList(player);
+        ProfileMenu profileMenu = ActiveCraftCore.getPlugin().getFromProfileMenuList(player);
         Gui gui = event.getGui();
 
         if (!event.getGui().getAssociatedGuiCreator().getInternalName().equals("reasons_profile")) return;
@@ -95,9 +96,11 @@ public class ReasonsProfileListener implements Listener {
             clearSelection(19, 26, event.getSlot(), profileMenu);
             reasonsProfile.getGuiCreator().setItemInSlot(reasonsProfile.getSelectedStack(), event.getSlot() + 9);
         } else if (item == profileMenu.getReasonsProfile().getVerificationStack()) {
+            String action = "";
             needRefresh = false;
             switch (reasonsProfile.getActiveConfirmation()) {
                 case BAN:
+                    if (reasonsProfile.getActiveReason() == ReasonsProfile.Reason.MODERATOR) reasonsProfile.setViolationReason(Reasons.MODERATOR("Banned"));
                     if (player.hasPermission("activecraft.ban")) {
                         if (profileMenu.getReasonsProfile().getBanTime() == -1) {
                             profileMenu.getNameBanManager().ban(profileMenu.getTarget(), reasonsProfile.getViolationReason(), null, player.getName());
@@ -109,10 +112,10 @@ public class ReasonsProfileListener implements Listener {
                             profileMenu.getNameBanManager().ban(profileMenu.getTarget(), profileMenu.getReasonsProfile().getViolationReason(), expires, player.getName());
                             profileMenu.getTarget().kickPlayer(profileMenu.getReasonsProfile().getViolationReason());
                         }
-                        player.openInventory(Main.getPlugin().getGuiHistoryMap().getGuiStack(player).pop());
                     } else player.sendMessage(Errors.NO_PERMISSION());
                     break;
                 case BAN_IP:
+                    if (reasonsProfile.getActiveReason() == ReasonsProfile.Reason.MODERATOR) reasonsProfile.setViolationReason(Reasons.MODERATOR("Banned"));
                     if (player.hasPermission("activecraft.ban")) {
                         if (profileMenu.getReasonsProfile().getBanTime() == -1) {
                             profileMenu.getNameBanManager().ban(profileMenu.getTarget(), reasonsProfile.getViolationReason(), null, player.getName());
@@ -125,28 +128,31 @@ public class ReasonsProfileListener implements Listener {
                                     reasonsProfile.getViolationReason(), expires, player.getName());
                             profileMenu.getTarget().kickPlayer(profileMenu.getReasonsProfile().getViolationReason());
                         }
-                        player.openInventory(Main.getPlugin().getGuiHistoryMap().getGuiStack(player).pop());
+
                     } else player.sendMessage(Errors.NO_PERMISSION());
                     break;
                 case WARN:
+                    if (reasonsProfile.getActiveReason() == ReasonsProfile.Reason.MODERATOR) reasonsProfile.setViolationReason(Reasons.MODERATOR("Warned"));
                     if (player.hasPermission("activecraft.warn")) {
                         player.performCommand("warn add " + profileMenu.getTarget().getName() + " " + reasonsProfile.getViolationReason());
-                        player.openInventory(Main.getPlugin().getGuiHistoryMap().getGuiStack(player).pop());
                     } else player.sendMessage(Errors.NO_PERMISSION());
                     break;
                 case KICK:
+                    if (reasonsProfile.getActiveReason() == ReasonsProfile.Reason.MODERATOR) reasonsProfile.setViolationReason(Reasons.MODERATOR("Kicked"));
                     if (player.hasPermission("activecraft.kick")) {
                         profileMenu.getTarget().kickPlayer(reasonsProfile.getViolationReason());
-                        player.openInventory(Main.getPlugin().getGuiHistoryMap().getGuiStack(player).pop());
                     } else player.sendMessage(Errors.NO_PERMISSION());
                     break;
             }
+            player.openInventory(GuiNavigator.pop(player));
         }
-        profileMenu.setReasonsProfile(reasonsProfile);
-        player.openInventory(profileMenu.getReasonsProfile().getGuiCreator().build().getInventory());
+        if (needRefresh) {
+            profileMenu.setReasonsProfile(reasonsProfile);
+            player.openInventory(gui.rebuild().getInventory());
+        }
     }
 
-    private void clearSelection(int start, int end, int slot, ProfileMenu2 profileMenu) {
+    private void clearSelection(int start, int end, int slot, ProfileMenu profileMenu) {
         for (int i = start; i < end; i++) {
             if (!(i == slot)) {
                 profileMenu.getReasonsProfile().getGuiCreator().setItemInSlot(
