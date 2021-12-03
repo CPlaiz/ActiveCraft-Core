@@ -19,6 +19,7 @@ import org.bukkit.permissions.Permission;
 import org.bukkit.permissions.PermissionDefault;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.util.*;
@@ -116,6 +117,8 @@ public final class ActiveCraftCore extends JavaPlugin {
         // listener
         PluginManager pluginManager = Bukkit.getPluginManager();
 
+        //loadMaxHomePermissions();
+
         pluginManager.registerEvents(new JoinQuitListener(), this);
         pluginManager.registerEvents(new ProfileListener(), this);
         pluginManager.registerEvents(new OffInvSeeCommand(), this);
@@ -181,6 +184,9 @@ public final class ActiveCraftCore extends JavaPlugin {
         Bukkit.getPluginCommand("tpaccept").setExecutor(new TpAcceptCommand());
         Bukkit.getPluginCommand("tpadeny").setExecutor(new TpaDenyCommand());
         Bukkit.getPluginCommand("warp").setExecutor(new WarpCommand());
+        Bukkit.getPluginCommand("warps").setExecutor(new WarpCommand());
+        Bukkit.getPluginCommand("setwarp").setExecutor(new WarpCommand());
+        Bukkit.getPluginCommand("delwarp").setExecutor(new WarpCommand());
         Bukkit.getPluginCommand("home").setExecutor(new HomeCommand());
         Bukkit.getPluginCommand("sethome").setExecutor(new SetHomeCommand());
         Bukkit.getPluginCommand("delhome").setExecutor(new DelHomeCommand());

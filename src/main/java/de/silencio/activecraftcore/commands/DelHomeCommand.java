@@ -36,7 +36,7 @@ public class DelHomeCommand implements CommandExecutor, TabCompleter {
                             List<String> homeList = homeconfig.getStringList(playerName + ".home_list");
                             homeList.remove(args[0]);
                             homeconfig.set(playerName + ".home_list", homeList);
-                            homeconfig.set(playerName + "." + args[0].toLowerCase(), null);
+                            homeconfig.set(playerName + "." + args[0], null);
                             homeconfig.saveConfig();
                             sender.sendMessage(CommandMessages.HOME_DELETED(args[0]));
                         } else sender.sendMessage(Errors.WARNING() + CommandMessages.NO_HOME(args[0]));

@@ -21,7 +21,7 @@ import java.util.List;
 public class RestartCommand implements CommandExecutor, TabCompleter {
 
     private BukkitRunnable runnable;
-    private int time = 30;
+    private int time;
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -49,7 +49,7 @@ public class RestartCommand implements CommandExecutor, TabCompleter {
                         }
                         this.time = Integer.parseInt(args[0]);
                     }
-
+                    if (runnable != null) if (!runnable.isCancelled()) runnable.cancel();
 
                     runnable = new BukkitRunnable() {
 
@@ -58,14 +58,10 @@ public class RestartCommand implements CommandExecutor, TabCompleter {
 
                             for (Player target : Bukkit.getOnlinePlayers()) {
 
-                                if (time == 1) {
-                                    target.kickPlayer(CommandMessages.RESTART_MESSAGE());
-                                    Bukkit.shutdown();
-                                    return;
-                                }
-
                                 if (time == 0) {
+                                    target.kickPlayer(CommandMessages.RESTART_MESSAGE());
                                     cancel();
+                                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "spigot:restart");
                                 }
 
                                 target.playSound(target.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 1f, 0.5f);
@@ -86,7 +82,6 @@ public class RestartCommand implements CommandExecutor, TabCompleter {
         } else sender.sendMessage(Errors.NOT_A_PLAYER());
         return true;
     }
-
     private void cancelTimer(CommandSender sender) {
 
         if (runnable != null) {

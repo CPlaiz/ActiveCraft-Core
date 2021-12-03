@@ -11,6 +11,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.permissions.Permission;
+import org.bukkit.permissions.PermissionAttachmentInfo;
 
 import java.util.List;
 
@@ -36,6 +37,11 @@ public class SetHomeCommand implements CommandExecutor {
 
                     List<String> homeList = homeconfig.getStringList(playerName + ".home_list");
                     int maxHomes = 1;
+                    for (PermissionAttachmentInfo perm : player.getEffectivePermissions()) {
+                        if (perm.getPermission().startsWith("activecraft.maxhomes.")) {
+                            if (Bukkit.getPluginManager().getPermission(perm.getPermission()) == null) Bukkit.getPluginManager().addPermission(new Permission(perm.getPermission()));
+                        }
+                    }
                     for (Permission perm : Bukkit.getPluginManager().getPermissions()) {
                         if (perm.getName().startsWith("activecraft.maxhomes.")) {
                             String[] permParts = perm.getName().split("\\.");

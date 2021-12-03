@@ -1008,7 +1008,7 @@ permissions:
     default: op
     children:
       activecraft.knockbackstick: true
-  activecrat.fireball:
+  activecraft.fireball:
     description: Summons a fireball at your position.
     default: op
   activecraft.playerlist:
@@ -1024,12 +1024,12 @@ permissions:
     description: Allows the player to teleport themselves to other players.
     default: op
     children:
-      actovecraft.tp: true
+      activecraft.tp: true
   activecraf.tp.others:
     description: Allows the player to teleport other players to other players.
     default: op
     children:
-      actovecraft.tp: true
+      activecraft.tp: true
   activecraft.commandstick:
     description: A stick that you can bind commands to.
     default: op

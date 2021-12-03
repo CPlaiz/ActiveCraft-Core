@@ -85,10 +85,16 @@ public class WarpCommand implements CommandExecutor, TabCompleter {
                     FileConfig warpsConfig = new FileConfig("warps.yml");
                     List<String> warpList = warpListConfig.getStringList("warplist");
                     if (!warpList.isEmpty()) {
-                        sender.sendMessage(ChatColor.GOLD + "Warps:");
+                        StringBuilder message = new StringBuilder();
                         for (String s : warpList) {
                             Location loc = warpsConfig.getLocation(s);
                             sender.sendMessage(ChatColor.GOLD + s + ": " + ChatColor.GRAY + loc.getWorld().getName() + "; " + loc.getBlockX() + "," + loc.getBlockY() + ", " + loc.getBlockZ());
+                        }
+                        if (message.toString().equals("")) {
+                            sender.sendMessage(Errors.WARNING() + CommandMessages.NO_WARPS());
+                        } else {
+                            sender.sendMessage(ChatColor.GOLD + "Warps:");
+                            sender.sendMessage(message.toString());
                         }
                     } else sender.sendMessage(Errors.WARNING() + CommandMessages.NO_WARPS());
                 } else sender.sendMessage(Errors.NO_PERMISSION());
