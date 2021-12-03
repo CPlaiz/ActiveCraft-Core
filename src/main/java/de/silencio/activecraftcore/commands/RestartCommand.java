@@ -29,12 +29,15 @@ public class RestartCommand implements CommandExecutor, TabCompleter {
         if (sender instanceof Player) {
             Player player = (Player) sender;
 
-            if (args.length == 0) {
                 if (sender.hasPermission("activecraft.restart")) {
 
                     if (args.length == 0) {
                         time = 30;
                     } else {
+                        if (args[0].equalsIgnoreCase("cancel")) {
+                            cancelTimer(sender);
+                            return false;
+                        }
                         Integer num = null;
                         try {
                             num = Integer.valueOf(args[0]);
@@ -80,20 +83,22 @@ public class RestartCommand implements CommandExecutor, TabCompleter {
                     };
                     runnable.runTaskTimer(ActiveCraftCore.getPlugin(), 0, 20);
                 } else sender.sendMessage(Errors.NO_PERMISSION());
-            } else if (args[0].equalsIgnoreCase("cancel")) {
-                if (runnable != null) {
-                    if (!runnable.isCancelled()) {
-                        for (Player p : Bukkit.getOnlinePlayers()) {
-                            Title title = new Title(CommandMessages.RESTART_TITLE(ChatColor.RED + "--"));
-                            p.sendTitle(title);
-                        }
-                        runnable.cancel();
-                        sender.sendMessage(CommandMessages.RESTART_CANCEL());
-                    }
-                }
-            } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
         } else sender.sendMessage(Errors.NOT_A_PLAYER());
         return true;
+    }
+
+    private void cancelTimer(CommandSender sender) {
+
+        if (runnable != null) {
+            if (!runnable.isCancelled()) {
+                for (Player p : Bukkit.getOnlinePlayers()) {
+                    Title title = new Title(CommandMessages.RESTART_TITLE(ChatColor.RED + "--"));
+                    p.sendTitle(title);
+                }
+                runnable.cancel();
+                sender.sendMessage(CommandMessages.RESTART_CANCEL());
+            }
+        }
     }
 
     @Override

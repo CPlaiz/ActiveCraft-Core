@@ -5,6 +5,7 @@ import de.silencio.activecraftcore.utils.FileConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -25,7 +26,12 @@ public class RandomTPCommand implements CommandExecutor, TabCompleter {
             if (sender.hasPermission("activecraft.randomtp.self")) {
                 if (sender instanceof Player) {
                     Player player = (Player) sender;
-                    Location tpLoc = randomLocation(player, 3000000);
+                    Location tpLoc = randomLocation(player, (int) player.getWorld().getWorldBorder().getSize()/2);
+                    int save = 69;
+                    for (int i = 0; i < save; i++) {
+                        if (tpLoc.getWorld().getBlockAt(tpLoc.getBlockX(), tpLoc.getWorld().getHighestBlockYAt(tpLoc.getBlockX(), tpLoc.getBlockZ()), tpLoc.getBlockZ()).getType() != Material.LAVA) break;
+                        tpLoc = randomLocation(player, (int) player.getWorld().getWorldBorder().getSize()/2);
+                    }
                     player.teleport(tpLoc);
                 } else sender.sendMessage(Errors.NOT_A_PLAYER());
             } else sender.sendMessage(Errors.NO_PERMISSION());
@@ -40,7 +46,12 @@ public class RandomTPCommand implements CommandExecutor, TabCompleter {
                             return false;
                         }
                     }
-                    Location tpLoc = randomLocation(target, 3000000);
+                    Location tpLoc = randomLocation(target, (int) target.getWorld().getWorldBorder().getSize()/2);
+                    int save = 69;
+                    for (int i = 0; i < save; i++) {
+                        if (tpLoc.getWorld().getBlockAt(tpLoc.getBlockX(), tpLoc.getWorld().getHighestBlockYAt(tpLoc.getBlockX(), tpLoc.getBlockZ()), tpLoc.getBlockZ()).getType() != Material.LAVA) break;
+                        tpLoc = randomLocation(player, (int) target.getWorld().getWorldBorder().getSize()/2);
+                    }
                     target.teleport(tpLoc);
                 } else {
                     Player player = (Player) sender;
@@ -53,8 +64,13 @@ public class RandomTPCommand implements CommandExecutor, TabCompleter {
                         sender.sendMessage(Errors.INVALID_NUMBER());
                         return false;
                     }
-
+                    if (num > player.getWorld().getWorldBorder().getSize()/2) num = (int) player.getWorld().getWorldBorder().getSize()/2;
                     Location tpLoc = randomLocation(player, num);
+                    int save = 69;
+                    for (int i = 0; i < save; i++) {
+                        if (tpLoc.getWorld().getBlockAt(tpLoc.getBlockX(), tpLoc.getWorld().getHighestBlockYAt(tpLoc.getBlockX(), tpLoc.getBlockZ()), tpLoc.getBlockZ()).getType() != Material.LAVA) break;
+                        tpLoc = randomLocation(player, num);
+                    }
                     player.teleport(tpLoc);
                 }
             } else sender.sendMessage(Errors.NO_PERMISSION());
@@ -74,10 +90,14 @@ public class RandomTPCommand implements CommandExecutor, TabCompleter {
                 sender.sendMessage(Errors.INVALID_NUMBER());
                 return false;
             }
-
+            if (num > target.getWorld().getWorldBorder().getSize()/2) num = (int) target.getWorld().getWorldBorder().getSize()/2;
             Location tpLoc = randomLocation(target, num);
+            int save = 69;
+            for (int i = 0; i < save; i++) {
+                if (tpLoc.getWorld().getBlockAt(tpLoc.getBlockX(), tpLoc.getWorld().getHighestBlockYAt(tpLoc.getBlockX(), tpLoc.getBlockZ()), tpLoc.getBlockZ()).getType() != Material.LAVA) break;
+                tpLoc = randomLocation(player, num);
+            }
             target.teleport(tpLoc);
-
         }
         return true;
     }
