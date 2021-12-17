@@ -18,16 +18,16 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 
-title: ActiveCraft-Docs
-email: your-email@example.com
+title: ActiveCraft-Core Docs
+email: dev.cplaiz@gmail.com
 description: This is the documentation page for ActiveCraft-Core. 
-baseurl: "ActiveCraft-Core" # the subpath of your site, e.g. /blog
+baseurl: "ActiveCraft-Core" # ActiveCraft-Core (wenn github) || the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: jekyllrb
 github_username:  CPlaiz
 
 # Build settings
 remote_theme: pmarsceill/just-the-docs
-# theme: "just-the-docs"
+theme: "just-the-docs"
 plugins:
   - jekyll-feed
