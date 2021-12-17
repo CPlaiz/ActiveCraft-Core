@@ -3,7 +3,6 @@ package de.silencio.activecraftcore;
 import de.silencio.activecraftcore.commands.*;
 import de.silencio.activecraftcore.gui.*;
 import de.silencio.activecraftcore.listener.*;
-import de.silencio.activecraftcore.listener.inventory.ProfileListener;
 import de.silencio.activecraftcore.messages.ActiveCraftMessage;
 import de.silencio.activecraftcore.dialogue.DialogueManagerList;
 import de.silencio.activecraftcore.messages.Language;
@@ -120,7 +119,6 @@ public final class ActiveCraftCore extends JavaPlugin {
         //loadMaxHomePermissions();
 
         pluginManager.registerEvents(new JoinQuitListener(), this);
-        pluginManager.registerEvents(new ProfileListener(), this);
         pluginManager.registerEvents(new OffInvSeeCommand(), this);
         pluginManager.registerEvents(new MessageListener(), this);
         pluginManager.registerEvents(new LogCommand(), this);
@@ -153,6 +151,7 @@ public final class ActiveCraftCore extends JavaPlugin {
         // commands
         Bukkit.getPluginCommand("heal").setExecutor(new HealCommand());
         Bukkit.getPluginCommand("spawn").setExecutor(new SpawnCommand());
+        Bukkit.getPluginCommand("setspawn").setExecutor(new SpawnCommand());
         Bukkit.getPluginCommand("ping").setExecutor(new PingCommand());
         Bukkit.getPluginCommand("broadcast").setExecutor(new BroadCastCommand());
         Bukkit.getPluginCommand("msg").setExecutor(new MsgCommand());

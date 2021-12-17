@@ -237,7 +237,7 @@ public class CommandMessages {
 
     public static String TELEPORTED_BACK_OTHERS(Player target) {
 
-        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.BACK, "teleported-back")
+        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.BACK, "teleported-back-others")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
                 .replace("%t_displayname%", ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD);
         return msg;

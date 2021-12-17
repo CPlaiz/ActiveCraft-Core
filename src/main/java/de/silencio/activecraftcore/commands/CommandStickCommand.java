@@ -102,7 +102,6 @@ public class CommandStickCommand implements CommandExecutor, Listener, TabComple
     public void onCommandStickInteract(EntityDamageByEntityEvent event) {
 
         if (event.getDamager().getType() == EntityType.PLAYER && event.getEntityType() == EntityType.PLAYER) {
-            event.setCancelled(true);
             Player player = (Player) event.getDamager();
             Player target = (Player) event.getEntity();
             ItemStack eventItem = player.getInventory().getItemInHand();

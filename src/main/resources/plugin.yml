@@ -190,7 +190,7 @@ commands:
     permission: activecraft.kickall
     permission-message: "§cWarning! §7You don't have the permission to do that!"
   ram:
-    description: Shows RAM info.
+    description: Shows RAM info.w
     permission: activecraft.ram
     permission-message: "§cWarning! §7You don't have the permission to do that!"
   staffchat:
@@ -707,7 +707,7 @@ permissions:
   activecraft.kickall.bypass:
     description: Prevents a player from being kicked by /kickall.
     default: op
-  activecraf.ram:
+  activecraft.ram:
     description: Shows RAM info.
     default: op
   activecraft.staffchat:
