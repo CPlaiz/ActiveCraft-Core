@@ -39,6 +39,7 @@ public class Profile {
         EDIT_SIGN,
         KNOWN_IPS,
         HOME_LIST,
+        RECEIVE_SOCIALSPY,
         FORCE_MUTED;
 
         Value() {
@@ -74,6 +75,7 @@ public class Profile {
     private boolean log_enabled;
     private boolean bypass_lockdown;
     private boolean edit_sign;
+    private boolean receive_socialspy;
     private List<String> known_ips;
     private HashMap<String, Location> homeList;
 
@@ -125,6 +127,7 @@ public class Profile {
         bypass_lockdown = fileConfig.getBoolean("lockdown-bypass");
         edit_sign = fileConfig.getBoolean("edit-sign");
         known_ips = fileConfig.getStringList("known-ips");
+        receive_socialspy = fileConfig.getBoolean("receive-socialspy");
 
         playtime_minutes = playtimeConfig.getInt(owner + ".minutes");
         playtime_hours = playtimeConfig.getInt(owner + ".hours");
@@ -245,6 +248,10 @@ public class Profile {
             case HOME_LIST:
                 homeConfig.set(owner + ".", object);
                 break;
+
+            case RECEIVE_SOCIALSPY:
+                playerdataConfig.set("receive-socialspy", object);
+                break;
         }
         playerdataConfig.saveConfig();
         playtimeConfig.saveConfig();
@@ -363,6 +370,10 @@ public class Profile {
 
     public boolean isForcemuted() {
         return forcemuted;
+    }
+
+    public boolean canReceiveSocialspy() {
+        return receive_socialspy;
     }
 
 }

@@ -24,6 +24,7 @@ public class TpaDenyCommand implements CommandExecutor {
 
                         Player player = (Player) sender;
                         Player target = tpaList.get(sender);
+                        sender.sendMessage(CommandMessages.TPADENY_DENIED());
 
                         player.sendMessage(CommandMessages.TPADENY_RECIEVER_MESSAGE(sender));
                         target.sendMessage(CommandMessages.TPADENY_SENDER_MESSAGE(target));

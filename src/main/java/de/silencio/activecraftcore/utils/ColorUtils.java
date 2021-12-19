@@ -4,6 +4,69 @@ import org.bukkit.Color;
 
 public class ColorUtils {
 
+    public static String replaceColorAndFormat(String message) {
+        return replaceColor(replaceFormat(message));
+    }
+
+    public static String replaceColor(String message) {
+        message = replaceHex(message);
+        return message.replace("&0", "§0")
+                .replace("&1", "§1")
+                .replace("&2", "§2")
+                .replace("&3", "§3")
+                .replace("&4", "§4")
+                .replace("&5", "§5")
+                .replace("&6", "§6")
+                .replace("&7", "§7")
+                .replace("&8", "§8")
+                .replace("&9", "§9")
+                .replace("&a", "§a")
+                .replace("&b", "§b")
+                .replace("&c", "§c")
+                .replace("&d", "§d")
+                .replace("&e", "§e")
+                .replace("&f", "§f");
+    }
+
+    public static String replaceFormat(String message) {
+        return message.replace("&0", "§0")
+                .replace("&k", "§k")
+                .replace("&l", "§l")
+                .replace("&m", "§m")
+                .replace("&n", "§n")
+                .replace("&o", "§o")
+                .replace("&r", "§r");
+    }
+
+    public static String removeColorAndFormat(String string) {
+        String edited = string.replace("§0", "")
+                .replace("§1", "")
+                .replace("§2", "")
+                .replace("§3", "")
+                .replace("§4", "")
+                .replace("§5", "")
+                .replace("§6", "")
+                .replace("§7", "")
+                .replace("§8", "")
+                .replace("§9", "")
+                .replace("§a", "")
+                .replace("§b", "")
+                .replace("§c", "")
+                .replace("§d", "")
+                .replace("§e", "")
+                .replace("§f", "")
+                .replace("§k", "")
+                .replace("§l", "")
+                .replace("§m", "")
+                .replace("§n", "")
+                .replace("§o", "")
+                .replace("§r", "")
+                .replaceAll("§x(§[a-fA-F0-9]){6}", "");
+
+        return edited;
+    }
+
+
     public static Color bukkitColorFromString(String string) {
         Color color = null;
 
@@ -90,6 +153,25 @@ public class ColorUtils {
             ret[i] = Integer.parseInt(rgb.substring(i * 2, i * 2 + 2), 16);
         }
         return ret;
+    }
+
+    public static String replaceHex(String input) {
+        String[] inputArray = input.split("&#");
+        StringBuilder outputStringBuilder = new StringBuilder();
+        outputStringBuilder.append(inputArray[0]);
+        for (int i = 1; i < inputArray.length; i++) {
+            if (inputArray[i].length() < 6) continue;
+            String substring = inputArray[i].substring(0, 6);
+            String rest = inputArray[i].length() > 5 ? inputArray[i].substring(6) : "";
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append("§x");
+            for (char strChar : substring.toCharArray()) {
+                String s = String.valueOf(strChar);
+                stringBuilder.append("§").append(s);
+            }
+            outputStringBuilder.append(stringBuilder).append(rest);
+        }
+        return outputStringBuilder.toString();
     }
 
 }

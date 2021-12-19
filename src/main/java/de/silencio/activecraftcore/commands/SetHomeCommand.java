@@ -52,7 +52,7 @@ public class SetHomeCommand implements CommandExecutor {
                         player.sendMessage(Errors.WARNING() + CommandMessages.MAX_HOMES());
                         return false;
                     }
-                    homeList.add(args[0]);
+                    if (!homeList.contains(args[0])) homeList.add(args[0]);
                     homeconfig.set(playerName + ".home_list", homeList);
                     homeconfig.set(playerName + "." + args[0], loc);
                     homeconfig.saveConfig();
@@ -88,15 +88,15 @@ public class SetHomeCommand implements CommandExecutor {
                 int maxHomes = 1;
                 for (Permission perm : Bukkit.getPluginManager().getPermissions()) {
                     if (perm.getName().startsWith("activecraft.maxhomes.")) {
-                        String[] permParts = perm.getName().split(".");
+                        String[] permParts = perm.getName().split("\\.");
                         maxHomes = Integer.parseInt(permParts[2]);
                     }
                 }
-                if (!(homeList.size() < maxHomes)) {
+                if (!(homeList.size() < maxHomes || target.isOp())) {
                     player.sendMessage(Errors.WARNING() + CommandMessages.MAX_HOMES_OTHERS());
                     return false;
                 }
-                homeList.add(args[1]);
+                if (!homeList.contains(args[1])) homeList.add(args[1]);
                 homeconfig.set(targetName + ".home_list", homeList);
                 homeconfig.set(targetName + "." + args[1], loc);
                 homeconfig.saveConfig();

@@ -1,21 +1,27 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.ActiveCraftCore;
 import de.silencio.activecraftcore.events.MsgEvent;
 import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
+import de.silencio.activecraftcore.utils.ColorUtils;
 import de.silencio.activecraftcore.utils.FileConfig;
+import de.silencio.activecraftcore.utils.Profile;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
-public class MsgCommand implements CommandExecutor {
+public class MsgCommand implements CommandExecutor, TabCompleter {
 
-    public static HashMap<Player, Player> playerStoring = new HashMap<>();
+
 
     String message = "";
 
@@ -40,6 +46,9 @@ public class MsgCommand implements CommandExecutor {
                                     message = message + args[i] + " ";
                                 }
 
+                                message = ColorUtils.replaceColor(message);
+                                message = ColorUtils.replaceFormat(message);
+
                                 MsgEvent event = new MsgEvent(sender, target, message);
                                 Bukkit.getPluginManager().callEvent(event);
                                 if (event.isCancelled()) return false;
@@ -50,15 +59,14 @@ public class MsgCommand implements CommandExecutor {
 
                                 FileConfig mainConfig = new FileConfig("config.yml");
 
-                                playerStoring.put(target, player);
+                                ActiveCraftCore.getMsgPlayerStoring().put(target, player);
 
                                 //socialspy
                                 for(Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-                                    if (onlinePlayer.hasPermission("activecraft.msg.spy")) {
-                                        if(onlinePlayer != player && onlinePlayer != target) {
-                                            onlinePlayer.sendMessage(CommandMessages.SOCIALSPY_PREFIX_TO(target, player, event.getMessage()));
-                                        }
-                                    }
+                                    if (!onlinePlayer.hasPermission("activecraft.msg.spy")) continue;
+                                    if(!new Profile(onlinePlayer).canReceiveSocialspy()) continue;
+                                    if (onlinePlayer != player && onlinePlayer != target)
+                                        onlinePlayer.sendMessage(CommandMessages.SOCIALSPY_PREFIX_TO(player, target, message));
                                 }
                                 if (mainConfig.getBoolean("socialspy-to-console")) {
                                     Bukkit.getConsoleSender().sendMessage(CommandMessages.SOCIALSPY_PREFIX_TO(target, player, event.getMessage()));
@@ -79,6 +87,9 @@ public class MsgCommand implements CommandExecutor {
                         message = message + args[i] + " ";
                     }
 
+                    message = ColorUtils.replaceColor(message);
+                    message = ColorUtils.replaceFormat(message);
+
                     MsgEvent event = new MsgEvent(sender, target, message);
                     Bukkit.getPluginManager().callEvent(event);
                     if (event.isCancelled()) return false;
@@ -90,5 +101,26 @@ public class MsgCommand implements CommandExecutor {
             } else sender.sendMessage(Errors.INVALID_PLAYER());
         }
         return true;
+    }
+
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+        ArrayList<String> list = new ArrayList<>();
+        if (args.length == 0) return list;
+        if (args.length == 1) {
+            for (Player player : Bukkit.getOnlinePlayers()) {
+                list.add(player.getName());
+            }
+        }
+        ArrayList<String> completerList = new ArrayList<>();
+        String currentarg = args[args.length-1].toLowerCase();
+        for (String s : list) {
+            String s1 = s.toLowerCase();
+            if (s1.startsWith(currentarg)){
+                completerList.add(s);
+            }
+        }
+
+        return completerList;
     }
 }

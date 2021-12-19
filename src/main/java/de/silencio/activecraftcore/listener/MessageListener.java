@@ -2,6 +2,7 @@ package de.silencio.activecraftcore.listener;
 
 import de.silencio.activecraftcore.ActiveCraftCore;
 import de.silencio.activecraftcore.dialogue.DialogueManager;
+import de.silencio.activecraftcore.utils.ColorUtils;
 import de.silencio.activecraftcore.utils.FileConfig;
 import de.silencio.activecraftcore.utils.MessageUtils;
 import org.bukkit.Bukkit;
@@ -19,8 +20,8 @@ public class MessageListener implements Listener {
     @EventHandler (priority = EventPriority.LOWEST)
     public void onChatMessage(AsyncPlayerChatEvent event) {
 
-        String message = MessageUtils.replaceColor(event.getMessage());
-        message = MessageUtils.replaceFormat(message);
+        String message = ColorUtils.replaceColor(event.getMessage());
+        message = ColorUtils.replaceFormat(message);
         Player player = event.getPlayer();
 
         if (!ActiveCraftCore.getPlugin().getDialogueList().contains(player)) {

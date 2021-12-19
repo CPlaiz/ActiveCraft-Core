@@ -30,6 +30,8 @@ public final class ActiveCraftCore extends JavaPlugin {
     private static ActiveCraftCore plugin;
     private static VanishManager vanishManager;
 
+    private static HashMap<Player, Player> msgPlayerStoring = new HashMap<>();
+
     private Language language;
     private ActiveCraftMessage activeCraftMessage;
 
@@ -41,6 +43,7 @@ public final class ActiveCraftCore extends JavaPlugin {
     private HashMap<Player, ProfileMenu> profileMenuList;
 
     private HashMap<Player, Player> tpaList;
+    private HashMap<Player, BukkitRunnable> tpaTimerList;
 
     private HashMap<GuiCreator, GuiData> guiDataMap;
     private HashMap<Integer, Gui> guiList;
@@ -59,12 +62,13 @@ public final class ActiveCraftCore extends JavaPlugin {
     public void onEnable() {
         // Plugin startup logic
         this.dialogueManagerList = new DialogueManagerList();
-        this.dialogueList = new ArrayList<Player>();
+        this.dialogueList = new ArrayList<>();
         this.vanishManager = new VanishManager(this);
 
         profileMenuList = new HashMap<>();
 
         tpaList = new HashMap<>();
+        tpaTimerList = new HashMap<>();
 
         //gui creator stuff
         guiDataMap = new HashMap<>();
@@ -244,6 +248,8 @@ public final class ActiveCraftCore extends JavaPlugin {
         Bukkit.getPluginCommand("language").setExecutor(new LanguageCommand());
         Bukkit.getPluginCommand("bow").setExecutor(new BowCommand());
         Bukkit.getPluginCommand("sudo").setExecutor(new SudoCommand());
+        Bukkit.getPluginCommand("togglesocialspy").setExecutor(new SocialSpyToggleCommand());
+        Bukkit.getPluginCommand("drain").setExecutor(new DrainCommand());
     }
 
     public static ActiveCraftCore getPlugin() {
@@ -448,5 +454,21 @@ public final class ActiveCraftCore extends JavaPlugin {
             }
         }
         return null;
+    }
+
+    public static HashMap<Player, Player> getMsgPlayerStoring() {
+        return msgPlayerStoring;
+    }
+
+    public static void setMsgPlayerStoring(HashMap<Player, Player> msgPlayerStoring) {
+        ActiveCraftCore.msgPlayerStoring = msgPlayerStoring;
+    }
+
+    public HashMap<Player, BukkitRunnable> getTpaTimerList() {
+        return tpaTimerList;
+    }
+
+    public void setTpaTimerList(HashMap<Player, BukkitRunnable> tpaTimerList) {
+        this.tpaTimerList = tpaTimerList;
     }
 }

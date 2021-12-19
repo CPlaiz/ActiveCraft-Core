@@ -2,6 +2,7 @@ package de.silencio.activecraftcore.commands;
 
 import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
+import de.silencio.activecraftcore.utils.ColorUtils;
 import de.silencio.activecraftcore.utils.MessageUtils;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -117,7 +118,7 @@ public class ItemCommand implements CommandExecutor, TabCompleter {
                         }
                         ItemStack stack = player.getInventory().getItemInMainHand();
                         ItemMeta meta = stack.getItemMeta();
-                        meta.setDisplayName(MessageUtils.replaceFormat(MessageUtils.replaceColor(stringBuilder.toString())));
+                        meta.setDisplayName(ColorUtils.replaceFormat(ColorUtils.replaceColor(stringBuilder.toString())));
                         stack.setItemMeta(meta);
 
                         sender.sendMessage(CommandMessages.ITEM_RENAMED());
@@ -142,7 +143,7 @@ public class ItemCommand implements CommandExecutor, TabCompleter {
                                 stringBuilder.append(args[i]);
                                 stringBuilder.append(" ");
                             }
-                            stringList.add(MessageUtils.replaceFormat(MessageUtils.replaceColor(stringBuilder.toString())));
+                            stringList.add(ColorUtils.replaceFormat(ColorUtils.replaceColor(stringBuilder.toString())));
                             meta.setLore(stringList);
                             stack.setItemMeta(meta);
                             sender.sendMessage(CommandMessages.ITEM_LORE_ADD());
@@ -158,7 +159,7 @@ public class ItemCommand implements CommandExecutor, TabCompleter {
                                 stringBuilder.append(" ");
                             }
                             stringList.clear();
-                            stringList.add(MessageUtils.replaceFormat(MessageUtils.replaceColor(stringBuilder.toString())));
+                            stringList.add(ColorUtils.replaceFormat(ColorUtils.replaceColor(stringBuilder.toString())));
                             meta.setLore(stringList);
                             stack.setItemMeta(meta);
 

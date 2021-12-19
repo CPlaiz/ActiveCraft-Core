@@ -79,6 +79,7 @@ public enum CommandType {
     WHEREAMI,
     WHOIS,
     XP,
+    DRAIN,
     LANGUAGE;
 
 }

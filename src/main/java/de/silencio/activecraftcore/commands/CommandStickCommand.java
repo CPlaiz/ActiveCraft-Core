@@ -1,6 +1,7 @@
 package de.silencio.activecraftcore.commands;
 
 import de.silencio.activecraftcore.messages.Errors;
+import de.silencio.activecraftcore.utils.ColorUtils;
 import de.silencio.activecraftcore.utils.FileConfig;
 import de.silencio.activecraftcore.utils.MessageUtils;
 import org.bukkit.Bukkit;
@@ -87,7 +88,7 @@ public class CommandStickCommand implements CommandExecutor, Listener, TabComple
             if (itemMeta.lore() == null) return;
             for (String rawLore : itemMeta.getLore()) {
                 String command;
-                command = MessageUtils.removeColorAndFormat(rawLore);
+                command = ColorUtils.removeColorAndFormat(rawLore);
                 command = command.replace("Bound Command: /", "");
                 command = command.replace("/", "");
                 command = command.replace("@p", target.getName());
@@ -114,7 +115,7 @@ public class CommandStickCommand implements CommandExecutor, Listener, TabComple
             if (itemMeta.lore() == null) return;
             for (String rawLore : itemMeta.getLore()) {
                 String command;
-                command = MessageUtils.removeColorAndFormat(rawLore);
+                command = ColorUtils.removeColorAndFormat(rawLore);
                 command = command.replace("Bound Command: /", "");
                 command = command.replace("/", "");
                 command = command.replace("@p", target.getName());
@@ -141,7 +142,7 @@ public class CommandStickCommand implements CommandExecutor, Listener, TabComple
         if (itemMeta.lore() == null) return;
         for (String rawLore : itemMeta.getLore()) {
             String command;
-            command = MessageUtils.removeColorAndFormat(rawLore);
+            command = ColorUtils.removeColorAndFormat(rawLore);
             command = command.replace("Bound Command: /", "");
             command = command.replace("/", "");
 

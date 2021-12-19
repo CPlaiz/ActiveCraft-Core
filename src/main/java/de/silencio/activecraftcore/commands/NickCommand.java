@@ -2,6 +2,7 @@ package de.silencio.activecraftcore.commands;
 
 import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
+import de.silencio.activecraftcore.utils.ColorUtils;
 import de.silencio.activecraftcore.utils.FileConfig;
 import de.silencio.activecraftcore.utils.MessageUtils;
 import org.bukkit.Bukkit;
@@ -30,8 +31,8 @@ public class NickCommand implements CommandExecutor {
                             stringBuilder.append(args[i]);
                         }
                         String nickname = stringBuilder.toString();
-                        nickname = MessageUtils.replaceColor(nickname);
-                        nickname = MessageUtils.replaceFormat(nickname);
+                        nickname = ColorUtils.replaceColor(nickname);
+                        nickname = ColorUtils.replaceFormat(nickname);
                         FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + player.getName().toLowerCase() + ".yml");
 
                         setDisplaynameFromConfig(player, playerdataConfig.getString("colornick"), nickname);
@@ -50,8 +51,8 @@ public class NickCommand implements CommandExecutor {
                             stringBuilder.append(args[i]);
                         }
                         String nickname = stringBuilder.toString();
-                        nickname = MessageUtils.replaceColor(nickname);
-                        nickname = MessageUtils.replaceFormat(nickname);
+                        nickname = ColorUtils.replaceColor(nickname);
+                        nickname = ColorUtils.replaceFormat(nickname);
 
                         Player target = Bukkit.getPlayer(args[0]);
                         if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
@@ -79,8 +80,8 @@ public class NickCommand implements CommandExecutor {
                                 stringBuilder.append(args[i]);
                             }
                             String nickname = stringBuilder.toString();
-                            nickname = MessageUtils.replaceColor(nickname);
-                            nickname = MessageUtils.replaceFormat(nickname);
+                            nickname = ColorUtils.replaceColor(nickname);
+                            nickname = ColorUtils.replaceFormat(nickname);
                             FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + player.getName().toLowerCase() + ".yml");
 
                             setDisplaynameFromConfig(player, playerdataConfig.getString("colornick"), nickname);

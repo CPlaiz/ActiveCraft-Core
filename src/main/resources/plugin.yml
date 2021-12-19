@@ -408,6 +408,14 @@ commands:
     description: Command to execute a command as another player
     permission: activecraft.sudo
     permission-message: "§cWarning! §7You don't have the permission to do that!"
+  togglesocialspy:
+    description: Command to toggle whether you get SocialSpy messages or not.
+    permission: activecraft.msg.spy
+    permission-message: "§cWarning! §7You don't have the permission to do that!"
+  drain:
+    description: Command to remove water and lava in a certain area.
+    permission: activecraft.drain
+    permission-message: "§cWarning! §7You don't have the permission to do that!"
 
 permissions:
   activecraft.heal.self:
@@ -1020,12 +1028,12 @@ permissions:
   activecraft.kick:
     description: Allows the player to kick another player.
     default: op
-  activecraf.tp.self:
+  activecraft.tp.self:
     description: Allows the player to teleport themselves to other players.
     default: op
     children:
       activecraft.tp: true
-  activecraf.tp.others:
+  activecraft.tp.others:
     description: Allows the player to teleport other players to other players.
     default: op
     children:
@@ -1104,5 +1112,8 @@ permissions:
     description: Allows the player to execute the /trigger command provided by vanilla.
     default: op
   activecraft.vanilla.version:
+    description: Allows the player to execute the /version command provided by Bukkit.
+    default: op
+  activecraft.drain:
     description: Allows the player to execute the /version command provided by Bukkit.
     default: op

@@ -29,6 +29,7 @@ public class TpAcceptCommand implements CommandExecutor {
                         Player player = (Player) sender;
                         Player target = tpaList.get(sender);
                         Location loc = player.getLocation();
+                        sender.sendMessage(CommandMessages.TPACCEPT_ACCEPTED());
                         if (!fileConfig.getBoolean("use-timer-on-tpa")) {
                             tpaList.get(sender).sendActionBar(CommandMessages.TPACCEPT_ACTIONBAR());
                             tpaList.get(sender).teleport(loc);
@@ -41,21 +42,25 @@ public class TpAcceptCommand implements CommandExecutor {
                                 public void run() {
 
                                     if (time == 0) {
-                                        tpaList.get(sender).sendActionBar(CommandMessages.TPACCEPT_ACTIONBAR());
-                                        tpaList.get(sender).teleport(loc);
+                                        target.sendActionBar(CommandMessages.TPACCEPT_ACTIONBAR());
+                                        target.teleport(loc);
                                         target.sendMessage(CommandMessages.TPACCEPT_RECIEVER_MESSAGE(sender));
                                         target.playSound(target.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
                                         sender.sendMessage(CommandMessages.TPACCEPT_SENDER_MESSAGE(target));
                                         cancel();
+                                        ActiveCraftCore.getPlugin().getTpaTimerList().put(tpaList.get(sender), null);
                                         ActiveCraftCore.getPlugin().removeFromTpaList((Player) sender);
                                         return;
                                     }
 
-                                    tpaList.get(sender).sendActionBar(ChatColor.GOLD + "" + time);
+                                    target.playSound(target.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1f, 1f);
+                                    target.sendActionBar(ChatColor.GOLD + "" + time);
                                     time--;
 
                                 }
                             };
+                            if (ActiveCraftCore.getPlugin().getTpaTimerList().get(target) != null) ActiveCraftCore.getPlugin().getTpaTimerList().get(target).cancel();
+                            ActiveCraftCore.getPlugin().getTpaTimerList().put(tpaList.get(sender), runnable);
                             runnable.runTaskTimer(ActiveCraftCore.getPlugin(), 0, 20);
                         }
 

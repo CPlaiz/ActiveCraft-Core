@@ -3,6 +3,7 @@ package de.silencio.activecraftcore.commands;
 import de.silencio.activecraftcore.ActiveCraftCore;
 import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
+import de.silencio.activecraftcore.utils.ColorUtils;
 import de.silencio.activecraftcore.utils.FileConfig;
 import de.silencio.activecraftcore.utils.MessageUtils;
 import org.bukkit.Bukkit;
@@ -34,7 +35,7 @@ public class RealNameCommand implements CommandExecutor, TabCompleter {
 
                 for (String playername : ActiveCraftCore.getPlugin().getPlayerlist().keySet()) {
                     FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + playername.toLowerCase() + ".yml");
-                    if (stringBuilder.toString().trim().equalsIgnoreCase(MessageUtils.removeColorAndFormat(playerdataConfig.getString("nickname")))) {
+                    if (stringBuilder.toString().trim().equalsIgnoreCase(ColorUtils.removeColorAndFormat(playerdataConfig.getString("nickname")))) {
                         associatedPlayerList.add(playerdataConfig.getString("name"));
                     }
                 }
@@ -61,7 +62,7 @@ public class RealNameCommand implements CommandExecutor, TabCompleter {
         if (args.length == 1) {
             for (Player player : Bukkit.getOnlinePlayers()) {
                 FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + player.getName().toLowerCase() + ".yml");
-                list.add(MessageUtils.removeColorAndFormat(playerdataConfig.getString("nickname")));
+                list.add(ColorUtils.removeColorAndFormat(playerdataConfig.getString("nickname")));
             }
         }
 

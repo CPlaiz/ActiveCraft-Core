@@ -2,6 +2,7 @@ package de.silencio.activecraftcore.commands;
 
 import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
+import de.silencio.activecraftcore.utils.ColorUtils;
 import de.silencio.activecraftcore.utils.MessageUtils;
 import de.silencio.activecraftcore.utils.StringUtils;
 import org.bukkit.ChatColor;
@@ -45,7 +46,7 @@ public class BookCommand implements CommandExecutor, TabCompleter {
                                     } else isFirst = false;
                                     title = title + args[i];
                                 }
-                                bookmeta.setTitle(MessageUtils.replaceColorAndFormat(title));
+                                bookmeta.setTitle(ColorUtils.replaceColorAndFormat(title));
                                 book.setItemMeta(bookmeta);
                                 sender.sendMessage(CommandMessages.CHANGED_TITLE(title));
                             } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
@@ -80,7 +81,7 @@ public class BookCommand implements CommandExecutor, TabCompleter {
                                     sender.sendMessage(Errors.INVALID_NUMBER());
                                     return false;
                                 };
-                                bookmeta.setPage(Integer.parseInt(args[1]), MessageUtils.replaceColorAndFormat(editpage));
+                                bookmeta.setPage(Integer.parseInt(args[1]), ColorUtils.replaceColorAndFormat(editpage));
                                 book.setItemMeta(bookmeta);
                                 sender.sendMessage(CommandMessages.CHANGED_PAGE(num.toString()).replace("%page%", ChatColor.AQUA + num.toString() + ChatColor.GOLD));
                             } else sender.sendMessage(Errors.INVALID_ARGUMENTS());

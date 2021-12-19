@@ -26,17 +26,17 @@ public class HatCommand implements CommandExecutor {
                     helmetitem = new ItemStack(Material.AIR);
                 }
 
-                ItemStack setEmptyHand = new ItemStack(Material.AIR);
+                ItemStack emptyHand = new ItemStack(Material.AIR);
                 ItemStack air = new ItemStack(Material.AIR, 0);
 
                 if (!(handitem.getType() == Material.AIR && helmetitem.getType() == Material.AIR)) {
-                    player.getInventory().addItem(helmetitem);
                     player.getInventory().setHelmet(handitem);
-                    player.getInventory().setItemInMainHand(setEmptyHand);
+                    player.getInventory().setItemInMainHand(emptyHand);
+                    player.getInventory().addItem(helmetitem);
                     player.sendMessage(CommandMessages.HAT_SUCCESS());
                 } else if (handitem.getType() != Material.AIR) {
                     player.getInventory().setHelmet(handitem);
-                    player.getInventory().setItemInMainHand(setEmptyHand);
+                    player.getInventory().setItemInMainHand(emptyHand);
                     player.sendMessage(CommandMessages.HAT_SUCCESS());
                 } else sender.sendMessage(Errors.NOT_HOLDING_ITEM());
             } else sender.sendMessage(Errors.NO_PERMISSION());

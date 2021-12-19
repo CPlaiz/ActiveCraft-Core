@@ -1127,6 +1127,15 @@ public class CommandMessages {
         return msg;
     }
 
+
+    public static String SOCIALSPY_ON() {
+        return ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.MSG, "socialspy-on");
+    }
+
+    public static String SOCIALSPY_OFF() {
+        return ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.MSG, "socialspy-off");
+    }
+
     public static String CONSOLE_MSG_PREFIX(String message) {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.MSG, "console-msg-prefix")
@@ -1600,6 +1609,12 @@ public class CommandMessages {
     }
 
     // TPACCEPT
+    public static String TPACCEPT_ACCEPTED() {
+
+        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.TPACCEPT, "tpaccept-accepted");
+        return msg;
+    }
+
     public static String TPACCEPT_ACTIONBAR() {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.TPACCEPT, "tpaccept-actionbar");
@@ -1631,6 +1646,13 @@ public class CommandMessages {
     }
 
     // TPADENY
+
+    public static String TPADENY_DENIED() {
+
+        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.TPACCEPT, "tpadeny-denied");
+        return msg;
+    }
+
     public static String TPADENY_RECIEVER_MESSAGE(CommandSender sender) {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.TPADENY, "tpadeny-reciever-message");
@@ -2237,4 +2259,11 @@ public class CommandMessages {
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.AFK, "not-afk-target");
         return msg;
     }
+
+    public static String DRAIN_COMPLETE(int amount) {
+        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.DRAIN, "drain-complete")
+                .replace("%amount%", ChatColor.AQUA + "" + amount + ChatColor.GOLD);
+        return msg;
+    }
+
 }

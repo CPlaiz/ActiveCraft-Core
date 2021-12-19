@@ -2,10 +2,7 @@ package de.silencio.activecraftcore.manager;
 
 import de.silencio.activecraftcore.events.PlayerAfkEvent;
 import de.silencio.activecraftcore.messages.CommandMessages;
-import de.silencio.activecraftcore.utils.ConfigUtils;
-import de.silencio.activecraftcore.utils.FileConfig;
-import de.silencio.activecraftcore.utils.MessageUtils;
-import de.silencio.activecraftcore.utils.Profile;
+import de.silencio.activecraftcore.utils.*;
 import net.minecraft.server.commands.CommandMe;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -32,7 +29,7 @@ public class AfkManager {
             if(mainConfig.getBoolean("announce-afk")) {
                 for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
                     if (onlinePlayer != player) {
-                        onlinePlayer.sendMessage(ChatColor.GRAY + "" + MessageUtils.removeColorAndFormat(CommandMessages.NOW_AFK(player)));
+                        onlinePlayer.sendMessage(ChatColor.GRAY + "" + ColorUtils.removeColorAndFormat(CommandMessages.NOW_AFK(player)));
                     }
                 }
             }
@@ -51,7 +48,7 @@ public class AfkManager {
             if (mainConfig.getBoolean("announce-afk")) {
                 for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
                     if (onlinePlayer != player) {
-                        onlinePlayer.sendMessage(ChatColor.GRAY + "" + MessageUtils.removeColorAndFormat(CommandMessages.NOT_AFK(player)));
+                        onlinePlayer.sendMessage(ChatColor.GRAY + "" + ColorUtils.removeColorAndFormat(CommandMessages.NOT_AFK(player)));
                     }
                 }
             }
