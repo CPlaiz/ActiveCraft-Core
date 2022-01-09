@@ -297,11 +297,9 @@ public class CommandMessages {
         return ChatColor.GRAY + acm.getMessage(MessageType.COMMAND, CommandType.BUTCHER, "no-mobs");
     }
 
-    public static String KILLED_MOBS(String amount) {
-
-        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.BUTCHER, "killed-mobs")
-                .replace("%amount%", ChatColor.AQUA + amount + ChatColor.GOLD);
-        return msg;
+    public static String KILLED_MOBS(int amount) {
+        return ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.BUTCHER, "killed-mobs")
+                .replace("%amount%", ChatColor.AQUA + "" + amount + ChatColor.GOLD);
     }
 
     // CLEARINVENTORY
@@ -1646,9 +1644,8 @@ public class CommandMessages {
                 .replace("%amount%", ChatColor.AQUA + amount + ChatColor.GOLD);
     }
 
-    public static String XP_LEVELS_OTHERS_MESSAGE(CommandSender sender, String amount) {
-
-        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.XP, "xp-levels-others-message")
+    public static String XP_ADD_LEVELS_OTHERS_MESSAGE(CommandSender sender, String amount) {
+        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.XP, "xp-add-levels-others-message")
                 .replace("%amount%", ChatColor.AQUA + amount + ChatColor.GOLD);
         if (sender instanceof Player) {
             msg = msg.replace("%s_displayname%", ChatColor.AQUA + ((Player) sender).getDisplayName() + ChatColor.GOLD);
@@ -1663,9 +1660,8 @@ public class CommandMessages {
                 .replace("%amount%", ChatColor.AQUA + amount + ChatColor.GOLD);
     }
 
-    public static String XP_XP_OTHERS_MESSAGE(CommandSender sender, String amount) {
-
-        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.XP, "xp-xp-others-message")
+    public static String XP_ADD_XP_OTHERS_MESSAGE(CommandSender sender, String amount) {
+        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.XP, "xp-add-xp-others-message")
                 .replace("%amount%", ChatColor.AQUA + amount + ChatColor.GOLD);
         if (sender instanceof Player) {
             msg = msg.replace("%s_displayname%", ChatColor.AQUA + ((Player) sender).getDisplayName() + ChatColor.GOLD);
@@ -1673,6 +1669,69 @@ public class CommandMessages {
         return msg;
     }
 
+    /// SET
+    public static String XP_SET_LEVELS(String amount) {
+        return ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.XP, "xp-set-levels")
+                .replace("%amount%", ChatColor.AQUA + amount + ChatColor.GOLD);
+    }
+
+    public static String XP_SET_XP(String amount) {
+        return ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.XP, "xp-set-xp")
+                .replace("%amount%", ChatColor.AQUA + amount + ChatColor.GOLD);
+    }
+
+    public static String XP_SET_LEVELS_OTHERS(Player target, String amount) {
+        return ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.XP, "xp-set-levels-others")
+                .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
+                .replace("%t_displayname%", ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD)
+                .replace("%amount%", ChatColor.AQUA + amount + ChatColor.GOLD);
+    }
+
+    public static String XP_SET_LEVELS_OTHERS_MESSAGE(CommandSender sender, String amount) {
+        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.XP, "xp-set-levels-others-message")
+                .replace("%amount%", ChatColor.AQUA + amount + ChatColor.GOLD);
+        if (sender instanceof Player) {
+            msg = msg.replace("%s_displayname%", ChatColor.AQUA + ((Player) sender).getDisplayName() + ChatColor.GOLD);
+        } else msg = msg.replace("%s_displayname%", ChatColor.AQUA + sender.getName() + ChatColor.GOLD);
+        return msg;
+    }
+
+    public static String XP_SET_XP_OTHERS(Player target, String amount) {
+        return ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.XP, "xp-set-xp-others")
+                .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
+                .replace("%t_displayname%", ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD)
+                .replace("%amount%", ChatColor.AQUA + amount + ChatColor.GOLD);
+    }
+
+    public static String XP_SET_XP_OTHERS_MESSAGE(CommandSender sender, String amount) {
+        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.XP, "xp-set-xp-others-message")
+                .replace("%amount%", ChatColor.AQUA + amount + ChatColor.GOLD);
+        if (sender instanceof Player) {
+            msg = msg.replace("%s_displayname%", ChatColor.AQUA + ((Player) sender).getDisplayName() + ChatColor.GOLD);
+        } else msg = msg.replace("%s_displayname%", ChatColor.AQUA + sender.getName() + ChatColor.GOLD);
+        return msg;
+    }
+
+    /// CLEAR
+    public static String XP_CLEAR() {
+        return ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.XP, "xp-set-xp");
+    }
+
+    public static String XP_CLEAR_OTHERS(Player target) {
+        return ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.XP, "xp-set-xp-others-message")
+                .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
+                .replace("%t_displayname%", ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD);
+    }
+
+    public static String XP_CLEAR_OTHERS_MESSAGE(CommandSender sender) {
+        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.XP, "xp-set-xp-others-message");
+        if (sender instanceof Player) {
+            msg = msg.replace("%s_displayname%", ChatColor.AQUA + ((Player) sender).getDisplayName() + ChatColor.GOLD);
+        } else msg = msg.replace("%s_displayname%", ChatColor.AQUA + sender.getName() + ChatColor.GOLD);
+        return msg;
+    }
+
+    // LANGUAGE
     public static String CURRENT_LANGUAGE(String language, String code) {
         return ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.LANGUAGE, "current-language")
                 .replace("%language%", ChatColor.AQUA + language + ChatColor.GOLD)
@@ -1685,6 +1744,7 @@ public class CommandMessages {
                 .replace("%code%", ChatColor.AQUA + code + ChatColor.GOLD);
     }
 
+    // AFK
     public static String AFK_TAG() {
         return ChatColor.GRAY + acm.getMessage(MessageType.COMMAND, CommandType.AFK, "afk-tag");
     }
@@ -1711,6 +1771,7 @@ public class CommandMessages {
         return ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.AFK, "not-afk-target");
     }
 
+    // DRAIN
     public static String DRAIN_COMPLETE(int amount) {
         return ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.DRAIN, "drain-complete")
                 .replace("%amount%", ChatColor.AQUA + "" + amount + ChatColor.GOLD);

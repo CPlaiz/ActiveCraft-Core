@@ -521,12 +521,21 @@ en:
       god: 'God: %god%'
       vanished: 'Vanished: %vanished%'
     xp:
-      xp-levels: 'Gave yourself %amount% levels.'
-      xp-xp: 'Gave yourself %amount% xp.'
-      xp-levels-others: 'Gave %t_displayname% %amount% levels.'
-      xp-levels-others-message: 'You were given %amount% levels by %s_displayname%.'
-      xp-xp-others: 'Gave %t_displayname% %amount% xp.'
-      xp-xp-others-message: 'You were given %amount% xp by %s_displayname%.'
+      xp-add-levels: 'Gave yourself %amount% levels.'
+      xp-add-xp: 'Gave yourself %amount% xp.'
+      xp-add-levels-others: 'Gave %t_displayname% %amount% levels.'
+      xp-add-levels-others-message: 'You were given %amount% levels by %s_displayname%.'
+      xp-add-xp-others: 'Gave %t_displayname% %amount% xp.'
+      xp-add-xp-others-message: 'You were given %amount% xp by %s_displayname%.'
+      xp-set-levels: 'Set your exp to %amount% levels.'
+      xp-set-xp: 'Set your exp to %amount%.'
+      xp-set-levels-others: "Set %t_displayname%'s exp to %amount% levels."
+      xp-set-levels-others-message: 'Your exp has been set to %amount% levels by %s_displayname%.'
+      xp-set-xp-others: "Set %t_displayname%'s exp to %amount%."
+      xp-set-xp-others-message: 'Your exp has been set to %amount% by %s_displayname%.'
+      xp-clear: 'You have cleared your exp.'
+      xp-clear-others: "You have cleared %t_displayname%'s exp."
+      xp-clear-others-message: 'Your exp has been cleared by %s_displayname%.'
     language:
       current-language: 'The plugin language currently is %language% (%code%).'
       language-set: 'The plugin language was set to %language% (%code%).'
@@ -1041,12 +1050,21 @@ de:
       god: 'Unsterblich: %god%'
       vanished: 'Unsichtbar: %vanished%'
     xp:
-      xp-levels: 'Du hast dir %amount% Level gegeben.'
-      xp-xp: 'Du hast dir %amount% Erfahrungspunkte gegeben.'
-      xp-levels-others: 'Du hast %t_displayname% %amount% Level gegeben.'
-      xp-levels-others-message: 'Dir wurden %amount% Level von %s_displayname% gegeben.'
-      xp-xp-others: 'Du hast %t_displayname% %amount% Erfahrungspunkte gegeben.'
-      xp-xp-others-message: 'Dir wurden %amount% Erfahrungspunkte von %s_displayname% gegeben.'
+      xp-add-levels: 'Du hast dir %amount% Level gegeben.'
+      xp-add-xp: 'Du hast dir %amount% Erfahrungspunkte gegeben.'
+      xp-add-levels-others: 'Du hast %t_displayname% %amount% Level gegeben.'
+      xp-add-levels-others-message: 'Dir wurden %amount% Level von %s_displayname% gegeben.'
+      xp-add-xp-others: 'Du hast %t_displayname% %amount% Erfahrungspunkte gegeben.'
+      xp-add-xp-others-message: 'Dir wurden %amount% Erfahrungspunkte von %s_displayname% gegeben.'
+      xp-set-levels: 'Du hast deine exp auf %amount% level gesetzt.'
+      xp-set-xp: 'Du hast deine exp auf %amount% exp gesetzt.'
+      xp-set-levels-others: "Du hast %t_displayname%s exp auf %amount% level gesetzt"
+      xp-set-levels-others-message: 'Deine exp wurden von %s_displayname% auf %amount% Level gesetzt.'
+      xp-set-xp-others: "Du hast %t_displayname%s exp auf %amount% exp gesetzt"
+      xp-set-xp-others-message: 'Deine exp wurden von %s_displayname% auf %amount% exp gesetzt.'
+      xp-clear: 'Du hast deine exp zurückgesetzt.'
+      xp-clear-others: "Du hast %t_displayname%s exp zurückgesetzt."
+      xp-clear-others-message: 'Deine exp wurden von %s_displayname% zurückgesetzt.'
     language:
       current-language: 'Die Pluginsprache ist %language% (%code%).'
       language-set: 'Die Pluginsprache wurde zu %language% (%code%) geändert.'
@@ -1564,12 +1582,21 @@ sv:
       god: 'Gud: %god%'
       vanished: 'Vanished: %vanished%'
     xp:
-      xp-levels: 'Gav dig %amount% levlar.'
-      xp-xp: 'Gav dig %amount% xp.'
-      xp-levels-others: 'Gav %t_displayname% %amount% levlar.'
-      xp-levels-others-message: 'Du fick %amount% levlar av %s_displayname%.'
-      xp-xp-others: 'Gav %t_displayname% %amount% xp.'
-      xp-xp-others-message: 'Du fick %amount% xp av %s_displayname%.'
+      xp-add-levels: 'Gave yourself %amount% levels.'
+      xp-add-xp: 'Gave yourself %amount% xp.'
+      xp-add-levels-others: 'Gave %t_displayname% %amount% levels.'
+      xp-add-levels-others-message: 'You were given %amount% levels by %s_displayname%.'
+      xp-add-xp-others: 'Gave %t_displayname% %amount% xp.'
+      xp-add-xp-others-message: 'You were given %amount% xp by %s_displayname%.'
+      xp-set-levels: 'Set your exp to %amount% levels.'
+      xp-set-xp: 'Set your exp to %amount%.'
+      xp-set-levels-others: "Set %t_displayname%'s exp to %amount% levels."
+      xp-set-levels-others-message: 'Your exp has been set to %amount% levels by %s_displayname%.'
+      xp-set-xp-others: "Set %t_displayname%'s exp to %amount%."
+      xp-set-xp-others-message: 'Your exp has been set to %amount% by %s_displayname%.'
+      xp-clear: 'You have cleared your exp.'
+      xp-clear-others: "You have cleared %t_displayname%'s exp."
+      xp-clear-others-message: 'Your exp has been cleared by %s_displayname%.'
     language:
       current-language: 'Plugin språket är för nuvarande %language% (%code%).'
       language-set: 'Plugin språket har blevit suttet till %language% (%code%).'
