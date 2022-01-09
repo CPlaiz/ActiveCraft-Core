@@ -5,18 +5,20 @@
 chat-format: '%displayname%§f: %message%'
 join-format: "§b» §f%displayname%"
 quit-format: "§c« §f%displayname%"
-# For further message customization see "messages.yml"
 
-# Misc settings
+# Teleportation Timers
 use-timer-on-tpa: true
+use-timer-on-spawn: true
+use-timer-on-home: true
+use-timer-on-warp: true
+
+# Default Mute
+# When activated, players who join for the first time cannot speak in chat.
 mute-new-players: false
 remove-default-mute-after: 10 #in minutes | 0 to disable
-check-for-matching-ips: true
-socialspy-to-console: false
-language: 'en'
-announce-afk: true
 
-# Vanish settings
+# Vanish Settings
+# Set if the vanish tag should be shown behind player names in tab.
 enable-vanish-format: true
 vanish-format: '[V]'
 
@@ -24,8 +26,20 @@ vanish-format: '[V]'
 lockdown-modt: "This server is in lockdown mode. You are not able to join until this is disabled."
 lockdown-kick-message: "This server is in lockdown mode. You are not able to join until this is disabled."
 
-# Clear In Tab Complete
-hide-commands-after-plugin-name: # remove commands from tab complete which have the following format: "pluginname:command"
+# Misc Settings
+# If people with the permission 'activecraft.matchingip.notify' should recieve messages when a player logs in with an already known IP address.
+check-for-matching-ips: true
+# If player to player messages should be broadcasted to the server console.
+socialspy-to-console: false
+# If command targets should recieve messages in chat when someone executes a command targetted at them (I.E. /feed -> >You were fed by %displayname%).
+silent-mode: false
+# If players should drop all, not some, EXP on death.
+drop-all-exp-on-death: true
+
+# Clear Tab Completer
+# remove commands from tab complete which have the following format: "pluginname:command"
+hide-commands-after-plugin-name:
+  # If this setting should be enabled.
   enable: true
   except:
     - 'minecraft:enchant'

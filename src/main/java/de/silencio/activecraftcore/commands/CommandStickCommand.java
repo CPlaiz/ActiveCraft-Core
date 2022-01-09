@@ -1,5 +1,6 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.exceptions.ActiveCraftException;
 import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.utils.ColorUtils;
 import de.silencio.activecraftcore.utils.FileConfig;
@@ -26,50 +27,40 @@ import org.bukkit.plugin.Plugin;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CommandStickCommand implements CommandExecutor, Listener, TabCompleter {
+public class CommandStickCommand extends ActiveCraftCommand implements Listener {
+
+    public CommandStickCommand() {
+        super("commandstick");
+    }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public void runCommand(CommandSender sender, Command command, String label, String[] args) throws ActiveCraftException {
+        checkPermission(sender, "commandstick");
+        Player player = getPlayer(sender);
 
-        if (sender instanceof Player) {
-            if (args.length == 0) return false;
-            Player player = (Player) sender;
-            if (sender.hasPermission("activecraft.commandstick")) {
-                if (Bukkit.getPlayer(args[0]) == null) {
-                    // code
+        boolean isValidCommand = false;
+        for (String registeredCommand : Bukkit.getCommandMap().getKnownCommands().keySet())
+            if (args[0].replace("/", "").equals(registeredCommand)) {
+                isValidCommand = true;
+                break;
+            }
 
-                    // Command Stick (Displayname)
-                    // Bound Command: <command> (Lore)
-                    boolean isValidCommand = false;
-                    for (String registeredCommand : Bukkit.getCommandMap().getKnownCommands().keySet()) {
-                        if (args[0].replace("/", "").equals(registeredCommand)) {
-                            isValidCommand = true;
-                            break;
-                        }
-                    }
-                    if (isValidCommand) {
-                        ItemStack commandStick = new ItemStack(Material.STICK);
-                        ItemMeta commandStickMeta = commandStick.getItemMeta();
-                        commandStickMeta.setDisplayName(ChatColor.GOLD + "Command Stick");
-                        commandStickMeta.setUnbreakable(true);
-                        commandStickMeta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
-                        commandStickMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        if (isValidCommand) {
+            ItemStack commandStick = new ItemStack(Material.STICK);
+            ItemMeta commandStickMeta = commandStick.getItemMeta();
+            commandStickMeta.setDisplayName(ChatColor.GOLD + "Command Stick");
+            commandStickMeta.setUnbreakable(true);
+            commandStickMeta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+            commandStickMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 
-                        StringBuilder stringBuilder = new StringBuilder();
-                        for (String s : args) {
-                            stringBuilder.append(s + " ");
-                        }
-                        List<String> lore = new ArrayList<>();
-                        lore.add(ChatColor.GOLD + "Bound Command: /" + ChatColor.AQUA + stringBuilder.toString());
-                        commandStickMeta.setLore(lore);
-                        commandStick.setItemMeta(commandStickMeta);
-                        player.getInventory().addItem(commandStick);
-                    } else sender.sendMessage(Errors.WARNING() + "Invalid Command!");
-                }
-            } else sender.sendMessage(Errors.NO_PERMISSION());
-        } else sender.sendMessage(Errors.NOT_A_PLAYER());
-        return true;
+            List<String> lore = new ArrayList<>();
+            lore.add(ChatColor.GOLD + "Bound Command: /" + ChatColor.AQUA + combineArray(args, 0));
+            commandStickMeta.setLore(lore);
+            commandStick.setItemMeta(commandStickMeta);
+            player.getInventory().addItem(commandStick);
+        } else sendMessage(sender, Errors.WARNING() + "Invalid Command!");
     }
+
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onCommandStickInteract(PlayerInteractEntityEvent event) {
