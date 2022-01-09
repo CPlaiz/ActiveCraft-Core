@@ -233,9 +233,7 @@ en:
       max-homes-others: 'This player cannot create more homes!'
     deletehome:
       home-deleted: 'Home %home% deleted.'
-      no-home: 'You do not have a home called %home%!'
       home-others-deleted: 'Deleted the home %home% of player %t_displayname%.'
-      no-home-others: 'Player %t_displayname% does not have a home called %home%!'
     editsign:
       enabled: 'Enabled sign edit mode.'
       disabled: 'Disabled sign edit mode.'
@@ -345,8 +343,6 @@ en:
       socialspy-on: 'Enabled SocialSpy.'
       socialspy-off: 'Disabled SocialSpy.'
       console-msg-prefix: '[Console -> me] %message%'
-      cannot-message-self: "You can't message yourself."
-      include-player: 'Please include a player.'
     mute:
       mute: 'Muted %t_displayname%.'
       mute-message: 'You have been muted.'
@@ -757,9 +753,7 @@ de:
       max-homes-others: 'Dieser Spieler kann keine Homes mehr erstellen!'
     deletehome:
       home-deleted: 'Das Home %home% wurde gelöscht.'
-      no-home: 'Du hast kein Home mit dem Namen %home%.'
       home-others-deleted: 'Du hast das Home %home% für den Spieler %t_displayname% gelöscht.'
-      no-home-others: 'Spieler %t_displayname% hat keinen home mit dem Namen %home%!'
     editsign:
       enabled: 'Schildbearbeitungsmodus aktiviert.'
       disabled: 'Schildbearbeitungsmodus deaktiviert.'
@@ -869,8 +863,6 @@ de:
       socialspy-on: 'SocialSpy aktiviert.'
       socialspy-off: 'SocialSpy deaktiviert.'
       console-msg-prefix: '[Konsole -> Mir] %message%'
-      cannot-message-self: 'Du kannst dir selbst keine Nachrichten senden.'
-      include-player: 'Bitte bennene einen Spieler.'
     mute:
       mute: '%t_displayname% wurde gestummt.'
       mute-message: 'Du wurdest gestummt.'
@@ -1271,7 +1263,7 @@ sv:
       colornick-others: '%t_displayname%s namn färg ändrades till %color%.'
       colornick-others-message: 'Namn färg ändrad till %color% av %s_displayname%.'
     drain:
-      drain-complete: '%amount% Blöcke trockengelegt.'
+      drain-complete: 'Tömde %amount% blocks.'
     home:
       teleport-home-complete: 'Teleporterade till %home%.'
       home-not-set: 'Du har inget hem som heter %home%!'
@@ -1285,7 +1277,6 @@ sv:
     deletehome:
       home-deleted: 'Hem %home% raderat.'
       home-others-deleted: 'Raderade hemmet %home% av spelaren %t_displayname%.'
-      no-home-others: 'Spelaren %t_displayname% har inget hem som heter %home%!'
     editsign:
       enabled: 'Aktiverade skylt redigerar läge.'
       disabled: 'Inaktiverade skylt redigerar läge.'
@@ -1395,8 +1386,6 @@ sv:
       socialspy-on: 'SocialSpy aktiverat'
       socialspy-off: 'SocialSpy inaktiverat'
       console-msg-prefix: '[Konsol -> mig] %message%'
-      cannot-message-self: "Du kan inte medela dig själv."
-      include-player: 'Inkudera vänligen en spelare.'
     mute:
       mute: 'Tystade %t_displayname%.'
       mute-message: 'Du har blevit tystad.'

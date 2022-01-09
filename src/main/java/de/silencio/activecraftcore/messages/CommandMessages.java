@@ -397,27 +397,11 @@ public class CommandMessages {
                 .replace("%home%", ChatColor.AQUA + home + ChatColor.GOLD);
     }
 
-    public static String NO_HOME(String home) {
-
-        String msg = ChatColor.GRAY + acm.getMessage(MessageType.COMMAND, CommandType.DELETEHOME, "no-home")
-                .replace("%home%", ChatColor.AQUA + home + ChatColor.GRAY);
-        return msg;
-    }
-
     public static String HOME_OTHERS_DELETED(Player target, String home) {
         return ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.DELETEHOME, "home-others-deleted")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
                 .replace("%t_displayname%", ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD)
                 .replace("%home%", ChatColor.AQUA + home + ChatColor.GOLD);
-    }
-
-    public static String NO_HOME_OTHERS(Player target, String home) {
-
-        String msg = ChatColor.GRAY + acm.getMessage(MessageType.COMMAND, CommandType.DELETEHOME, "no-home-others")
-                .replace("%t_playername%", ChatColor.DARK_AQUA + target.getName() + ChatColor.GRAY)
-                .replace("%t_displayname%", ChatColor.DARK_AQUA + target.getDisplayName() + ChatColor.GRAY)
-                .replace("%home%", ChatColor.AQUA + home + ChatColor.GRAY);
-        return msg;
     }
 
     // EDITSIGN
@@ -896,18 +880,6 @@ public class CommandMessages {
     public static String CONSOLE_MSG_PREFIX(String message) {
         return ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.MSG, "console-msg-prefix")
                 .replace("%message%", ChatColor.AQUA + message + ChatColor.GOLD);
-    }
-
-    public static String CANNOT_MESSAGE_SELF() {
-
-        String msg = ChatColor.GRAY + acm.getMessage(MessageType.COMMAND, CommandType.MSG, "cannot-message-self");
-        return msg;
-    }
-
-    public static String INCLUDE_PLAYER() {
-
-        String msg = ChatColor.GRAY + acm.getMessage(MessageType.COMMAND, CommandType.MSG, "include-player");
-        return msg;
     }
 
     // MUTE
