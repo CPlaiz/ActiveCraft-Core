@@ -3,6 +3,7 @@ package de.silencio.activecraftcore.commands;
 import de.silencio.activecraftcore.exceptions.ActiveCraftException;
 import de.silencio.activecraftcore.utils.ComparisonType;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;

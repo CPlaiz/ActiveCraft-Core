@@ -43,6 +43,7 @@ public enum CommandType {
     MSG,
     MUTE,
     UNMUTE,
+    FORCEMUTE,
     NICK,
     PING,
     PLAYERLIST,

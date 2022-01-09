@@ -32,9 +32,9 @@ public class MessageListener implements Listener {
 
             Profile profile = ActiveCraftCore.getProfile(player);
 
-            boolean muted = playerdataConfig.getBoolean("muted");
-
-            boolean defaultMuted = playerdataConfig.getBoolean("default-mute");
+            boolean muted = profile.isMuted();
+            boolean forcemuted = profile.isForcemuted();
+            boolean defaultMuted = profile.isDefaultmuted();
 
             if (!muted && !defaultMuted) {
                 FileConfig fileConfig = new FileConfig("config.yml");
@@ -46,12 +46,19 @@ public class MessageListener implements Listener {
             } else {
                 if (muted) {
                     player.sendMessage(ChatColor.GOLD + "You are muted!");
-                    Bukkit.broadcast(ChatColor.GOLD + "[Mute] " + ChatColor.AQUA + player.getDisplayName() + ChatColor.GOLD + " tried to talk, but is muted. (" + ChatColor.AQUA + message + ChatColor.GOLD + ")", "activecraft.muted.see");
+
+                    if (!forcemuted) {
+                        Bukkit.broadcast(ChatColor.GOLD + "[Mute] " + ChatColor.AQUA + player.getDisplayName() + ChatColor.GOLD + " tried to talk, but is muted. (" + ChatColor.AQUA + message + ChatColor.GOLD + ")", "activecraft.muted.see");
+                    }
                     event.setCancelled(true);
+
 
                 } else {
                     player.sendMessage(ChatColor.GOLD + "You are new to this server so you cannot write in chat. Please contact a staff member to verify you.");
-                    Bukkit.broadcast(ChatColor.GOLD + "[Default-Mute] " + ChatColor.AQUA + player.getDisplayName() + ChatColor.GOLD + " is default-muted. (" + ChatColor.AQUA + message + ChatColor.GOLD + ")", "activecraft.muted.see");
+
+                    if (!forcemuted) {
+                        Bukkit.broadcast(ChatColor.GOLD + "[Mute] " + ChatColor.AQUA + player.getDisplayName() + ChatColor.GOLD + " tried to talk, but is default muted. (" + ChatColor.AQUA + message + ChatColor.GOLD + ")", "activecraft.muted.see");
+                    }
                     event.setCancelled(true);
                 }
             }

@@ -12,9 +12,11 @@ commands:
     permission-message: "§cWarning! §7You don't have the permission to do that!"
   spawn:
     description: Teleports you to spawn.
-    aliases: ["setspawn"]
-    usage: /spawn | /setspawn
     permission: activecraft.spawn
+    permission-message: "§cWarning! §7You don't have the permission to do that!"
+  setspawn:
+    description: Sets the spawn location.
+    permission: activecraft.spawn.set
     permission-message: "§cWarning! §7You don't have the permission to do that!"
   ping:
     description: Pong!
@@ -120,10 +122,10 @@ commands:
       - "flyspeed"
     permission: activecraft.fly
     permission-message: "§cWarning! §7You don't have the permission to do that!"
-  offinvsee:
-    description: Shows a players armor and offhand-item.
-    permission: activecraft.offinvsee
-    permission-message: "§cWarning! §7You don't have the permission to do that!"
+  #offinvsee:
+  #  description: Shows a players armor and offhand-item.
+  #  permission: activecraft.offinvsee
+  #  permission-message: "§cWarning! §7You don't have the permission to do that!"
   realname:
     description: Shows a players real name.
     permission: activecraft.realname
@@ -154,12 +156,20 @@ commands:
     permission: activecraft.tpadeny
     permission-message: "§cWarning! §7You don't have the permission to do that!"
   warp:
-    description: Warp System.
-    aliases:
-      - "setwarp"
-      - "delwarp"
-      - "warps"
+    description: Teleport to a warp
     permission: activecraft.warp
+    permission-message: "§cWarning! §7You don't have the permission to do that!"
+  setwarp:
+    description: Create a warp point.
+    permission: activecraft.warp.set
+    permission-message: "§cWarning! §7You don't have the permission to do that!"
+  delwarp:
+    description: Delete a warp point.
+    permission: activecraft.warp.delete
+    permission-message: "§cWarning! §7You don't have the permission to do that!"
+  warps:
+    description: Lists all warp points the player can teleport to.
+    permission: activecraft.warp.list
     permission-message: "§cWarning! §7You don't have the permission to do that!"
   home:
     description: Manages homes.
@@ -339,7 +349,7 @@ commands:
     description: Gives you or another player a mob spawner with the definend mob.
     permission: activecraft.spawner
     permission-message: "§cWarning! §7You don't have the permission to do that!"
-  edit-sign:
+  editsign:
     description: Toggles the ability to edit signs for you or another player.
     permission: activecraft.editsign
     permission-message: "§cWarning! §7You don't have the permission to do that!"
@@ -470,7 +480,7 @@ permissions:
     default: op
     children:
       activecraft.spawn: true
-  activecraft.setspawn:
+  activecraft.spawn.set:
     description: Sets the spawn.
     default: op
   activecraft.vanish.self:
@@ -645,17 +655,17 @@ permissions:
   activecraft.tpadeny:
     description: Denies a teleport request.
     default: op
-  activecraft.setwarp:
+  activecraft.warp.set:
     description: Permission to set a new warp.
     default: op
     children:
       activecraft.warp: true
-  activecraft.deletewarp:
+  activecraft.warp.delete:
     description: Permission to delete a warp.
     default: op
     children:
       activecraft.warp: true
-  activecraft.listwarps:
+  activecraft.warp.list:
     description: Permission to list all warps.
     default: op
     children:
@@ -1029,9 +1039,9 @@ permissions:
   activecraft.playerlist:
     description: Lists all online players.
     default: op
-  activecraft.offinvsee:
-    description: Shows a players armor and offhand-item.
-    default: op
+  #activecraft.offinvsee:
+  #  description: Shows a players armor and offhand-item.
+  #  default: op
   activecraft.kick:
     description: Allows the player to kick another player.
     default: op

@@ -48,9 +48,7 @@ public class CommandMessages {
 
     // UNBAN
     public static String NOT_BANNED() {
-
-        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.UNBAN, "not-banned");
-        return msg;
+        return ChatColor.GRAY + acm.getMessage(MessageType.COMMAND, CommandType.UNBAN, "not-banned");
     }
 
     public static String UNBANNED_PLAYER(String target) {
@@ -119,9 +117,7 @@ public class CommandMessages {
     }
 
     public static String NO_RETURN_LOCATION() {
-
-        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.BACK, "no-return-location");
-        return msg;
+        return ChatColor.GRAY + acm.getMessage(MessageType.COMMAND, CommandType.BACK, "no-return-location");
     }
 
     public static String TELEPORTED_BACK_OTHERS(Player target) {
@@ -141,11 +137,9 @@ public class CommandMessages {
     }
 
     public static String NO_RETURN_LOCATION_OTHERS(Player target) {
-
-        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.BACK, "no-return-location-others")
-                .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
-                .replace("%t_displayname%", ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD);
-        return msg;
+        return ChatColor.GRAY + acm.getMessage(MessageType.COMMAND, CommandType.BACK, "no-return-location-others")
+                .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GRAY)
+                .replace("%t_displayname%", ChatColor.AQUA + target.getDisplayName() + ChatColor.GRAY);
     }
 
     // BOOK
@@ -812,6 +806,19 @@ public class CommandMessages {
         return ChatColor.GRAY + acm.getMessage(MessageType.COMMAND, CommandType.UNMUTE, "not-muted");
     }
 
+    // FORCEMUTE
+    public static String FORCEMUTE(Player target) {
+        return ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.FORCEMUTE, "forcemute")
+                .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
+                .replace("%t_displayname%", ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD);
+    }
+
+    public static String FORCEUNMUTE(Player target) {
+        return ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.FORCEMUTE, "forceunmute")
+                .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
+                .replace("%t_displayname%", ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD);
+    }
+
     // NICK
     public static String NICK_SET(String nickname) {
         return ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.NICK, "nick-set")
@@ -920,6 +927,10 @@ public class CommandMessages {
     public static String RESTART_TITLE(String time) {
         return ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.RESTARTSERVER, "restart-title")
                 .replace("%time%", ChatColor.AQUA + time + ChatColor.GOLD);
+    }
+
+    public static String RESTART_CANCEL() {
+        return ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.RESTARTSERVER, "restart-cancel");
     }
 
     // SKULL
@@ -1120,6 +1131,10 @@ public class CommandMessages {
         return ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.TPA, "tpa-deny-hover");
     }
 
+    public static String CANNOT_TPA_SELF() {
+        return ChatColor.GRAY + acm.getMessage(MessageType.COMMAND, CommandType.TPA, "cannot-tpa-self");
+    }
+
     // TPACCEPT
     public static String TPACCEPT_ACCEPTED() {
         return ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.TPACCEPT, "tpaccept-accepted");
@@ -1194,11 +1209,9 @@ public class CommandMessages {
 
     // TELEPORT
     public static String TELEPORT_TO_PLAYER(Player target) {
-
-        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.TELEPORT, "teleport-to-player")
-          .replace("%t_displayname%", ChatColor.AQUA + target.getDisplayName())
-                .replace("%t_playername%", ChatColor.AQUA + target.getDisplayName()) + ChatColor.GOLD;
-        return msg;
+        return ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.TELEPORT, "teleport-to-player")
+                .replace("%t_displayname%", ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD)
+                .replace("%t_playername%", ChatColor.AQUA + target.getName()) + ChatColor.GOLD;
     }
 
     public static String TELEPORT_TO_COORDS(String coords) {

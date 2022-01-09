@@ -34,6 +34,9 @@ en:
     abusive-language: 'Abusive Language'
     stealing: 'Stealing'
     griefing: 'Griefing'
+    moderator-banned: 'Banned by a moderator.'
+    moderator-kicked: 'Kicked by a moderator.'
+    moderator-warned: 'Warned by a moderator.'
   dialogue:
     default-header: '-- Dialogue --'
     default-completed-message: 'Exiting dialogue...'
@@ -194,9 +197,6 @@ en:
       tattered: 'tattered'
       added-page: 'Added a new page.'
       not-holding-book: 'You are not holding a book!'
-    break:
-      break-others: 'Broke block infront of %t_displayname%.'
-      break-self: 'Broke block infront of you.'
     broadcast:
       broadcast-prefix: '[BroadCast]'
       include-message: 'Please include a message!'
@@ -342,6 +342,9 @@ en:
       unmute: 'Unmuted %t_displayname%.'
       unmute-message: 'You have been unmuted.'
       not-muted: 'This player is not muted.'
+    forcemute:
+      forcemute: 'You forcemuted %t_displayname%.'
+      forceunmute: 'You forceunmuted %t_displayname%.'
     nick:
       nick-set: 'Nick set to %nickname%.'
       nick-set-others: 'Set nickname of %t_displayname% to %nickname%.'
@@ -375,6 +378,7 @@ en:
     restartserver:
       restart-message: 'The server is restarting.'
       restart-title: 'Server Restart in %time%'
+      restart-cancel: 'Server restart was cancelled.'
     skull:
       give-skull: 'Gave yourself your head.'
       give-skull-others: "Gave yourself %t_displayname%'s head."
@@ -417,6 +421,7 @@ en:
       tpa-accept-hover: 'Click here to accept.'
       tpa-deny: '[DENY]'
       tpa-deny-hover: 'Click here to deny.'
+      cannot-tpa-self: "You can't tpa to yourself"
     tpaccept:
       tpaccept-accepted: 'Accepted the TPA request.'
       tpaccept-actionbar: 'Teleporting...'
@@ -554,6 +559,9 @@ de:
     abusive-language: 'Unangemessene Sprache'
     stealing: 'Diebstahl'
     griefing: 'Griefing'
+    moderator-banned: 'Von einem Moderator gebannt.'
+    moderator-kicked: 'Von einem Moderator gekickt.'
+    moderator-warned: 'Von einem Moderator gewarnt.'
   dialogue:
     default-header: '-- Dialog --'
     default-completed-message: 'Beende Dialog...'
@@ -859,6 +867,9 @@ de:
       unmute: '%t_displayname% wurde entstummt.'
       unmute-message: 'Du wurdest entstummt.'
       not-muted: 'Dieser spieler ist nicht gestummt.'
+    forcemute:
+      forcemute: 'Du hast %t_displayname%. für admins stummgeschaltet.'
+      forceunmute: 'Du hast %t_displayname% für admins entstummt.'
     nick:
       nick-set: 'Spitzname zu %nickname% gesetzt.'
       nick-set-others: '%t_displayname%s Spitzname zu %nickname% gesetzt.'
@@ -892,6 +903,7 @@ de:
     restartserver:
       restart-message: 'Der Server startet neu.'
       restart-title: 'Der Server startet in %time% neu'
+      restart-cancel: 'Serverneustart wurde abgebrochen.'
     skull:
       give-skull: 'Dir wurde dein Kopf gegeben.'
       give-skull-others: 'Dir wurde %t_displayname%s Kopf gegeben.'
@@ -934,17 +946,18 @@ de:
       tpa-accept-hover: 'Klicke hier um anzunehmen.'
       tpa-deny: '[ABLEHNEN]'
       tpa-deny-hover: 'Klicke hier um abzubrechen.'
+      cannot-tpa-self: "Du kannst dir selbst keine TPA-Anfrage senden."
     tpaccept:
       tpaccept-accepted: 'TPA Anfrage angenommen.'
       tpaccept-actionbar: 'Teleportiere...'
       tpaccept-reciever-message: 'Du wurdest zu %s_displayname% teleportiert.'
       tpaccept-sender-message: '%t_displayname% hat sich zu dir teleportiert.'
-      no-requests: 'Du hast keine ausstehenden Teleportationsanfragen!'
+      no-requests-accept: 'Du hast keine ausstehenden Teleportationsanfragen!'
     tpadeny:
       tpadeny-denied: 'TPA Anfrage abgelehnt.'
       tpadeny-reciever-message: 'Du hast %s_displayname%s Teleportationsanfrage abgelehnt.'
       tpadeny-sender-message: '%t_displayname% hat deine Teleportationsanfrage abgelehnt.'
-      no-requests: 'Du hast keine ausstehenden Teleportationsanfragen!'
+      no-requests-deny: 'Du hast keine ausstehenden Teleportationsanfragen!'
     tpall:
       tpall: 'Du hast alle Spieler zu dir teleportiert.'
       tpall-message: 'Du wurdest zu %s_displayname% teleportiert.'
@@ -1071,6 +1084,9 @@ sv:
     abusive-language: 'Grovt språk'
     stealing: 'Stöld'
     griefing: 'Griefing'
+    moderator-banned: 'Bannade av en moderator'
+    moderator-kicked: 'Kickad av en moderator'
+    moderator-warned: 'Varnad av en moderator'
   dialogue:
     default-header: '-- Dialog --'
     default-completed-message: 'Lämnar dialogen...'
@@ -1376,6 +1392,9 @@ sv:
       unmute: 'Tillät %t_displayname% att skriva igen.'
       unmute-message: 'Du får nu skriva igen.'
       not-muted: 'Denna spelare är inte tystad.'
+    forcemute:
+      forcemute: 'Du forcemuted %t_displayname%.'
+      forceunmute: 'Du forceunmuted %t_displayname%.'
     nick:
       nick-set: 'Smeknamn satt till %nickname%.'
       nick-set-others: 'Satte %t_displayname%s smeknamn till %nickname%.'
@@ -1409,6 +1428,7 @@ sv:
     restartserver:
       restart-message: 'Servern startar om.'
       restart-title: 'Servern startar om innom %time%'
+      restart-cancel: 'Server omstart blev avbruten..'
     skull:
       give-skull: 'Gav dig ett huvud.'
       give-skull-others: "Gav dig %t_displayname%s huvud."
@@ -1451,6 +1471,7 @@ sv:
       tpa-accept-hover: 'Tryck här för att godta.'
       tpa-deny: '[NEKA]'
       tpa-deny-hover: 'Tryck hät föt att neka.'
+      cannot-tpa-self: 'Du kan inte tpa till digsjälv'
     tpaccept:
       tpaccept-accepted: 'Accepterade TPA förfrågan.'
       tpaccept-actionbar: 'Teleporterar...'

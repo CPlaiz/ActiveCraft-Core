@@ -118,48 +118,4 @@ public class ItemCommand extends ActiveCraftCommand {
                 for (Material material : Material.values()) list.add(material.name().toLowerCase());
         return list;
     }
-
-    @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-        ArrayList<String> list = new ArrayList<>();
-        if (args.length == 0) return list;
-        if (alias.equalsIgnoreCase("item")) {
-            if (args.length == 1) {
-                list.add("name");
-                list.add("lore");
-                list.add("give");
-            }
-            if (args[0].equalsIgnoreCase("give")) {
-                if (args.length == 2) {
-                    for (Material material : Material.values()) {
-                        list.add(material.name().toLowerCase());
-                    }
-                }
-            } else if (args[0].equalsIgnoreCase("lore")) {
-                if (args.length == 2) {
-                    list.add("set");
-                    list.add("add");
-                    list.add("clear");
-                }
-            }
-        } else if (alias.equalsIgnoreCase("i")) {
-            if (args.length == 1) {
-                for (Material material : Material.values()) {
-                    list.add(material.name().toLowerCase());
-                }
-            }
-        }
-
-
-        ArrayList<String> completerList = new ArrayList<>();
-        String currentarg = args[args.length - 1].toLowerCase();
-        for (String s : list) {
-            String s1 = s.toLowerCase();
-            if (s1.startsWith(currentarg)) {
-                completerList.add(s);
-            }
-        }
-
-        return completerList;
-    }
 }
