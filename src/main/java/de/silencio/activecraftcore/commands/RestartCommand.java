@@ -76,7 +76,7 @@ public class RestartCommand extends ActiveCraftCommand {
                     p.sendTitle(title);
                 }
                 runnable.cancel();
-                sender.sendMessage(CommandMessages.RESTART_CANCEL());
+                sendMessage(sender, CommandMessages.RESTART_CANCEL());
             }
         }
     }

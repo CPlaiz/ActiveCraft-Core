@@ -97,7 +97,7 @@ public class TpCommand extends ActiveCraftCommand {
                     } else finalNumZ = target.getLocation().getZ() + parseDouble(args[2]);
                 } else finalNumZ = parseDouble(args[2]);
                 target.teleport(new Location(target.getWorld(), finalNumX, finalNumY, finalNumZ));
-                sender.sendMessage(CommandMessages.TELEPORT_PLAYER_TO_COORDS(target, finalNumX + finalNumY + finalNumZ + ""));
+                sendMessage(sender, CommandMessages.TELEPORT_PLAYER_TO_COORDS(target, finalNumX + finalNumY + finalNumZ + ""));
                 target.playSound(target.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
             }
         }

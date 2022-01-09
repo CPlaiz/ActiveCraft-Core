@@ -15,15 +15,25 @@ use-timer-on-warp: true
 # Default Mute
 # When activated, players who join for the first time cannot speak in chat.
 mute-new-players: false
+# Set the time a new player should be muted for.
 remove-default-mute-after: 10 #in minutes | 0 to disable
 
 # Vanish Settings
 # Set if the vanish tag should be shown behind player names in tab.
 enable-vanish-format: true
+# The tag that is shown behind player names in tab, assuming 'enable-vanish-format' is true.
 vanish-format: '[V]'
 
+# AFK Settings
+# If players enabling / disabling afk mode should be broadcasted in chat.
+announce-afk: true
+# The tag that is shown behind player names in tab.
+afk-format: '[AFK]'
+
 # Lockdown Settings
+# The server modt (Multiplayer Menu) when lockdown is activated.
 lockdown-modt: "This server is in lockdown mode. You are not able to join until this is disabled."
+# The kick message when players attempt to join during lockdown mode.
 lockdown-kick-message: "This server is in lockdown mode. You are not able to join until this is disabled."
 
 # Misc Settings
@@ -41,11 +51,14 @@ drop-all-exp-on-death: true
 hide-commands-after-plugin-name:
   # If this setting should be enabled.
   enable: true
+  # All commands that should not be removed from the tab complete.
   except:
     - 'minecraft:enchant'
-hide-commands: # remove normal commands from tab complete
+# Remove any command from tab complete.
+hide-commands:
   - 'command'
 
 # Do not edit!
 lockdown:
 old-modt:
+language: 'en'

@@ -9,7 +9,8 @@ import org.bukkit.entity.Player;
 
 public class CommandMessages {
 
-    static ActiveCraftMessage acm = ActiveCraftCore.getPlugin().getActiveCraftMessage();
+    static ActiveCraftMessage acm = ActiveCraftCore.getActiveCraftMessage();
+    static FileConfig fileConfig = new FileConfig("config.yml");
 
     // BANSCREEN
     public static String BAN_TITLE() {
@@ -35,38 +36,10 @@ public class CommandMessages {
     }
 
     // BAN
-    public static String BAN_HEADER(Player target) {
-
-        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.BAN, "ban-header")
-                .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
-                .replace("%t_displayname%", ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD);
-        return msg;
-    }
-
     public static String BAN_COMPLETED_MESSAGE(Player target) {
         return ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.BAN, "ban-completed-message")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
                 .replace("%t_displayname%", ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD);
-    }
-
-    public static String BAN_CANCELLED_MESSAGE(Player target) {
-
-        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.BAN, "ban-cancelled-message")
-                .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
-                .replace("%t_displayname%", ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD);
-        return msg;
-    }
-
-    public static String BAN_ENTER_REASON() {
-
-        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.BAN, "ban-enter-reason");
-        return msg;
-    }
-
-    public static String BAN_ENTER_TIME() {
-
-        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.BAN, "ban-enter-time");
-        return msg;
     }
 
     public static String ALREADY_BANNED() {
@@ -107,24 +80,6 @@ public class CommandMessages {
     }
 
     // IPBAN
-    public static String IPBAN_HEADER(Player target, String ip) {
-
-            String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.IPBAN, "ipban-header")
-                    .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
-                    .replace("%t_displayname%", ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD)
-                    .replace("%ip%", ChatColor.AQUA + ip + ChatColor.GOLD);
-        return msg;
-    }
-
-    public static String IPBAN_HEADER(String ip) {
-
-            String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.IPBAN, "ipban-header")
-                    .replace("%t_playername%", ChatColor.AQUA + ip + ChatColor.GOLD)
-                    .replace("%t_displayname%", ChatColor.AQUA + ip + ChatColor.GOLD)
-                    .replace("%ip%", ChatColor.AQUA + ip + ChatColor.GOLD);
-        return msg;
-    }
-
     public static String IPBAN_COMPLETED_MESSAGE(Player target, String ip) {
         return ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.IPBAN, "ipban-completed-message")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
@@ -137,36 +92,6 @@ public class CommandMessages {
                 .replace("%t_playername%", ChatColor.AQUA + ip + ChatColor.GOLD)
                 .replace("%t_displayname%", ChatColor.AQUA + ip + ChatColor.GOLD)
                 .replace("%ip%", ChatColor.AQUA + ip + ChatColor.GOLD);
-    }
-
-    public static String IPBAN_CANCELLED_MESSAGE(Player target, String ip) {
-
-        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.IPBAN, "ipban-cancelled-message")
-                .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
-                .replace("%t_displayname%", ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD)
-                .replace("%ip%", ChatColor.AQUA + ip + ChatColor.GOLD);
-        return msg;
-    }
-
-    public static String IPBAN_CANCELLED_MESSAGE(String ip) {
-
-        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.IPBAN, "ipban-cancelled-message")
-                .replace("%t_playername%", ChatColor.AQUA + ip + ChatColor.GOLD)
-                .replace("%t_displayname%", ChatColor.AQUA + ip + ChatColor.GOLD)
-                .replace("%ip%", ChatColor.AQUA + ip + ChatColor.GOLD);
-        return msg;
-    }
-
-    public static String IPBAN_ENTER_REASON() {
-
-        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.IPBAN, "ipban-enter-reason");
-        return msg;
-    }
-
-    public static String IPBAN_ENTER_TIME() {
-
-        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.IPBAN, "ipban-enter-time");
-        return msg;
     }
 
     public static String INVALID_IP() {
@@ -266,21 +191,6 @@ public class CommandMessages {
 
     public static String NOT_HOLDING_BOOK() {
         return ChatColor.GRAY + acm.getMessage(MessageType.COMMAND, CommandType.BOOK, "not-holding-book");
-    }
-
-    // BREAK
-    public static String BREAK_SELF() {
-
-        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.BREAK, "break-self");
-        return msg;
-    }
-
-    public static String BREAK_OTHERS(Player target) {
-
-        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.BREAK, "break-others")
-                .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
-                .replace("%t_displayname%", ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD);
-        return msg;
     }
 
     // BROADCAST
@@ -444,14 +354,6 @@ public class CommandMessages {
         return ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.ENCHANT, "applied-enchantment")
                 .replace("%enchantment%", ChatColor.AQUA + enchantment + ChatColor.GOLD)
                 .replace("%maxlevel%", ChatColor.AQUA + maxlevel + ChatColor.GOLD);
-    }
-
-    public static String APPLIED_ENCHANTMENT_LEVEL(String enchantment, String level) {
-
-        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.ENCHANT, "applied-enchantment-level")
-                .replace("%enchantment%", ChatColor.AQUA + enchantment + ChatColor.GOLD)
-                .replace("%level%", ChatColor.AQUA + level + ChatColor.GOLD);
-        return msg;
     }
 
     public static String CANNOT_BE_APPLIED() {
@@ -1151,11 +1053,11 @@ public class CommandMessages {
     }
 
     public static String BROADCAST_SUICIDE(Player target) {
-
-        String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.SUICIDE, "broadcast-suicide")
+        return ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.SUICIDE, "broadcast-suicide")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
-                .replace("%t_displayname%", ChatColor.AQUA + target.getDisplayName() + ChatColor.GOLD);
-        return msg;
+                .replace("%t_displayname%", ChatColor.AQUA + target.getDisplayName()
+                        .replace(" " + fileConfig.getString(" " + "vanish-format"), "")
+                        .replace(" " + fileConfig.getString(" " + "afk-format"), "") + ChatColor.GOLD);
     }
 
     public static String SUICIDE_OTHERS(Player target) {
@@ -1291,18 +1193,6 @@ public class CommandMessages {
     }
 
     // TELEPORT
-    public static String CANNOT_TP_TO_SELF_TELEPORT() {
-
-        String msg = ChatColor.GRAY + acm.getMessage(MessageType.COMMAND, CommandType.TELEPORT, "cannot-tp-to-self-teleport");
-        return msg;
-    }
-
-    public static String CANNOT_TP_OTHERS_TO_THEMSELF() {
-
-        String msg = ChatColor.GRAY + acm.getMessage(MessageType.COMMAND, CommandType.TELEPORT, "cannot-tp-others-to-themself");
-        return msg;
-    }
-
     public static String TELEPORT_TO_PLAYER(Player target) {
 
         String msg = ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.TELEPORT, "teleport-to-player")
@@ -1332,12 +1222,6 @@ public class CommandMessages {
     }
 
     // TPHERE
-    public static String CANNOT_TP_TO_SELF_TPHERE() {
-
-        String msg = ChatColor.GRAY + acm.getMessage(MessageType.COMMAND, CommandType.TPHERE, "cannot-tp-to-self-tphere");
-        return msg;
-    }
-
     public static String TELEPORT_PLAYER_TO_YOU(Player target) {
         return ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.TPHERE, "teleport-player-to-you")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)

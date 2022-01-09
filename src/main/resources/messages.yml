@@ -160,11 +160,7 @@ en:
       ban-expiration-permanent: 'You are permanently banned from this server.'
       ban-reason: 'Reason: %reason%'
     ban:
-      ban-header: '-- Ban Dialogue for %t_playername% --'
       ban-completed-message: 'Banned %t_playername%.'
-      ban-cancelled-message: 'Cancelled ban dialogue for %t_playername%.'
-      ban-enter-reason: 'Please enter a reason:'
-      ban-enter-time: 'Please enter the ban duration:'
       already-banned: 'This player is already banned.'
     unban:
       not-banned: 'This player is not banned.'
@@ -175,11 +171,7 @@ en:
       unban-ip-on-hover: 'Unban %ip%'
       no-bans: 'There are no bans to be listed here!'
     ipban:
-      ipban-header: '-- IP Ban Dialogue for %t_playername% (%ip%) --'
       ipban-completed-message: 'Banned %t_playername% (%ip%).'
-      ipban-cancelled-message: 'Cancelled ip-ban dialogue for %t_playername% (%ip%).'
-      ipban-enter-reason: 'Please enter a reason:'
-      ipban-enter-time: 'Please enter the ban duration:'
       ip-already-banned: 'This IP is already banned.'
       invalid-ip: 'This is not a valid IP address.'
     unban-ip:
@@ -243,7 +235,6 @@ en:
       disabled-others-message: 'Sign edit mode disabled by %s_displayname%.'
     enchant:
       applied-enchantment: 'Applied enchantment %enchantment% %maxlevel% to your item.'
-      applied-enchantment-level: 'Applied enchantment %enchantment% level %level% to your item.'
       cannot-be-applied: 'This enchantment can not be applied to this item!'
       cleared-all-enchantments: 'Cleared all enchantments from this item.'
       not-enchanted: 'Item is not enchanted!'
@@ -442,14 +433,11 @@ en:
       tpall-message: 'You were teleported to %s_displayname%.'
       tpall-exept: '%s_displayname% executed a tpall, but you were not teleported.'
     teleport:
-      cannot-tp-to-self-teleport: "You can't teleport to yourself!"
-      cannot-tp-others-to-themself: "You can't teleport the player to themself!"
       teleport-to-player: 'Teleported to %t_displayname%.'
       teleport-to-coords: 'Teleported to %coords%.'
       teleport-player-to-player: 'Teleported %t1_displayname% to %t2_displayname%.'
       teleport-player-to-coords: 'Teleported %t_displayname% to %coords%.'
     tphere:
-      cannot-tp-to-self-tphere: "You can't teleport to yourself!"
       teleport-player-to-you: 'Teleported %t_displayname% to you.'
     vanish:
       now-visible: 'You are now visible.'
@@ -469,18 +457,18 @@ en:
       warn-add: |
         Warned %t_displayname%.
         Reason: %reason%.
-      warn-remove: 'Removed warn %reason% from %t_displayname%.'
+      warn-remove: 'Removed warning %reason% from %t_displayname%.'
       warn-get-header: "-- %t_displayname%'s Warn Entry --"
       warn-get: |
         Reason: %reason%
         Created: %date-created%
         Source: %s_displayname%
-        ID: %warn-id%'
+        ID: %warn-id%
       warned-header: 'You have been warned!'
       warned: |
         Reason: %reason%
         Warned by: %s_displayname%.
-      warned-remove: 'Your warn %reason% has been removed.'
+      warned-remove: 'Your warning %reason% has been removed.'
     warp:
       warp-doesnt-exist: 'This warp does not exist!'
       warp-teleport: 'You warped to %warp%.'
@@ -692,11 +680,7 @@ de:
       ban-expiration-permanent: 'Du bist dauerhaft von diesem Server gebannt.'
       ban-reason: 'Grund: %reason%'
     ban:
-      ban-header: '-- Ban Dialog für %t_playername% --'
       ban-completed-message: '%t_playername% wurde gebannt.'
-      ban-cancelled-message: 'Ban Dialog für %t_playername% wurde abgebrochen.'
-      ban-enter-reason: 'Bitte gib einen Grund an:'
-      ban-enter-time: 'Bitte gib eine Bandauer an:'
       already-banned: 'Dieser Spieler ist bereits gebannt.'
     unban:
       not-banned: 'Dieser Spieler ist nicht gebannt.'
@@ -707,11 +691,7 @@ de:
       ip-ban-on-hover: '%ip% entbannen'
       no-bans: 'Es gibt keine Bans, die hier aufgelistet werden könnten!'
     ipban:
-      ipban-header: '-- IP Ban Dialog für %t_playername% (%ip%) --'
       ipban-completed-message: '%t_playername% (%ip%) wurde gebannt.'
-      ipban-cancelled-message: 'Ban Dialog für  %t_playername% (%ip%) wurde abgebrochen.'
-      ipban-enter-reason: 'Bitte gib einen Grund an:'
-      ipban-enter-time: 'Bitte gib eine Bandauer an:'
       ip-already-banned: 'Diese IP ist bereits gebannt.'
       invalid-ip: 'Diese IP Adresse ist ungültig.'
     unban-ip:
@@ -772,7 +752,6 @@ de:
       disabled-others-message: 'Schildbearbeitungsmodus von  %s_displayname% deaktiviert.'
     enchant:
       applied-enchantment: 'Verzauberung %enchantment% wurde zu deinem Item hinzugefügt.'
-      applied-enchantment-level: 'Verzauberung %enchantment% Stufe %level% wurde zu deinem Item hinzugefügt.'
       cannot-be-applied: 'Diese Verzauberung wird von deinem Item nicht unterstützt.'
       cleared-all-enchantments: 'Alle Verzauberungen wurden von deinem Item entfernt.'
       not-enchanted: 'Item ist nicht Verzaubert!'
@@ -971,14 +950,11 @@ de:
       tpall-message: 'Du wurdest zu %s_displayname% teleportiert.'
       tpall-exept: '%s_displayname% hat alle Spieler zu sich teleportiert, aber du wurdest nicht teleportiert.'
     teleport:
-      cannot-tp-to-self: 'Du kannst dich nicht zu dir selbst teleportieren'
-      cannot-tp-others-to-themself: 'Du kannst diesen Spieler nicht zu sich selbst teleportieren!'
       teleport-to-player: 'Du wurdest zu %t_displayname% teleportiert.'
       teleport-to-coords: 'Du wurdest zu %coords% teleportiert.'
       teleport-player-to-player: 'Du hast %t1_displayname% zu %t2_displayname% teleportiert.'
       teleport-player-to-coords: 'Du hast %t_displayname% zu %coords% teleportiert.'
     tphere:
-      cannot-tp-to-self: 'Du kannst dich nicht zu dir selbst teleportieren'
       teleport-player-to-you: 'Du hast %t_displayname% zu dir teleportiert.'
     vanish:
       now-visible: 'Du bist nun sichtbar.'
@@ -1221,11 +1197,7 @@ sv:
       ban-expiration-permanent: 'Du är permanent bannad från denna server.'
       ban-reason: 'Reason: %reason%'
     ban:
-      ban-header: '-- Ban dialog för %t_playername% --'
       ban-completed-message: 'Bannade %t_playername%.'
-      ban-cancelled-message: 'Avbröt bannlysning för %t_playername%.'
-      ban-enter-reason: 'Vänligen ange en andledning:'
-      ban-enter-time: 'Ange vänligen bannlysningens längd+:'
       already-banned: 'Denna användare är redan bannad.'
     unban:
       not-banned: 'Denna användare är inte bannad.'
@@ -1236,11 +1208,7 @@ sv:
       unban-ip-on-hover: 'Återkallade %ip%s bannlyning'
       no-bans: 'Det finns inga bannlysningar att bli listad här.!'
     ipban:
-      ipban-header: '-- IP Bannlysnings Dialog för %t_playername% (%ip%) --'
       ipban-completed-message: 'Bannade %t_playername% (%ip%).'
-      ipban-cancelled-message: 'Avbröt ip-ban dialog för %t_playername% (%ip%).'
-      ipban-enter-reason: 'Please enter a reason:'
-      ipban-enter-time: 'Var vänlig och ange bannlysningens längd:'
       ip-already-banned: 'Denna IP är redan bannlyst.'
       invalid-ip: 'Detta är inte en giltig IP.'
     unban-ip:
@@ -1263,9 +1231,6 @@ sv:
       tattered: 'trasig'
       added-page: 'Lade till en ny sida.'
       not-holding-book: 'Du håller inte i en bok!'
-    break:
-      break-others: 'Tog sönder ett block framför %t_displayname%.'
-      break-self: 'Tog sönder ett block framför dig.'
     broadcast:
       broadcast-prefix: '[BroadCast]'
       include-message: 'Inkudera vänligen ett medelande!'
@@ -1304,7 +1269,6 @@ sv:
       disabled-others-message: 'Skylt redigerar läge var inaktiverat för %s_displayname%.'
     enchant:
       applied-enchantment: 'Lade till förtrollningen %enchantment% %maxlevel% till ditt föremål.'
-      applied-enchantment-level: 'Lade till förtrollningen %enchantment% nivå %level% till ditt föremål.'
       cannot-be-applied: 'Denna förtrollning kan inte läggas till på detta föremål!'
       cleared-all-enchantments: 'Tog bort alla förtrollningar från detta föremål.'
       not-enchanted: 'Detta föremål är inte förtrollat!'
@@ -1503,14 +1467,11 @@ sv:
       tpall-message: 'Teleporterade alla spelare till %s_displayname%.'
       tpall-exept: '%s_displayname% utförde en tpall, men du blev inte teleporterad.'
     teleport:
-      cannot-tp-to-self-teleport: "Du kan inte teleportera till digsjälv!"
-      cannot-tp-others-to-themself: "Du kan inte teleportera spelaren till sig själv!"
       teleport-to-player: 'Teleporterade till %t_displayname%.'
       teleport-to-coords: 'Teleporterade til. %coords%.'
       teleport-player-to-player: 'Teleporterade %t1_displayname% till %t2_displayname%.'
       teleport-player-to-coords: 'Teleporterade %t_displayname% till %coords%.'
     tphere:
-      cannot-tp-to-self-tphere: "Du kan inte teleportera till dig själv!"
       teleport-player-to-you: 'Teleporterade %t_displayname% till dig.'
     vanish:
       now-visible: 'Du är nu synlig.'
