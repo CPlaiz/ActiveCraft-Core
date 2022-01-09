@@ -83,4 +83,9 @@ public class FlyCommand extends ActiveCraftCommand {
             }
         }
     }
+
+    @Override
+    public List<String> onTab(CommandSender sender, Command command, String alias, String[] args) {
+        return args.length == 1 ? getBukkitPlayernames() : null;
+    }
 }
