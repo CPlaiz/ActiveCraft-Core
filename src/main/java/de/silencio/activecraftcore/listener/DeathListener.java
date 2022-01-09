@@ -1,6 +1,10 @@
 package de.silencio.activecraftcore.listener;
 
 import de.silencio.activecraftcore.ActiveCraftCore;
+import de.silencio.activecraftcore.commands.SuicideCommand;
+import de.silencio.activecraftcore.playermanagement.Profile;
+import de.silencio.activecraftcore.utils.FileConfig;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

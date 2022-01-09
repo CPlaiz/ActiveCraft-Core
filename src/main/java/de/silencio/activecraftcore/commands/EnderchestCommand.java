@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class EnderchestCommand implements CommandExecutor {
+public class EnderchestCommand extends ActiveCraftCommand {
 
     public static ArrayList<UUID> enderchest = new ArrayList<>();
 

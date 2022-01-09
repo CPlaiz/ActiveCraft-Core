@@ -9,9 +9,11 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
-public class EditSignCommand implements CommandExecutor {
+public class EditSignCommand extends ActiveCraftCommand {
 
-    String message = "";
+    public EditSignCommand() {
+        super("editsign");
+    }
 
     @Override
     public void runCommand(CommandSender sender, Command command, String label, String[] args) throws ActiveCraftException {

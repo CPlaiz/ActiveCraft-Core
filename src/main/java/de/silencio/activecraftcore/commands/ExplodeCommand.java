@@ -9,7 +9,11 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ExplodeCommand implements CommandExecutor, TabCompleter {
+public class ExplodeCommand extends ActiveCraftCommand {
+
+    public ExplodeCommand() {
+        super("explode");
+    }
 
     private static final float DEFAULT_POWER = 4f;
     private static final boolean DEFAULT_FIRE = true;
@@ -66,7 +70,3 @@ public class ExplodeCommand implements CommandExecutor, TabCompleter {
         return  list;
     }
 }
-
-// power:
-// fire: true/false
-// breakblocks: true/false
