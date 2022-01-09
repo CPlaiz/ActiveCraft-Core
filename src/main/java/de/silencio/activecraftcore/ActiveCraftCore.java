@@ -94,6 +94,11 @@ public final class ActiveCraftCore extends JavaPlugin {
         }
 
         log("Plugin loaded.");
+
+        new UpdateChecker(this, 95488).getVersion(version -> {
+            if (!this.getDescription().getVersion().equals(version))
+                getLogger().info("There is a new update available.");
+        });
     }
 
     @Override
