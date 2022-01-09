@@ -14,38 +14,28 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.List;
 
-public class RestartCommand implements CommandExecutor, TabCompleter {
+public class RestartCommand extends ActiveCraftCommand {
+
+    public RestartCommand() {
+        super("restart-server");
+    }
 
     private BukkitRunnable runnable;
     private int time;
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-
-        if (sender instanceof Player) {
-            Player player = (Player) sender;
-
-                if (sender.hasPermission("activecraft.restart")) {
-
-                    if (args.length == 0) {
-                        time = 30;
-                    } else {
-                        if (args[0].equalsIgnoreCase("cancel")) {
-                            cancelTimer(sender);
-                            return false;
-                        }
-                        Integer num = null;
-                        try {
-                            num = Integer.valueOf(args[0]);
-                        } catch (NumberFormatException ignored) {
-                        }
-                        if (num == null) {
-                            sender.sendMessage(Errors.INVALID_NUMBER());
-                            return false;
-                        }
-                        this.time = Integer.parseInt(args[0]);
-                    }
-                    if (runnable != null) if (!runnable.isCancelled()) runnable.cancel();
+    public void runCommand(CommandSender sender, Command command, String label, String[] args) throws ActiveCraftException {
+        checkPermission(sender, "restart");
+        if (args.length == 0) {
+            time = 30;
+        } else {
+            if (args[0].equalsIgnoreCase("cancel")) {
+                cancelTimer(sender);
+                return;
+            }
+            this.time = parseInt(args[0]);
+        }
+        if (runnable != null) if (!runnable.isCancelled()) runnable.cancel();
 
         runnable = new BukkitRunnable() {
             @Override
