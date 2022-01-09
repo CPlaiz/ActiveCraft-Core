@@ -9,26 +9,24 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
-public class StrikeCommand implements CommandExecutor {
+public class StrikeCommand extends ActiveCraftCommand {
+
+    public StrikeCommand() {
+        super("strike");
+    }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public void runCommand(CommandSender sender, Command command, String label, String[] args) throws ActiveCraftException {
+        checkPermission(sender, "strike");
+        checkArgsLength(args, ComparisonType.EQUAL, 1);
+        Player target = getPlayer(args[0]);
+        target.getWorld().strikeLightning(target.getLocation());
+        sendSilentMessage(target, CommandMessages.STRIKE());
+        sendMessage(sender, CommandMessages.STRIKE_OTHERS(target));
+    }
 
-            if(sender.hasPermission("activecraft.strike")) {
-                if(args.length == 1) {
-                    if (Bukkit.getPlayer(args[0]) == null) {
-                        sender.sendMessage(Errors.INVALID_PLAYER());
-                        return false;
-                    }
-                    Player target = Bukkit.getPlayer(args[0]);
-
-                    if(target != null) {
-                        target.getWorld().strikeLightning(target.getLocation());
-                        target.sendMessage(CommandMessages.STRIKE());
-                        sender.sendMessage(CommandMessages.STRIKE_OTHERS(target));
-                    } else sender.sendMessage(Errors.INVALID_PLAYER());
-                } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
-            } else sender.sendMessage(Errors.NO_PERMISSION());
-        return true;
+    @Override
+    public List<String> onTab(CommandSender sender, Command command, String label, String[] args) {
+        return args.length == 1 ? getBukkitPlayernames() : null;
     }
 }

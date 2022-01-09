@@ -12,7 +12,11 @@ import org.bukkit.entity.Player;
 import java.util.List;
 
 
-public class StaffChatCommand implements CommandExecutor, TabCompleter {
+public class StaffChatCommand extends ActiveCraftCommand {
+
+    public StaffChatCommand() {
+        super("staffchat", "sc");
+    }
 
     @Override
     public void runCommand(CommandSender sender, Command command, String label, String[] args) throws ActiveCraftException {

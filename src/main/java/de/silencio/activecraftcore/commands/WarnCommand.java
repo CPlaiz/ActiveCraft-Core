@@ -22,63 +22,70 @@ public class WarnCommand extends ActiveCraftCommand {
     }
 
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-
-
-
-        if (args.length >= 2) {
-            if (Bukkit.getPlayer(args[1]) == null) {
-                sender.sendMessage(Errors.INVALID_PLAYER());
-                return false;
-            }
-            Player target = Bukkit.getPlayer(args[1]);
-
-            WarnManager warnManager = new WarnManager(target);
-            if (args[0].equalsIgnoreCase("add")) {
-                StringBuilder stringBuilder = new StringBuilder();
-                if(sender.hasPermission("activecraft.warn.add")) {
-                    if (args.length >= 3) {
-                        for (int i = 2; i < args.length; i++) {
-                            if (!(i == 2)) stringBuilder.append(" ");
-                            stringBuilder.append(args[i]);
-                        }
-                    } else stringBuilder.append(CommandMessages.DEFAULT_WARN_REASON());
-                } else sender.sendMessage(Errors.NO_PERMISSION());
-
+    public void runCommand(CommandSender sender, Command command, String label, String[] args) throws ActiveCraftException {
+        checkArgsLength(args, ComparisonType.GREATER_EQUAL, 2);
+        Player target = getPlayer(args[1]);
+        WarnManager warnManager = new WarnManager(target);
+        switch (args[0]) {
+            case "add" -> {
+                checkPermission(sender, "warn.add");
+                String warnToAdd = args.length >= 3 ? combineArray(args, 2) : CommandMessages.DEFAULT_WARN_REASON();
                 String source = sender.getName();
-                warnManager.add(stringBuilder.toString(), source);
-                sender.sendMessage( CommandMessages.WARN_ADD(target, stringBuilder.toString()));
-            } else if (args[0].equalsIgnoreCase("remove")) {
-                StringBuilder stringBuilder = new StringBuilder();
-                if(sender.hasPermission("activecraft.warn.remove")) {
-                    if (args.length >= 3) {
-                        for (int i = 2; i < args.length; i++) {
-                            if (!(i == 2)) stringBuilder.append(" ");
-                            stringBuilder.append(args[i]);
-                        }
-                        sender.sendMessage(CommandMessages.WARN_REMOVE(target, warnManager.getWarnEntry(stringBuilder.toString()).reason));
-                        warnManager.remove(args[2]);
-                    } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
-                } else sender.sendMessage(Errors.NO_PERMISSION());
-            } else if (args[0].equalsIgnoreCase("get")) {
-                StringBuilder stringBuilder = new StringBuilder();
-                if(sender.hasPermission("activecraft.warn.get")) {
-                    if (args.length >= 3) {
-                        for (int i = 2; i < args.length; i++) {
-                            if (!(i == 2)) stringBuilder.append(" ");
-                            stringBuilder.append(args[i]);
-                        }
-                        StringBuilder strBuilder = new StringBuilder();
-                        strBuilder.append(CommandMessages.WARN_GET_HEADER(target) + "\n")
-                                        .append(CommandMessages.WARN_GET(warnManager.getWarnEntry(stringBuilder.toString()).source,
-                                                warnManager.getWarnEntry(stringBuilder.toString()).reason,
-                                                warnManager.getWarnEntry(stringBuilder.toString()).created,
-                                                warnManager.getWarnEntry(stringBuilder.toString()).id + ""));
-                        sender.sendMessage(strBuilder.toString());
-                    } else sender.sendMessage(Errors.INVALID_PLAYER());
-                } else sender.sendMessage(Errors.NO_PERMISSION());
+                warnManager.add(warnToAdd, source);
+                sendMessage(sender, CommandMessages.WARN_ADD(target, warnToAdd));
             }
-        } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
-        return true;
+            case "remove" -> {
+                checkPermission(sender, "warn.remove");
+                if (args.length >= 3) {
+                    sendMessage(sender, CommandMessages.WARN_REMOVE(target, warnManager.getWarnEntry(combineArray(args, 2)).reason));
+                    warnManager.remove(args[2]);
+                } else throw new InvalidArgumentException();
+            }
+            case "get" -> {
+                if (args.length >= 3) {
+                    String warnToGet = combineArray(args, 2);
+                    sendMessage(sender,
+                            CommandMessages.WARN_GET_HEADER(target) + "\n" +
+                            CommandMessages.WARN_GET(
+                                    warnManager.getWarnEntry(warnToGet).source,
+                                    warnManager.getWarnEntry(warnToGet).reason,
+                                    warnManager.getWarnEntry(warnToGet).created,
+                                    warnManager.getWarnEntry(warnToGet).id + ""));
+                } else sendMessage(sender, Errors.INVALID_ARGUMENTS());
+            }
+        }
+    }
+
+    @Override
+    public List<String> onTab(CommandSender sender, Command command, String label, String[] args) {
+        ArrayList<String> list = new ArrayList<>();
+        FileConfig warnsConfig = new FileConfig("warns.yml");
+
+        switch (args.length) {
+            case 1 -> {
+                list.add("add");
+                list.add("remove");
+                list.add("get");
+            }
+            case 2 -> {
+                switch (args[0].toLowerCase()) {
+                    case "add", "get", "remove" -> list.addAll(getBukkitPlayernames());
+                }
+            }
+            case 3 -> {
+                switch (args[0].toLowerCase()) {
+                    case "get", "remove" -> {
+                        Player target = Bukkit.getPlayer(args[1]);
+                        if (target != null) {
+                            for (String s : warnsConfig.getStringList(target.getName() + ".warn-list")) {
+                                s = s.replace("%dot%", ".");
+                                list.add(s);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return list;
     }
 }

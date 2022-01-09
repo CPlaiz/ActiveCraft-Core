@@ -12,25 +12,27 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
-public class TableMenuCommand implements CommandExecutor {
+public class TableMenuCommand extends ActiveCraftCommand {
+
+    public TableMenuCommand() {
+        super("tablemenu");
+    }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-
-        if(sender instanceof Player) {
-            Player player = (Player) sender;
-            if(sender.hasPermission("activecraft.tablemenu")) {
-
-                GuiCreator guiCreator = new GuiCreator("table_menu", 6, TableMenuMessages.TABLEMENU_TITLE());
+    public void runCommand(CommandSender sender, Command command, String label, String[] args) throws ActiveCraftException {
+        checkPermission(sender, "tablemenu");
+        Player player = getPlayer(sender);
+        GuiCreator guiCreator = new GuiCreator("table_menu", 6, TableMenuMessages.TABLEMENU_TITLE()) {
+            @Override
+            public void refresh() {
                 GuiCloseItem guiCloseItem = new GuiCloseItem(49);
-
-                guiCreator.setItemInSlot(new GuiItem(Material.CRAFTING_TABLE).setDisplayName(TableMenuMessages.TABLEMENU_CRAFTING_TABLE()).setMovable(false).setClickSound(true), 13);
-                guiCreator.setItemInSlot(new GuiItem(Material.CARTOGRAPHY_TABLE).setDisplayName(TableMenuMessages.TABLEMENU_CARTOGRAPHY_TABLE()).setMovable(false).setClickSound(true), 20);
-                guiCreator.setItemInSlot(new GuiItem(Material.STONECUTTER).setDisplayName(TableMenuMessages.TABLEMENU_STONECUTTER()).setMovable(false).setClickSound(true), 21);
-                guiCreator.setItemInSlot(new GuiItem(Material.ANVIL).setDisplayName(TableMenuMessages.TABLEMENU_ANVIL()).setMovable(false).setClickSound(true), 22);
-                guiCreator.setItemInSlot(new GuiItem(Material.GRINDSTONE).setDisplayName(TableMenuMessages.TABLEMENU_GRINDSTONE()).setMovable(false).setClickSound(true), 23);
-                guiCreator.setItemInSlot(new GuiItem(Material.LOOM).setDisplayName(TableMenuMessages.TABLEMENU_LOOM()).setMovable(false).setClickSound(true), 24);
-                guiCreator.setItemInSlot(new GuiItem(Material.SMITHING_TABLE).setDisplayName(TableMenuMessages.TABLEMENU_SMITHING_TABLE()).setMovable(false).setClickSound(true), 31);
+                setItemInSlot(new GuiItem(Material.CRAFTING_TABLE).setDisplayName(TableMenuMessages.TABLEMENU_CRAFTING_TABLE()).setMovable(false).setClickSound(true), 13);
+                setItemInSlot(new GuiItem(Material.CARTOGRAPHY_TABLE).setDisplayName(TableMenuMessages.TABLEMENU_CARTOGRAPHY_TABLE()).setMovable(false).setClickSound(true), 20);
+                setItemInSlot(new GuiItem(Material.STONECUTTER).setDisplayName(TableMenuMessages.TABLEMENU_STONECUTTER()).setMovable(false).setClickSound(true), 21);
+                setItemInSlot(new GuiItem(Material.ANVIL).setDisplayName(TableMenuMessages.TABLEMENU_ANVIL()).setMovable(false).setClickSound(true), 22);
+                setItemInSlot(new GuiItem(Material.GRINDSTONE).setDisplayName(TableMenuMessages.TABLEMENU_GRINDSTONE()).setMovable(false).setClickSound(true), 23);
+                setItemInSlot(new GuiItem(Material.LOOM).setDisplayName(TableMenuMessages.TABLEMENU_LOOM()).setMovable(false).setClickSound(true), 24);
+                setItemInSlot(new GuiItem(Material.SMITHING_TABLE).setDisplayName(TableMenuMessages.TABLEMENU_SMITHING_TABLE()).setMovable(false).setClickSound(true), 31);
                 guiCloseItem.setClickSound(true);
                 guiCloseItem.setMovable(false);
                 fillBackground(true);

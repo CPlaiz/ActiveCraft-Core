@@ -9,33 +9,25 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
-public class TphereCommand implements CommandExecutor {
+public class TphereCommand extends ActiveCraftCommand {
+
+    public TphereCommand() {
+        super("tphere");
+    }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public void runCommand(CommandSender sender, Command command, String label, String[] args) throws ActiveCraftException {
+        checkPermission(sender, "tphere");
+        checkArgsLength(args, ComparisonType.GREATER_EQUAL, 1);
+        Player player = getPlayer(sender);
+        Player target = getPlayer(args[0]);
+        checkTargetSelf(sender, target);
+        target.teleport(player.getLocation());
+        sendMessage(sender, CommandMessages.TELEPORT_PLAYER_TO_YOU(target));
+    }
 
-        if(sender instanceof Player) {
-
-            if (args.length == 1) {
-                if (sender.hasPermission("activecraft.tphere")) {
-                    if (Bukkit.getPlayer(args[0]) == null) {
-                        sender.sendMessage(Errors.INVALID_PLAYER());
-                        return false;
-                    }
-                    Player target = Bukkit.getPlayer(args[0]);
-                    Player player = (Player) sender;
-
-                    if(target == player) {
-                        player.sendMessage(Errors.WARNING() + CommandMessages.CANNOT_TP_TO_SELF_TPHERE());
-                        return false;
-                    }
-
-                    target.teleport(player.getLocation());
-                    sender.sendMessage(CommandMessages.TELEPORT_PLAYER_TO_YOU(target));
-
-                } else sender.sendMessage(Errors.NO_PERMISSION());
-            } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
-        } else sender.sendMessage(Errors.NOT_A_PLAYER());
-        return true;
+    @Override
+    public List<String> onTab(CommandSender sender, Command command, String label, String[] args) {
+        return args.length == 1 ? getBukkitPlayernames() : null;
     }
 }

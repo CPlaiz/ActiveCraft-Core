@@ -12,70 +12,112 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-public class XpCommand implements CommandExecutor {
+public class XpCommand extends ActiveCraftCommand {
+
+    public XpCommand() {
+        super("xp");
+    }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public void runCommand(CommandSender sender, Command command, String label, String[] args) throws ActiveCraftException {
+        checkArgsLength(args, ComparisonType.GREATER_EQUAL, 2);
+        switch (args[0].toLowerCase()) {
+            case "add" -> {
+                if (args.length == 2) {
+                    checkPermission(sender, "xp.self");
+                    Player player = getPlayer(sender);
 
-        if (args.length == 1) {
-            if (sender instanceof Player) {
-                Player player = (Player) sender;
-                Integer num = null;
-                try {
-                    num = Integer.valueOf(args[0].replace("l", ""));
-                } catch (NumberFormatException ignored) {
-                }
-                if (num != null) {
-                    if (sender.hasPermission("activecraft.xp.self")) {
-                        if (args[0].endsWith("l")) {
-                            player.giveExpLevels(Integer.parseInt(args[0].replace("l", "")));
-                            player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f);
-                            player.sendMessage(CommandMessages.XP_LEVELS(args[0].replace("l", "")));
-                        } else {
-                            player.giveExp(Integer.parseInt(args[0]));
-                            player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f);
-                            player.sendMessage(CommandMessages.XP_XP(args[0].replace("l", "")));
-                        }
-                    } else sender.sendMessage(Errors.NO_PERMISSION());
-                } else sender.sendMessage(Errors.INVALID_NUMBER());
-            } else sender.sendMessage(Errors.NOT_A_PLAYER());
-        } else if (args.length == 2) {
-            if (sender.hasPermission("activecraft.xp.others")) {
-                if (Bukkit.getPlayer(args[0]) == null) {
-                    sender.sendMessage(Errors.INVALID_PLAYER());
-                    return false;
-                }
-                Player target = Bukkit.getPlayer(args[0]);
-                if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
-                    if (!sender.hasPermission("activecraft.xp.self")) {
-                        sender.sendMessage(Errors.CANNOT_TARGET_SELF());
-                        return false;
-                    }
-                }
-                Integer num = null;
-                try {
-                    num = Integer.valueOf(args[1].replace("l", ""));;
-                } catch (NumberFormatException ignored) {
-                }
-                if (num == null) {
-                    sender.sendMessage(Errors.INVALID_NUMBER());
-                    return false;
-                }
-                if (target != null) {
                     if (args[1].endsWith("l")) {
-                        target.giveExpLevels(Integer.parseInt(args[1].replace("l", "")));
-                        target.playSound(target.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f);
-                        sender.sendMessage(CommandMessages.XP_LEVELS_OTHERS(target, args[1].replace("l", "")));
-                        target.sendMessage(CommandMessages.XP_LEVELS_OTHERS_MESSAGE(sender, args[1].replace("l", "")));
+                        player.giveExpLevels(parseInt(args[1].replace("l", "")));
+                        sendMessage(sender, CommandMessages.XP_ADD_LEVELS(args[1].replace("l", "")));
                     } else {
-                        target.giveExp(Integer.parseInt(args[1]));
-                        target.playSound(target.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f);
-                        sender.sendMessage(CommandMessages.XP_XP_OTHERS(target, args[1].replace("l", "")));
-                        target.sendMessage(CommandMessages.XP_XP_OTHERS_MESSAGE(sender, args[1].replace("l", "")));
+                        player.giveExp(parseInt(args[1]));
+                        sendMessage(sender, CommandMessages.XP_ADD_XP(args[1]));
                     }
-                } else sender.sendMessage(Errors.INVALID_PLAYER());
-            } else sender.sendMessage(Errors.NO_PERMISSION());
-        } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
-        return true;
+
+                    player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f);
+                } else if (args.length >= 2) {
+                    checkPermission(sender, "xp.others");
+                    Player target = getPlayer(args[1]);
+
+                    if (args[2].endsWith("l")) {
+                        if (!checkTargetSelf(sender, target, "xp.self")) sendSilentMessage(target, CommandMessages.XP_ADD_LEVELS_OTHERS_MESSAGE(sender, args[2].replace("l", "")));
+                        target.giveExpLevels(parseInt(args[2].replace("l", "")));
+                        sendMessage(sender, CommandMessages.XP_ADD_LEVELS_OTHERS(target, args[2].replace("l", "")));
+                    } else {
+                        if (!checkTargetSelf(sender, target, "xp.self")) sendSilentMessage(target, CommandMessages.XP_ADD_XP_OTHERS_MESSAGE(sender, args[2]));
+                        target.giveExp(parseInt(args[2]));
+                        sendMessage(sender, CommandMessages.XP_ADD_XP_OTHERS(target, args[2]));
+                    }
+                    target.playSound(target.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f);
+                }
+            }
+            case "set" -> {
+                if (args.length == 2) {
+                    checkPermission(sender, "xp.self");
+                    Player player = getPlayer(sender);
+
+                    if (args[1].endsWith("l")) {
+                        player.setTotalExperience(0);
+                        player.giveExpLevels(parseInt(args[1].replace("l", "")));
+                        sendMessage(sender, CommandMessages.XP_SET_LEVELS(args[1].replace("l", "")));
+                    } else {
+                        player.setTotalExperience(0);
+                        player.giveExp(parseInt(args[1]));
+                        sendMessage(sender, CommandMessages.XP_SET_XP(args[1]));
+                    }
+
+                    player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f);
+                } else if (args.length >= 2) {
+                    checkPermission(sender, "xp.others");
+                    Player target = getPlayer(args[1]);
+
+                    if (args[2].endsWith("l")) {
+                        if (!checkTargetSelf(sender, target, "xp.self")) sendSilentMessage(target, CommandMessages.XP_SET_LEVELS_OTHERS_MESSAGE(sender, args[2].replace("l", "")));
+                        target.setTotalExperience(0);
+                        target.giveExpLevels(parseInt(args[2].replace("l", "")));
+                        sendMessage(sender, CommandMessages.XP_SET_LEVELS_OTHERS(target, args[2].replace("l", "")));
+                    } else {
+                        if (!checkTargetSelf(sender, target, "xp.self")) sendSilentMessage(target, CommandMessages.XP_SET_XP_OTHERS_MESSAGE(sender, args[2]));
+                        target.setTotalExperience(0);
+                        target.giveExp(parseInt(args[2]));
+                        sendMessage(sender, CommandMessages.XP_SET_XP_OTHERS(target, args[2].replace("l", "")));
+                    }
+
+                    target.playSound(target.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f);
+                }
+            }
+            case "clear" -> {
+                if (args.length == 1) {
+                    checkPermission(sender, "xp.self");
+                    Player player = getPlayer(sender);
+
+                    player.setTotalExperience(0);
+                    player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f);
+                    sendMessage(sender, CommandMessages.XP_CLEAR());
+                } else {
+                    checkPermission(sender, "xp.others");
+                    Player target = getPlayer(args[1]);
+
+                    if (!checkTargetSelf(sender, target, "xp.self")) sendSilentMessage(target, CommandMessages.XP_CLEAR_OTHERS_MESSAGE(sender));
+                    target.setTotalExperience(0);
+                    target.playSound(target.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 1f, 1f);
+                    sendMessage(sender, CommandMessages.XP_CLEAR_OTHERS(target));
+                }
+            }
+        }
+
+    }
+
+    @Override
+    public List<String> onTab(CommandSender sender, Command command, String label, String[] args) {
+        List<String> list = new ArrayList<>();
+        if (args.length == 1) {
+            list.add("add");
+            list.add("set");
+            list.add("clear");
+        }
+        if (args.length == 2) list.addAll(getBukkitPlayernames());
+        return list;
     }
 }
