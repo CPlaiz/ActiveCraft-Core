@@ -9,42 +9,28 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
-public class KickCommand implements CommandExecutor {
+public class KickCommand extends ActiveCraftCommand {
+
+    public KickCommand() {
+        super("kick");
+    }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public void runCommand(CommandSender sender, Command command, String label, String[] args) throws ActiveCraftException {
+        checkPermission(sender, "kick");
+        checkArgsLength(args, ComparisonType.GREATER_EQUAL, 1);
+        Player target = getPlayer(args[0]);
+        if (args.length == 1) {
+            target.kickPlayer(CommandMessages.DEFAULT_KICK_MESSAGE());
+            sendMessage(sender, CommandMessages.DEFAULT_KICK(target));
+        } else {
+            sendMessage(sender, CommandMessages.CUSTOM_KICK(target, combineArray(args)));
+            target.kickPlayer(CommandMessages.CUSTOM_KICK_MESSAGE(combineArray(args)));
+        }
+    }
 
-            if(sender instanceof Player) {
-                Player player = (Player) sender;
-            }
-            if(sender.hasPermission("activecraft.kick")) {
-                if(args.length == 1) {
-                    if (Bukkit.getPlayer(args[0]) == null) {
-                        sender.sendMessage(Errors.INVALID_PLAYER());
-                        return false;
-                    }
-                    Player target = Bukkit.getPlayer(args[0]);
-                    target.kickPlayer(CommandMessages.DEFAULT_KICK_MESSAGE());
-                    sender.sendMessage(CommandMessages.DEFAULT_KICK(target));
-                }
-                if(args.length > 1) {
-                    StringBuilder stringBuilder = new StringBuilder();
-                    for (int i = 1; i < args.length; i++) {
-                        stringBuilder.append(args[i]);
-                        stringBuilder.append(" ");
-                    }
-                    if (Bukkit.getPlayer(args[0]) == null) {
-                        sender.sendMessage(Errors.INVALID_PLAYER());
-                        return false;
-                    }
-                    Player target = Bukkit.getPlayer(args[0]);
-                    sender.sendMessage(CommandMessages.CUSTOM_KICK(target, stringBuilder.toString()));
-                    target.kickPlayer(CommandMessages.CUSTOM_KICK_MESSAGE(stringBuilder.toString()));
-                }
-                if(args.length == 0) {
-                    sender.sendMessage(Errors.INVALID_ARGUMENTS());
-                }
-            } else sender.sendMessage(Errors.NO_PERMISSION());
-        return true;
+    @Override
+    public List<String> onTab(CommandSender sender, Command command, String label, String[] args) {
+        return args.length == 1 ? getBukkitPlayernames() : null;
     }
 }

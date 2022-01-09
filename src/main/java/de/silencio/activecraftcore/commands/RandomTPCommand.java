@@ -10,89 +10,51 @@ import org.bukkit.entity.Player;
 import java.util.List;
 import java.util.Random;
 
-public class RandomTPCommand implements CommandExecutor, TabCompleter {
+public class RandomTPCommand extends ActiveCraftCommand {
+
+    public RandomTPCommand() {
+        super("randomtp");
+    }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-
+    public void runCommand(CommandSender sender, Command command, String label, String[] args) throws ActiveCraftException {
+        Player player = getPlayer(sender);
         if (args.length == 0) {
-            if (sender.hasPermission("activecraft.randomtp.self")) {
-                if (sender instanceof Player) {
-                    Player player = (Player) sender;
-                    Location tpLoc = randomLocation(player, (int) player.getWorld().getWorldBorder().getSize()/2);
-                    int save = 69;
-                    for (int i = 0; i < save; i++) {
-                        if (tpLoc.getWorld().getBlockAt(tpLoc.getBlockX(), tpLoc.getWorld().getHighestBlockYAt(tpLoc.getBlockX(), tpLoc.getBlockZ()), tpLoc.getBlockZ()).getType() != Material.LAVA) break;
-                        tpLoc = randomLocation(player, (int) player.getWorld().getWorldBorder().getSize()/2);
-                    }
-                    player.teleport(tpLoc);
-                } else sender.sendMessage(Errors.NOT_A_PLAYER());
-            } else sender.sendMessage(Errors.NO_PERMISSION());
-        } else if (args.length == 1) {
-            if (sender.hasPermission("activecraft.randomtp.others")) {
-                if (Bukkit.getPlayer(args[0]) != null) {
-                    Player player = (Player) sender;
-                    Player target = Bukkit.getPlayer(args[0]);
-                    if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
-                        if (!sender.hasPermission("activecraft.randomtp.self")) {
-                            sender.sendMessage(Errors.CANNOT_TARGET_SELF());
-                            return false;
-                        }
-                    }
-                    Location tpLoc = randomLocation(target, (int) target.getWorld().getWorldBorder().getSize()/2);
-                    int save = 69;
-                    for (int i = 0; i < save; i++) {
-                        if (tpLoc.getWorld().getBlockAt(tpLoc.getBlockX(), tpLoc.getWorld().getHighestBlockYAt(tpLoc.getBlockX(), tpLoc.getBlockZ()), tpLoc.getBlockZ()).getType() != Material.LAVA) break;
-                        tpLoc = randomLocation(player, (int) target.getWorld().getWorldBorder().getSize()/2);
-                    }
-                    target.teleport(tpLoc);
-                } else {
-                    Player player = (Player) sender;
-                    Integer num = null;
-                    try {
-                        num = Integer.valueOf(args[0]);
-                    } catch (NumberFormatException ignored) {
-                    }
-                    if (num == null || num == 0) {
-                        sender.sendMessage(Errors.INVALID_NUMBER());
-                        return false;
-                    }
-                    if (num > player.getWorld().getWorldBorder().getSize()/2) num = (int) player.getWorld().getWorldBorder().getSize()/2;
-                    Location tpLoc = randomLocation(player, num);
-                    int save = 69;
-                    for (int i = 0; i < save; i++) {
-                        if (tpLoc.getWorld().getBlockAt(tpLoc.getBlockX(), tpLoc.getWorld().getHighestBlockYAt(tpLoc.getBlockX(), tpLoc.getBlockZ()), tpLoc.getBlockZ()).getType() != Material.LAVA) break;
-                        tpLoc = randomLocation(player, num);
-                    }
-                    player.teleport(tpLoc);
-                }
-            } else sender.sendMessage(Errors.NO_PERMISSION());
-        } else {
-            if (Bukkit.getPlayer(args[0]) == null) {
-                sender.sendMessage(Errors.INVALID_PLAYER());
-                return false;
-            }
-            Player player = (Player) sender;
-            Player target = Bukkit.getPlayer(args[0]);
-            Integer num = null;
-            try {
-                num = Integer.valueOf(args[1]);
-            } catch (NumberFormatException ignored) {
-            }
-            if (num == null || num == 0) {
-                sender.sendMessage(Errors.INVALID_NUMBER());
-                return false;
-            }
-            if (num > target.getWorld().getWorldBorder().getSize()/2) num = (int) target.getWorld().getWorldBorder().getSize()/2;
-            Location tpLoc = randomLocation(target, num);
+            checkPermission(sender, "randomtp.self");
+            Location tpLoc = randomLocation(player, (int) player.getWorld().getWorldBorder().getSize()/2);
             int save = 69;
             for (int i = 0; i < save; i++) {
                 if (tpLoc.getWorld().getBlockAt(tpLoc.getBlockX(), tpLoc.getWorld().getHighestBlockYAt(tpLoc.getBlockX(), tpLoc.getBlockZ()), tpLoc.getBlockZ()).getType() != Material.LAVA) break;
-                tpLoc = randomLocation(player, num);
+                tpLoc = randomLocation(player, (int) player.getWorld().getWorldBorder().getSize()/2);
+            }
+            player.teleport(tpLoc);
+        } else if (args.length == 1) {
+            checkPermission(sender, "randomtp.others");
+            Player target = getPlayer(args[0]);
+            checkTargetSelf(sender, target, "randomtp.self");
+            Location tpLoc = randomLocation(target, (int) target.getWorld().getWorldBorder().getSize()/2);
+            int save = 69;
+            for (int i = 0; i < save; i++) {
+                if (tpLoc.getWorld().getBlockAt(tpLoc.getBlockX(), tpLoc.getWorld().getHighestBlockYAt(tpLoc.getBlockX(), tpLoc.getBlockZ()), tpLoc.getBlockZ()).getType() != Material.LAVA) break;
+                tpLoc = randomLocation(player, (int) target.getWorld().getWorldBorder().getSize()/2);
             }
             target.teleport(tpLoc);
+        } else {
+            int num = parseInt(args[1]);
+            if (parseInt(args[1]) > player.getWorld().getWorldBorder().getSize()/2) num = (int) player.getWorld().getWorldBorder().getSize()/2;
+            Location tpLoc = randomLocation(player, num);
+            int save = 69;
+            for (int i = 0; i < save; i++) {
+                if (tpLoc.getWorld().getBlockAt(tpLoc.getBlockX(), tpLoc.getWorld().getHighestBlockYAt(tpLoc.getBlockX(), tpLoc.getBlockZ()), tpLoc.getBlockZ()).getType() != Material.LAVA) break;
+                tpLoc = randomLocation(player, parseInt(args[1]));
+            }
+            player.teleport(tpLoc);
         }
-        return true;
+    }
+
+    @Override
+    public List<String> onTab(CommandSender sender, Command command, String label, String[] args) {
+        return args.length == 1 ? getBukkitPlayernames() : null;
     }
 
     private Location randomLocation(Player player, int range) {

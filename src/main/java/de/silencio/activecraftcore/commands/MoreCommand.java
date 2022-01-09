@@ -9,34 +9,35 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-public class MoreCommand implements CommandExecutor {
+import java.util.List;
+
+public class MoreCommand extends ActiveCraftCommand {
+
+    public MoreCommand() {
+        super("more");
+    }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public void runCommand(CommandSender sender, Command command, String label, String[] args) throws ActiveCraftException {
+        checkPermission(sender, "more");
+        Player player = getPlayer(sender);
+        if(args.length == 0) {
+            ItemStack is = player.getInventory().getItemInMainHand();
+            if (is.getType() != Material.AIR) {
+                is.setAmount(is.getMaxStackSize());
+            } else sendMessage(sender, Errors.NOT_HOLDING_ITEM());
+        } else if(args.length == 1) {
+            if(Integer.parseInt(args[0]) < 128) {
+                ItemStack is = player.getInventory().getItemInMainHand();
+                if (is.getType() != Material.AIR) {
+                    is.setAmount(Integer.parseInt(args[0]));
+                } else sendMessage(sender, Errors.NOT_HOLDING_ITEM());
+            } else sendMessage(sender, Errors.WARNING() + CommandMessages.CANNOT_STACK());
+        } else sendMessage(sender, Errors.TOO_MANY_ARGUMENTS());
+    }
 
-        if(sender instanceof Player) {
-            Player player = (Player) sender;
-
-            if(sender.hasPermission("activecraft.more")) {
-
-                if(args.length == 0) {
-                    ItemStack is = player.getInventory().getItemInMainHand();
-                    if (is.getType() != Material.AIR) {
-                        is.setAmount(is.getMaxStackSize());
-                    } else sender.sendMessage(Errors.NOT_HOLDING_ITEM());
-                }
-                if(args.length == 1) {
-                    if(Integer.parseInt(args[0]) < 128) {
-                        ItemStack is = player.getInventory().getItemInMainHand();
-                        if (is.getType() != Material.AIR) {
-                            is.setAmount(Integer.parseInt(args[0]));
-                        } else sender.sendMessage(Errors.NOT_HOLDING_ITEM());
-                    } else sender.sendMessage(Errors.WARNING() + CommandMessages.CANNOT_STACK());
-                } if(args.length > 1) {
-                    sender.sendMessage(Errors.TOO_MANY_ARGUMENTS());
-                }
-            } else sender.sendMessage(Errors.NO_PERMISSION());
-        } else sender.sendMessage(Errors.NOT_A_PLAYER());
-        return true;
+    @Override
+    public List<String> onTab(CommandSender sender, Command command, String alias, String[] args) {
+        return null;
     }
 }

@@ -19,7 +19,7 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MsgCommand implements CommandExecutor, TabCompleter {
+public class MsgCommand extends ActiveCraftCommand {
 
     public MsgCommand() {
         super("msg");

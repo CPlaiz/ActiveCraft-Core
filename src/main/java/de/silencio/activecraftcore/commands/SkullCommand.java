@@ -9,67 +9,39 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
-public class SkullCommand implements CommandExecutor {
+public class SkullCommand extends ActiveCraftCommand {
+
+    public SkullCommand() {
+        super("skull");
+    }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-
-        if (sender instanceof Player) {
-            Player player = (Player) sender;
-
-            if (args.length == 0) {
-                if (sender.hasPermission("activecraft.skull.self")) {
-
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "give @p minecraft:player_head{SkullOwner:\"" + player.getName() + "\"}");
-                    sender.sendMessage(CommandMessages.GIVE_SKULL());
-
-                } else sender.sendMessage(Errors.NO_PERMISSION());
+    public void runCommand(CommandSender sender, Command command, String label, String[] args) throws ActiveCraftException {
+        Player player = getPlayer(sender);
+        switch (args.length) {
+            case 0 -> {
+                checkPermission(sender, "skull.self");
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "give " + player.getName() + " minecraft:player_head{SkullOwner:\"" + player.getName() + "\"}");
+                sendMessage(sender, CommandMessages.GIVE_SKULL());
             }
-
-            if (args.length == 1) {
-                if (sender.hasPermission("activecraft.skull.others")) {
-                    Player target = Bukkit.getPlayer(args[0]);
-                    if(player.getUniqueId().toString().equals(Bukkit.getServer().getOfflinePlayer(args[0]).getUniqueId().toString())) {
-                        if (!sender.hasPermission("activecraft.skull.self")) {
-                            sender.sendMessage(Errors.CANNOT_TARGET_SELF());
-                            return false;
-                        }
-                    }
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "give @p minecraft:player_head{SkullOwner:\"" + args[0] + "\"}");
-                    sender.sendMessage(CommandMessages.GIVE_SKULL_OTHERS(args[0]));
-
-                } else sender.sendMessage(Errors.NO_PERMISSION());
+            case 1 -> {
+                checkPermission(sender, "skull.others");
+                checkTargetSelf(sender, getPlayer(args[0]), "skull.self");
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "give " + player.getName() + " minecraft:player_head{SkullOwner:\"" + args[0] + "\"}");
+                sendMessage(sender, CommandMessages.GIVE_SKULL_OTHERS(args[0]));
             }
-
-            if(args.length == 2) {
-                if (sender.hasPermission("activecraft.skull.multiple")) {
-                    Player target = Bukkit.getPlayer(args[0]);
-                    if(player.getUniqueId().toString().equals(Bukkit.getServer().getOfflinePlayer(args[0]).getUniqueId().toString())) {
-                        if (!sender.hasPermission("activecraft.skull.self")) {
-                            sender.sendMessage(Errors.CANNOT_TARGET_SELF());
-                            return false;
-                        }
-                    }
-                        Integer num = null;
-                        try {
-                            num = Integer.valueOf(args[1]);
-                        } catch (NumberFormatException ignored) {
-                        }
-                        if (num == null) {
-                            sender.sendMessage(Errors.INVALID_NUMBER());
-                            return false;
-                        }
-                    for (int i = Integer.parseInt(args[1]); i > 0; i--) {
-                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "give @p minecraft:player_head{SkullOwner:\"" + args[0] + "\"}");
-                    }
-                    sender.sendMessage(CommandMessages.GIVE_SKULL_OTHERS_MULTIPLE(args[0], num + ""));
-                } else sender.sendMessage(Errors.NO_PERMISSION());
+            default -> {
+                checkPermission(sender, "skull.multiple");
+                checkTargetSelf(sender, getPlayer(args[0]), "skull.self");
+                for (int i = parseInt(args[1]); i > 0; i--)
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "give " + sender.getName() + " minecraft:player_head{SkullOwner:\"" + args[0] + "\"}");
+                sendMessage(sender, CommandMessages.GIVE_SKULL_OTHERS_MULTIPLE(args[0], parseInt(args[1]) + ""));
             }
+        }
+    }
 
-            if(args.length >= 3) {
-                sender.sendMessage(Errors.TOO_MANY_ARGUMENTS());
-            }
-        } else sender.sendMessage(Errors.NOT_A_PLAYER());
-        return true;
+    @Override
+    public List<String> onTab(CommandSender sender, Command command, String label, String[] args) {
+        return args.length == 1 ? getBukkitPlayernames() : null;
     }
 }

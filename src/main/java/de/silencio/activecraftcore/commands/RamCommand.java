@@ -7,18 +7,22 @@ import org.bukkit.command.CommandSender;
 
 import java.util.List;
 
-public class RamCommand implements CommandExecutor, TabCompleter {
+public class RamCommand extends ActiveCraftCommand {
+
+    public RamCommand() {
+        super("ram");
+    }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public void runCommand(CommandSender sender, Command command, String label, String[] args) throws ActiveCraftException {
+        checkPermission(sender, "ram");
+        Runtime runtime = Runtime.getRuntime();
+        int durch = 1024*1024;
+        sendMessage(sender, CommandMessages.RAM(runtime.freeMemory()/durch + "", runtime.totalMemory()/durch - runtime.freeMemory()/durch + "", runtime.maxMemory()/durch + ""));
+    }
 
-            if(sender.hasPermission("activecraft.ram")) {
-
-                Runtime runtime = Runtime.getRuntime();
-
-                int durch = 1024*1024;
-                sender.sendMessage(CommandMessages.RAM(runtime.freeMemory()/durch + "", runtime.totalMemory()/durch - runtime.freeMemory()/durch + "", runtime.maxMemory()/durch + ""));
-            } else sender.sendMessage(Errors.NO_PERMISSION());
-        return true;
+    @Override
+    public List<String> onTab(CommandSender sender, Command command, String label, String[] args) {
+        return null;
     }
 }
