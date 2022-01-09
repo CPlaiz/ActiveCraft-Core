@@ -1,15 +1,13 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.exceptions.ActiveCraftException;
 import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -17,119 +15,59 @@ import org.bukkit.inventory.meta.BlockStateMeta;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
-public class SpawnerCommand implements CommandExecutor, TabCompleter {
+public class SpawnerCommand extends ActiveCraftCommand {
 
-    @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-
-        if (args.length == 1 ) {
-            String mobName = args[0];
-            EntityType value = null;
-            try {
-                value = EntityType.valueOf(mobName);
-            } catch (IllegalArgumentException exp) {
-                sender.sendMessage(Errors.INVALID_ENTITY());
-                return false;
-            }
-            if (sender instanceof Player) {
-                Player player = (Player) sender;
-                if (sender.hasPermission("activecraft.spawner.self")) {
-
-                    ItemStack spawner = new ItemStack(Material.SPAWNER);
-                    BlockStateMeta spawnermeta = (BlockStateMeta) spawner.getItemMeta();
-                    CreatureSpawner spawnerblock = (CreatureSpawner) spawnermeta.getBlockState();
-                    player.sendMessage(CommandMessages.SPAWNER_GIVE(mobName.toLowerCase()));
-
-                    spawnerblock.setSpawnedType(EntityType.valueOf(mobName));
-                    spawnermeta.setDisplayName(CommandMessages.SPAWNER_DISPLAYNAME(mobName.toLowerCase().replace("_", " ")));
-                    spawnermeta.setBlockState(spawnerblock);
-                    spawner.setItemMeta(spawnermeta);
-                    player.getInventory().addItem(spawner);
-
-                } else sender.sendMessage(Errors.NO_PERMISSION());
-            } else sender.sendMessage(Errors.NOT_A_PLAYER());
-        } else {
-            if (args.length == 2) {
-                if (Bukkit.getPlayer(args[0]) == null) {
-                    sender.sendMessage(Errors.INVALID_PLAYER());
-                    return false;
-                }
-                String mobName = args[1];
-                EntityType value = null;
-                try {
-                    value = EntityType.valueOf(mobName);
-                } catch (IllegalArgumentException ignored) {
-                }
-                if (value == null || value.name().equals("UNKNOWN")) {
-                    sender.sendMessage(Errors.INVALID_ENTITY());
-                    return false;
-                }
-
-                if (sender.hasPermission("activecraft.spawner.others")) {
-
-                    Player target = Bukkit.getPlayer(args[0]);
-                    if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
-                        if (!sender.hasPermission("activecraft.spawner.self")) {
-                            sender.sendMessage(Errors.CANNOT_TARGET_SELF());
-                            return false;
-                        }
-                    }
-
-
-                    ItemStack spawner = new ItemStack(Material.SPAWNER);
-                    BlockStateMeta spawnermeta = (BlockStateMeta) spawner.getItemMeta();
-                    CreatureSpawner spawnerblock = (CreatureSpawner) spawnermeta.getBlockState();
-
-                    spawnerblock.setSpawnedType(EntityType.valueOf(mobName));
-                    spawnermeta.setDisplayName(CommandMessages.SPAWNER_DISPLAYNAME(mobName.toLowerCase().replace("_", " ")));
-                    sender.sendMessage(CommandMessages.SPAWNER_GIVE_OTHERS(target, mobName.toLowerCase()));
-                    target.sendMessage(CommandMessages.SPAWNER_GIVE_OTHERS_MESSAGE(sender, mobName.toLowerCase()));
-
-                    spawnermeta.setBlockState(spawnerblock);
-                    spawner.setItemMeta(spawnermeta);
-                    target.getInventory().addItem(spawner);
-
-
-                } else sender.sendMessage(Errors.NO_PERMISSION());
-            } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
-        }
-        return true;
+    public SpawnerCommand() {
+        super("spawner");
     }
 
     @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-        ArrayList<String> list = new ArrayList<>();
-        Player p = (Player) sender;
-
-        if (args.length == 0) return list;
+    public void runCommand(CommandSender sender, Command command, String label, String[] args) throws ActiveCraftException {
+        Player player = getPlayer(sender);
         if (args.length == 1) {
-            for (EntityType entityType : EntityType.values()) {
-                list.add(entityType.name());
-            }
-            for (Player player : Bukkit.getOnlinePlayers()) {
-                list.add(player.getName());
-            }
-        }
-        if (args.length == 2) {
-            if (Bukkit.getPlayer(args[0]) != null) {
-                for (EntityType entityType : EntityType.values()) {
-                    if (!entityType.name().equals("UNKNOWN")) {
-                        list.add(entityType.name());
-                    }
-                }
-            }
-        }
+            checkPermission(sender, "spawner.self");
+            String mobName = parseEntityType(args[0]).name().toUpperCase();
+            ItemStack spawner = new ItemStack(Material.SPAWNER);
+            BlockStateMeta spawnermeta = (BlockStateMeta) spawner.getItemMeta();
+            CreatureSpawner spawnerblock = (CreatureSpawner) spawnermeta.getBlockState();
+            sendMessage(sender, CommandMessages.SPAWNER_GIVE(mobName.toLowerCase()));
+            spawnerblock.setSpawnedType(EntityType.valueOf(mobName));
+            spawnermeta.setDisplayName(CommandMessages.SPAWNER_DISPLAYNAME(mobName.replace("_", " ")));
+            spawnermeta.setBlockState(spawnerblock);
+            spawner.setItemMeta(spawnermeta);
+            player.getInventory().addItem(spawner);
+        } else if (args.length == 2) {
+            checkPermission(sender, "spawner.others");
+            Player target = getPlayer(args[0]);
+            String mobName = parseEntityType(args[1]).name().toUpperCase();
+            if (!checkTargetSelf(sender, target, "spawner.self")) sendSilentMessage(target, CommandMessages.SPAWNER_GIVE_OTHERS_MESSAGE(sender, mobName.toLowerCase()));
+            ItemStack spawner = new ItemStack(Material.SPAWNER);
+            BlockStateMeta spawnermeta = (BlockStateMeta) spawner.getItemMeta();
+            CreatureSpawner spawnerblock = (CreatureSpawner) spawnermeta.getBlockState();
+            spawnerblock.setSpawnedType(EntityType.valueOf(mobName));
+            spawnermeta.setDisplayName(CommandMessages.SPAWNER_DISPLAYNAME(mobName.toLowerCase().replace("_", " ")));
+            sendMessage(sender, CommandMessages.SPAWNER_GIVE_OTHERS(target, mobName.toLowerCase()));
+            spawnermeta.setBlockState(spawnerblock);
+            spawner.setItemMeta(spawnermeta);
+            target.getInventory().addItem(spawner);
+        } else sendMessage(sender, Errors.INVALID_ARGUMENTS());
+    }
 
-        ArrayList<String> completerList = new ArrayList<>();
-        String currentarg = args[args.length - 1].toLowerCase();
-        for (String s : list) {
-            String s1 = s.toLowerCase();
-            if (s1.startsWith(currentarg)) {
-                completerList.add(s);
-            }
+    @Override
+    public List<String> onTab(CommandSender sender, Command command, String label, String[] args) {
+        ArrayList<String> list = new ArrayList<>();
+
+        if (args.length == 1) {
+            for (EntityType entityType : EntityType.values())
+                list.add(entityType.name());
+            list.addAll(getBukkitPlayernames());
+        } else if (args.length == 2) {
+            if (Bukkit.getPlayer(args[0]) != null)
+                for (EntityType entityType : EntityType.values())
+                    if (!entityType.name().equals("UNKNOWN"))
+                        list.add(entityType.name());
         }
-        return completerList;
+        return list;
     }
 }

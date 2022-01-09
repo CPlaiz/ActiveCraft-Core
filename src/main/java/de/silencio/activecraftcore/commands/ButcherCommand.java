@@ -1,56 +1,50 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.exceptions.ActiveCraftException;
 import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
-import org.bukkit.ChatColor;
-import org.bukkit.World;
+import de.silencio.activecraftcore.utils.ComparisonType;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.*;
 
 import java.util.List;
 
-public class ButcherCommand implements CommandExecutor {
+public class ButcherCommand extends ActiveCraftCommand {
+
+    public ButcherCommand() {
+        super("butcher");
+    }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public void runCommand(CommandSender sender, Command command, String label, String[] args) throws ActiveCraftException {
+        checkPermission(sender, "butcher");
+        Player player = getPlayer(sender);
+        checkArgsLength(args, ComparisonType.EQUAL, 0);
+        List<Entity> entities = player.getNearbyEntities(200, 500, 200);
+        if(entities.size() == 0) {
+            sendMessage(sender, Errors.WARNING() + CommandMessages.NO_MOBS());
+            return;
+        }
 
-        if (sender instanceof Player) {
-            Player player = (Player) sender;
-            World world = player.getWorld();
+        int killed = 0;
+        for (Entity e : entities) {
+            if (e instanceof Monster) {
+                ((Monster) e).setHealth(0);
+                killed += 1;
+            } else if (e instanceof Flying) {
+                ((Flying) e).setHealth(0);
+                killed += 1;
+            } else if (e instanceof Slime) {
+                ((Slime) e).setHealth(0);
+                killed += 1;
+            }
+        }
+        sendMessage(sender, CommandMessages.KILLED_MOBS(killed));
+    }
 
-            if (sender.hasPermission("activecraft.butcher")) {
-
-                if (args.length == 0) {
-
-                    List<Entity> enemies = player.getNearbyEntities(200, 500, 200);
-                    int amount = enemies.size();
-
-                    if(amount == 0) {
-                        sender.sendMessage(Errors.WARNING() + CommandMessages.NO_MOBS());
-                        return false;
-                    }
-                    for (int i = 0; i < amount; i++) {
-                        Entity e = enemies.get(i);
-                        if (e instanceof Monster) {
-                            if(e != null) {
-                                ((Monster) e).setHealth(0);
-                            }
-                        } else if (e instanceof Flying) {
-                            if(e != null) {
-                                ((Flying) e).setHealth(0);
-                            }
-                        } else if (e instanceof Slime) {
-                            if(e != null) {
-                                ((Slime) e).setHealth(0);
-                            }
-                        }
-                    }
-                    player.sendMessage(CommandMessages.KILLED_MOBS(amount + ""));
-                } else sender.sendMessage(Errors.TOO_MANY_ARGUMENTS());
-            } else sender.sendMessage(Errors.NO_PERMISSION());
-        } else sender.sendMessage(Errors.NOT_A_PLAYER());
-        return true;
+    @Override
+    public List<String> onTab(CommandSender sender, Command command, String alias, String[] args) {
+        return null;
     }
 }

@@ -1,5 +1,6 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.exceptions.ActiveCraftException;
 import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import org.bukkit.Bukkit;

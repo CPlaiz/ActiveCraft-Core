@@ -1,16 +1,18 @@
 package de.silencio.activecraftcore.commands;
 
-import de.silencio.activecraftcore.ActiveCraftCore;
+import de.silencio.activecraftcore.exceptions.ActiveCraftException;
 import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class TpCommand implements CommandExecutor, TabCompleter {
@@ -266,67 +268,5 @@ public class TpCommand implements CommandExecutor, TabCompleter {
             sender.sendMessage(Errors.INVALID_ARGUMENTS());
         }
         return true;
-    }
-
-    @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-        ArrayList<String> list = new ArrayList<>();
-        Player p = (Player) sender;
-
-        if (args.length == 0) return list;
-        if (args.length == 1) {
-            if (p.getTargetBlock(10) != null && !(p.getTargetBlock(10).getBlockData().getMaterial().equals(Material.AIR))) {
-                int targetblockX = p.getTargetBlock(10).getLocation().getBlockX();
-                list.add(targetblockX + "");
-            } else list.add("~");
-            for (Player player : ActiveCraftCore.getPlugin().getServer().getOnlinePlayers()) {
-                list.add(player.getName());
-            }
-        }
-        if (Bukkit.getPlayer(args[0]) == null) {
-            if (args.length == 2) {
-                if (p.getTargetBlock(10) != null && !(p.getTargetBlock(10).getBlockData().getMaterial().equals(Material.AIR))) {
-                    int targetblockY = p.getTargetBlock(10).getLocation().getBlockY();
-                    list.add(targetblockY + "");
-                } else list.add("~");
-            } else if (args.length == 3) {
-                if (p.getTargetBlock(10) != null && !(p.getTargetBlock(10).getBlockData().getMaterial().equals(Material.AIR))) {
-                    int targetblockZ = p.getTargetBlock(10).getLocation().getBlockZ();
-                    list.add(targetblockZ + "");
-                } else list.add("~");
-            }
-        } else if (sender.hasPermission("activecaft.tp.others")) {
-            if (Bukkit.getPlayer(args[0]) != null) {
-                if (args.length == 2) {
-                    if (p.getTargetBlock(10) != null && !(p.getTargetBlock(10).getBlockData().getMaterial().equals(Material.AIR))) {
-                        int targetblockX = p.getTargetBlock(10).getLocation().getBlockX();
-                        list.add(targetblockX + "");
-                    } else list.add("~");
-                    for (Player player : Bukkit.getOnlinePlayers()) {
-                        list.add(player.getName());
-                    }
-                } else if (args.length == 3) {
-                    if (p.getTargetBlock(10) != null && !(p.getTargetBlock(10).getBlockData().getMaterial().equals(Material.AIR))) {
-                        int targetblockY = p.getTargetBlock(10).getLocation().getBlockY();
-                        list.add(targetblockY + "");
-                    } else list.add("~");
-                } else if (args.length == 4) {
-                    if (p.getTargetBlock(10) != null && !(p.getTargetBlock(10).getBlockData().getMaterial().equals(Material.AIR))) {
-                        int targetblockZ = p.getTargetBlock(10).getLocation().getBlockZ();
-                        list.add(targetblockZ + "");
-                    } else list.add("~");
-                }
-            }
-        }
-
-        ArrayList<String> completerList = new ArrayList<>();
-        String currentarg = args[args.length - 1].toLowerCase();
-        for (String s : list) {
-            String s1 = s.toLowerCase();
-            if (s1.startsWith(currentarg)) {
-                completerList.add(s);
-            }
-        }
-        return completerList;
     }
 }

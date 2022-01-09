@@ -1,14 +1,10 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.exceptions.ActiveCraftException;
 import de.silencio.activecraftcore.messages.CommandMessages;
-import de.silencio.activecraftcore.messages.Errors;
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class RamCommand implements CommandExecutor, TabCompleter {
@@ -25,12 +21,4 @@ public class RamCommand implements CommandExecutor, TabCompleter {
             } else sender.sendMessage(Errors.NO_PERMISSION());
         return true;
     }
-
-    @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-
-        ArrayList<String> completerList = new ArrayList<>();
-        return completerList;
-    }
-
 }

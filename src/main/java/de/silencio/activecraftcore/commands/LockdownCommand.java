@@ -1,121 +1,89 @@
 package de.silencio.activecraftcore.commands;
 
-import de.silencio.activecraftcore.ActiveCraftCore;
+import de.silencio.activecraftcore.exceptions.ActiveCraftException;
 import de.silencio.activecraftcore.manager.LockdownManager;
 import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
+import de.silencio.activecraftcore.playermanagement.Profile;
+import de.silencio.activecraftcore.utils.ComparisonType;
 import de.silencio.activecraftcore.utils.FileConfig;
-import de.silencio.activecraftcore.utils.Profile;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.server.ServerListPingEvent;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-public class LockdownCommand implements CommandExecutor, Listener, TabCompleter {
+public class LockdownCommand extends ActiveCraftCommand {
 
-    @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-
-        if (label.equalsIgnoreCase("lockdown")) {
-            if (sender.hasPermission("activecraft.lockdown")) {
-                if (args.length == 1 && args[0].equalsIgnoreCase("enable")) {
-                    FileConfig fileConfig = new FileConfig("config.yml");
-                    if (!fileConfig.getBoolean("lockdown")) {
-                        LockdownManager.lockdown(true);
-                        sender.sendMessage(CommandMessages.LOCKDOWN_ENABLED());
-                    } else sender.sendMessage(Errors.WARNING() + CommandMessages.LOCKDOWN_ALREADY_ENABLED());
-                } else if (args.length == 1 && args[0].equalsIgnoreCase("disable")) {
-                    FileConfig fileConfig = new FileConfig("config.yml");
-                    if (fileConfig.getBoolean("lockdown")) {
-                        LockdownManager.lockdown(false);
-                        sender.sendMessage(CommandMessages.LOCKDOWN_DISABLED());
-                    } else sender.sendMessage(Errors.WARNING() + CommandMessages.LOCKDOWN_NOT_ENABLED());
-                } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
-
-            } else sender.sendMessage(Errors.NO_PERMISSION());
-        } else if (label.equalsIgnoreCase("lockdownbypass")) {
-            if (sender.hasPermission("activecraft.lockdown.allowbypass")) {
-                if (args.length == 2) {
-                    if (ActiveCraftCore.getPlugin().getPlayerlist().containsKey(args[0].toLowerCase())) {
-                        FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + args[0].toLowerCase() + ".yml");
-
-                        if (args[1].equalsIgnoreCase("true")) {
-                            if (!playerdataConfig.getBoolean("lockdown-bypass")) {
-                                playerdataConfig.set("lockdown-bypass", true);
-                                playerdataConfig.saveConfig();
-                                sender.sendMessage(CommandMessages.ALLOW_PLAYER(playerdataConfig.getString("name")));
-                                sender.sendMessage(CommandMessages.ALLOW_PLAYER_EXTRA());
-                            } else
-                                sender.sendMessage(Errors.WARNING() + CommandMessages.ALLOW_PLAYER_ALREADY_ENABLED(playerdataConfig.getString("name")));
-                        } else if (args[1].equalsIgnoreCase("false")) {
-                            if (playerdataConfig.getBoolean("lockdown-bypass")) {
-                                playerdataConfig.set("lockdown-bypass", false);
-                                playerdataConfig.saveConfig();
-                                sender.sendMessage(CommandMessages.DISALLOW_PLAYER(playerdataConfig.getString("name")));
-                                sender.sendMessage(CommandMessages.DISALLOW_PLAYER_EXTRA());
-                            } else
-                                sender.sendMessage(Errors.WARNING() + CommandMessages.DISALLOW_PLAYER_ALREADY_DISABLED(playerdataConfig.getString("name")));
-                        } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
-                    } else sender.sendMessage(Errors.INVALID_PLAYER());
-                } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
-            } else sender.sendMessage(Errors.NO_PERMISSION());
-        }
-        return true;
+    public LockdownCommand() {
+        super("lockdown", "lockdownbypass");
     }
 
     @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-        ArrayList<String> list = new ArrayList<>();
-        Player p = (Player) sender;
+    public void runCommand(CommandSender sender, Command command, String label, String[] args) throws ActiveCraftException {
+        if (label.equalsIgnoreCase("lockdown")) {
+            checkPermission(sender, "lockdown");
+            checkArgsLength(args, ComparisonType.EQUAL, 1);
+            FileConfig fileConfig = new FileConfig("config.yml");
+            if (args[0].equalsIgnoreCase("enable")) {
+                if (!fileConfig.getBoolean("lockdown")) {
+                    LockdownManager.lockdown(true);
+                    sendMessage(sender, CommandMessages.LOCKDOWN_ENABLED());
+                    for (Player player : Bukkit.getOnlinePlayers()) {
+                        if (!player.hasPermission("activecraft.lockdown")) {
+                            player.kickPlayer(fileConfig.getString("lockdown-kick-message"));
+                        }
+                    }
+                } else sendMessage(sender, Errors.WARNING() + CommandMessages.LOCKDOWN_ALREADY_ENABLED());
+            } else if (args[0].equalsIgnoreCase("disable")) {
+                if (fileConfig.getBoolean("lockdown")) {
+                    LockdownManager.lockdown(false);
+                    sendMessage(sender, CommandMessages.LOCKDOWN_DISABLED());
+                } else sendMessage(sender, Errors.WARNING() + CommandMessages.LOCKDOWN_NOT_ENABLED());
+            }
+        }
+        if (label.equalsIgnoreCase("lockdownbypass")) {
+            checkPermission(sender, "lockdown.allowbypass");
+            checkArgsLength(args, ComparisonType.EQUAL, 2);
+            Profile profile = getProfile(args[0]);
+            if (profile != null) {
+                if (args[1].equalsIgnoreCase("true")) {
+                    if (!profile.canBypassLockdown()) {
+                        profile.set(Profile.Value.BYPASS_LOCKDOWN, true);
+                        sendMessage(sender, CommandMessages.ALLOW_PLAYER(profile.getName()));
+                        sendMessage(sender, CommandMessages.ALLOW_PLAYER_EXTRA());
+                    } else sendMessage(sender, Errors.WARNING() + CommandMessages.ALLOW_PLAYER_ALREADY_ENABLED(profile.getName()));
+                } else if (args[1].equalsIgnoreCase("false")) {
+                    if (profile.canBypassLockdown()) {
+                        profile.set(Profile.Value.BYPASS_LOCKDOWN, false);
+                        sendMessage(sender, CommandMessages.DISALLOW_PLAYER(profile.getName()));
+                        sendMessage(sender, CommandMessages.DISALLOW_PLAYER_EXTRA());
+                    } else sendMessage(sender, Errors.WARNING() + CommandMessages.DISALLOW_PLAYER_ALREADY_DISABLED(profile.getName()));
+                } else sendMessage(sender, Errors.INVALID_ARGUMENTS());
+            }
+        }
+    }
 
-        if (args.length == 0) return list;
-        if (alias.equalsIgnoreCase("lockdown")) {
+    @Override
+    public List<String> onTab(CommandSender sender, Command command, String label, String[] args) {
+        ArrayList<String> list = new ArrayList<>();
+
+        if (label.equalsIgnoreCase("lockdown")) {
             if (args.length == 1) {
                 list.add("enable");
                 list.add("disable");
             }
-        } else if (alias.equalsIgnoreCase("lockdownbypass")) {
+        } else if (label.equalsIgnoreCase("lockdownbypass")) {
             if (args.length == 1) {
-                for (String playername : ActiveCraftCore.getPlugin().getPlayerlist().keySet()) {
-                    list.add(new Profile(playername).getName());
-                }
+                list.addAll(getBukkitPlayernames());
             }
             if (args.length == 2) {
                 list.add("true");
                 list.add("false");
             }
         }
-        ArrayList<String> completerList = new ArrayList<>();
-        String currentarg = args[args.length - 1].toLowerCase();
-        for (String s : list) {
-            String s1 = s.toLowerCase();
-            if (s1.startsWith(currentarg)) {
-                completerList.add(s);
-            }
-        }
-        return completerList;
-    }
-
-    @EventHandler
-    public void on(ServerListPingEvent event) {
-        FileConfig fileConfig = new FileConfig("config.yml");
-        if (fileConfig.getBoolean("lockdown")) {
-            fileConfig.set("old-modt", event.getMotd());
-            fileConfig.saveConfig();
-            event.setMotd(Objects.requireNonNull(fileConfig.getString("lockdown-modt")));
-        }
-
-        if (!fileConfig.getBoolean("lockdown") && fileConfig.get("lockdown") != null) {
-            event.setMotd(Objects.requireNonNull(fileConfig.getString("old-modt")));
-        }
+        return list;
     }
 }

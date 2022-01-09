@@ -21,19 +21,19 @@ public class IntegerUtils {
         if (duration >= 1)
             seconds = duration;
         if (hours <= 9) {
-            string = String.valueOf(string) + "0" + hours + ":";
+            string += "0" + hours + ":";
         } else {
-            string = String.valueOf(string) + hours + ":";
+            string += hours + ":";
         }
         if (minutes <= 9) {
-            string = String.valueOf(string) + "0" + minutes + ":";
+            string += "0" + minutes + ":";
         } else {
-            string = String.valueOf(string) + minutes + ":";
+            string += minutes + ":";
         }
         if (seconds <= 9) {
-            string = String.valueOf(string) + "0" + seconds;
+            string += "0" + seconds;
         } else {
-            string = String.valueOf(string) + seconds;
+            string += + seconds;
         }
         return string;
     }
@@ -54,17 +54,28 @@ public class IntegerUtils {
                 seconds = duration;
 
             if (minutes <= 9) {
-                string = String.valueOf(string) + "0" + minutes + ":";
+                string += "0" + minutes + ":";
             } else {
-                string = String.valueOf(string) + minutes + ":";
+                string += minutes + ":";
             }
             if (seconds <= 9) {
-                string = String.valueOf(string) + "0" + seconds;
+                string += "0" + seconds;
             } else {
-                string = String.valueOf(string) + seconds;
+                string += seconds;
             }
             return string;
         }
+    }
+
+    public static boolean compareInt(int i1, ComparisonType compType, int i2) {
+        return switch (compType) {
+            case GREATER -> i1 > i2;
+            case GREATER_EQUAL -> i1 >= i2;
+            case EQUAL ->  i1 == i2;
+            case LESS_EQUAL -> i1 <= i2;
+            case LESS -> i1 < i2;
+            case NOT_EQUAL -> i1 != i2;
+        };
     }
 
 }

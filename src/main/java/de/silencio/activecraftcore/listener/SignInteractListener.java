@@ -1,9 +1,9 @@
 package de.silencio.activecraftcore.listener;
 
-import de.silencio.activecraftcore.utils.FileConfig;
+import de.silencio.activecraftcore.ActiveCraftCore;
+import de.silencio.activecraftcore.playermanagement.Profile;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
@@ -11,8 +11,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-
-import java.io.File;
 
 public class SignInteractListener implements Listener {
 
@@ -28,8 +26,8 @@ public class SignInteractListener implements Listener {
         BlockState blockState = event.getClickedBlock().getState();
         if (blockState instanceof Sign) {
             if (player.isSneaking()) {
-                FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + player.getName().toLowerCase() + ".yml");
-                if (playerdataConfig.getBoolean("edit-sign")) {
+                Profile profile = ActiveCraftCore.getProfile(player);
+                if (profile.canEditSign()) {
                     event.setCancelled(true);
                     Sign signBlock = (Sign) event.getClickedBlock().getState();
                     player.openSign(signBlock);

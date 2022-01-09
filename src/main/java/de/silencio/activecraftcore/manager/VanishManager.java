@@ -1,10 +1,10 @@
 package de.silencio.activecraftcore.manager;
 
+import de.silencio.activecraftcore.ActiveCraftCore;
 import de.silencio.activecraftcore.events.PlayerUnvanishEvent;
 import de.silencio.activecraftcore.events.PlayerVanishEvent;
-import de.silencio.activecraftcore.utils.ConfigUtils;
+import de.silencio.activecraftcore.playermanagement.Profile;
 import de.silencio.activecraftcore.utils.FileConfig;
-import de.silencio.activecraftcore.utils.Profile;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -32,15 +32,15 @@ public class VanishManager {
     }
 
     public void setVanished(Player player, boolean hide) {
-        Profile profile = new Profile(player);
+        Profile profile = ActiveCraftCore.getProfile(player);
         FileConfig mainConfig = new FileConfig("config.yml");
         if (hide) {
             PlayerVanishEvent event = new PlayerVanishEvent(player);
             Bukkit.getPluginManager().callEvent(event);
             if (event.isCancelled()) return;
 
-            ConfigUtils.setDisplaynameFromConfig(player, profile.getColorNick().name(), profile.getNickname() + ChatColor.GRAY + " " + mainConfig.getString("vanish-format"));
             profile.set(Profile.Value.VANISHED, true);
+            profile.addTag(ChatColor.GRAY + mainConfig.getString("vanish-format"));
 
             vanished.add(player);
         } else {
@@ -48,8 +48,8 @@ public class VanishManager {
             Bukkit.getPluginManager().callEvent(event);
             if (event.isCancelled()) return;
 
-            ConfigUtils.setDisplaynameFromConfig(player, profile.getColorNick().name(), profile.getNickname());
             profile.set(Profile.Value.VANISHED, false);
+            profile.removeTag(ChatColor.GRAY + mainConfig.getString("vanish-format"));
 
             vanished.remove(player);
         }

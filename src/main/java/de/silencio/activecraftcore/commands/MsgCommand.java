@@ -2,125 +2,76 @@ package de.silencio.activecraftcore.commands;
 
 import de.silencio.activecraftcore.ActiveCraftCore;
 import de.silencio.activecraftcore.events.MsgEvent;
+import de.silencio.activecraftcore.exceptions.ActiveCraftException;
+import de.silencio.activecraftcore.exceptions.InvalidPlayerException;
 import de.silencio.activecraftcore.messages.CommandMessages;
-import de.silencio.activecraftcore.messages.Errors;
+import de.silencio.activecraftcore.playermanagement.PlayerQueue;
+import de.silencio.activecraftcore.playermanagement.Profile;
 import de.silencio.activecraftcore.utils.ColorUtils;
-import de.silencio.activecraftcore.utils.FileConfig;
-import de.silencio.activecraftcore.utils.Profile;
+import de.silencio.activecraftcore.utils.ComparisonType;
+import de.silencio.activecraftcore.utils.ConfigUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class MsgCommand implements CommandExecutor, TabCompleter {
 
-
-
-    String message = "";
-
-    @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-
-        if (sender instanceof Player) {
-            Player player = (Player) sender;
-            if (player.hasPermission("activecraft.msg")) {
-
-                if (args.length >= 1) {
-                    if (Bukkit.getPlayer(args[0]) == null) {
-                        sender.sendMessage(Errors.INVALID_PLAYER());
-                        return false;
-                    }
-                    Player target = Bukkit.getPlayer(args[0]);
-
-                    if (target != null) {
-                        if (target != player) {
-                            if (args.length > 1) {
-                                for (int i = 1; i < args.length; i++) {
-                                    message = message + args[i] + " ";
-                                }
-
-                                message = ColorUtils.replaceColor(message);
-                                message = ColorUtils.replaceFormat(message);
-
-                                MsgEvent event = new MsgEvent(sender, target, message);
-                                Bukkit.getPluginManager().callEvent(event);
-                                if (event.isCancelled()) return false;
-
-                                player.sendMessage(CommandMessages.MSG_PREFIX_TO(target, event.getMessage()));
-                                target.sendMessage(CommandMessages.MSG_PREFIX_FROM(player, event.getMessage()));
-                                target.playSound(target.getLocation(), Sound.ENTITY_ARROW_HIT_PLAYER, 1f, 1f);
-
-                                FileConfig mainConfig = new FileConfig("config.yml");
-
-                                ActiveCraftCore.getMsgPlayerStoring().put(target, player);
-
-                                //socialspy
-                                for(Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-                                    if (!onlinePlayer.hasPermission("activecraft.msg.spy")) continue;
-                                    if(!new Profile(onlinePlayer).canReceiveSocialspy()) continue;
-                                    if (onlinePlayer != player && onlinePlayer != target)
-                                        onlinePlayer.sendMessage(CommandMessages.SOCIALSPY_PREFIX_TO(player, target, message));
-                                }
-                                if (mainConfig.getBoolean("socialspy-to-console")) {
-                                    Bukkit.getConsoleSender().sendMessage(CommandMessages.SOCIALSPY_PREFIX_TO(target, player, event.getMessage()));
-                                }
-                                message = "";
-
-                            } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
-                        } else sender.sendMessage(Errors.WARNING() + CommandMessages.CANNOT_MESSAGE_SELF());
-                    } else player.sendMessage(Errors.INVALID_PLAYER());
-                } else player.sendMessage(Errors.WARNING() + CommandMessages.INCLUDE_PLAYER());
-            } else sender.sendMessage(Errors.NO_PERMISSION());
-        } else if (args.length >= 1) {
-            Player target = Bukkit.getPlayer(args[0]);
-
-            if (target != null) {
-                if (args.length > 1) {
-                    for (int i = 1; i < args.length; i++) {
-                        message = message + args[i] + " ";
-                    }
-
-                    message = ColorUtils.replaceColor(message);
-                    message = ColorUtils.replaceFormat(message);
-
-                    MsgEvent event = new MsgEvent(sender, target, message);
-                    Bukkit.getPluginManager().callEvent(event);
-                    if (event.isCancelled()) return false;
-
-                    target.sendMessage(CommandMessages.CONSOLE_MSG_PREFIX(event.getMessage()));
-                    target.playSound(target.getLocation(), Sound.ENTITY_ARROW_HIT_PLAYER, 1f, 1f);
-                    message = "";
-                } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
-            } else sender.sendMessage(Errors.INVALID_PLAYER());
-        }
-        return true;
+    public MsgCommand() {
+        super("msg");
     }
 
     @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-        ArrayList<String> list = new ArrayList<>();
-        if (args.length == 0) return list;
-        if (args.length == 1) {
-            for (Player player : Bukkit.getOnlinePlayers()) {
-                list.add(player.getName());
-            }
-        }
-        ArrayList<String> completerList = new ArrayList<>();
-        String currentarg = args[args.length-1].toLowerCase();
-        for (String s : list) {
-            String s1 = s.toLowerCase();
-            if (s1.startsWith(currentarg)){
-                completerList.add(s);
-            }
-        }
+    public void runCommand(CommandSender sender, Command command, String label, String[] args) throws ActiveCraftException {
+        checkPermission(sender, "msg");
+        checkArgsLength(args, ComparisonType.GREATER , 1);
+        Profile profile = getProfile(args[0]);
+        checkTargetSelf(sender, profile.getName());
 
-        return completerList;
+        String message = combineArray(args, 1);
+        message = ColorUtils.replaceColor(message);
+        message = ColorUtils.replaceFormat(message);
+        String finalMessage = message;
+        if (sender instanceof Player) {
+            sendMessage(sender, CommandMessages.MSG_PREFIX_TO(profile, message));
+            PlayerQueue.add(profile, () -> {
+                Player target = Bukkit.getPlayer(profile.getName());
+                MsgEvent event = new MsgEvent(sender, target, finalMessage);
+                Bukkit.getPluginManager().callEvent(event);
+                if (event.isCancelled()) return;
+                sendMessage(target, CommandMessages.MSG_PREFIX_FROM(sender, event.getMessage()));
+                target.playSound(target.getLocation(), Sound.ENTITY_ARROW_HIT_PLAYER, 1f, 1f);
+                try {
+                    ActiveCraftCore.getMsgPlayerStoring().put(target, getProfile(sender.getName()));
+                } catch (InvalidPlayerException ignored) {
+                }
+                for(Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+                    if (!onlinePlayer.hasPermission("activecraft.msg.spy")) continue;
+                    if(!getProfile(onlinePlayer).canReceiveSocialspy()) continue;
+                    if (onlinePlayer != sender && onlinePlayer != target)
+                        sendMessage(onlinePlayer, CommandMessages.SOCIALSPY_PREFIX_TO(target, sender, finalMessage));
+                }
+                if (ConfigUtils.getMainConfig().getBoolean("socialspy-to-console"))
+                    sendMessage(Bukkit.getConsoleSender(), CommandMessages.SOCIALSPY_PREFIX_TO(target, sender, event.getMessage()));
+            });
+        } else {
+            PlayerQueue.add(profile, () -> {
+                Player target = Bukkit.getPlayer(profile.getName());
+                MsgEvent event = new MsgEvent(sender, target, finalMessage);
+                Bukkit.getPluginManager().callEvent(event);
+                if (event.isCancelled()) return;
+                sendMessage(target, CommandMessages.CONSOLE_MSG_PREFIX(event.getMessage()));
+                target.playSound(target.getLocation(), Sound.ENTITY_ARROW_HIT_PLAYER, 1f, 1f);
+            });
+        }
+    }
+
+    @Override
+    public List<String> onTab(CommandSender sender, Command command, String label, String[] args) {
+        return args.length == 1 ? new ArrayList<>(getProfileNames()) : null;
     }
 }

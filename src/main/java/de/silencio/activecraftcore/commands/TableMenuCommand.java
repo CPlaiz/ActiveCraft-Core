@@ -1,17 +1,16 @@
 package de.silencio.activecraftcore.commands;
 
-import de.silencio.activecraftcore.gui.*;
-import de.silencio.activecraftcore.messages.Errors;
+import de.silencio.activecraftcore.exceptions.ActiveCraftException;
+import de.silencio.activecraftcore.guicreator.GuiCloseItem;
+import de.silencio.activecraftcore.guicreator.GuiCreator;
+import de.silencio.activecraftcore.guicreator.GuiItem;
 import de.silencio.activecraftcore.messages.TableMenuMessages;
-import de.silencio.activecraftcore.utils.ItemBuilder;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
+
+import java.util.List;
 
 public class TableMenuCommand implements CommandExecutor {
 
@@ -34,11 +33,15 @@ public class TableMenuCommand implements CommandExecutor {
                 guiCreator.setItemInSlot(new GuiItem(Material.SMITHING_TABLE).setDisplayName(TableMenuMessages.TABLEMENU_SMITHING_TABLE()).setMovable(false).setClickSound(true), 31);
                 guiCloseItem.setClickSound(true);
                 guiCloseItem.setMovable(false);
-                guiCreator.fillBackground(true);
-                guiCreator.setCloseItem(guiCloseItem);
-                player.openInventory(guiCreator.build().getInventory());
-            } else sender.sendMessage(Errors.NO_PERMISSION());
-        } else sender.sendMessage(Errors.NOT_A_PLAYER());
-        return true;
+                fillBackground(true);
+                setCloseItem(guiCloseItem);
+            }
+        };
+        player.openInventory(guiCreator.build().getInventory());
+    }
+
+    @Override
+    public List<String> onTab(CommandSender sender, Command command, String label, String[] args) {
+        return null;
     }
 }

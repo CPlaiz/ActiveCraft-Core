@@ -1,5 +1,6 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.exceptions.ActiveCraftException;
 import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import org.bukkit.ChatColor;
@@ -38,28 +39,5 @@ public class WeatherCommand implements CommandExecutor, TabCompleter {
 
         } else sender.sendMessage(Errors.NOT_A_PLAYER());
         return true;
-    }
-
-    @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-        ArrayList<String> list = new ArrayList<>();
-        Player p = (Player) sender;
-
-        if (args.length == 0) return list;
-        if (args.length == 1) {
-            list.add("clear");
-            list.add("thunder");
-            list.add("rain");
-        }
-
-        ArrayList<String> completerList = new ArrayList<>();
-        String currentarg = args[args.length - 1].toLowerCase();
-        for (String s : list) {
-            String s1 = s.toLowerCase();
-            if (s1.startsWith(currentarg)) {
-                completerList.add(s);
-            }
-        }
-        return completerList;
     }
 }

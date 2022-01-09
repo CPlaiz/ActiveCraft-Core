@@ -149,7 +149,7 @@ commands:
     description: Accept a teleport request
     permission: activecraft.tpaccept
     permission-message: "§cWarning! §7You don't have the permission to do that!"
-  tpadeny:
+  tpdeny:
     description: Denies a teleport request
     permission: activecraft.tpadeny
     permission-message: "§cWarning! §7You don't have the permission to do that!"
@@ -162,16 +162,11 @@ commands:
     permission: activecraft.warp
     permission-message: "§cWarning! §7You don't have the permission to do that!"
   home:
-    description: Teleports to your home.
+    description: Manages homes.
+    aliases:
+      - "sethome"
+      - "delhome"
     permission: activecraft.home
-    permission-message: "§cWarning! §7You don't have the permission to do that!"
-  sethome:
-    description: Creates your home.
-    permission: activecraft.sethome
-    permission-message: "§cWarning! §7You don't have the permission to do that!"
-  delhome:
-    description: Deletes your home.
-    permission: activecraft.delhome
     permission-message: "§cWarning! §7You don't have the permission to do that!"
   suicide:
     description: kill yourself.
@@ -415,6 +410,18 @@ commands:
   drain:
     description: Command to remove water and lava in a certain area.
     permission: activecraft.drain
+    permission-message: "§cWarning! §7You don't have the permission to do that!"
+  offlinetp:
+    description: Teleport the an offline player's last location.
+    permission: activecraft.offlinetp
+    permission-message: "§cWarning! §7You don't have the permission to do that!"
+  offlinetphere:
+    description: Set the last location (their login spot) for a player to your location.
+    permission: activecraft.offlinetphere
+    permission-message: "§cWarning! §7You don't have the permission to do that!"
+  acversion:
+    description: Check the current version of all installed ActiveCraft Plugins.
+    permission: activecraft.version
     permission-message: "§cWarning! §7You don't have the permission to do that!"
 
 permissions:
@@ -1115,5 +1122,14 @@ permissions:
     description: Allows the player to execute the /version command provided by Bukkit.
     default: op
   activecraft.drain:
-    description: Allows the player to execute the /version command provided by Bukkit.
+    description: Allows the player to execute the /drain command..
+    default: op
+  activecraft.offlinetp:
+    description: Allows the player to execute the /offlinetp command.
+    default: op
+  activecraft.offlinetphere:
+    description: Allows the player to execute the /offlinetphere command.
+    default: op
+  activecraft.version:
+    description: Check the current version of all installed ActiveCraft Plugins.
     default: op

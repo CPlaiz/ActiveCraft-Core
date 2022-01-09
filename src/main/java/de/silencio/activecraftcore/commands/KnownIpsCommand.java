@@ -1,46 +1,36 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.exceptions.ActiveCraftException;
 import de.silencio.activecraftcore.messages.CommandMessages;
-import de.silencio.activecraftcore.messages.Errors;
-import de.silencio.activecraftcore.utils.FileConfig;
-import org.bukkit.Bukkit;
+import de.silencio.activecraftcore.playermanagement.Profile;
+import de.silencio.activecraftcore.utils.ComparisonType;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.io.File;
 import java.util.List;
 
-public class KnownIpsCommand implements CommandExecutor {
+public class KnownIpsCommand extends ActiveCraftCommand {
+
+    public KnownIpsCommand() {
+        super("known-ips");
+    }
+
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-
-        if (sender.hasPermission("activecraft.listips")) {
-            if (args.length == 1) {
-                if (Bukkit.getPlayer(args[0]) == null) {
-                    sender.sendMessage(Errors.INVALID_PLAYER());
-                    return false;
-                }
-                Player target = Bukkit.getPlayer(args[0]);
-
-                FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + target.getName().toLowerCase() + ".yml");
-                List<String> ipList = playerdataConfig.getStringList("known-ips");
-
-                StringBuilder stringBuilder = new StringBuilder();
-                for (String s : ipList) {
-                    stringBuilder.append(s);
-                    if (!s.equals(ipList.get(ipList.size() - 1))) {
-                        stringBuilder.append(",");
-                    }
-                }
-                sender.sendMessage(CommandMessages.KNOWNIPS_HEADER(target) + "\n"
-                                + ChatColor.WHITE + stringBuilder.toString()
-                        );
-            } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
-        } else sender.sendMessage(Errors.NO_PERMISSION());
-
-        return true;
+    public void runCommand(CommandSender sender, Command command, String label, String[] args) throws ActiveCraftException {
+        checkPermission(sender, "listips");
+        checkArgsLength(args, ComparisonType.GREATER_EQUAL, 1);
+        Player target = getPlayer(args[0]);
+        Profile profile = getProfile(target);
+        List<String> ipList = profile.getKnownIps();
+        sendMessage(sender, CommandMessages.KNOWNIPS_HEADER(target) + "\n"
+                + ChatColor.WHITE + combineList(ipList)
+        );
+    }
+    
+    @Override
+    public List<String> onTab(CommandSender sender, Command command, String label, String[] args) {
+        return args.length == 1 ? getBukkitPlayernames() : null;
     }
 }

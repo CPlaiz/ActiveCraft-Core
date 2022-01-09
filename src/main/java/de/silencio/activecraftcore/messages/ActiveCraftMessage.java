@@ -12,13 +12,13 @@ public class ActiveCraftMessage {
     }
 
     public String getMessage(MessageType type, String input) {
-        return fileConfig.getString(ActiveCraftCore.getPlugin().getLanguage().name().toLowerCase()
+        return fileConfig.getString(ActiveCraftCore.getLanguage().name().toLowerCase()
                 + "." + type.name().toLowerCase()
                 + "." + input);
     }
 
     public String getMessage(MessageType type, CommandType cmdType , String input) {
-        return fileConfig.getString(ActiveCraftCore.getPlugin().getLanguage().name().toLowerCase()
+        return fileConfig.getString(ActiveCraftCore.getLanguage().name().toLowerCase()
                 + "." + type.name().toLowerCase()
                 + "." + cmdType.name().toLowerCase().replace("_", "-")
                 + "." + input);

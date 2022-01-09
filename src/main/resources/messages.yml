@@ -186,9 +186,10 @@ en:
       unbanned-ip: 'Unbanned %ip%'
       ip-not-banned: 'This IP is not banned.'
     back:
-      teleported-back: 'teleported to last location.'
+      teleported-back: 'Teleported to last location.'
       no-return-location: 'No location to return to!'
       teleported-back-others: 'You teleported %t_displayname% to their last location.'
+      teleported-back-others-message: 'You were teleported to your last position by %s_displayname%.'
       no-return-location-others: 'No location to return %t_displayname% to!'
     book:
       changed-title: 'Changed book title to %title%.'
@@ -206,7 +207,7 @@ en:
       break-self: 'Broke block infront of you.'
     broadcast:
       broadcast-prefix: '[BroadCast]'
-      inlcude-message: 'Please include a message!'
+      include-message: 'Please include a message!'
     butcher:
       no-mobs: 'No mobs nearby!'
       killed-mobs: 'Killed %amount% mobs.'
@@ -715,6 +716,7 @@ de:
       teleported-back: 'Du wurdest zu deiner letzten Position teleportiert.'
       no-return-location: 'Keine Position zu der du zurück kannst!'
       teleported-back-others: 'Du hast %t_displayname% zu seiner letzten Position teleportiert.'
+      teleported-back-others-message: 'Du wurdest von %s_displayname% zu deiner letzten Position teleportiert.'
       no-return-location-others: 'Keine Position zu der %t_displayname% zurückkehren kann!'
     book:
       changed-title: 'Buchtitel zu %title% geändert.'
@@ -727,12 +729,9 @@ de:
       tattered: 'zerflättert'
       added-page: 'Neue Seite hinzugefügt.'
       not-holding-book: 'Du hälst kein Buch in der Hand!'
-    break:
-      break-others: 'Der Block vor %t_displayname% wurde zerstört.'
-      break-self: 'Der Block vor dir wurde zerstört.'
     broadcast:
       broadcast-prefix: '[BroadCast]'
-      inlcude-message: 'Bitte schreibe eine Nachricht!'
+      include-message: 'Bitte schreibe eine Nachricht!'
     butcher:
       no-mobs: 'Keine Monster in der Nähe!'
       killed-mobs: '%amount% Monster wurden getötet.'
@@ -918,6 +917,7 @@ de:
       give-skull-others: 'Dir wurde %t_displayname%s Kopf gegeben.'
       give-skull-others-multiple: 'Dir wurden %amount%x Köpfe von %t_displayname% gegeben.'
     spawn:
+      spawn-set: 'Spawn zur aktuellen Position gesetzt.'
       spawn-teleport: 'Teleportiere zum Spawn.'
       spawn-teleport-others: 'Teleportiere %t_displayname% zum Spawn.'
       spawn-teleport-others-message: 'Du wurdest von %s_displayname% zum Spawn teleportiert.'
@@ -928,10 +928,10 @@ de:
       spawner-give-others: 'Du hast %t_displayname% einen %spawner% Spawner gegeben.'
       spawner-give-others-message: '%s_displayname% hat dir einen %spawner% Spawner gegeben.'
     summon:
-      summon: 'Du hast %mob% beschwört.'
-      summon-multiple: 'Du hast %amount%x %mob% beschwört.'
-      summon-others: 'Du hast %mob% an %t_displayname%s Position beschwört.'
-      summon-others-multiple: 'Du hast %amount%x %mob% an %t_displayname%s Position beschwört.'
+      summon: 'Du hast %mob% beschworen.'
+      summon-multiple: 'Du hast %amount%x %mob% beschworen.'
+      summon-others: 'Du hast %mob% an %t_displayname%s Position beschworen.'
+      summon-others-multiple: 'Du hast %amount%x %mob% an %t_displayname%s Position beschworen.'
     staffchat:
       staffchat-prefix: '[StaffChat] %s_displayname%: %message%'
       staffchat-from-console-prefix: '[StaffChat] Konsole: %message%'
@@ -1240,6 +1240,7 @@ sv:
       teleported-back: 'Teleporterade till senaste din position..'
       no-return-location: 'Det finns ingen plats att återvända till!'
       teleported-back-others: 'Du teleporterade %t_displayname% till deras senaste position.'
+      teleported-back-others-message: 'Du blev teleporterad till din senaste position av %s_displayname%.'
       no-return-location-others: 'Det finns ingen plats att teleportera %t_displayname% till!'
     book:
       changed-title: 'Ändrade titlen till %title%.'
@@ -1257,7 +1258,7 @@ sv:
       break-self: 'Tog sönder ett block framför dig.'
     broadcast:
       broadcast-prefix: '[BroadCast]'
-      inlcude-message: 'Inkudera vänligen ett medelande!'
+      include-message: 'Inkudera vänligen ett medelande!'
     butcher:
       no-mobs: 'Inga monster i närheten!'
       killed-mobs: 'Dödade %amount% monster.'
@@ -1283,7 +1284,6 @@ sv:
       max-homes-others: 'Denna spelare kan inte skapa flera hem!'
     deletehome:
       home-deleted: 'Hem %home% raderat.'
-      no-home: 'Du har inget hem som heter %home%!'
       home-others-deleted: 'Raderade hemmet %home% av spelaren %t_displayname%.'
       no-home-others: 'Spelaren %t_displayname% har inget hem som heter %home%!'
     editsign:

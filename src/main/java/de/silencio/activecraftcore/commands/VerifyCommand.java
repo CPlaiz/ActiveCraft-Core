@@ -1,42 +1,37 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.exceptions.ActiveCraftException;
 import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
-import de.silencio.activecraftcore.utils.FileConfig;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
+import de.silencio.activecraftcore.playermanagement.Profile;
+import de.silencio.activecraftcore.utils.ComparisonType;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.io.File;
 import java.util.List;
 
-public class VerifyCommand implements CommandExecutor {
+public class VerifyCommand extends ActiveCraftCommand {
+
+    public VerifyCommand() {
+        super("verify");
+    }
+
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public void runCommand(CommandSender sender, Command command, String label, String[] args) throws ActiveCraftException {
+        checkPermission(sender, "verify");
+        checkArgsLength(args, ComparisonType.EQUAL, 1);
+        Player target = getPlayer(args[0]);
+        Profile profile = getProfile(target);
+        if (profile.isDefaultmuted()) {
+            profile.set(Profile.Value.DEFAULTMUTED, false);
+            target.sendMessage(CommandMessages.DEFAULT_MUTE_REMOVE());
+            sendMessage(sender, CommandMessages.DEFAULT_MUTE_REMOVE_MESSAGE(target));
+        } else sendMessage(sender, Errors.WARNING() + CommandMessages.NOT_DEFAULT_MUTED());
+    }
 
-        if (sender.hasPermission("activecraft.verify")) {
-            if (args.length == 1) {
-                if (Bukkit.getPlayer(args[0]) == null) {
-                    sender.sendMessage(Errors.INVALID_PLAYER());
-                    return false;
-                }
-                Player target = Bukkit.getPlayer(args[0]);
-
-                FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + target.getName().toLowerCase() + ".yml");
-                boolean defaultmute = playerdataConfig.getBoolean("default-mute");
-
-                if (defaultmute) {
-                    playerdataConfig.set("default-mute", false);
-                    playerdataConfig.saveConfig();
-                    target.sendMessage(CommandMessages.DEFAULT_MUTE_REMOVE());
-                    sender.sendMessage(CommandMessages.DEFAULT_MUTE_REMOVE_MESSAGE(target));
-                } else sender.sendMessage(Errors.WARNING() + CommandMessages.NOT_DEFAULT_MUTED());
-            } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
-        } else sender.sendMessage(Errors.NO_PERMISSION());
-
-        return true;
+    @Override
+    public List<String> onTab(CommandSender sender, Command command, String label, String[] args) {
+        return args.length == 1 ? getBukkitPlayernames() : null;
     }
 }

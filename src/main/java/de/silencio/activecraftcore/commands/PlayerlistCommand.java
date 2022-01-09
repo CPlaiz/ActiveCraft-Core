@@ -1,46 +1,49 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.exceptions.ActiveCraftException;
 import de.silencio.activecraftcore.messages.CommandMessages;
-import de.silencio.activecraftcore.messages.Errors;
+import de.silencio.activecraftcore.playermanagement.Profile;
 import de.silencio.activecraftcore.utils.FileConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.io.File;
+import java.util.List;
 
-public class PlayerlistCommand implements CommandExecutor {
+public class PlayerlistCommand extends ActiveCraftCommand {
+
+    public PlayerlistCommand() {
+        super("playerlist");
+    }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-
-            if(sender.hasPermission("activecraft.playerlist")) {
-
-            StringBuilder stringBuilder = new StringBuilder();
-            FileConfig mainConfig = new FileConfig("config.yml");
-            boolean isFirst = true;
-            for(Player player : Bukkit.getOnlinePlayers()) {
-                FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + player.getName().toLowerCase() + ".yml");
-                if (playerdataConfig.getBoolean("vanished")) {
-                    if (sender.hasPermission("activecraft.vanish.see")) {
-                        if (!isFirst) {
-                            stringBuilder.append(ChatColor.WHITE + ", ");
-                        } else isFirst = false;
-                        stringBuilder.append(player.getName() + ChatColor.GRAY + " " + mainConfig.getString("vanish-format"));
-                    }
-                } else {
-                    if (!isFirst) {
-                        stringBuilder.append(ChatColor.WHITE + ", ");
-                    } else isFirst = false;
-                    stringBuilder.append(player.getDisplayName());
+    public void runCommand(CommandSender sender, Command command, String label, String[] args) throws ActiveCraftException {
+        checkPermission(sender, "playerlist");
+        StringBuilder stringBuilder = new StringBuilder();
+        FileConfig mainConfig = new FileConfig("config.yml");
+        boolean isFirst = true;
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            Profile profile = getProfile(player);
+            if (profile.isVanished()) {
+                if (sender.hasPermission("activecraft.vanish.see")) {
+                    if (!isFirst) stringBuilder.append(ChatColor.WHITE + ", ");
+                    else isFirst = false;
+                    stringBuilder.append(player.getName() + ChatColor.GRAY + " " + mainConfig.getString("vanish-format"));
                 }
+            } else {
+                if (!isFirst) stringBuilder.append(ChatColor.WHITE + ", ");
+                else isFirst = false;
+                stringBuilder.append(player.getDisplayName());
             }
-            sender.sendMessage(CommandMessages.PLAYERLIST_HEADER());
-            sender.sendMessage(stringBuilder.toString());
-        } else sender.sendMessage(Errors.NO_PERMISSION());
-        return true;
+        }
+        sendMessage(sender, CommandMessages.PLAYERLIST_HEADER());
+        sendMessage(sender, stringBuilder.toString());
+    }
+
+    @Override
+    public List<String> onTab(CommandSender sender, Command command, String label, String[] args) {
+        return null;
     }
 }

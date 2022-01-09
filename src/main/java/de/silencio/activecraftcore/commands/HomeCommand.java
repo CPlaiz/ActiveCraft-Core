@@ -1,120 +1,167 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.exceptions.ActiveCraftException;
+import de.silencio.activecraftcore.exceptions.InvalidArgumentException;
+import de.silencio.activecraftcore.exceptions.InvalidHomeException;
 import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
+import de.silencio.activecraftcore.utils.ConfigUtils;
 import de.silencio.activecraftcore.utils.FileConfig;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
-import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.permissions.Permission;
+import org.bukkit.permissions.PermissionAttachmentInfo;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeCommand implements CommandExecutor, TabCompleter {
+public class HomeCommand extends ActiveCraftCommand {
 
-    @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-
-        if (sender instanceof Player) {
-
-            FileConfiguration homeconfig = new FileConfig("homes.yml");
-
-            if (args.length == 1) {
-                if (sender.hasPermission("activecraft.home.self")) {
-                    Player player = (Player) sender;
-                    String playerName = player.getName();
-
-                    if (args[0].equalsIgnoreCase("home_list")) {
-                        sender.sendMessage(Errors.INVALID_ARGUMENTS());
-                        return false;
-                    }
-                    if (homeconfig.contains(playerName + "." + args[0])) {
-                        player.teleport(homeconfig.getLocation(playerName + "." + args[0]));
-                        sender.sendMessage(CommandMessages.TELEPORT_HOME_COMPLETE(args[0]));
-                        player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
-
-                    } else sender.sendMessage(Errors.WARNING() + CommandMessages.HOME_NOT_SET(args[0]));
-                } else sender.sendMessage(Errors.NO_PERMISSION());
-            }
-
-            if (args.length == 2) {
-                if (sender.hasPermission("activecraft.home.others")) {
-                    Player player = (Player) sender;
-                    if (Bukkit.getPlayer(args[0]) == null) {
-                        sender.sendMessage(Errors.INVALID_PLAYER());
-                        return false;
-                    }
-                    Player target = Bukkit.getPlayer(args[0]);
-                    if (sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
-                        if (!sender.hasPermission("activecraft.home.self")) {
-                            sender.sendMessage(Errors.CANNOT_TARGET_SELF());
-                            return false;
-                        }
-                    }
-                    String targetName = target.getName();
-
-                    if (args[1].equalsIgnoreCase("home_list")) {
-                        sender.sendMessage(Errors.INVALID_ARGUMENTS());
-                        return false;
-                    }
-
-                    if (homeconfig.contains(targetName + "." + args[1])) {
-
-                        player.teleport(homeconfig.getLocation(targetName + "." + args[1]));
-                        sender.sendMessage(CommandMessages.TELEPORT_HOME_OTHERS_COMPLETE(target, args[1]));
-                        player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
-
-                    } else
-                        sender.sendMessage(Errors.WARNING() + CommandMessages.HOME_OTHERS_NOT_SET(target, args[1]));
-                } else sender.sendMessage(Errors.NO_PERMISSION());
-            }
-            if (args.length >= 3) {
-                sender.sendMessage(Errors.TOO_MANY_ARGUMENTS());
-            }
-            if (args.length == 0) {
-                sender.sendMessage(Errors.INVALID_ARGUMENTS());
-            }
-        } else sender.sendMessage(Errors.NOT_A_PLAYER());
-        return true;
+    public HomeCommand() {
+        super("home", "delhome", "sethome");
     }
 
     @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+    public void runCommand(CommandSender sender, Command command, String label, String[] args) throws ActiveCraftException {
+        FileConfig homeConfig = ConfigUtils.getHomeConfig();
+
+        switch (label.toLowerCase()) {
+            case "home" -> {
+
+                switch (args.length) {
+                    case 1 -> {
+                        checkPermission(sender, "home.self");
+                        Player player = getPlayer(sender);
+                        String playername = player.getName();
+                        if (args[0].equalsIgnoreCase("home_list")) throw new InvalidArgumentException();
+                        if (!homeConfig.contains(playername + "." + args[0]))
+                            throw new InvalidHomeException(args[0]);
+                        player.teleport(homeConfig.getLocation(playername + "." + args[0]));
+                        sendMessage(sender, CommandMessages.TELEPORT_HOME_COMPLETE(args[0]));
+                        player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
+                    }
+                    case 2 -> {
+                        checkPermission(sender, "home.others");
+                        Player target = getPlayer(args[0]);
+                        checkTargetSelf(sender, target, "home.self");
+                        String playername = target.getName();
+                        if (args[1].equalsIgnoreCase("home_list")) throw new InvalidArgumentException();
+                        if (!homeConfig.contains(playername + "." + args[1]))
+                            throw new InvalidHomeException(args[1], target);
+                        target.teleport(homeConfig.getLocation(playername + "." + args[1]));
+                        sendMessage(sender, CommandMessages.TELEPORT_HOME_OTHERS_COMPLETE(target, args[1]));
+                        target.playSound(target.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
+                    }
+                }
+            }
+            case "sethome" -> {
+                switch (args.length) {
+                    case 1 -> {
+                        checkPermission(sender, "sethome.self");
+                        Player target = getPlayer(sender);
+                        String playername = target.getName();
+                        if (args[0].equalsIgnoreCase("home_list")) throw new InvalidArgumentException();
+                        List<String> homeList = homeConfig.getStringList(playername + ".home_list");
+                        int maxHomes = 1;
+                        for (PermissionAttachmentInfo perm : target.getEffectivePermissions())
+                            if (perm.getPermission().startsWith("activecraft.maxhomes."))
+                                if (Bukkit.getPluginManager().getPermission(perm.getPermission()) == null) Bukkit.getPluginManager().addPermission(new Permission(perm.getPermission()));
+
+                        for (Permission perm : Bukkit.getPluginManager().getPermissions())
+                            if (perm.getName().startsWith("activecraft.maxhomes."))
+                                maxHomes = Integer.parseInt(perm.getName().split("\\.")[2]);
+
+                        if (!(homeList.size() < maxHomes || target.isOp())) {
+                            target.sendMessage(Errors.WARNING() + CommandMessages.MAX_HOMES());
+                            return;
+                        }
+                        if (!homeList.contains(args[0])) homeList.add(args[0]);
+                        homeConfig.set(playername + ".home_list", homeList);
+                        homeConfig.set(playername + "." + args[0], target.getLocation());
+                        homeConfig.saveConfig();
+                        sendMessage(sender, CommandMessages.HOME_SET(args[0]));
+                    }
+                    case 2 -> {
+                        checkPermission(sender, "sethome.others");
+                        Player target = getPlayer(args[0]);
+                        checkTargetSelf(sender, target, "sethome.self");
+                        String playername = target.getName();
+                        if (args[1].equalsIgnoreCase("home_list")) throw new InvalidArgumentException();
+                        List<String> homeList = homeConfig.getStringList(playername + ".home_list");
+                        int maxHomes = 1;
+                        for (PermissionAttachmentInfo perm : target.getEffectivePermissions())
+                            if (perm.getPermission().startsWith("activecraft.maxhomes."))
+                                if (Bukkit.getPluginManager().getPermission(perm.getPermission()) == null) Bukkit.getPluginManager().addPermission(new Permission(perm.getPermission()));
+
+                        for (Permission perm : Bukkit.getPluginManager().getPermissions())
+                            if (perm.getName().startsWith("activecraft.maxhomes."))
+                                maxHomes = Integer.parseInt(perm.getName().split("\\.")[2]);
+
+                        if (!(homeList.size() < maxHomes || target.isOp())) {
+                            target.sendMessage(Errors.WARNING() + CommandMessages.MAX_HOMES_OTHERS());
+                            return;
+                        }
+                        if (!homeList.contains(args[1])) homeList.add(args[1]);
+                        homeConfig.set(playername + ".home_list", homeList);
+                        homeConfig.set(playername + "." + args[1], target.getLocation());
+                        homeConfig.saveConfig();
+                        sendMessage(sender, CommandMessages.HOME_OTHERS_SET(target, args[1]));
+                    }
+                }
+            }
+            case "delhome" -> {
+                switch (args.length) {
+                    case 1 -> {
+                        checkPermission(sender, "delhome.self");
+                        Player player = getPlayer(sender);
+                        String playername = player.getName();
+                        if (args[0].equalsIgnoreCase("home_list")) throw new InvalidArgumentException();
+                        if (homeConfig.contains(playername + "." + args[0])) throw new InvalidHomeException(args[0]);
+                        List<String> homeList = homeConfig.getStringList(playername + ".home_list");
+                        homeList.remove(args[0]);
+                        homeConfig.set(playername + ".home_list", homeList);
+                        homeConfig.set(playername + "." + args[0], null);
+                        homeConfig.saveConfig();
+                        sendMessage(sender, CommandMessages.HOME_DELETED(args[0]));
+                    }
+                    case 2 -> {
+                        checkPermission(sender, "delhome.others");
+                        Player target = getPlayer(args[0    ]);
+                        checkTargetSelf(sender,target, "delhome.self");
+                        String playername = target.getName();
+                        if (args[1].equalsIgnoreCase("home_list")) throw new InvalidArgumentException();
+                        if (homeConfig.contains(playername + "." + args[1])) throw new InvalidHomeException(args[1], target);
+                        List<String> homeList = homeConfig.getStringList(playername + ".home_list");
+                        homeList.remove(args[1]);
+                        homeConfig.set(playername + ".home_list", homeList);
+                        homeConfig.set(playername + "." + args[1], null);
+                        homeConfig.saveConfig();
+                        sendMessage(sender, CommandMessages.HOME_OTHERS_DELETED(target, args[1]));
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    public List<String> onTab(CommandSender sender, Command command, String label, String[] args) {
         ArrayList<String> list = new ArrayList<>();
-
-        Player p = (Player) sender;
-
-        if (args.length == 0) return list;
-
-        if (args.length == 1) {
-            FileConfig warpListConfig = new FileConfig("homes.yml");
-            list.addAll(warpListConfig.getStringList(p.getName() + ".home_list"));
-            for (Player player : Bukkit.getOnlinePlayers()) {
-                list.add(player.getName());
+        switch (label) {
+            case "sethome" -> {
+                if (args.length == 1) list.addAll(getProfileNames());
             }
-        } else if (args.length == 2) {
-            FileConfig warpListConfig = new FileConfig("homes.yml");
-            if (Bukkit.getPlayer(args[0]) != null) {
-                list.addAll(warpListConfig.getStringList(Bukkit.getPlayer(args[0]).getName() + ".home_list"));
+            case "home", "delhome" -> {
+                if (args.length == 1) {
+                    list.addAll(ConfigUtils.getHomeConfig().getStringList(sender.getName() + ".home_list"));
+                    list.addAll(getProfileNames());
+                }
+                if (args.length == 2 && Bukkit.getPlayer(args[0]) != null)
+                    list.addAll(ConfigUtils.getHomeConfig().getStringList(Bukkit.getPlayer(args[0]).getName() + ".home_list"));
             }
         }
-
-
-        ArrayList<String> completerList = new ArrayList<>();
-        String currentarg = args[args.length - 1].toLowerCase();
-        for (String s : list) {
-            String s1 = s.toLowerCase();
-            if (s1.startsWith(currentarg)) {
-                completerList.add(s);
-            }
-        }
-
-        return completerList;
+        return list;
     }
 }

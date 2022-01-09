@@ -1,51 +1,46 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.exceptions.ActiveCraftException;
 import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.List;
+
 public class FeedCommand implements CommandExecutor {
 
+    public FeedCommand() {
+        super("feed");
+    }
+
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public void runCommand(CommandSender sender, Command command, String label, String[] args) throws ActiveCraftException {
+        switch (args.length) {
+            case 0 -> {
+                checkPermission(sender, "feed.self");
+                Player player = getPlayer(sender);
+                player.setFoodLevel(20);
+                sendMessage(sender, CommandMessages.FEED());
+                player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_BURP, 1f, 1f);
+            }
+            case 1 -> {
+                checkPermission(sender, "feed.others");
+                Player target = getPlayer(args[0]);
+                if (checkTargetSelf(sender, target, "feed.self")) sendSilentMessage(target, CommandMessages.FEED_OTHERS_MESSAGE(sender));
+                target.setFoodLevel(20);
+                sendMessage(sender, CommandMessages.FEED_OTHERS(target));
+                target.playSound(target.getLocation(), Sound.ENTITY_PLAYER_BURP, 1f, 1f);
+            }
+        }
+    }
 
-                if(args.length == 0) {
-                    if(sender instanceof Player) {
-                        Player player = (Player) sender;
-                        if(sender.hasPermission("activecraft.feed.self")) {
-                            player.setFoodLevel(20);
-                            player.sendMessage(CommandMessages.FEED());
-                            player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_BURP, 1f, 1f);
-                        }
-                    } else sender.sendMessage(Errors.NOT_A_PLAYER());
-                } else if(args.length == 1) {
-                    if (Bukkit.getPlayer(args[0]) == null) {
-                        sender.sendMessage(Errors.INVALID_PLAYER());
-                        return false;
-                    }
-                    Player target = Bukkit.getPlayer(args[0]);
-                    if(target != null) {
-                        if (sender.hasPermission("activecraft.feed.others")) {
-                            if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
-                                if (!sender.hasPermission("activecraft.feed.self")) {
-                                    sender.sendMessage(Errors.CANNOT_TARGET_SELF());
-                                    return false;
-                                }
-                            }
-                            target.setFoodLevel(20);
-                            sender.sendMessage(CommandMessages.FEED_OTHERS(target));
-                            target.sendMessage(CommandMessages.FEED_OTHERS_MESSAGE(sender));
-
-                            target.playSound(target.getLocation(), Sound.ENTITY_PLAYER_BURP, 1f, 1f);
-                        } else sender.sendMessage(Errors.NO_PERMISSION());
-                    } else sender.sendMessage(Errors.INVALID_PLAYER());
-                } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
-        return true;
+    @Override
+    public List<String> onTab(CommandSender sender, Command command, String alias, String[] args) {
+        return args.length == 1 ? getBukkitPlayernames() : null;
     }
 }

@@ -1,7 +1,6 @@
 package de.silencio.activecraftcore.listener;
 
 import de.silencio.activecraftcore.utils.ColorUtils;
-import de.silencio.activecraftcore.utils.MessageUtils;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.SignChangeEvent;

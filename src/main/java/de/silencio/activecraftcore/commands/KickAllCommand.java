@@ -1,43 +1,39 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.exceptions.ActiveCraftException;
 import de.silencio.activecraftcore.messages.CommandMessages;
-import de.silencio.activecraftcore.messages.Errors;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class KickAllCommand implements CommandExecutor {
+import java.util.List;
+
+public class KickAllCommand extends ActiveCraftCommand {
+
+    public KickAllCommand() {
+        super("kickall");
+    }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-
-        if (sender.hasPermission("activecraft.kickall")) {
-            if (!(args.length > 0)) {
-                sender.sendMessage(CommandMessages.DEFAULT_KICKALL());
-
-                for (Player player : Bukkit.getOnlinePlayers()) {
-                    if (!player.hasPermission("activecraft.kickall.bypass")) {
-                        player.kickPlayer(CommandMessages.DEFAULT_KICKALL_MESSAGE());
-                    }
-                }
-            } else {
-                StringBuilder stringBuilder = new StringBuilder();
-                for (String arg : args) {
-                    stringBuilder.append(arg);
-                    stringBuilder.append(" ");
-                }
-                sender.sendMessage(CommandMessages.CUSTOM_KICKALL(stringBuilder.toString()));
-
-                for (Player player : Bukkit.getOnlinePlayers()) {
-                    if (!player.hasPermission("activecraft.kickall.bypass")) {
-                        player.kickPlayer(CommandMessages.CUSTOM_KICKALL_MESSAGE(stringBuilder.toString()));
-                    }
-                }
-            }
-        } else sender.sendMessage(Errors.NO_PERMISSION());
-        return true;
+    public void runCommand(CommandSender sender, Command command, String label, String[] args) throws ActiveCraftException {
+        
+        checkPermission(sender, "kickall");
+        if (args.length == 0) {
+            sendMessage(sender, CommandMessages.DEFAULT_KICKALL());
+            for (Player player : Bukkit.getOnlinePlayers()) 
+                if (!player.hasPermission("activecraft.kickall.bypass")) 
+                    player.kickPlayer(CommandMessages.DEFAULT_KICKALL_MESSAGE());
+        } else {
+            sendMessage(sender, CommandMessages.CUSTOM_KICKALL(combineArray(args)));
+            for (Player player : Bukkit.getOnlinePlayers()) 
+                if (!player.hasPermission("activecraft.kickall.bypass")) 
+                    player.kickPlayer(CommandMessages.CUSTOM_KICKALL_MESSAGE(combineArray(args)));
+        }
+    }
+    
+    @Override
+    public List<String> onTab(CommandSender sender, Command command, String label, String[] args) {
+        return null;
     }
 }

@@ -5,47 +5,40 @@ import org.bukkit.ChatColor;
 
 public class GuiMessages {
 
-    static ActiveCraftMessage acm = ActiveCraftCore.getPlugin().getActiveCraftMessage();
+    static ActiveCraftMessage acm = ActiveCraftCore.getActiveCraftMessage();
 
     public static String BACK_ARROW() {
 
-        String msg = ChatColor.GOLD + acm.getMessage(MessageType.GUI, "back-arrow");
-        return msg;
+        return ChatColor.GOLD + acm.getMessage(MessageType.GUI, "back-arrow");
     }
 
     public static String CLOSE_ITEM() {
 
-        String msg = ChatColor.GOLD + acm.getMessage(MessageType.GUI, "close-item");
-        return msg;
+        return ChatColor.GOLD + acm.getMessage(MessageType.GUI, "close-item");
     }
 
     public static String CONFIRM_ITEM() {
 
-        String msg = ChatColor.GOLD + acm.getMessage(MessageType.GUI, "confirm-item");
-        return msg;
+        return ChatColor.GOLD + acm.getMessage(MessageType.GUI, "confirm-item");
     }
 
     public static String CANCEL_ITEM() {
 
-        String msg = ChatColor.GOLD + acm.getMessage(MessageType.GUI, "cancel-item");
-        return msg;
+        return ChatColor.GOLD + acm.getMessage(MessageType.GUI, "cancel-item");
     }
 
     public static String CONFIRMATION_TITLE() {
 
-        String msg = ChatColor.GOLD + acm.getMessage(MessageType.GUI, "confirmation-title");
-        return msg;
+        return ChatColor.GOLD + acm.getMessage(MessageType.GUI, "confirmation-title");
     }
 
     public static String DEFAULT_GUI_TITLE() {
 
-        String msg = ChatColor.GOLD + acm.getMessage(MessageType.GUI, "default-gui-title");
-        return msg;
+        return ChatColor.GOLD + acm.getMessage(MessageType.GUI, "default-guicreator-title");
     }
 
     public static String NO_PERMISSION_ITEM() {
 
-        String msg = ChatColor.GOLD + acm.getMessage(MessageType.GUI, "no-permission-item");
-        return msg;
+        return ChatColor.GOLD + acm.getMessage(MessageType.GUI, "no-permission-item");
     }
 }

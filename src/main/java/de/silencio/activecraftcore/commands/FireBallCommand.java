@@ -1,9 +1,8 @@
 package de.silencio.activecraftcore.commands;
 
-import de.silencio.activecraftcore.messages.Errors;
-import org.bukkit.Bukkit;
+import de.silencio.activecraftcore.exceptions.ActiveCraftException;
+import org.bukkit.Location;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Fireball;

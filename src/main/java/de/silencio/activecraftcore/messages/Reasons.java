@@ -4,7 +4,7 @@ import de.silencio.activecraftcore.ActiveCraftCore;
 
 public class Reasons {
 
-    static ActiveCraftMessage acm = ActiveCraftCore.getPlugin().getActiveCraftMessage();
+    static ActiveCraftMessage acm = ActiveCraftCore.getActiveCraftMessage();
 
     public static String HACKING() {
         return acm.getMessage(MessageType.REASON, "hacking");
@@ -34,7 +34,15 @@ public class Reasons {
         return acm.getMessage(MessageType.REASON, "griefing");
     }
 
-    public static String MODERATOR(String action) {
-        return acm.getMessage(MessageType.REASON, "moderator").replace("%action%", action);
+    public static String MODERATOR_BANNED() {
+        return acm.getMessage(MessageType.REASON, "moderator-banned");
+    }
+
+    public static String MODERATOR_WARNED() {
+        return acm.getMessage(MessageType.REASON, "moderator-warned");
+    }
+
+    public static String MODERATOR_KICKED() {
+        return acm.getMessage(MessageType.REASON, "moderator-kicked");
     }
 }

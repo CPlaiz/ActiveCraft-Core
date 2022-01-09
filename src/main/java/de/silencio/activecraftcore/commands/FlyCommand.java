@@ -1,121 +1,86 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.exceptions.ActiveCraftException;
 import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
-import de.silencio.activecraftcore.utils.FileConfig;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
+import de.silencio.activecraftcore.playermanagement.Profile;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.io.File;
+import java.util.List;
 
-public class FlyCommand implements CommandExecutor {
+public class FlyCommand extends ActiveCraftCommand {
+
+    public FlyCommand() {
+        super("fly", "flyspeed");
+    }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public void runCommand(CommandSender sender, Command command, String label, String[] args) throws ActiveCraftException {
 
-        if (label.equalsIgnoreCase("fly")) {
-            if (args.length == 0) {
-                if (sender instanceof Player) {
-                    if (sender.hasPermission("activecraft.fly.self")) {
-                        Player player = (Player) sender;
-                        FileConfig fileConfig = new FileConfig("playerdata" + File.separator + player.getName().toLowerCase() + ".yml");
-
-                        if (fileConfig.getBoolean("fly")) {
+        switch (label) {
+            case "fly" -> {
+                switch (args.length) {
+                    case 0 -> {
+                        checkPermission(sender, "fly.self");
+                        Player player = getPlayer(sender);
+                        Profile profile = getProfile(player);
+                        if (profile.canFly()) {
+                            profile.set(Profile.Value.FLY, false);
                             player.setAllowFlight(false);
-                            player.sendMessage(CommandMessages.DISABLE_FLY());
-                            fileConfig.set("fly", false);
-                            fileConfig.saveConfig();
-                        } else if (!fileConfig.getBoolean("fly")) {
+                            sendMessage(sender, CommandMessages.DISABLE_FLY());
+                        } else if (!profile.canFly()) {
                             player.setAllowFlight(true);
-                            player.sendMessage(CommandMessages.ENABLE_FLY());
-                            fileConfig.set("fly", true);
-                            fileConfig.saveConfig();
-                        }
-                    } else sender.sendMessage(Errors.NO_PERMISSION());
-                } else sender.sendMessage(Errors.NOT_A_PLAYER());
-            } else if (args.length == 1) {
-                if (sender.hasPermission("activecraft.fly.others")) {
-                    if (Bukkit.getPlayer(args[0]) == null) {
-                        sender.sendMessage(Errors.INVALID_PLAYER());
-                        return false;
-                    }
-                    Player target = Bukkit.getPlayer(args[0]);
-                    if (sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
-                        if (!sender.hasPermission("activecraft.fly.self")) {
-                            sender.sendMessage(Errors.CANNOT_TARGET_SELF());
-                            return false;
+                            profile.set(Profile.Value.FLY, true);
+                            sendMessage(sender, CommandMessages.ENABLE_FLY());
                         }
                     }
-                    FileConfig fileConfig = new FileConfig("playerdata" + File.separator + target.getName().toLowerCase() + ".yml");
-
-                    if (fileConfig.getBoolean("fly")) {
-                        target.setAllowFlight(false);
-                        target.sendMessage(CommandMessages.DISABLED_FLY_OTHERS_MESSAGE(sender));
-                        sender.sendMessage(CommandMessages.DISABLE_FLY_OTHERS(target));
-                        fileConfig.set("fly", false);
-                        fileConfig.saveConfig();
-                    } else if (!fileConfig.getBoolean("fly")) {
-                        target.setAllowFlight(true);
-                        target.sendMessage(CommandMessages.ENABLE_FLY_OTHERS_MESSAGE(sender));
-                        sender.sendMessage(CommandMessages.ENABLE_FLY_OTHERS(target));
-                        fileConfig.set("fly", true);
-                        fileConfig.saveConfig();
-                    }
-                } else sender.sendMessage(Errors.NO_PERMISSION());
-            } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
-        }
-
-        if (label.equalsIgnoreCase("flyspeed")) {
-            if (args.length == 1) {
-                if (sender instanceof Player) {
-                    if (sender.hasPermission("activecraft.flyspeed")) {
-                        Integer num = null;
-                        try {
-                            num = Integer.valueOf(args[0]);
-                        } catch (NumberFormatException ignored) {
+                    case 1 -> {
+                        checkPermission(sender, "fly.others");
+                        Player target = getPlayer(args[0]);
+                        Profile profile = getProfile(target);
+                        if (profile.canFly()) {
+                            if (!checkTargetSelf(sender, target, "fly.self")) sendSilentMessage(target, CommandMessages.DISABLED_FLY_OTHERS_MESSAGE(sender));
+                            target.setAllowFlight(false);
+                            sendMessage(sender, CommandMessages.DISABLE_FLY_OTHERS(target));
+                            profile.set(Profile.Value.FLY, false);
+                        } else if (!profile.canFly()) {
+                            if (!checkTargetSelf(sender, target, "fly.self")) sendSilentMessage(target, CommandMessages.ENABLE_FLY_OTHERS_MESSAGE(sender));
+                            target.setAllowFlight(true);
+                            sendMessage(sender, CommandMessages.ENABLE_FLY_OTHERS(target));
+                            profile.set(Profile.Value.FLY, true);
                         }
-                        if (num != null) {
-                            Player player = (Player) sender;
-                            FileConfig fileConfig = new FileConfig("playerdata" + File.separator + player.getName().toLowerCase() + ".yml");
-                            if (Integer.parseInt(args[0]) <= 10) {
-                                player.setFlySpeed((float) Integer.parseInt(args[0]) / 10);
-                                player.sendMessage(CommandMessages.FLYSPEED_SET(args[0].toString()));
-                                fileConfig.set("flyspeed", Integer.parseInt(args[0]));
-                                fileConfig.saveConfig();
-                            } else sender.sendMessage(Errors.NUMBER_TOO_LARGE());
-                        } else sender.sendMessage(Errors.INVALID_NUMBER());
-                    } else sender.sendMessage(Errors.NO_PERMISSION());
-                } else sender.sendMessage(Errors.NOT_A_PLAYER());
-            } else if (args.length == 2) {
-                if (sender.hasPermission("activecraft.flyspeed.others")) {
-                    if (Bukkit.getPlayer(args[0]) == null) {
-                        sender.sendMessage(Errors.INVALID_PLAYER());
-                        return false;
                     }
-                    Integer num = null;
-                    try {
-                        num = Integer.valueOf(args[1]);
-                    } catch (NumberFormatException ignored) {
+                }
+            }
+            case "flyspeed" -> {
+                switch (args.length) {
+                    case 1 -> {
+                        checkPermission(sender, "flyspeed.self");
+                        parseInt(args[0]);
+                        Player player = getPlayer(sender);
+                        Profile profile = getProfile(player);
+                        if (Integer.parseInt(args[0]) <= 10) {
+                            player.setFlySpeed((float) Integer.parseInt(args[0]) / 10);
+                            sendMessage(sender, CommandMessages.FLYSPEED_SET(args[0]));
+                            profile.set(Profile.Value.FLYSPEED, Integer.parseInt(args[0]));
+                        } else sendMessage(sender, Errors.NUMBER_TOO_LARGE());
                     }
-                    if (num != null) {
-
-                        Player target = Bukkit.getPlayer(args[0]);
-                        FileConfig fileConfig = new FileConfig("playerdata" + File.separator + target.getName().toLowerCase() + ".yml");
+                    case 2 -> {
+                        checkPermission(sender, "flyspeed.others");
+                        Player target = getPlayer(args[0]);
+                        if (!checkTargetSelf(sender, target, "flyspeed.self")) sendSilentMessage(target, CommandMessages.FLYSPEED_SET_OTHERS_MESSAGE(sender, args[1]));
+                        Profile profile = getProfile(target);
                         if (Integer.parseInt(args[1]) <= 10) {
                             target.setFlySpeed((float) Integer.parseInt(args[1]) / 10);
-                            target.sendMessage(CommandMessages.FLYSPEED_SET_OTHERS_MESSAGE(sender, args[1].toString()));
-                            sender.sendMessage(CommandMessages.FLYSPEED_SET_OTHERS(target, args[1].toString()));
-                            fileConfig.set("flyspeed", Integer.parseInt(args[1]));
-                            fileConfig.saveConfig();
-                        } else sender.sendMessage(Errors.NUMBER_TOO_LARGE());
-                    } else sender.sendMessage(Errors.INVALID_NUMBER());
-                } else sender.sendMessage(Errors.NO_PERMISSION());
-            } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
+                            sendSilentMessage(target, CommandMessages.FLYSPEED_SET_OTHERS_MESSAGE(sender, args[1]));
+                            sendMessage(sender, CommandMessages.FLYSPEED_SET_OTHERS(target, args[1]));
+                            profile.set(Profile.Value.FLYSPEED, Integer.parseInt(args[1]));
+                        }
+                    }
+                }
+            }
         }
-        return true;
     }
 }

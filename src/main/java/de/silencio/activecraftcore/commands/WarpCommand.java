@@ -1,154 +1,113 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.exceptions.ActiveCraftException;
+import de.silencio.activecraftcore.manager.WarpManager;
 import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.utils.FileConfig;
-import de.silencio.activecraftcore.manager.WarpManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
-import org.bukkit.permissions.Permission;
-import org.bukkit.permissions.PermissionDefault;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public class WarpCommand implements CommandExecutor, TabCompleter {
+public class WarpCommand extends ActiveCraftCommand {
 
-    @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-
-        if (sender instanceof Player) {
-            Player player = (Player) sender;
-            if (label.equalsIgnoreCase("warp")) {
-
-                if (args.length == 1) {
-                    if (player.hasPermission("activecraft.warp.self." + args[0])) {
-                        if (WarpManager.getWarp(args[0]) != null) {
-                            WarpManager.warp(player, args[0]);
-                            player.sendMessage(CommandMessages.WARP_TELEPORT(args[0]));
-                            player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
-                        } else sender.sendMessage(Errors.WARNING() + CommandMessages.WARP_DOESNT_EXIST());
-                    } else sender.sendMessage(Errors.NO_PERMISSION());
-                } else if (args.length == 2) {
-                    if (player.hasPermission("activecraft.warp.others." + args[1])) {
-                        if (WarpManager.getWarp(args[1]) != null) {
-                            if (Bukkit.getPlayer(args[0]) == null) {
-                                sender.sendMessage(Errors.INVALID_PLAYER());
-                                return false;
-                            }
-                            Player target = Bukkit.getPlayer(args[0]);
-
-                            if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
-                                if (!sender.hasPermission("activecraft.warp.self." + args[1])) {
-                                    sender.sendMessage(Errors.CANNOT_TARGET_SELF());
-                                    return false;
-                                }
-                            }
-                            WarpManager.warp(target, args[1]);
-                            player.sendMessage(CommandMessages.WARP_TELEPORT_OTHERS(target, args[1]));
-                            target.sendMessage(CommandMessages.WARP_TELEPORT_OTHERS_MESSAGE(sender, args[1]));
-                            target.playSound(target.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
-                        } else sender.sendMessage(Errors.WARNING() + CommandMessages.WARP_DOESNT_EXIST());
-                    } else sender.sendMessage(Errors.NO_PERMISSION());
-                }
-            }
-            if (args.length == 1) {
-                if (label.equalsIgnoreCase("setwarp")) {
-                    if (player.hasPermission("activecraft.setwarp")) {
-                        if (WarpManager.getWarp(args[0]) == null) {
-                            WarpManager.createWarp(args[0], player.getLocation());
-                            player.sendMessage(CommandMessages.WARP_SET(args[0]));
-                        } else sender.sendMessage(Errors.WARNING() + CommandMessages.WARP_ALREADY_EXISTS());
-                    } else sender.sendMessage(Errors.NO_PERMISSION());
-
-                } else if (label.equalsIgnoreCase("delwarp")) {
-                    if (player.hasPermission("activecraft.deletewarp")) {
-                        if (WarpManager.getWarp(args[0]) != null) {
-                            WarpManager.deleteWarp(args[0]);
-                            player.sendMessage(CommandMessages.WARP_DELETED(args[0]));
-                        } else sender.sendMessage(Errors.WARNING() + CommandMessages.DOESNT_EXIST());
-                    } else sender.sendMessage(Errors.NO_PERMISSION());
-                }
-            }
-            if (label.equalsIgnoreCase("warps")) {
-                if (player.hasPermission("activecraft.listwarps")) {
-                    FileConfig warpListConfig = new FileConfig("warplist.yml");
-                    FileConfig warpsConfig = new FileConfig("warps.yml");
-                    List<String> warpList = warpListConfig.getStringList("warplist");
-                    if (!warpList.isEmpty()) {
-                        StringBuilder message = new StringBuilder();
-                        for (String s : warpList) {
-                            Location loc = warpsConfig.getLocation(s);
-                            sender.sendMessage(ChatColor.GOLD + s + ": " + ChatColor.GRAY + loc.getWorld().getName() + "; " + loc.getBlockX() + "," + loc.getBlockY() + ", " + loc.getBlockZ());
-                        }
-                        if (message.toString().equals("")) {
-                            sender.sendMessage(Errors.WARNING() + CommandMessages.NO_WARPS());
-                        } else {
-                            sender.sendMessage(ChatColor.GOLD + "Warps:");
-                            sender.sendMessage(message.toString());
-                        }
-                    } else sender.sendMessage(Errors.WARNING() + CommandMessages.NO_WARPS());
-                } else sender.sendMessage(Errors.NO_PERMISSION());
-            }
-
-
-        } else sender.sendMessage(Errors.NOT_A_PLAYER());
-        return true;
+    public WarpCommand() {
+        super("warp", "setwarp", "delwarp");
     }
 
     @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+    public void runCommand(CommandSender sender, Command command, String label, String[] args) throws ActiveCraftException {
+        switch (label) {
+            case "warp" -> {
+                Player player = getPlayer(sender);
+                if (args.length == 1) {
+                    checkPermission(sender, "warp.self." + args[0]);
+                    if (WarpManager.getWarp(args[0]) != null) {
+                        WarpManager.warp(player, args[0]);
+                        sendMessage(sender, CommandMessages.WARP_TELEPORT(args[0]));
+                        player.playSound(player.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
+                    } else sendMessage(sender, Errors.WARNING() + CommandMessages.WARP_DOESNT_EXIST());
+                } else if (args.length == 2) {
+                    checkPermission(sender, "warp.others." + args[1]);
+                    Player target = getPlayer(args[0]);
+                    if (WarpManager.getWarp(args[1]) != null) {
+                        if (!checkTargetSelf(sender, target, "warp.self." + args[1])) sendSilentMessage(target, CommandMessages.WARP_TELEPORT_OTHERS_MESSAGE(sender, args[1]));
+                        WarpManager.warp(target, args[1]);
+                        sendMessage(sender, CommandMessages.WARP_TELEPORT_OTHERS(target, args[1]));
+                        target.playSound(target.getLocation(), Sound.ENTITY_ENDERMAN_TELEPORT, 1f, 1f);
+                    } else sendMessage(sender, Errors.WARNING() + CommandMessages.WARP_DOESNT_EXIST());
+                }
+            }
+            case "setwarp" -> {
+                checkPermission(sender, "warp.set");
+                Player player = getPlayer(sender);
+                if (WarpManager.getWarp(args[0]) == null) {
+                    WarpManager.createWarp(args[0], player.getLocation());
+                    sendMessage(sender, CommandMessages.WARP_SET(args[0]));
+                } else sendMessage(sender, Errors.WARNING() + CommandMessages.WARP_ALREADY_EXISTS());
+            }
+            case "delwarp" -> {
+                checkPermission(sender, "warp.delete");
+                if (WarpManager.getWarp(args[0]) != null) {
+                    WarpManager.deleteWarp(args[0]);
+                    sendMessage(sender, CommandMessages.WARP_DELETED(args[0]));
+                } else sendMessage(sender, Errors.WARNING() + CommandMessages.DOESNT_EXIST());
+            }
+            case "warps" -> {
+                checkPermission(sender, "warp.list");
+                FileConfig warpListConfig = new FileConfig("warplist.yml");
+                FileConfig warpsConfig = new FileConfig("warps.yml");
+                List<String> warpList = warpListConfig.getStringList("warplist");
+                if (!warpList.isEmpty()) {
+                    StringBuilder message = new StringBuilder();
+                    for (String s : warpList) {
+                        Location loc = warpsConfig.getLocation(s);
+                        if (sender.hasPermission("activecraft.warp.self." + s) || sender.hasPermission("activecraft.warp.others." + s)) {
+                            message.append(ChatColor.GOLD + s + ": " + ChatColor.GRAY + loc.getWorld().getName() + "; " + loc.getBlockX() + ", " + loc.getBlockY() + ", " + loc.getBlockZ());
+                            message.append("\n");
+                        }
+                    }
+                    if (message.toString().equals("")) {
+                        sendMessage(sender, Errors.WARNING() + CommandMessages.NO_WARPS());
+                    } else {
+                        sendMessage(sender, CommandMessages.WARPS_HEADER());
+                        sendMessage(sender, message.toString());
+                    }
+                } else sendMessage(sender, Errors.WARNING() + CommandMessages.NO_WARPS());
+            }
+        }
+    }
+
+    @Override
+    public List<String> onTab(CommandSender sender, Command command, String label, String[] args) {
         ArrayList<String> list = new ArrayList<>();
-
-        Player p = (Player) sender;
-
-        if (args.length == 0) return list;
-
-
-        if (alias.equals("delwarp")) {
-            if (args.length == 1) {
-                FileConfig warpListConfig = new FileConfig("warplist.yml");
-                list.addAll(warpListConfig.getStringList("warplist"));
-            }
-        }
-        if (alias.equals("warp")) {
-            if (args.length == 1) {
-                FileConfig warpListConfig = new FileConfig("warplist.yml");
-                for (String s : warpListConfig.getStringList("warplist")) {
-                    if (sender.hasPermission("activecraft.warp.self." + s))
-                        list.add(s);
-                }
-                for (Player player : Bukkit.getOnlinePlayers()) {
-                    list.add(player.getName());
-                }
-            } else if (args.length == 2) {
-                FileConfig warpListConfig = new FileConfig("warplist.yml");
-                for (String s : warpListConfig.getStringList("warplist")) {
-                    if (sender.hasPermission("activecraft.warp.others." + s))
-                        list.add(s);
+        FileConfig warpListConfig = new FileConfig("warplist.yml");
+        switch (label) {
+            case "warp" -> {
+                if (args.length == 1) {
+                    for (String s : warpListConfig.getStringList("warplist"))
+                        if (sender.hasPermission("activecraft.warp.self." + s))
+                            list.add(s);
+                    list.addAll(getBukkitPlayernames());
+                } else if (args.length == 2) {
+                    for (Player player : Bukkit.getOnlinePlayers()) {
+                        if (args[0].equalsIgnoreCase(player.getName())) {
+                            for (String s : warpListConfig.getStringList("warplist"))
+                                if (sender.hasPermission("activecraft.warp.others." + s))
+                                    list.add(s);
+                        }
+                    }
                 }
             }
+            case "delwarp" -> list.addAll(warpListConfig.getStringList("warplist"));
         }
-
-
-        ArrayList<String> completerList = new ArrayList<>();
-        String currentarg = args[args.length - 1].toLowerCase();
-        for (String s : list) {
-            String s1 = s.toLowerCase();
-            if (s1.startsWith(currentarg)) {
-                completerList.add(s);
-            }
-        }
-
-        return completerList;
+        return list;
     }
 }

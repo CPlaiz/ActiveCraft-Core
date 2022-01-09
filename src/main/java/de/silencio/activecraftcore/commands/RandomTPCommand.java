@@ -1,19 +1,12 @@
 package de.silencio.activecraftcore.commands;
 
-import de.silencio.activecraftcore.messages.Errors;
-import de.silencio.activecraftcore.utils.FileConfig;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
+import de.silencio.activecraftcore.exceptions.ActiveCraftException;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -109,27 +102,14 @@ public class RandomTPCommand implements CommandExecutor, TabCompleter {
 
         int isNegative = random.nextInt(4);
         switch (isNegative) {
-            case 1:
-                randomNumX *= -1;
-                break;
-            case 2:
-                randomNumZ *= -1;
-                break;
-            case 3:
+            case 1 -> randomNumX *= -1;
+            case 2 -> randomNumZ *= -1;
+            case 3 -> {
                 randomNumX *= -1;
                 randomNumZ *= -1;
-                break;
+            }
         }
-        Location newLoc = new Location(player.getWorld(), randomNumX, player.getWorld().getHighestBlockYAt(randomNumX, randomNumZ) + 1, randomNumZ,
+        return new Location(player.getWorld(), randomNumX, player.getWorld().getHighestBlockYAt(randomNumX, randomNumZ) + 1, randomNumZ,
                 player.getLocation().getYaw(), player.getLocation().getPitch());
-        return newLoc;
     }
-
-    @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-
-        ArrayList<String> completerList = new ArrayList<>();
-        return completerList;
-    }
-
 }

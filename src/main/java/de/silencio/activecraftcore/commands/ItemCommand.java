@@ -1,15 +1,14 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.exceptions.ActiveCraftException;
 import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.utils.ColorUtils;
-import de.silencio.activecraftcore.utils.MessageUtils;
+import de.silencio.activecraftcore.utils.ComparisonType;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -17,159 +16,107 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemCommand implements CommandExecutor, TabCompleter {
+public class ItemCommand extends ActiveCraftCommand {
+
+    public ItemCommand() {
+        super("item", "i");
+    }
+
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-
-        if (sender instanceof Player) {
-            Player player = (Player) sender;
-
-            if (args.length < 1) {
-                sender.sendMessage(Errors.INVALID_ARGUMENTS());
-                return false;
+    public void runCommand(CommandSender sender, Command command, String label, String[] args) throws ActiveCraftException {
+        Player player = getPlayer(sender);
+        if (label.equalsIgnoreCase("i")) {
+            checkPermission(sender, "item.give");
+            checkArgsLength(args, ComparisonType.GREATER_EQUAL, 1);
+            Material material = getMaterial(args[0]);
+            ItemStack itemStack = new ItemStack(material);
+            itemStack.setAmount(args.length >= 2 ? parseInt(args[1]) : 1);
+            player.getInventory().addItem(itemStack);
+            if (args.length == 1) sendMessage(sender, CommandMessages.ITEM_GIVE(itemStack.getType().name().toLowerCase()));
+            else sendMessage(sender, CommandMessages.ITEM_GIVE_MULTIPLE(itemStack.getType().name().toLowerCase(), parseInt(args[1]) + ""));
+            player.playSound(player.getLocation(), Sound.valueOf("BLOCK_AMETHYST_BLOCK_BREAK"), 1f, 1f);
+        } else {
+            checkArgsLength(args, ComparisonType.GREATER_EQUAL, 2);
+            switch (args[0].toLowerCase()) {
+                case "give" -> {
+                    checkPermission(sender, "item.give");
+                    Material material = getMaterial(args[1]);
+                    ItemStack itemStack = new ItemStack(material);
+                    itemStack.setAmount(args.length >= 3 ? parseInt(args[2]) : 1);
+                    player.getInventory().addItem(itemStack);
+                    if (args.length == 2) sendMessage(sender, CommandMessages.ITEM_GIVE(itemStack.getType().name().toLowerCase()));
+                    else sendMessage(sender, CommandMessages.ITEM_GIVE_MULTIPLE(itemStack.getType().name().toLowerCase(), parseInt(args[2]) + ""));
+                    player.playSound(player.getLocation(), Sound.valueOf("BLOCK_AMETHYST_BLOCK_BREAK"), 1f, 1f);
+                }
+                case "name" -> {
+                    checkPermission(sender, "item.name");
+                    if (player.getInventory().getItemInMainHand().getType() == Material.AIR)
+                        sendMessage(sender, Errors.NOT_HOLDING_ITEM());
+                    ItemStack stack = player.getInventory().getItemInMainHand();
+                    ItemMeta meta = stack.getItemMeta();
+                    meta.setDisplayName(ColorUtils.replaceFormat(ColorUtils.replaceColor(combineArray(args, 1))));
+                    stack.setItemMeta(meta);
+                    sendMessage(sender, CommandMessages.ITEM_RENAMED());
+                }
+                case "lore" -> {
+                    checkPermission(sender, "item.lore");
+                    checkArgsLength(args, ComparisonType.GREATER, 2);
+                    if (player.getInventory().getItemInMainHand().getType() == Material.AIR)
+                        sendMessage(sender, Errors.NOT_HOLDING_ITEM());
+                    ItemStack stack = player.getInventory().getItemInMainHand();
+                    ItemMeta meta = stack.getItemMeta();
+                    List<String> stringList = new ArrayList<>();
+                    if (meta.getLore() != null) stringList.addAll(meta.getLore());
+                    switch (args[1]) {
+                        case "add" -> {
+                            stringList.add(ColorUtils.replaceFormat(ColorUtils.replaceColor(combineArray(args, 2))));
+                            sendMessage(sender, CommandMessages.ITEM_LORE_ADD());
+                        }
+                        case "clear" -> {
+                            stringList.clear();
+                            sendMessage(sender, CommandMessages.ITEM_LORE_CLEAR());
+                        }
+                        case "set" -> {
+                            stringList.clear();
+                            stringList.add(ColorUtils.replaceFormat(ColorUtils.replaceColor(combineArray(args, 2))));
+                            sendMessage(sender, CommandMessages.ITEM_LORE_SET());
+                        }
+                        case "remove" -> {
+                            checkArgsLength(args, ComparisonType.GREATER_EQUAL, 3);
+                            stringList.remove(parseInt(args[2]).intValue());
+                            sendMessage(sender, CommandMessages.ITEM_LORE_SET());
+                        }
+                    }
+                    meta.setLore(stringList);
+                    stack.setItemMeta(meta);
+                }
             }
+        }
+    }
 
-            if (label.equalsIgnoreCase("i")) {
-
-                if (args.length == 1) {
-                    if (Material.getMaterial(args[0].toUpperCase()) == null) {
-                        sender.sendMessage(Errors.INVALID_ARGUMENTS());
-                        return false;
-                    }
-                    Material material = Material.getMaterial(args[0].toUpperCase());
-                    ItemStack itemStack = new ItemStack(material);
-                    player.getInventory().addItem(itemStack);
-                    sender.sendMessage(CommandMessages.ITEM_GIVE(itemStack.getType().name().toLowerCase()));
-                    player.playSound(player.getLocation(), Sound.valueOf("BLOCK_AMETHYST_BLOCK_BREAK"), 1f, 1f);
+    @Override
+    public List<String> onTab(CommandSender sender, Command command, String label, String[] args) {
+        ArrayList<String> list = new ArrayList<>();
+        if (label.equalsIgnoreCase("item")) {
+            if (args.length == 1) {
+                if (sender.hasPermission("item.name")) list.add("name");
+                if (sender.hasPermission("item.lore")) list.add("lore");
+                if (sender.hasPermission("item.give")) list.add("give");
+            }
+            if (args[0].equalsIgnoreCase("give")) {
+                if (sender.hasPermission("item.give") && args.length == 2)
+                    for (Material material : Material.values()) list.add(material.name().toLowerCase());
+            } else if (args[0].equalsIgnoreCase("lore"))
+                if (sender.hasPermission("item.lore") && args.length == 2) {
+                    list.add("set");
+                    list.add("add");
+                    list.add("clear");
+                    list.add("remove");
                 }
-                if (args.length == 2) {
-                    if (Material.getMaterial(args[0].toUpperCase()) == null) {
-                        sender.sendMessage(Errors.NOT_HOLDING_ITEM());
-                        return false;
-                    }
-                    Material material = Material.getMaterial(args[0].toUpperCase());
-                    ItemStack itemStack = new ItemStack(material);
-                    Integer num = null;
-                    try {
-                        num = Integer.valueOf(args[1]);
-                    } catch (NumberFormatException ignored) {
-                    }
-                    if (num == null) {
-                        sender.sendMessage(Errors.INVALID_NUMBER());
-                        return false;
-                    }
-                    itemStack.setAmount(Integer.parseInt(args[1]));
-                    player.getInventory().addItem(itemStack);
-                    sender.sendMessage(CommandMessages.ITEM_GIVE_MULTIPLE(itemStack.getType().name().toLowerCase(), num + ""));
-                    player.playSound(player.getLocation(), Sound.valueOf("BLOCK_AMETHYST_BLOCK_BREAK"), 1f, 1f);
-                }
-            } else if (args[0].equalsIgnoreCase("give")) {
-                if (sender.hasPermission("activecraft.item.give")) {
-                    if (args.length == 2) {
-                        if (Material.getMaterial(args[1].toUpperCase()) == null) {
-                            sender.sendMessage(Errors.INVALID_ARGUMENTS());
-                            return false;
-                        }
-                        Material material = Material.getMaterial(args[1].toUpperCase());
-                        ItemStack itemStack = new ItemStack(material);
-                        player.getInventory().addItem(itemStack);
-                        sender.sendMessage(CommandMessages.ITEM_GIVE(itemStack.getType().name().toLowerCase()));
-                        player.playSound(player.getLocation(), Sound.valueOf("BLOCK_AMETHYST_BLOCK_BREAK"), 1f, 1f);
-                    }
-                    if (args.length == 3) {
-                        if (Material.getMaterial(args[1].toUpperCase()) == null) {
-                            sender.sendMessage(Errors.INVALID_ARGUMENTS());
-                            return false;
-                        }
-                        Material material = Material.getMaterial(args[1].toUpperCase());
-                        ItemStack itemStack = new ItemStack(material);
-                        Integer num = null;
-                        try {
-                            num = Integer.valueOf(args[2]);
-                        } catch (NumberFormatException ignored) {
-                        }
-                        if (num == null) {
-                            sender.sendMessage(Errors.INVALID_NUMBER());
-                            return false;
-                        }
-                        itemStack.setAmount(Integer.parseInt(args[2]));
-                        player.getInventory().addItem(itemStack);
-                        sender.sendMessage(CommandMessages.ITEM_GIVE_MULTIPLE(itemStack.getType().name().toLowerCase(), num + ""));
-                        player.playSound(player.getLocation(), Sound.valueOf("BLOCK_AMETHYST_BLOCK_BREAK"), 1f, 1f);
-                    }
-                } else sender.sendMessage(Errors.NO_PERMISSION());
-            } else if (args[0].equalsIgnoreCase("name")) {
-                if (player.hasPermission("activecraft.item.name")) {
-                    if (args.length > 1) {
-                        if (player.getInventory().getItemInMainHand().getType() == Material.AIR) {
-                            sender.sendMessage(Errors.NOT_HOLDING_ITEM());
-                            return false;
-                        }
-
-                        StringBuilder stringBuilder = new StringBuilder();
-                        for (int i = 1; i < args.length; i++) {
-                            stringBuilder.append(args[i]);
-                            stringBuilder.append(" ");
-                        }
-
-                        if (player.getInventory().getItemInMainHand().getType() == Material.AIR) {
-                            sender.sendMessage(Errors.INVALID_ARGUMENTS());
-                            return false;
-                        }
-                        ItemStack stack = player.getInventory().getItemInMainHand();
-                        ItemMeta meta = stack.getItemMeta();
-                        meta.setDisplayName(ColorUtils.replaceFormat(ColorUtils.replaceColor(stringBuilder.toString())));
-                        stack.setItemMeta(meta);
-
-                        sender.sendMessage(CommandMessages.ITEM_RENAMED());
-                    } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
-                } else sender.sendMessage(Errors.NO_PERMISSION());
-            } else if (args[0].equalsIgnoreCase("lore")) {
-                if (player.hasPermission("activecraft.item.lore")) {
-                    if (args.length > 1) {
-                        if (player.getInventory().getItemInMainHand().getType() == Material.AIR) {
-                            sender.sendMessage(Errors.NOT_HOLDING_ITEM());
-                            return false;
-                        }
-                        ItemStack stack = player.getInventory().getItemInMainHand();
-                        ItemMeta meta = stack.getItemMeta();
-                        List<String> stringList = new ArrayList<>();
-                        if (meta.getLore() != null) {
-                            stringList.addAll(meta.getLore());
-                        }
-                        if (args[1].equalsIgnoreCase("add")) {
-                            StringBuilder stringBuilder = new StringBuilder();
-                            for (int i = 2; i < args.length; i++) {
-                                stringBuilder.append(args[i]);
-                                stringBuilder.append(" ");
-                            }
-                            stringList.add(ColorUtils.replaceFormat(ColorUtils.replaceColor(stringBuilder.toString())));
-                            meta.setLore(stringList);
-                            stack.setItemMeta(meta);
-                            sender.sendMessage(CommandMessages.ITEM_LORE_ADD());
-                        } else if (args[1].equalsIgnoreCase("clear")) {
-                            stringList.clear();
-                            meta.setLore(stringList);
-                            stack.setItemMeta(meta);
-                            sender.sendMessage(CommandMessages.ITEM_LORE_CLEAR());
-                        } else if (args[1].equalsIgnoreCase("set")) {
-                            StringBuilder stringBuilder = new StringBuilder();
-                            for (int i = 2; i < args.length; i++) {
-                                stringBuilder.append(args[i]);
-                                stringBuilder.append(" ");
-                            }
-                            stringList.clear();
-                            stringList.add(ColorUtils.replaceFormat(ColorUtils.replaceColor(stringBuilder.toString())));
-                            meta.setLore(stringList);
-                            stack.setItemMeta(meta);
-
-                            sender.sendMessage(CommandMessages.ITEM_LORE_SET());
-                        } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
-                    } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
-                } else sender.sendMessage(Errors.NO_PERMISSION());
-            } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
-        } else sender.sendMessage(Errors.NOT_A_PLAYER());
-        return false;
+        } else if (label.equalsIgnoreCase("i"))
+            if (sender.hasPermission("item.give") && args.length == 1)
+                for (Material material : Material.values()) list.add(material.name().toLowerCase());
+        return list;
     }
 
     @Override

@@ -1,80 +1,70 @@
 package de.silencio.activecraftcore.commands;
 
-import de.silencio.activecraftcore.messages.Errors;
-import org.bukkit.Bukkit;
+import de.silencio.activecraftcore.exceptions.ActiveCraftException;
 import org.bukkit.GameMode;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class GamemodeCommand implements CommandExecutor {
+import java.util.List;
+
+public class GamemodeCommand extends ActiveCraftCommand {
+
+    public GamemodeCommand() {
+        super("survival", "creative", "adventure", "spectator");
+    }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-
-        if (args.length == 1) {
-            if (Bukkit.getPlayer(args[0]) == null) {
-                sender.sendMessage(Errors.INVALID_PLAYER());
-                return false;
-            }
-            Player target = Bukkit.getPlayer(args[0]);
-            if(sender.getName().toLowerCase().equals(target.getName().toLowerCase())) {
-                if (!sender.hasPermission("activecraft.gamemode.survival.self") || !sender.hasPermission("activecraft.gamemode.creative.self") || !sender.hasPermission("activecraft.gamemode.adventure.self") || !sender.hasPermission("activecraft.gamemode.spectator.self")) {
-                    sender.sendMessage(Errors.CANNOT_TARGET_SELF());
-                    return false;
+    public void runCommand(CommandSender sender, Command command, String label, String[] args) throws ActiveCraftException {
+        if (args.length == 0) {
+            Player player = getPlayer(sender);
+            switch (label) {
+                case "su", "survival" -> {
+                    checkPermission(sender, "gamemode.survival.self");
+                    player.setGameMode(GameMode.SURVIVAL);
+                }
+                case "ad", "adventure" -> {
+                    checkPermission(sender, "gamemode.adventure.self");
+                    player.setGameMode(GameMode.ADVENTURE);
+                }
+                case "cr", "creative" -> {
+                    checkPermission(sender, "gamemode.creative.self");
+                    player.setGameMode(GameMode.CREATIVE);
+                }
+                case "sp", "spectator" -> {
+                    checkPermission(sender, "gamemode.spectator.self");
+                    player.setGameMode(GameMode.SPECTATOR);
                 }
             }
-
-            if (label.equalsIgnoreCase("su") || label.equalsIgnoreCase("survival")) {
-                if (sender.hasPermission("activecraft.gamemode.survival.others")) {
+        } else {
+            Player target = getPlayer(args[0]);
+            switch (label) {
+                case "su", "survival" -> {
+                    checkPermission(sender, "gamemode.survival.others");
+                    checkTargetSelf(sender, target, "gamemode.survival.self");
                     target.setGameMode(GameMode.SURVIVAL);
-                } else sender.sendMessage(Errors.NO_PERMISSION());
-            }
-
-            if (label.equalsIgnoreCase("cr") || label.equalsIgnoreCase("creative")) {
-                if (sender.hasPermission("activecraft.gamemode.creative.others")) {
-                    target.setGameMode(GameMode.CREATIVE);
-                } else sender.sendMessage(Errors.NO_PERMISSION());
-            }
-
-            if (label.equalsIgnoreCase("sp") || label.equalsIgnoreCase("spectator")) {
-                if (sender.hasPermission("activecraft.gamemode.spectator.others")) {
-                    target.setGameMode(GameMode.SPECTATOR);
-                } else sender.sendMessage(Errors.NO_PERMISSION());
-            }
-
-            if (label.equalsIgnoreCase("ad") || label.equalsIgnoreCase("adventure")) {
-                if (sender.hasPermission("activecraft.gamemode.adventure.others")) {
+                }
+                case "ad", "adventure" -> {
+                    checkPermission(sender, "gamemode.adventure.others");
+                    checkTargetSelf(sender, target, "gamemode.adventure.self");
                     target.setGameMode(GameMode.ADVENTURE);
-                } else sender.sendMessage(Errors.NO_PERMISSION());
-            }
-        } else if (sender instanceof Player){
-            Player player = (Player) sender;
-            if (label.equalsIgnoreCase("su") || label.equalsIgnoreCase("survival")) {
-                if (sender.hasPermission("activecraft.gamemode.survival.self")) {
-                    player.setGameMode(GameMode.SURVIVAL);
-                } else sender.sendMessage(Errors.NO_PERMISSION());
-            }
-
-            if (label.equalsIgnoreCase("cr") || label.equalsIgnoreCase("creative")) {
-                if (sender.hasPermission("activecraft.gamemode.creative.self")) {
-                    player.setGameMode(GameMode.CREATIVE);
-                } else sender.sendMessage(Errors.NO_PERMISSION());
-            }
-
-            if (label.equalsIgnoreCase("sp") || label.equalsIgnoreCase("spectator")) {
-                if (sender.hasPermission("activecraft.gamemode.spectator.self")) {
-                    player.setGameMode(GameMode.SPECTATOR);
-                } else sender.sendMessage(Errors.NO_PERMISSION());
-            }
-
-            if (label.equalsIgnoreCase("ad") || label.equalsIgnoreCase("adventure")) {
-                if (sender.hasPermission("activecraft.gamemode.adventure.self")) {
-                    player.setGameMode(GameMode.ADVENTURE);
-                } else sender.sendMessage(Errors.NO_PERMISSION());
+                }
+                case "cr", "creative" -> {
+                    checkPermission(sender, "gamemode.creative.others");
+                    checkTargetSelf(sender, target, "gamemode.creative.self");
+                    target.setGameMode(GameMode.CREATIVE);
+                }
+                case "sp", "spectator" -> {
+                    checkPermission(sender, "gamemode.spectator.others");
+                    checkTargetSelf(sender, target, "gamemode.spectator.self");
+                    target.setGameMode(GameMode.SPECTATOR);
+                }
             }
         }
-        return true;
+    }
+
+    @Override
+    public List<String> onTab(CommandSender sender, Command command, String label, String[] args) {
+        return args.length == 1 ? getBukkitPlayernames() : null;
     }
 }

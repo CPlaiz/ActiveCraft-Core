@@ -1,10 +1,11 @@
 package de.silencio.activecraftcore.listener;
 
 import de.silencio.activecraftcore.ActiveCraftCore;
-import de.silencio.activecraftcore.dialogue.DialogueManager;
+import de.silencio.activecraftcore.manager.DialogueManager;
+import de.silencio.activecraftcore.playermanagement.Profile;
 import de.silencio.activecraftcore.utils.ColorUtils;
 import de.silencio.activecraftcore.utils.FileConfig;
-import de.silencio.activecraftcore.utils.MessageUtils;
+import de.silencio.activecraftcore.utils.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -12,8 +13,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
-
-import java.io.File;
 
 public class MessageListener implements Listener {
 
@@ -24,9 +23,14 @@ public class MessageListener implements Listener {
         message = ColorUtils.replaceFormat(message);
         Player player = event.getPlayer();
 
-        if (!ActiveCraftCore.getPlugin().getDialogueList().contains(player)) {
+        if (ActiveCraftCore.getDialogueManagerList().containsKey(player)) {
+            DialogueManager dialogueManager = ActiveCraftCore.getDialogueManagerList().get(player);
+            dialogueManager.answer(event.getMessage());
+            event.setCancelled(true);
+            return;
+        }
 
-            FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + player.getName().toLowerCase() + ".yml");
+            Profile profile = ActiveCraftCore.getProfile(player);
 
             boolean muted = playerdataConfig.getBoolean("muted");
 
@@ -36,7 +40,7 @@ public class MessageListener implements Listener {
                 FileConfig fileConfig = new FileConfig("config.yml");
                 //Bukkit.broadcastMessage(fileConfig.getString("chat-format").replace("%displayname%", player.getDisplayName()).replace("%message%", message));
                 Bukkit.broadcastMessage(fileConfig.getString("chat-format")
-                        .replace("%displayname%", messageWithColor(player, playerdataConfig.getString("nickname"), playerdataConfig.getString("colornick")))
+                        .replace("%displayname%", StringUtils.messageWithColor(player, profile.getNickname(), profile.getColorNick().name()))
                         .replace("%message%", message));
                 event.setCancelled(true);
             } else {
@@ -51,24 +55,5 @@ public class MessageListener implements Listener {
                     event.setCancelled(true);
                 }
             }
-        } else {
-
-            DialogueManager dialogueManager = ActiveCraftCore.getPlugin().getDialogueManagerList().getDialogueManager(player);
-            dialogueManager.answer(event.getMessage());
-            event.setCancelled(true);
         }
     }
-
-    public String messageWithColor(Player p, String displayname, String colorname) {
-        String outputDisplayname = null;
-        for (ChatColor color : ChatColor.values()) {
-            if (colorname.toLowerCase().equals(color.name().toLowerCase())) {
-                if (!colorname.equals("BOLD") && !colorname.equals("MAGIC") && !colorname.equals("STRIKETHROUGH") &&
-                        !colorname.equals("ITALIC") && !colorname.equals("UNDERLINE") && !colorname.equals("RESET")) {
-                    outputDisplayname = color + displayname;
-                }
-            }
-        }
-        return outputDisplayname;
-    }
-}

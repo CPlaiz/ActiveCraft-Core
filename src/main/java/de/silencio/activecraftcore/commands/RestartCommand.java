@@ -2,20 +2,16 @@ package de.silencio.activecraftcore.commands;
 
 import com.destroystokyo.paper.Title;
 import de.silencio.activecraftcore.ActiveCraftCore;
+import de.silencio.activecraftcore.exceptions.ActiveCraftException;
 import de.silencio.activecraftcore.messages.CommandMessages;
-import de.silencio.activecraftcore.messages.Errors;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class RestartCommand implements CommandExecutor, TabCompleter {
@@ -51,37 +47,36 @@ public class RestartCommand implements CommandExecutor, TabCompleter {
                     }
                     if (runnable != null) if (!runnable.isCancelled()) runnable.cancel();
 
-                    runnable = new BukkitRunnable() {
-
-                        @Override
-                        public void run() {
-
-                            for (Player target : Bukkit.getOnlinePlayers()) {
-
-                                if (time == 0) {
-                                    target.kickPlayer(CommandMessages.RESTART_MESSAGE());
-                                    cancel();
-                                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "spigot:restart");
-                                }
-
-                                target.playSound(target.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 1f, 0.5f);
-                                Title title = new Title(CommandMessages.RESTART_TITLE(time + ""));
-                                target.sendTitle(title);
-                                try {
-                                    Thread.sleep(250);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                                target.playSound(target.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 1f, 0.5f);
-                            }
-                            time--;
-                        }
-                    };
-                    runnable.runTaskTimer(ActiveCraftCore.getPlugin(), 0, 20);
-                } else sender.sendMessage(Errors.NO_PERMISSION());
-        } else sender.sendMessage(Errors.NOT_A_PLAYER());
-        return true;
+        runnable = new BukkitRunnable() {
+            @Override
+            public void run() {
+                for (Player target : Bukkit.getOnlinePlayers()) {
+                    if (time == 0) {
+                        target.kickPlayer(CommandMessages.RESTART_MESSAGE());
+                        cancel();
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "spigot:restart");
+                    }
+                    target.playSound(target.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 1f, 0.5f);
+                    Title title = new Title(CommandMessages.RESTART_TITLE(time + ""));
+                    target.sendTitle(title);
+                    try {
+                        Thread.sleep(250);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    target.playSound(target.getLocation(), Sound.BLOCK_NOTE_BLOCK_BELL, 1f, 0.5f);
+                }
+                time--;
+            }
+        };
+        runnable.runTaskTimer(ActiveCraftCore.getPlugin(), 0, 20);
     }
+
+    @Override
+    public List<String> onTab(CommandSender sender, Command command, String label, String[] args) {
+        return args.length == 1 ? List.of("cancel") : null;
+    }
+
     private void cancelTimer(CommandSender sender) {
 
         if (runnable != null) {
@@ -95,26 +90,4 @@ public class RestartCommand implements CommandExecutor, TabCompleter {
             }
         }
     }
-
-    @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-        ArrayList<String> list = new ArrayList<>();
-        Player p = (Player) sender;
-
-        if (args.length == 0) return list;
-        if (args.length == 1) {
-            list.add("cancel");
-        }
-
-        ArrayList<String> completerList = new ArrayList<>();
-        String currentarg = args[args.length - 1].toLowerCase();
-        for (String s : list) {
-            String s1 = s.toLowerCase();
-            if (s1.startsWith(currentarg)) {
-                completerList.add(s);
-            }
-        }
-        return completerList;
-    }
-
 }

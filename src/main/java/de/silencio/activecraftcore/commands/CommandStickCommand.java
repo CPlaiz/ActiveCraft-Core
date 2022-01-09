@@ -3,15 +3,14 @@ package de.silencio.activecraftcore.commands;
 import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.utils.ColorUtils;
 import de.silencio.activecraftcore.utils.FileConfig;
-import de.silencio.activecraftcore.utils.MessageUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
-import org.bukkit.entity.*;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -83,7 +82,8 @@ public class CommandStickCommand implements CommandExecutor, Listener, TabComple
             if (eventItem.getType() != Material.STICK) return;
             ItemMeta itemMeta = eventItem.getItemMeta();
             if (!(itemMeta.getDisplayName().equals("§6Command Stick"))) return;
-            if (!(itemMeta.getItemFlags().contains(ItemFlag.HIDE_ENCHANTS) && itemMeta.getItemFlags().contains(ItemFlag.HIDE_UNBREAKABLE))) return;
+            if (!(itemMeta.getItemFlags().contains(ItemFlag.HIDE_ENCHANTS) && itemMeta.getItemFlags().contains(ItemFlag.HIDE_UNBREAKABLE)))
+                return;
             if (!itemMeta.isUnbreakable()) return;
             if (itemMeta.lore() == null) return;
             for (String rawLore : itemMeta.getLore()) {
@@ -110,7 +110,8 @@ public class CommandStickCommand implements CommandExecutor, Listener, TabComple
             if (eventItem.getType() != Material.STICK) return;
             ItemMeta itemMeta = eventItem.getItemMeta();
             if (!(itemMeta.getDisplayName().equals("§6Command Stick"))) return;
-            if (!(itemMeta.getItemFlags().contains(ItemFlag.HIDE_ENCHANTS) && itemMeta.getItemFlags().contains(ItemFlag.HIDE_UNBREAKABLE))) return;
+            if (!(itemMeta.getItemFlags().contains(ItemFlag.HIDE_ENCHANTS) && itemMeta.getItemFlags().contains(ItemFlag.HIDE_UNBREAKABLE)))
+                return;
             if (!itemMeta.isUnbreakable()) return;
             if (itemMeta.lore() == null) return;
             for (String rawLore : itemMeta.getLore()) {
@@ -152,12 +153,10 @@ public class CommandStickCommand implements CommandExecutor, Listener, TabComple
     }
 
     @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+    public List<String> onTab(CommandSender sender, Command command, String alias, String[] args) {
         ArrayList<String> list = new ArrayList<>();
         if (args.length == 0) return list;
         if (args.length == 1) {
-
-
             FileConfig mainConfig = new FileConfig("config.yml");
 
             if (mainConfig.getBoolean("hide-commands-after-plugin-name.enable")) {
@@ -167,35 +166,20 @@ public class CommandStickCommand implements CommandExecutor, Listener, TabComple
                 pluginNames.add("bukkit");
                 pluginNames.add("spigot");
                 pluginNames.add("paper");
-                for (Plugin plugin : Bukkit.getPluginManager().getPlugins()) {
+                for (Plugin plugin : Bukkit.getPluginManager().getPlugins())
                     pluginNames.add(plugin.getName().toLowerCase());
-                }
 
                 List<String> toBeRemoved = new ArrayList<>();
 
-                for (String cmd : Bukkit.getCommandMap().getKnownCommands().keySet()) {
-                    for (String pluginName : pluginNames) {
-                        if (cmd.startsWith(pluginName + ":")) {
+                for (String cmd : Bukkit.getCommandMap().getKnownCommands().keySet())
+                    for (String pluginName : pluginNames)
+                        if (cmd.startsWith(pluginName + ":"))
                             toBeRemoved.add(cmd);
-                        }
-                    }
-                }
-                for (String cmd : Bukkit.getCommandMap().getKnownCommands().keySet()) {
-                    if (!toBeRemoved.contains(cmd)) {
+                for (String cmd : Bukkit.getCommandMap().getKnownCommands().keySet())
+                    if (!toBeRemoved.contains(cmd))
                         list.add(cmd);
-                    }
-                }
             }
         }
-
-        ArrayList<String> completerList = new ArrayList<>();
-        String currentarg = args[args.length - 1].toLowerCase();
-        for (String s : list) {
-            String s1 = s.toLowerCase();
-            if (s1.startsWith(currentarg)) {
-                completerList.add(s);
-            }
-        }
-        return completerList;
+        return list;
     }
 }

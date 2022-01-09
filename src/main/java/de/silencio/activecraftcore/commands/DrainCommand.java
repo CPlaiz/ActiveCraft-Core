@@ -1,65 +1,51 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.exceptions.ActiveCraftException;
 import de.silencio.activecraftcore.messages.CommandMessages;
-import de.silencio.activecraftcore.messages.Errors;
-import de.silencio.activecraftcore.utils.FileConfig;
-import org.bukkit.Bukkit;
+import de.silencio.activecraftcore.utils.ComparisonType;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Waterlogged;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DrainCommand implements CommandExecutor, TabCompleter {
+public class DrainCommand extends ActiveCraftCommand {
 
-    @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-
-        if (sender instanceof Player) {
-            Player player = (Player) sender;
-            if (!sender.hasPermission("activecraft.drain")) {
-                sender.sendMessage(Errors.NO_PERMISSION());
-                return false;
-            }
-            if (args.length == 1) {
-                Integer num = null;
-                try {
-                    num = Integer.valueOf(args[0]);
-                } catch (NumberFormatException ignored) {
-                }
-                drain(player.getLocation().getBlock(), num, false, true);
-                sender.sendMessage(ChatColor.GOLD + "Drained " + num + " blocks.");
-            } else if (args.length == 2) {
-                Integer num = null;
-                try {
-                    num = Integer.valueOf(args[0]);
-                } catch (NumberFormatException ignored) {
-                }
-                drain(player.getLocation().getBlock(), num, Boolean.parseBoolean(args[1]), true);
-                sender.sendMessage(ChatColor.GOLD + "Drained " + num + " blocks.");
-            } else if (args.length == 3) {
-                Integer num = null;
-                try {
-                    num = Integer.valueOf(args[0]);
-                } catch (NumberFormatException ignored) {
-                }
-                int drainedBlocks = drain(player.getLocation().getBlock(), num, Boolean.parseBoolean(args[1]), Boolean.parseBoolean(args[2]));
-                sender.sendMessage(CommandMessages.DRAIN_COMPLETE(drainedBlocks));
-            } else sender.sendMessage(Errors.INVALID_ARGUMENTS());
-        } else sender.sendMessage(Errors.NOT_A_PLAYER());
-        return true;
+    public DrainCommand() {
+        super("drain");
     }
 
-    private int drain(Block startBlock, int range, boolean destroyWaterlogged, boolean applyPhysics) {
-        List<Material> types = List.of(new Material[]{Material.LAVA, Material.WATER, Material.SEAGRASS, Material.TALL_SEAGRASS, Material.KELP_PLANT, Material.KELP});
+    @Override
+    public void runCommand(CommandSender sender, Command command, String label, String[] args) throws ActiveCraftException {
+        checkPermission(sender, "drain");
+        Player player = getPlayer(sender);
+        checkArgsLength(args, ComparisonType.NOT_EQUAL, 0);
+        int drainedBlocks;
+        switch (args.length) {
+            case 1 -> {
+                drainedBlocks = drain(player.getLocation().getBlock(), parseInt(args[0]), false, true);
+                sendMessage(sender, ChatColor.GOLD + CommandMessages.DRAIN_COMPLETE(drainedBlocks));
+            }
+            case 2 -> {
+                drainedBlocks = drain(player.getLocation().getBlock(), parseInt(args[0]), Boolean.parseBoolean(args[1]), true);
+                sendMessage(sender, ChatColor.GOLD + CommandMessages.DRAIN_COMPLETE(drainedBlocks));
+            }
+            default -> {
+                drainedBlocks = drain(player.getLocation().getBlock(), parseInt(args[0]), Boolean.parseBoolean(args[1]), Boolean.parseBoolean(args[2]));
+                sendMessage(sender, ChatColor.GOLD + CommandMessages.DRAIN_COMPLETE(drainedBlocks));
+            }
+        }
+    }
+
+
+    private int drain(Block startBlock, int range, boolean removeWaterlogged, boolean applyPhysics) {
+        List<Material> types = List.of(new Material[]{Material.LAVA, Material.WATER, Material.SEAGRASS, Material.TALL_SEAGRASS, Material.KELP_PLANT, Material.KELP, Material.BUBBLE_COLUMN});
         World world = startBlock.getWorld();
         List<Block> blocks = new ArrayList<>();
         List<Block> toBeAdded = new ArrayList<>();
@@ -74,61 +60,19 @@ public class DrainCommand implements CommandExecutor, TabCompleter {
                 Block yminus1 = world.getBlockAt(block.getX(), block.getY() - 1, block.getZ());
                 Block zplus1 = world.getBlockAt(block.getX(), block.getY(), block.getZ() + 1);
                 Block zminus1 = world.getBlockAt(block.getX(), block.getY(), block.getZ() - 1);
-                if ((types.contains(xplus1.getType())) && !toBeAdded.contains(xplus1))
-                    toBeAdded.add(xplus1);
-                if ((types.contains(xminus1.getType())) && !toBeAdded.contains(xminus1))
-                    toBeAdded.add(xminus1);
-                if ((types.contains(yplus1.getType())) && !toBeAdded.contains(yplus1))
-                    toBeAdded.add(yplus1);
-                if ((types.contains(yminus1.getType())) && !toBeAdded.contains(yminus1))
-                    toBeAdded.add(yminus1);
-                if ((types.contains(zplus1.getType())) && !toBeAdded.contains(zplus1))
-                    toBeAdded.add(zplus1);
-                if ((types.contains(zminus1.getType())) && !toBeAdded.contains(zminus1))
-                    toBeAdded.add(zminus1);
-                if (!destroyWaterlogged) continue;
-                if (xplus1.getBlockData() instanceof Waterlogged)
-                    if (((Waterlogged) xplus1.getBlockData()).isWaterlogged()) {
-                        Waterlogged wl = (Waterlogged) xplus1.getBlockData();
-                        wl.setWaterlogged(false);
-                        xplus1.setBlockData(wl, applyPhysics);
-                        totalDrainedBlocks++;
-                    }
-                if (xminus1.getBlockData() instanceof Waterlogged)
-                    if (((Waterlogged) xminus1.getBlockData()).isWaterlogged()) {
-                        Waterlogged wl = (Waterlogged) xminus1.getBlockData();
-                        wl.setWaterlogged(false);
-                        xminus1.setBlockData(wl, applyPhysics);
-                        totalDrainedBlocks++;
-                    }
-                if (yplus1.getBlockData() instanceof Waterlogged)
-                    if (((Waterlogged) yplus1.getBlockData()).isWaterlogged()) {
-                        Waterlogged wl = (Waterlogged) yplus1.getBlockData();
-                        wl.setWaterlogged(false);
-                        yplus1.setBlockData(wl, applyPhysics);
-                        totalDrainedBlocks++;
-                    }
-                if (yminus1.getBlockData() instanceof Waterlogged)
-                    if (((Waterlogged) yminus1.getBlockData()).isWaterlogged()) {
-                        Waterlogged wl = (Waterlogged) yminus1.getBlockData();
-                        wl.setWaterlogged(false);
-                        yminus1.setBlockData(wl, applyPhysics);
-                        totalDrainedBlocks++;
-                    }
-                if (zplus1.getBlockData() instanceof Waterlogged)
-                    if (((Waterlogged) zplus1.getBlockData()).isWaterlogged()) {
-                        Waterlogged wl = (Waterlogged) zplus1.getBlockData();
-                        wl.setWaterlogged(false);
-                        zplus1.setBlockData(wl, applyPhysics);
-                        totalDrainedBlocks++;
-                    }
-                if (zminus1.getBlockData() instanceof Waterlogged)
-                    if (((Waterlogged) zminus1.getBlockData()).isWaterlogged()) {
-                        Waterlogged wl = (Waterlogged) zminus1.getBlockData();
-                        wl.setWaterlogged(false);
-                        zminus1.setBlockData(wl, applyPhysics);
-                        totalDrainedBlocks++;
-                    }
+                Block[] neighbourBlocks = new Block[]{xplus1, xminus1, yplus1, yminus1, zplus1, zminus1};
+                for (Block neighbourBlock : neighbourBlocks)
+                    if ((types.contains(neighbourBlock.getType())) && !toBeAdded.contains(neighbourBlock))
+                        toBeAdded.add(neighbourBlock);
+                if (!removeWaterlogged) continue;
+                for (Block neighbourBlock : neighbourBlocks)
+                    if (neighbourBlock.getBlockData() instanceof Waterlogged)
+                        if (((Waterlogged) neighbourBlock.getBlockData()).isWaterlogged()) {
+                            Waterlogged wl = (Waterlogged) neighbourBlock.getBlockData();
+                            wl.setWaterlogged(false);
+                            neighbourBlock.setBlockData(wl, applyPhysics);
+                            totalDrainedBlocks++;
+                        }
             }
             for (Block block : blocks) {
                 block.setType(Material.AIR, applyPhysics);
@@ -142,32 +86,13 @@ public class DrainCommand implements CommandExecutor, TabCompleter {
     }
 
     @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+    public List<String> onTab(CommandSender sender, Command command, String label, String[] args) {
         ArrayList<String> list = new ArrayList<>();
-
-        Player p = (Player) sender;
-
-        if (args.length == 0) return list;
-        if (args.length == 2) {
+        if (args.length == 2 || args.length == 3) {
             list.add("true");
             list.add("false");
         }
-        if (args.length == 3) {
-            list.add("true");
-            list.add("false");
-        }
-
-
-        ArrayList<String> completerList = new ArrayList<>();
-        String currentarg = args[args.length - 1].toLowerCase();
-        for (String s : list) {
-            String s1 = s.toLowerCase();
-            if (s1.startsWith(currentarg)) {
-                completerList.add(s);
-            }
-        }
-
-        return completerList;
+        return list;
     }
 
 }

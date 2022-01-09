@@ -5,7 +5,7 @@ import org.bukkit.ChatColor;
 
 public class Errors {
 
-    static ActiveCraftMessage acm = ActiveCraftCore.getPlugin().getActiveCraftMessage();
+    static ActiveCraftMessage acm = ActiveCraftCore.getActiveCraftMessage();
 
     public static String WARNING() {
         return ChatColor.RED + acm.getMessage(MessageType.ERROR, "general-warning") + ChatColor.GRAY + " ";
@@ -61,5 +61,9 @@ public class Errors {
 
     public static String NOT_HOLDING_ITEM() {
         return ChatColor.RED + WARNING() +  ChatColor.GRAY + acm.getMessage(MessageType.ERROR, "not-holding-item");
+    }
+
+    public static String INVALID_WORLD() {
+        return ChatColor.RED + WARNING() +  ChatColor.GRAY + acm.getMessage(MessageType.ERROR, "invalid-world");
     }
 }
