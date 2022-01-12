@@ -2,7 +2,7 @@ package de.silencio.activecraftcore.commands;
 
 import de.silencio.activecraftcore.exceptions.ActiveCraftException;
 import de.silencio.activecraftcore.utils.ComparisonType;
-import de.silencio.activecraftcore.utils.JsonReader;
+import de.silencio.activecraftcore.utils.WebReader;
 import de.silencio.activecraftcore.utils.UpdateChecker;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
@@ -28,8 +28,8 @@ public class ACVersionCommand extends ActiveCraftCommand {
         checkPermission(sender, "version");
         checkArgsLength(args, ComparisonType.EQUAL, 0);
         try {
-            Map plugins = JsonReader.getMap("https://raw.githubusercontent.com/CPlaiz/ActiveCraft-Core/master/plugins.json");
-            ArrayList<String> keys = new ArrayList(plugins.keySet());
+            HashMap<String, Integer> plugins = WebReader.getACVersionMap();
+            ArrayList<String> keys = new ArrayList<>(plugins.keySet());
             Collections.sort(keys);
             for (String key : keys) {
                 Plugin plugin = Bukkit.getPluginManager().getPlugin(key);
@@ -48,8 +48,7 @@ public class ACVersionCommand extends ActiveCraftCommand {
                         linkComponent.setClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://www.spigotmc.org/resources/" + plugin.getName().toLowerCase() + "." + plugins.get(key)));
                         builder.append(linkComponent);
                         sendMessage(sender, builder.create());
-                    }
-                    else
+                    } else
                         sendMessage(sender, ChatColor.GOLD + key + ChatColor.DARK_AQUA + " - " + ChatColor.GREEN + "Latest.");
                 });
             }

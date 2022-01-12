@@ -4,7 +4,6 @@ import de.silencio.activecraftcore.ActiveCraftCore;
 import de.silencio.activecraftcore.manager.VanishManager;
 import de.silencio.activecraftcore.playermanagement.Profile;
 import de.silencio.activecraftcore.utils.FileConfig;
-import de.silencio.activecraftcore.utils.Placeholder;
 import de.silencio.activecraftcore.utils.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -19,6 +18,7 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 import java.io.File;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 
 public class JoinQuitListener implements Listener {
@@ -40,19 +40,17 @@ public class JoinQuitListener implements Listener {
 
         Player player = event.getPlayer();
 
-        Placeholder placeholder = new Placeholder(player);
-
         FileConfig playerlistConfig = new FileConfig("playerlist.yml");
         FileConfig mainConfig = new FileConfig("config.yml");
         FileConfig playerdataConfig = new FileConfig("playerdata" + File.separator + player.getName().toLowerCase() + ".yml");
 
         VanishManager vanishManager = ActiveCraftCore.getVanishManager();
 
-        List<String> playerlist = playerlistConfig.getStringList("players");
+        List<String> rawPlayerlist = playerlistConfig.getStringList("players");
 
-        if (!playerlist.contains(player.getName().toLowerCase() + "," + player.getUniqueId())) {
-            playerlist.add(player.getName().toLowerCase() + "," + player.getUniqueId());
-            playerlistConfig.set("players", playerlist);
+        if (!rawPlayerlist.contains(player.getName().toLowerCase() + "," + player.getUniqueId())) {
+            rawPlayerlist.add(player.getName().toLowerCase() + "," + player.getUniqueId());
+            playerlistConfig.set("players", rawPlayerlist);
             playerlistConfig.saveConfig();
         }
 
@@ -101,29 +99,6 @@ public class JoinQuitListener implements Listener {
 
         Profile profile = ActiveCraftCore.getProfile(player.getName());
 
-        List<String> knownIps = profile.getKnownIps();
-        if (!knownIps.contains(player.getAddress().getAddress().toString().replace("/", ""))) {
-            knownIps.add(player.getAddress().getAddress().toString().replace("/", ""));
-            profile.set(Profile.Value.KNOWN_IPS, knownIps);
-        }
-
-        if (mainConfig.getBoolean("check-for-matching-ips")) {
-            playerlist.remove(player.getName());
-            StringBuilder strBuilder = new StringBuilder();
-            for (Profile otherProfile : ActiveCraftCore.getProfiles().values()) {
-                if (otherProfile == profile) continue;
-                for (int i = 0; i < knownIps.size(); i++)
-                    if (otherProfile.getKnownIps().contains(knownIps.get(i))) {
-                        if (i != 0) strBuilder.append(", ");
-                        strBuilder.append(knownIps.get(i));
-                    }
-                if (!strBuilder.toString().equals("")) {
-                    Bukkit.broadcast(ChatColor.DARK_AQUA + player.getName() + ChatColor.GRAY + " shares the IP " +
-                            ChatColor.DARK_GRAY + strBuilder + ChatColor.GRAY + " with " + ChatColor.DARK_AQUA +
-                            otherProfile.getName(), "matchingip.notify");
-                }
-            }
-        }
         playerdataConfig.saveConfig();
 
         if (profile.getLastLocationBeforeQuit() != null) player.teleport(profile.getLastLocationBeforeQuit());

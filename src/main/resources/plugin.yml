@@ -321,10 +321,6 @@ commands:
     description: Sends a warning to a player.
     permission: activecraft.warn
     permission-message: "§cWarning! §7You don't have the permission to do that!"
-  known-ips:
-    description: Gets all ips a player has logged in with.
-    permission: activecraft.listips
-    permission-message: "§cWarning! §7You don't have the permission to do that!"
   profile:
     description: Opens a profile inventory for quick player management.
     permission: activecraft.profile
@@ -896,9 +892,6 @@ permissions:
     default: op
     children:
       activecraft.afk: true
-  activecraft.matchingip.notify:
-    description: Player with this permissions get a message if somebody's ip matches another.
-    default: op
   activecraft.top:
     description: Teleports the player ontop of the highest block at the player's x/z coordinates.
     default: op

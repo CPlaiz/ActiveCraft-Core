@@ -7,6 +7,7 @@ import de.silencio.activecraftcore.listener.*;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.event.Listener;
+import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,7 +18,6 @@ public class PluginManager {
 
     private static HashMap<String, CommandExecutor> commands = new HashMap<>();
     private static List<Listener> listeners = new ArrayList<>();
-
 
     public static void init() {
         // general listeners
@@ -76,7 +76,6 @@ public class PluginManager {
                 new KickAllCommand(),
                 new KickCommand(),
                 new KnockbackStickCommand(),
-                new KnownIpsCommand(),
                 new LanguageCommand(),
                 new LastCoordsCommand(),
                 new LastOnlineCommand(),

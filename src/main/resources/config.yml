@@ -37,8 +37,6 @@ lockdown-modt: "This server is in lockdown mode. You are not able to join until 
 lockdown-kick-message: "This server is in lockdown mode. You are not able to join until this is disabled."
 
 # Misc Settings
-# If people with the permission 'activecraft.matchingip.notify' should recieve messages when a player logs in with an already known IP address.
-check-for-matching-ips: true
 # If player to player messages should be broadcasted to the server console.
 socialspy-to-console: false
 # If command targets should recieve messages in chat when someone executes a command targetted at them (I.E. /feed -> >You were fed by %displayname%).
@@ -59,6 +57,6 @@ hide-commands:
   - 'command'
 
 # Do not edit!
-lockdown:
-old-modt:
+lockdown: false
+old-modt: ''
 language: 'en'

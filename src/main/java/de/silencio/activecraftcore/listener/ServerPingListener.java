@@ -23,5 +23,4 @@ public class ServerPingListener implements Listener {
             event.setMotd(Objects.requireNonNull(fileConfig.getString("old-modt")));
         }
     }
-
 }

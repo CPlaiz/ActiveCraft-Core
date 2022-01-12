@@ -1,10 +1,13 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.events.ColornickEvent;
+import de.silencio.activecraftcore.events.NickEvent;
 import de.silencio.activecraftcore.exceptions.ActiveCraftException;
 import de.silencio.activecraftcore.exceptions.InvalidArgumentException;
 import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.playermanagement.Profile;
 import de.silencio.activecraftcore.utils.ColorUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -26,6 +29,11 @@ public class ColorNickCommand extends ActiveCraftCommand {
             Player player = getPlayer(sender);
             Profile profile = getProfile(player);
             ChatColor color = args[0].equalsIgnoreCase("random") ? ColorUtils.getRandomColor() : getChatColor(args[0]);
+            //call event
+            ColornickEvent event = new ColornickEvent(profile, color);
+            Bukkit.getPluginManager().callEvent(event);
+            if (event.isCancelled()) return;
+
             player.setPlayerListName(color + profile.getNickname());
             player.setDisplayName(color + profile.getNickname());
             profile.set(Profile.Value.COLOR_NICK, color.name());
@@ -36,6 +44,11 @@ public class ColorNickCommand extends ActiveCraftCommand {
             Profile profile = getProfile(target);
             ChatColor color = args[1].equalsIgnoreCase("random") ? ColorUtils.getRandomColor() : getChatColor(args[1]);
             checkTargetSelf(sender, target, "colornick.self");
+            //call event
+            ColornickEvent event = new ColornickEvent(profile, color);
+            Bukkit.getPluginManager().callEvent(event);
+            if (event.isCancelled()) return;
+
             sendMessage(sender, CommandMessages.COLORNICK_OTHERS(target, color + color.name()));
             target.setPlayerListName(color + profile.getNickname());
             target.setDisplayName(color + profile.getNickname());

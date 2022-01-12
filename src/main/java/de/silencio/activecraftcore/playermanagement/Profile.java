@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-public class Profile {
+public final class Profile {
 
     public enum Value {
         NAME,
@@ -38,7 +38,6 @@ public class Profile {
         LOG_ENABLED,
         BYPASS_LOCKDOWN,
         EDIT_SIGN,
-        KNOWN_IPS,
         HOME_LIST,
         RECEIVE_SOCIALSPY,
         LAST_LOCATION,
@@ -79,7 +78,6 @@ public class Profile {
     private boolean bypass_lockdown;
     private boolean edit_sign;
     private boolean receive_socialspy;
-    private List<String> known_ips;
     private List<String> tags;
 
     private HashMap<String, Location> homeList;
@@ -126,7 +124,6 @@ public class Profile {
         log_enabled = fileConfig.getBoolean("log-enabled");
         bypass_lockdown = fileConfig.getBoolean("lockdown-bypass");
         edit_sign = fileConfig.getBoolean("edit-sign");
-        known_ips = fileConfig.getStringList("known-ips");
         tags = fileConfig.getStringList("tags");
         receive_socialspy = fileConfig.getBoolean("receive-socialspy");
 
@@ -174,9 +171,9 @@ public class Profile {
             case BYPASS_LOCKDOWN -> playerdataConfig.set("lockdown-bypass", object);
             case EDIT_SIGN -> playerdataConfig.set("edit-sign", object);
             case FORCE_MUTED -> playerdataConfig.set("forcemuted", object);
-            case KNOWN_IPS -> playerdataConfig.set("known-ips", object);
             case RECEIVE_SOCIALSPY -> playerdataConfig.set("receive-socialspy", object);
         }
+
         playerdataConfig.saveConfig();
         playtimeConfig.saveConfig();
 
@@ -328,10 +325,6 @@ public class Profile {
 
     public boolean canEditSign() {
         return edit_sign;
-    }
-
-    public List<String> getKnownIps() {
-        return known_ips;
     }
 
     public HashMap<String, Location> getHomeList() {

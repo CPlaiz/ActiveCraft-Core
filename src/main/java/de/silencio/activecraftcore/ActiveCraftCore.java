@@ -1,6 +1,5 @@
 package de.silencio.activecraftcore;
 
-import de.silencio.activecraftcore.commands.*;
 import de.silencio.activecraftcore.guicreator.Gui;
 import de.silencio.activecraftcore.guicreator.GuiCreator;
 import de.silencio.activecraftcore.guicreator.GuiData;
@@ -48,7 +47,6 @@ public final class ActiveCraftCore extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        // Plugin startup logic
         dialogueManagerList = new HashMap<>();
         vanishManager = new VanishManager(this);
 
@@ -103,7 +101,6 @@ public final class ActiveCraftCore extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
         log("Plugin unloaded.");
     }
 

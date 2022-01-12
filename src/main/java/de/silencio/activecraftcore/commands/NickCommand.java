@@ -1,5 +1,6 @@
 package de.silencio.activecraftcore.commands;
 
+import de.silencio.activecraftcore.events.NickEvent;
 import de.silencio.activecraftcore.exceptions.ActiveCraftException;
 import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.playermanagement.Profile;
@@ -28,8 +29,12 @@ public class NickCommand extends ActiveCraftCommand {
             Player player = getPlayer(sender);
             Profile profile = getProfile(player);
             String nickname = combineArray(args);
-            nickname = ColorUtils.replaceColor(nickname);
-            nickname = ColorUtils.replaceFormat(nickname);
+            nickname = ColorUtils.replaceColorAndFormat(nickname);
+            //call event
+            NickEvent event = new NickEvent(profile, nickname);
+            Bukkit.getPluginManager().callEvent(event);
+            if (event.isCancelled()) return;
+
             profile.set(Profile.Value.NICKNAME, nickname);
             sendMessage(sender, CommandMessages.NICK_SET(nickname));
             StringUtils.setDisplaynameFromConfig(player, profile.getColorNick().name(), nickname);
@@ -40,6 +45,11 @@ public class NickCommand extends ActiveCraftCommand {
             Profile profile = getProfile(target);
             String nickname = combineArray(args, 1);
             nickname = ColorUtils.replaceColorAndFormat(nickname);
+            // call event
+            NickEvent event = new NickEvent(profile, nickname);
+            Bukkit.getPluginManager().callEvent(event);
+            if (event.isCancelled()) return;
+
             if (!checkTargetSelf(sender, target, "nick.self")) sendSilentMessage(target, CommandMessages.NICK_SET_OTHERS_MESSAGE(sender, nickname));
             profile.set(Profile.Value.NICKNAME, nickname);
             sendMessage(sender, CommandMessages.NICK_SET_OTHERS(target, nickname));

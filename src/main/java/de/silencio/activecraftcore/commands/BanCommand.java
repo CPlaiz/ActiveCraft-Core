@@ -90,42 +90,22 @@ public class BanCommand extends ActiveCraftCommand {
                     Collections.sort(tempBanListName);
                     Collections.sort(tempBanListIP);
 
-                    boolean isFirst = true;
-                    for (String s : tempBanListName) {
+                    for (int i = 0; i < tempBanListName.size(); i++) {
+                        String name = tempBanListName.get(i);
                         TextComponent textComponent = new TextComponent();
-                        textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, TextComponent.fromLegacyText(CommandMessages.UNBAN_ON_HOVER(s))));
-                        textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/unban " + s));
-                        if (isFirst) {
-                            textComponent.setText(s);
-                            isFirst = false;
-                        } else textComponent.setText(", " + s);
+                        textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, TextComponent.fromLegacyText(CommandMessages.UNBAN_ON_HOVER(name))));
+                        textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/unban " + name));
+                        if (i != 0) textComponent.setText(", " + name);
+                        else textComponent.setText(name);
                         componentBuilder.append(textComponent);
                     }
-                    for (String s : tempBanListIP) {
+                    for (int i = 0; i < tempBanListIP.size(); i++) {
+                        String ip = tempBanListIP.get(i);
                         TextComponent textComponent = new TextComponent();
-                        textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, TextComponent.fromLegacyText(CommandMessages.UNBAN_IP_ON_HOVER(s))));
-                        textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/unban-ip " + s));
-                        StringBuilder stringBuilder = new StringBuilder();
-                        boolean isFirst1 = true;
-                        for (String playername : ActiveCraftCore.getPlayerlist().keySet()) {
-                            Profile profile = getProfile(playername);
-                            if (!profile.getKnownIps().contains(s)) continue;
-                                if (isFirst1) {
-                                    stringBuilder.append(profile.getName());
-                                    isFirst1 = false;
-                                } else stringBuilder.append(", ").append(profile.getName());
-                        }
-                        if (!stringBuilder.toString().equalsIgnoreCase("")) {
-                            if (isFirst) {
-                                textComponent.setText(s + " (" + stringBuilder + ")");
-                                isFirst = false;
-                            } else textComponent.setText(", " + s + " (" + stringBuilder + ")");
-                        } else {
-                            if (isFirst) {
-                                textComponent.setText(s);
-                                isFirst = false;
-                            } else textComponent.setText(", " + s);
-                        }
+                        textComponent.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, TextComponent.fromLegacyText(CommandMessages.UNBAN_IP_ON_HOVER(ip))));
+                        textComponent.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/unban-ip " + ip));
+                        if (i != 0) textComponent.setText(", " + ip);
+                        else textComponent.setText(ip);
                         componentBuilder.append(textComponent);
                     }
 

@@ -163,7 +163,7 @@ public abstract class ActiveCraftCommand implements CommandExecutor, TabComplete
     }
 
     public static boolean checkPermission(Permissible permissible, String perm) throws NoPermissionException {
-        if (!permissible.hasPermission(perm)) {
+        if (!permissible.hasPermission("activecraft." + perm)) {
             throw new NoPermissionException(permissible, perm);
         } else return true;
     }

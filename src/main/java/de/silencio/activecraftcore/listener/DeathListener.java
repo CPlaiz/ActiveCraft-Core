@@ -5,6 +5,7 @@ import de.silencio.activecraftcore.commands.SuicideCommand;
 import de.silencio.activecraftcore.playermanagement.Profile;
 import de.silencio.activecraftcore.utils.FileConfig;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -50,7 +51,7 @@ public class DeathListener implements Listener {
         }
 
         String deathmessage = e.getDeathMessage();
-        if (killer != null) {
+        if (killer != null && killer.getInventory().getItemInMainHand().getType() == Material.AIR) {
             String beforeBrackets = deathmessage.split("\\[")[0];
             beforeBrackets = beforeBrackets.replace(died.getName(), died.getDisplayName()
                             .replace(" " + mainConfig.getString("vanish-format"), "")
