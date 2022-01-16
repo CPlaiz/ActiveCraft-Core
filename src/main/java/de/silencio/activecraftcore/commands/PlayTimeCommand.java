@@ -35,7 +35,7 @@ public class PlayTimeCommand extends ActiveCraftCommand {
                 sendMessage(sender, Errors.INVALID_PLAYER());
             int hours = profile.getPlaytimeHours();
             int minutes = profile.getPlaytimeMinutes();
-            sendMessage(sender, CommandMessages.PLAYTIME_OTHERS(args[0], profile.getNickname(), hours + "", minutes + ""));
+            sendMessage(sender, CommandMessages.PLAYTIME_OTHERS(args[0], profile.getFullNickname(), hours + "", minutes + ""));
         }
     }
 

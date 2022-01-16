@@ -40,7 +40,7 @@ public class MessageListener implements Listener {
                 FileConfig fileConfig = new FileConfig("config.yml");
                 //Bukkit.broadcastMessage(fileConfig.getString("chat-format").replace("%displayname%", player.getDisplayName()).replace("%message%", message));
                 Bukkit.broadcastMessage(fileConfig.getString("chat-format")
-                        .replace("%displayname%", StringUtils.messageWithColor(player, profile.getNickname(), profile.getColorNick().name()))
+                        .replace("%displayname%", StringUtils.messageWithColor(player, profile.getFullNickname(), profile.getColorNick().name()))
                         .replace("%message%", message));
                 event.setCancelled(true);
             } else {

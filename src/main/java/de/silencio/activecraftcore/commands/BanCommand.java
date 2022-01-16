@@ -6,7 +6,6 @@ import de.silencio.activecraftcore.manager.BanManager;
 import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.Errors;
 import de.silencio.activecraftcore.messages.Reasons;
-import de.silencio.activecraftcore.playermanagement.Profile;
 import de.silencio.activecraftcore.utils.ComparisonType;
 import de.silencio.activecraftcore.utils.StringUtils;
 import de.silencio.activecraftcore.utils.TimeUtils;

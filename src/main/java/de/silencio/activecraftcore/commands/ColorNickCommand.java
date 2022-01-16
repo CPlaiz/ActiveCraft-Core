@@ -1,7 +1,6 @@
 package de.silencio.activecraftcore.commands;
 
 import de.silencio.activecraftcore.events.ColornickEvent;
-import de.silencio.activecraftcore.events.NickEvent;
 import de.silencio.activecraftcore.exceptions.ActiveCraftException;
 import de.silencio.activecraftcore.exceptions.InvalidArgumentException;
 import de.silencio.activecraftcore.messages.CommandMessages;
@@ -34,9 +33,8 @@ public class ColorNickCommand extends ActiveCraftCommand {
             Bukkit.getPluginManager().callEvent(event);
             if (event.isCancelled()) return;
 
-            player.setPlayerListName(color + profile.getNickname());
-            player.setDisplayName(color + profile.getNickname());
             profile.set(Profile.Value.COLOR_NICK, color.name());
+            profile.reloadDisplayname();
             sendMessage(sender, CommandMessages.COLORNICK_SELF(color + color.name()));
         } else if (args.length >= 2) {
             checkPermission(sender, "colornick.self");
@@ -50,10 +48,8 @@ public class ColorNickCommand extends ActiveCraftCommand {
             if (event.isCancelled()) return;
 
             sendMessage(sender, CommandMessages.COLORNICK_OTHERS(target, color + color.name()));
-            target.setPlayerListName(color + profile.getNickname());
-            target.setDisplayName(color + profile.getNickname());
             profile.set(Profile.Value.COLOR_NICK, color.name());
-
+            profile.reloadDisplayname();
             sendSilentMessage(target, CommandMessages.COLORNICK_OTHERS_MESSAGE(sender, color + color.name()));
         } else throw new InvalidArgumentException();
     }

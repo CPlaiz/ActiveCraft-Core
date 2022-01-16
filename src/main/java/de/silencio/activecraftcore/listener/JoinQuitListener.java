@@ -4,7 +4,6 @@ import de.silencio.activecraftcore.ActiveCraftCore;
 import de.silencio.activecraftcore.manager.VanishManager;
 import de.silencio.activecraftcore.playermanagement.Profile;
 import de.silencio.activecraftcore.utils.FileConfig;
-import de.silencio.activecraftcore.utils.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -18,7 +17,6 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 import java.io.File;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
 
 public class JoinQuitListener implements Listener {
@@ -103,20 +101,18 @@ public class JoinQuitListener implements Listener {
 
         if (profile.getLastLocationBeforeQuit() != null) player.teleport(profile.getLastLocationBeforeQuit());
 
+        profile.reloadDisplayname();
+
         // vanish stuff
         if (profile.isVanished()) {
             vanishManager.setVanished(player, true);
             event.setJoinMessage(null);
-            Bukkit.broadcast((mainConfig.getString("join-format") + ChatColor.GOLD + " (vanished)").replace("%displayname%", profile.getNickname()), "activecraft.vanish.see");
-        } else event.setJoinMessage(mainConfig.getString("join-format").replace("%displayname%", profile.getNickname()));
+            Bukkit.broadcast((mainConfig.getString("join-format") + ChatColor.GOLD + " (vanished)").replace("%displayname%", profile.getFullNickname()), "activecraft.vanish.see");
+        } else event.setJoinMessage(mainConfig.getString("join-format").replace("%displayname%", profile.getFullNickname()));
         if (!player.hasPermission("vanish.see")) vanishManager.hideAll(player);
 
         //fly
         if (profile.canFly()) player.setAllowFlight(true);
-
-        // tag stuff
-        StringUtils.setDisplaynameFromConfig(player, profile.getColorNick(), profile.getNickname());
-        profile.applyTags();
     }
 
     @EventHandler
@@ -138,14 +134,14 @@ public class JoinQuitListener implements Listener {
         FileConfig mainConfig = new FileConfig("config.yml");
 
         if (!profile.isVanished()) {
-            event.setQuitMessage(mainConfig.getString("quit-format").replace("%displayname%", profile.getNickname()));
+            event.setQuitMessage(mainConfig.getString("quit-format").replace("%displayname%", profile.getFullNickname()));
         } else {
             VanishManager vanishManager = ActiveCraftCore.getVanishManager();
             List<Player> vanishedList = vanishManager.getVanished();
             vanishedList.remove(player);
             vanishManager.setVanishedList(vanishedList);
             event.setQuitMessage(null);
-            Bukkit.broadcast((mainConfig.getString("quit-format") + ChatColor.GOLD + " (vanished)").replace("%displayname%", player.getDisplayName()), "vanish.see");
+            Bukkit.broadcast((mainConfig.getString("quit-format") + ChatColor.GOLD + " (vanished)").replace("%displayname%", profile.getFullNickname()), "vanish.see");
         }
     }
 }

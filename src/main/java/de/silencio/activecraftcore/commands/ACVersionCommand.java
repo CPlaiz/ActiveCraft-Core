@@ -2,8 +2,8 @@ package de.silencio.activecraftcore.commands;
 
 import de.silencio.activecraftcore.exceptions.ActiveCraftException;
 import de.silencio.activecraftcore.utils.ComparisonType;
-import de.silencio.activecraftcore.utils.WebReader;
 import de.silencio.activecraftcore.utils.UpdateChecker;
+import de.silencio.activecraftcore.utils.WebReader;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -15,7 +15,10 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.Plugin;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 
 public class ACVersionCommand extends ActiveCraftCommand {
 
@@ -37,7 +40,7 @@ public class ACVersionCommand extends ActiveCraftCommand {
                     sendMessage(sender, ChatColor.GOLD + key + ChatColor.DARK_AQUA + " - " + ChatColor.GRAY + "Not installed.");
                     continue;
                 }
-                new UpdateChecker(plugin, (Integer) plugins.get(key)).getVersion(version -> {
+                new UpdateChecker(plugin, plugins.get(key)).getVersion(version -> {
                     if (!plugin.getDescription().getVersion().equals(version)) {
                         ComponentBuilder builder = new ComponentBuilder();
                         builder.append(new TextComponent(ChatColor.GOLD + key + ChatColor.DARK_AQUA + " - " + ChatColor.RED + "Update Available. "));

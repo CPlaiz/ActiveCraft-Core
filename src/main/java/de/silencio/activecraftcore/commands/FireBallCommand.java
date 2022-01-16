@@ -1,7 +1,6 @@
 package de.silencio.activecraftcore.commands;
 
 import de.silencio.activecraftcore.exceptions.ActiveCraftException;
-import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.EntityType;

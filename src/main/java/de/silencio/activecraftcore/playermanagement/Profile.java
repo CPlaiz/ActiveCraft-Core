@@ -54,6 +54,7 @@ public final class Profile {
     private FileConfig homeConfig;
     private String name;
     private String nickname;
+    private String prefix;
     private String last_online;
     private UUID uuid;
     private ChatColor color_nick;
@@ -125,6 +126,7 @@ public final class Profile {
         bypass_lockdown = fileConfig.getBoolean("lockdown-bypass");
         edit_sign = fileConfig.getBoolean("edit-sign");
         tags = fileConfig.getStringList("tags");
+        prefix = fileConfig.getString("prefix");
         receive_socialspy = fileConfig.getBoolean("receive-socialspy");
 
         playtime_minutes = playtimeConfig.getInt(name + ".minutes");
@@ -194,7 +196,7 @@ public final class Profile {
         tags.clear();
         playerdataConfig.set("tags", this.tags);
         playerdataConfig.saveConfig();
-        applyTags();
+        reloadDisplayname();
     }
 
     public void addTag(String... tags) {
@@ -202,7 +204,7 @@ public final class Profile {
             if (!this.tags.contains(tag)) this.tags.add(tag);
         playerdataConfig.set("tags", this.tags);
         playerdataConfig.saveConfig();
-        applyTags();
+        reloadDisplayname();
     }
 
     public void removeTag(String... tags) {
@@ -210,7 +212,7 @@ public final class Profile {
             this.tags.remove(tag);
         playerdataConfig.set("tags", this.tags);
         playerdataConfig.saveConfig();
-        applyTags();
+        reloadDisplayname();
     }
 
     public void setTags(String... tags) {
@@ -218,13 +220,24 @@ public final class Profile {
         addTag(tags);
     }
 
-    public void applyTags() {
+    public void setPrefix(String prefix) {
+        this.prefix = prefix;
+        playerdataConfig.set("prefix", prefix);
+        playerdataConfig.saveConfig();
+        reloadDisplayname();
+    }
+
+    public void clearPrefix() {
+        setPrefix("");
+    }
+
+    public void reloadDisplayname() {
         Player player = Bukkit.getPlayer(name);
         if (player == null) return;
         List<String> appliedTags = tags;
         Collections.sort(appliedTags);
         Collections.reverse(appliedTags);
-        StringUtils.setDisplaynameFromConfig(player, color_nick, nickname + (tags.size() > 0 ? " " : "") + StringUtils.combineList(appliedTags));
+        StringUtils.setDisplaynameFromConfig(player, color_nick, prefix, nickname + (tags.size() > 0 ? " " : "") + StringUtils.combineList(appliedTags));
     }
 
     public String getProfileOwner() {
@@ -355,7 +368,13 @@ public final class Profile {
         return tags;
     }
 
-    public void setTags(List<String> tags) {
-        this.tags = tags;
+    public String getPrefix() {
+        return prefix;
+    }
+
+    public String getFullNickname() {
+        if (prefix == null) prefix = "";
+        prefix = prefix.strip() + (prefix.strip().equals("") ? "" : " ");
+        return prefix + color_nick + nickname;
     }
 }

@@ -52,12 +52,15 @@ public class StringUtils {
             }
         }
     }
-    public static void setDisplaynameFromConfig(Player p, ChatColor color, String displayname) {
-       if (!Arrays.stream(ColorUtils.getColorsOnly()).toList().contains(color)) return;
-       p.setDisplayName(color + displayname);
-       p.setPlayerListName(color + displayname);
+
+    public static void setDisplaynameFromConfig(Player p, ChatColor color, String prefix, String displayname) {
+        if (!Arrays.stream(ColorUtils.getColorsOnly()).toList().contains(color)) return;
+        if (prefix == null) prefix = "";
+        prefix = prefix.strip() + (prefix.strip().equals("") ? "" : " ");
+        p.setDisplayName(prefix + color + displayname);
+        p.setPlayerListName(prefix + color + displayname);
     }
-    
+
     public static String joinQuitWithColor(Player p, String displayname, String colorname) {
         String outputDisplayname = null;
         for (ChatColor color : ChatColor.values()) {

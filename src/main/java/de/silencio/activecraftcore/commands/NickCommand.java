@@ -6,7 +6,6 @@ import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.playermanagement.Profile;
 import de.silencio.activecraftcore.utils.ColorUtils;
 import de.silencio.activecraftcore.utils.ComparisonType;
-import de.silencio.activecraftcore.utils.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -37,9 +36,9 @@ public class NickCommand extends ActiveCraftCommand {
 
             profile.set(Profile.Value.NICKNAME, nickname);
             sendMessage(sender, CommandMessages.NICK_SET(nickname));
-            StringUtils.setDisplaynameFromConfig(player, profile.getColorNick().name(), nickname);
-            profile.applyTags();
+            profile.reloadDisplayname();
         } else {
+            checkArgsLength(args, ComparisonType.GREATER_EQUAL, 2);
             checkPermission(sender, "nick.others");
             Player target = getPlayer(args[0]);
             Profile profile = getProfile(target);
@@ -53,8 +52,7 @@ public class NickCommand extends ActiveCraftCommand {
             if (!checkTargetSelf(sender, target, "nick.self")) sendSilentMessage(target, CommandMessages.NICK_SET_OTHERS_MESSAGE(sender, nickname));
             profile.set(Profile.Value.NICKNAME, nickname);
             sendMessage(sender, CommandMessages.NICK_SET_OTHERS(target, nickname));
-            StringUtils.setDisplaynameFromConfig(target, profile.getColorNick().name(), nickname);
-            profile.applyTags();
+            profile.reloadDisplayname();
         }
     }
 

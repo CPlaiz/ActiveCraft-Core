@@ -38,7 +38,7 @@ public class VanishCommand extends ActiveCraftCommand {
                         if (forPlayer != sender)
                             forPlayer.sendMessage(CommandMessages.NOW_VISIBLE_OTHERS(player));
                     } else if (forPlayer != sender)
-                        forPlayer.sendMessage(joinFormat.replace("%displayname%", StringUtils.joinQuitWithColor(player, profile.getNickname(), profile.getColorNick().name())));
+                        forPlayer.sendMessage(joinFormat.replace("%displayname%", StringUtils.joinQuitWithColor(player, profile.getFullNickname(), profile.getColorNick().name())));
             } else {
                 vanishManager.setVanished(player, true);
                 sendMessage(sender, CommandMessages.NOW_INVISIBLE());
@@ -47,7 +47,7 @@ public class VanishCommand extends ActiveCraftCommand {
                         if (forPlayer != sender)
                             forPlayer.sendMessage(CommandMessages.NOW_INVISIBLE_OTHERS(player));
                     } else if (forPlayer != sender)
-                        forPlayer.sendMessage(quitFormat.replace("%displayname%", StringUtils.joinQuitWithColor(player, profile.getNickname(), profile.getColorNick().name())));
+                        forPlayer.sendMessage(quitFormat.replace("%displayname%", StringUtils.joinQuitWithColor(player, profile.getFullNickname(), profile.getColorNick().name())));
             }
         } else if (args.length == 1) {
             checkPermission(sender, "vanish.others");
@@ -62,7 +62,7 @@ public class VanishCommand extends ActiveCraftCommand {
                         if (forPlayer != sender && forPlayer != target)
                             forPlayer.sendMessage(CommandMessages.NOW_VISIBLE_OTHERS(target));
                     } else if (forPlayer != sender && forPlayer != target)
-                        forPlayer.sendMessage(joinFormat.replace("%displayname%", StringUtils.joinQuitWithColor(target, profile.getNickname(), profile.getColorNick().name())));
+                        forPlayer.sendMessage(joinFormat.replace("%displayname%", StringUtils.joinQuitWithColor(target, profile.getFullNickname(), profile.getColorNick().name())));
             } else {
                 if (!checkTargetSelf(sender, target, "vanish.self")) target.sendMessage(CommandMessages.NOW_INVISIBLE());
                 sendMessage(sender, CommandMessages.NOW_INVISIBLE_OTHERS(target));
@@ -72,7 +72,7 @@ public class VanishCommand extends ActiveCraftCommand {
                         if (forPlayer != sender && forPlayer != target)
                             forPlayer.sendMessage(CommandMessages.NOW_INVISIBLE_OTHERS(target));
                     } else if (forPlayer != sender && forPlayer != target)
-                        forPlayer.sendMessage(quitFormat.replace("%displayname%", StringUtils.joinQuitWithColor(target, profile.getNickname(), profile.getColorNick().name())));
+                        forPlayer.sendMessage(quitFormat.replace("%displayname%", StringUtils.joinQuitWithColor(target, profile.getFullNickname(), profile.getColorNick().name())));
             }
         }
     }

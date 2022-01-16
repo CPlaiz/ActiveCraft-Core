@@ -1,6 +1,5 @@
 package de.silencio.activecraftcore.guicreator;
 
-import de.silencio.activecraftcore.messages.CommandMessages;
 import de.silencio.activecraftcore.messages.GuiMessages;
 import org.bukkit.Material;
 

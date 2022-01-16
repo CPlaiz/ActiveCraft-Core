@@ -25,7 +25,7 @@ public class LastOnlineCommand extends ActiveCraftCommand {
             String lastonline = profile.getLastOnline();
             if (lastonline.equalsIgnoreCase("online")) sendMessage(sender, CommandMessages.LASTONLINE_ONLINE(profile, lastonline));
             else sendMessage(sender, CommandMessages.LASTONLINE_OFFLINE(
-                    profile.getName(), lastonline).replace("%t_displayname%", ChatColor.AQUA + profile.getNickname() + ChatColor.GOLD)
+                    profile.getName(), lastonline).replace("%t_displayname%", ChatColor.AQUA + profile.getFullNickname() + ChatColor.GOLD)
             );
         }
     }

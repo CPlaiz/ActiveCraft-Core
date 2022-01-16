@@ -6,7 +6,7 @@
 
     <groupId>de.silencio</groupId>
     <artifactId>activecraft-core</artifactId>
-    <version>1.2.3</version>
+    <version>1.2.5</version>
     <packaging>jar</packaging>
 
     <name>ActiveCraft-Core</name>

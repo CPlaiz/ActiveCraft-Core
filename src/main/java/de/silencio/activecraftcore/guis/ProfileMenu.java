@@ -30,7 +30,7 @@ public class ProfileMenu {
         //playerhead
         playerHead = new GuiPlayerHead(4);
         playerHead.setOwner(target);
-        playerHead.setLore(ChatColor.GRAY + "aka " + profile.getNickname(), ChatColor.AQUA + profile.getUuid().toString());
+        playerHead.setLore(ChatColor.GRAY + "aka " + profile.getFullNickname(), ChatColor.AQUA + profile.getUuid().toString());
         playerHead.setDisplayName(ChatColor.GOLD + target.getName());
 
         warnManager = new WarnManager(target);

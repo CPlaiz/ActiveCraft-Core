@@ -10,7 +10,6 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class XpCommand extends ActiveCraftCommand {
 

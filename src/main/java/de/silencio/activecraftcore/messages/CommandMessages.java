@@ -648,7 +648,7 @@ public class CommandMessages {
     public static String LASTONLINE_ONLINE(Profile target, String lastonline) {
         return ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.LASTONLINE, "lastonline-online")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
-                .replace("%t_displayname%", ChatColor.AQUA + target.getNickname() + ChatColor.GOLD)
+                .replace("%t_displayname%", ChatColor.AQUA + target.getFullNickname() + ChatColor.GOLD)
                 .replace("%lastonline%", ChatColor.GREEN + lastonline + ChatColor.GOLD);
     }
 
@@ -738,7 +738,7 @@ public class CommandMessages {
     public static String MSG_PREFIX_TO(Profile profile, String message) {
         return ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.MSG, "msg-prefix-to")
                 .replace("%t_playername%", ChatColor.AQUA + profile.getName() + ChatColor.GOLD)
-                .replace("%t_displayname%", ChatColor.AQUA + profile.getNickname() + ChatColor.GOLD)
+                .replace("%t_displayname%", ChatColor.AQUA + profile.getFullNickname() + ChatColor.GOLD)
                 .replace("%message%", ChatColor.WHITE + message + ChatColor.GOLD);
     }
 
@@ -1650,14 +1650,14 @@ public class CommandMessages {
         Profile profile = ActiveCraftCore.getProfile(target);
         return ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.AFK, "now-afk")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
-                .replace("%t_displayname%", ChatColor.AQUA + profile.getNickname() + ChatColor.GOLD);
+                .replace("%t_displayname%", ChatColor.AQUA + profile.getFullNickname() + ChatColor.GOLD);
     }
 
     public static String NOT_AFK(Player target) {
         Profile profile = ActiveCraftCore.getProfile(target);
         return ChatColor.GOLD + acm.getMessage(MessageType.COMMAND, CommandType.AFK, "not-afk")
                 .replace("%t_playername%", ChatColor.AQUA + target.getName() + ChatColor.GOLD)
-                .replace("%t_displayname%", ChatColor.AQUA + profile.getNickname() + ChatColor.GOLD);
+                .replace("%t_displayname%", ChatColor.AQUA + profile.getFullNickname() + ChatColor.GOLD);
     }
 
     public static String NOW_AFK_TARGET() {

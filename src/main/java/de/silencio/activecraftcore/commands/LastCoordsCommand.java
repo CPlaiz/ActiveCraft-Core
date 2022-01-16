@@ -33,7 +33,7 @@ public class LastCoordsCommand extends ActiveCraftCommand {
                 Location lastLocation = profile.getLastLocation("BEFORE_QUIT");
                 if (lastLocation == null) sendMessage(sender, Errors.WARNING() + CommandMessages.NEVER_QUIT_SERVER());
                 World world = lastLocation.getWorld();
-                sendMessage(sender, CommandMessages.LASTCOORDS_MESSAGE(profile.getName(), profile.getNickname(),
+                sendMessage(sender, CommandMessages.LASTCOORDS_MESSAGE(profile.getName(), profile.getFullNickname(),
                         ChatColor.GOLD + "X: " + ChatColor.AQUA + lastLocation.getBlockX() + ChatColor.GOLD
                                 + ", Y: " + ChatColor.AQUA + lastLocation.getBlockY() + ChatColor.GOLD
                                 + ", Z: " + ChatColor.AQUA + lastLocation.getBlockZ() + ChatColor.GOLD
@@ -46,7 +46,7 @@ public class LastCoordsCommand extends ActiveCraftCommand {
                 World world = getWorld(args[1]);
                 Location lastLocation = profile.getLastLocation(world.getName());
                 if (lastLocation == null) sendMessage(sender, Errors.WARNING() + CommandMessages.NEVER_ENTERED_WORLD());
-                sendMessage(sender, CommandMessages.LASTCOORDS_MESSAGE(profile.getName(), profile.getNickname(),
+                sendMessage(sender, CommandMessages.LASTCOORDS_MESSAGE(profile.getName(), profile.getFullNickname(),
                         ChatColor.GOLD + "X: " + ChatColor.AQUA + lastLocation.getBlockX() + ChatColor.GOLD
                                 + ", Y: " + ChatColor.AQUA + lastLocation.getBlockY() + ChatColor.GOLD
                                 + ", Z: " + ChatColor.AQUA + lastLocation.getBlockZ() + ChatColor.GOLD

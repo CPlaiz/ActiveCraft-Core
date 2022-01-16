@@ -54,7 +54,7 @@ public class MainProfile extends GuiCreator {
         // General Settings
         fillBackground(true);
         setCloseItem(new GuiCloseItem(49));
-        playerHead = profileMenu.getPlayerHead();
+        setPlayerHead(profileMenu.getPlayerHead());
 
         // Player Items
         GuiItem slotEmpty = new GuiItem(Material.RED_STAINED_GLASS_PANE)
