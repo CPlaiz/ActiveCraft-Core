@@ -20,7 +20,7 @@ nav_order: 2
 # Commands
 {: .no_toc }
 
-This is a overview of all the commands, their usage and associated permissions. 
+This is an overview of all the commands, their usage and associated permissions. 
 
 **IMPORTANT INFO**
 
@@ -58,6 +58,19 @@ Send a direct message to the last player who texted you.
 *Permission*: 
 ```
 activecraft.reply
+```
+
+
+### /togglesocialspy
+Sets whether you get SocialSpy messages or not.
+
+*Usage*:
+```
+/togglesocialspy
+```
+*Permission*: 
+```
+activecraft.msg.spy
 ```
 
 ---
@@ -248,7 +261,7 @@ Accepts the last tpa request.
 ```
 *Permission*: 
 ```
-activecraft.tpaccept
+activecraft.tpa
 ```
 
 ---
@@ -262,7 +275,7 @@ Denies the last tpa request.
 ```
 *Permission*: 
 ```
-activecraft.tpdeny
+activecraft.tpa
 ```
 
 ---
@@ -396,7 +409,7 @@ Sets the walkspeed for a player.
 
 *Usage*:
 ```
-/walkspeed <player> [1-10]
+/walkspeed <player> [1-5]
 ```
 *Permission*:
 ```
@@ -794,20 +807,6 @@ activecraft.item.lore
 
 ---
 
-### /known-ips
-Lists all IPs a player has joined with.
-
-*Usage*:
-```
-/known-ips [player]
-```
-*Permission*:
-```
-activecraft.listips
-```
-
----
-
 ### /lastcoords
 See the last coordinates a player had before disconnecting or changing worlds.
 
@@ -938,7 +937,38 @@ activecraft.suicide.others
 
 ---
 
+### /xp
+Give xp to a player. Add a "l" to **[amount]** for levels instead of experience points.
+
+*Usage*:
+```
+/xp set <player> [amount]
+/xp add <player> [amount]
+/xp clear <player>
+```
+*Permission*:
+```
+activecraft.suicide.self
+activecraft.suicide.others
+```
+
+---
+
 ## Server Management
+### /acversion
+Checks for all ActiveCraft plugins if you have the latest version installed.
+
+*Usage*:
+```
+/acversion
+```
+*Permission*:
+```
+activecraft.version
+```
+
+---
+
 ### /language
 See and change the plugin's main language.
 
@@ -1205,6 +1235,20 @@ Breaks the block in front of a player.
 ```
 activecraft.break.self
 activecraft.break.others
+```
+
+---
+
+### /drain
+Removes water/lava in the given area.
+
+*Usage*:
+```
+/drain [radius] <remove_waterlogged> <apply_physics>
+```
+*Permission*:
+```
+activecraft.drain
 ```
 
 ---

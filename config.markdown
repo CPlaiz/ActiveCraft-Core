@@ -104,12 +104,12 @@ The time in minutes after which a new player will be able to speak again.
 
 *Values*:
 ```
-1, 2, 3,...
+1, 2, 3, ...
 ```
 
 ---
 
-## check-for-matching-ips
+## check-for-matching-ips (until v1.2.3)
 If enabled, all players with the permission **"activecraft.matchingip.notify"** will receive a message, if two players share the same IP.
 
 *Values*:

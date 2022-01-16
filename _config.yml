@@ -21,13 +21,13 @@
 title: ActiveCraft-Core Docs
 email: dev.cplaiz@gmail.com
 description: This is the documentation page for ActiveCraft-Core. 
-baseurl: "ActiveCraft-Core" # ActiveCraft-Core (wenn github) || the subpath of your site, e.g. /blog
+baseurl: "" # ActiveCraft-Core (wenn github) || the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: jekyllrb
 github_username:  CPlaiz
 
 # Build settings
 remote_theme: pmarsceill/just-the-docs
-theme: "just-the-docs"
+theme: "just-the-docs" # löschen oder auskommentieren wenn github
 plugins:
   - jekyll-feed
